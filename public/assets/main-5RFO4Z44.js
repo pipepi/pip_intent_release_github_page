@@ -27569,35 +27569,27 @@ function nearest_projection(viewport, point) {
   return nearest;
 }
 
-// pip-editor/pip-host/projection/stationary-hold.ts
-var StationaryHold = class {
-  constructor(schedule = (callback) => requestAnimationFrame(callback), unschedule = (id) => cancelAnimationFrame(id)) {
-    this.frame_id = 0;
-    this.schedule = schedule;
-    this.unschedule = unschedule;
-  }
-  begin(point, advance) {
-    this.cancel();
-    this.origin = point;
-    let started;
-    const tick = (time) => {
-      started ??= time;
-      if (!this.origin) return;
-      if (time - started >= 450 && !advance(time - started - 450)) {
-        this.cancel();
-        return;
-      }
-      this.frame_id = this.schedule(tick);
-    };
-    this.frame_id = this.schedule(tick);
+// pip-editor/pip-host/projection/tap-sequence.ts
+var TapSequence = class {
+  begin(point, time, key) {
+    this.pending = { point, time, key };
   }
   move(point) {
-    if (this.origin && Math.hypot(point.x - this.origin.x, point.y - this.origin.y) > 6) this.cancel();
+    if (this.pending && Math.hypot(point.x - this.pending.point.x, point.y - this.pending.point.y) > 8) this.cancel();
+  }
+  end(time) {
+    const tap = this.pending;
+    this.pending = void 0;
+    if (!tap || time - tap.time > 250) {
+      this.previous = void 0;
+      return;
+    }
+    const previous = this.previous;
+    this.previous = { ...tap, time };
+    if (previous && tap.key === previous.key && time - previous.time <= 350 && Math.hypot(tap.point.x - previous.point.x, tap.point.y - previous.point.y) <= 24) return tap.point;
   }
   cancel() {
-    if (this.frame_id) this.unschedule(this.frame_id);
-    this.frame_id = 0;
-    this.origin = void 0;
+    this.pending = this.previous = void 0;
   }
 };
 
@@ -27616,8 +27608,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     let switched = false;
     let pinched = false;
     let moved = false;
-    let held = false;
-    const hold = new StationaryHold();
+    const taps = new TapSequence();
     let distance = 0;
     let pinch_start;
     let start_point;
@@ -27644,9 +27635,11 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       }
       const path = event.composedPath();
       if (!points.size) {
-        moved = pinched = held = false;
-        hold.cancel();
-        if (path.some((item) => ["INPUT", "SELECT", "TEXTAREA", "BUTTON", "SUMMARY", "A"].includes(item?.tagName))) return;
+        moved = pinched = false;
+        if (path.some((item) => ["INPUT", "SELECT", "TEXTAREA", "BUTTON", "SUMMARY", "A"].includes(item?.tagName) || item?.isContentEditable)) {
+          taps.cancel();
+          return;
+        }
         spatial = path.some((item) => item?.hasAttribute?.("data-projection-spatial"));
         surface = path.find((item) => item?.hasAttribute?.("data-projection-surface")) ?? element;
         switched = pinched = moved = false;
@@ -27657,42 +27650,13 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       }
       if (points.size === 1) {
         start_point = [...points.values()][0];
-        const hold_point = start_point;
-        if (spatial || path.some((item) => item?.hasAttribute?.("data-projection-hold"))) {
-          const base = latest.current;
-          const anchor = position(hold_point);
-          hold.begin(hold_point, (elapsed) => {
-            if (points.size !== 1 || latest.current.navigation.index !== base.navigation.index) return false;
-            held = true;
-            const target = nearest_projection(element, hold_point);
-            const forward = forwardRoute(
-              base.navigation,
-              base.graph,
-              base.node_types,
-              target?.dataset.embeddedProjection,
-              base.selection[0]
-            );
-            const next = applySemanticScale(
-              base.navigation,
-              base.navigation.semanticScale * Math.exp(elapsed * 85e-5),
-              forward
-            );
-            const crossed = next.index !== base.navigation.index;
-            const ratio = next.semanticScale / base.navigation.semanticScale;
-            base.update(crossed ? next : {
-              ...next,
-              semanticOrigin: anchor,
-              semanticTargetProjectionId: forward?.projectionNodeId
-            }, crossed ? base.offset : {
-              x: anchor.x - (anchor.x - base.offset.x) * ratio,
-              y: anchor.y - (anchor.y - base.offset.y) * ratio
-            });
-            return !crossed && next.semanticScale < 1.7;
-          });
-        }
+        if (spatial || path.some((item) => item?.hasAttribute?.("data-projection-tap"))) {
+          const current = latest.current.navigation;
+          taps.begin(start_point, event.timeStamp, `${current.index}:${current.entries[current.index].projectionNodeId}`);
+        } else taps.cancel();
       }
       if (points.size >= 2) {
-        hold.cancel();
+        taps.cancel();
         pinched = true;
         if (points.size === 2) {
           distance = separation();
@@ -27711,7 +27675,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       if (!points.size) return;
       const before = [...points.values()][0];
       refresh(event);
-      if (points.size === 1) hold.move([...points.values()][0]);
+      if (points.size === 1) taps.move([...points.values()][0]);
       event.stopPropagation();
       const current = latest.current;
       if (points.size >= 2) {
@@ -27744,17 +27708,48 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
             y: anchor.y - pinch_start.world.y * next.semanticScale
           });
         }
-      } else if (spatial && !pinched && !held) {
+      } else if (spatial && !pinched) {
         const after = [...points.values()][0];
         if (event.cancelable) event.preventDefault();
         if (!moved && start_point && Math.hypot(after.x - start_point.x, after.y - start_point.y) < 4) return;
         moved = true;
+        taps.cancel();
         const from = position(before), to = position(after);
         current.update(current.navigation, { x: current.offset.x + to.x - from.x, y: current.offset.y + to.y - from.y });
       }
     };
     const release = (event) => {
-      if (Array.from(event.changedTouches).some((touch) => points.has(touch.identifier))) hold.cancel();
+      const owned = Array.from(event.changedTouches).some((touch) => points.has(touch.identifier));
+      if (owned && event.type === "touchcancel") taps.cancel();
+      else if (owned && points.size === 1 && !moved && !pinched) {
+        const point = taps.end(event.timeStamp);
+        if (point) {
+          if (event.cancelable) event.preventDefault();
+          const current = latest.current;
+          const target = nearest_projection(element, point);
+          const forward = forwardRoute(
+            current.navigation,
+            current.graph,
+            current.node_types,
+            target?.dataset.embeddedProjection,
+            current.selection[0]
+          );
+          const anchor = position(point);
+          const next = applySemanticScale(current.navigation, current.navigation.semanticScale * 1.35, forward);
+          const crossed = next.index !== current.navigation.index;
+          const ratio = next.semanticScale / current.navigation.semanticScale;
+          current.update(crossed ? next : {
+            ...next,
+            semanticOrigin: anchor,
+            semanticTargetProjectionId: forward?.projectionNodeId
+          }, crossed ? current.offset : {
+            x: anchor.x - (anchor.x - current.offset.x) * ratio,
+            y: anchor.y - (anchor.y - current.offset.y) * ratio
+          });
+          moved = true;
+          if (crossed) taps.cancel();
+        }
+      }
       for (const touch of Array.from(event.changedTouches)) points.delete(touch.identifier);
       if (points.size < 2) {
         distance = 0;
@@ -27767,17 +27762,13 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       release(event);
     };
     const click = (event) => {
-      if (!moved && !pinched && !held) return;
+      if (!moved && !pinched) return;
       event.preventDefault();
       event.stopPropagation();
-      moved = pinched = held = false;
+      moved = pinched = false;
     };
-    const context_menu = (event) => {
-      if (held) event.preventDefault();
-    };
-    element.addEventListener("contextmenu", context_menu);
     const owner_document = element.ownerDocument;
-    owner_document?.addEventListener("touchend", release, true);
+    owner_document?.addEventListener("touchend", release, { capture: true, passive: false });
     owner_document?.addEventListener("touchcancel", release, true);
     element.addEventListener("touchstart", down, { passive: false });
     element.addEventListener("touchmove", move, { passive: false });
@@ -27785,8 +27776,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     element.addEventListener("touchcancel", end);
     element.addEventListener("click", click, true);
     return () => {
-      hold.cancel();
-      element.removeEventListener("contextmenu", context_menu);
+      taps.cancel();
       owner_document?.removeEventListener("touchend", release, true);
       owner_document?.removeEventListener("touchcancel", release, true);
       element.removeEventListener("touchstart", down);
