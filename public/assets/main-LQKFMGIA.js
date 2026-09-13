@@ -27603,6 +27603,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     const down = (event) => {
       const path = event.composedPath();
       if (!points.size) {
+        moved = pinched = false;
         if (path.some((item) => ["INPUT", "SELECT", "TEXTAREA", "BUTTON", "SUMMARY", "A"].includes(item?.tagName))) return;
         spatial = path.some((item) => item?.hasAttribute?.("data-projection-spatial"));
         surface = path.find((item) => item?.hasAttribute?.("data-projection-surface")) ?? element;
@@ -29311,6 +29312,7 @@ function useTabTouchDrag(on_reorder, on_detach) {
   const down = (event) => {
     if (event.pointerType === "mouse") return;
     if (drag.current) return;
+    suppress_click.current = false;
     const target = event.target;
     if (target.closest('[role="button"]')) return;
     const tab = target.closest("[data-workspace-tab]");
@@ -29321,7 +29323,6 @@ function useTabTouchDrag(on_reorder, on_detach) {
       start: { x: event.clientX, y: event.clientY },
       moved: false
     };
-    suppress_click.current = false;
     event.stopPropagation();
   };
   const move = (event) => {
