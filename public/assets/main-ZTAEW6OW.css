@@ -708,6 +708,53 @@
   border-left-color: var(--manager-error) !important;
 }
 
+/* pip-editor/pip-host/view/canvas-entry.module.css */
+.canvas_entry_entry {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid var(--pip-border);
+  border-radius: 10px;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  cursor: pointer;
+  font-size: 13px;
+}
+.canvas_entry_entry small {
+  color: var(--pip-muted);
+  font-size: 12px;
+}
+.canvas_entry_notice {
+  position: absolute;
+  z-index: 100;
+  top: 72px;
+  left: 12px;
+  right: 12px;
+  max-width: 380px;
+  padding: 12px;
+  border: 1px solid var(--pip-border);
+  border-radius: 10px;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.canvas_entry_notice button {
+  min-height: 44px;
+  margin-top: 8px;
+  color: var(--pip-ink);
+  background: var(--pip-bg);
+  border: 1px solid var(--pip-border);
+  border-radius: 6px;
+}
+
 /* pip-editor/pip-host/view/creator-window.module.css */
 .creator_window_creator {
   box-sizing: border-box;

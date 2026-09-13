@@ -78,7 +78,7 @@ var require_react_development = __commonJS({
         try {
           testStringCoercion(value);
           var JSCompiler_inline_result = false;
-        } catch (e) {
+        } catch (e2) {
           JSCompiler_inline_result = true;
         }
         if (JSCompiler_inline_result) {
@@ -308,8 +308,8 @@ var require_react_development = __commonJS({
           invokeCallback = children;
           callback = callback(invokeCallback);
           var childKey = "" === nameSoFar ? "." + getElementKey(invokeCallback, 0) : nameSoFar;
-          isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c) {
-            return c;
+          isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array, escapedPrefix, "", function(c2) {
+            return c2;
           })) : null != callback && (isValidElement(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
             callback,
             escapedPrefix + (null == callback.key || invokeCallback && invokeCallback.key === callback.key ? "" : ("" + callback.key).replace(
@@ -322,19 +322,19 @@ var require_react_development = __commonJS({
         invokeCallback = 0;
         childKey = "" === nameSoFar ? "." : nameSoFar + ":";
         if (isArrayImpl(children))
-          for (var i = 0; i < children.length; i++)
-            nameSoFar = children[i], type = childKey + getElementKey(nameSoFar, i), invokeCallback += mapIntoArray(
+          for (var i2 = 0; i2 < children.length; i2++)
+            nameSoFar = children[i2], type = childKey + getElementKey(nameSoFar, i2), invokeCallback += mapIntoArray(
               nameSoFar,
               array,
               escapedPrefix,
               type,
               callback
             );
-        else if (i = getIteratorFn(children), "function" === typeof i)
-          for (i === children.entries && (didWarnAboutMaps || console.warn(
+        else if (i2 = getIteratorFn(children), "function" === typeof i2)
+          for (i2 === children.entries && (didWarnAboutMaps || console.warn(
             "Using Maps as children is not supported. Use an array of keyed ReactElements instead."
-          ), didWarnAboutMaps = true), children = i.call(children), i = 0; !(nameSoFar = children.next()).done; )
-            nameSoFar = nameSoFar.value, type = childKey + getElementKey(nameSoFar, i++), invokeCallback += mapIntoArray(
+          ), didWarnAboutMaps = true), children = i2.call(children), i2 = 0; !(nameSoFar = children.next()).done; )
+            nameSoFar = nameSoFar.value, type = childKey + getElementKey(nameSoFar, i2++), invokeCallback += mapIntoArray(
               nameSoFar,
               array,
               escapedPrefix,
@@ -467,17 +467,17 @@ var require_react_development = __commonJS({
       function flushActQueue(queue) {
         if (!isFlushing) {
           isFlushing = true;
-          var i = 0;
+          var i2 = 0;
           try {
-            for (; i < queue.length; i++) {
-              var callback = queue[i];
+            for (; i2 < queue.length; i2++) {
+              var callback = queue[i2];
               do {
                 ReactSharedInternals.didUsePromise = false;
                 var continuation = callback(false);
                 if (null !== continuation) {
                   if (ReactSharedInternals.didUsePromise) {
-                    queue[i] = callback;
-                    queue.splice(0, i);
+                    queue[i2] = callback;
+                    queue.splice(0, i2);
                     return;
                   }
                   callback = continuation;
@@ -486,7 +486,7 @@ var require_react_development = __commonJS({
             }
             queue.length = 0;
           } catch (error) {
-            queue.splice(0, i + 1), ReactSharedInternals.thrownErrors.push(error);
+            queue.splice(0, i2 + 1), ReactSharedInternals.thrownErrors.push(error);
           } finally {
             isFlushing = false;
           }
@@ -601,11 +601,11 @@ var require_react_development = __commonJS({
           );
         },
         count: function(children) {
-          var n = 0;
+          var n2 = 0;
           mapChildren(children, function() {
-            n++;
+            n2++;
           });
-          return n;
+          return n2;
         },
         toArray: function(children) {
           return mapChildren(children, function(child) {
@@ -746,8 +746,8 @@ var require_react_development = __commonJS({
         if (1 === propName) props.children = children;
         else if (1 < propName) {
           JSCompiler_inline_result = Array(propName);
-          for (var i = 0; i < propName; i++)
-            JSCompiler_inline_result[i] = arguments[i + 2];
+          for (var i2 = 0; i2 < propName; i2++)
+            JSCompiler_inline_result[i2] = arguments[i2 + 2];
           props.children = JSCompiler_inline_result;
         }
         props = ReactElement(
@@ -781,35 +781,35 @@ var require_react_development = __commonJS({
         return defaultValue;
       };
       exports.createElement = function(type, config, children) {
-        for (var i = 2; i < arguments.length; i++)
-          validateChildKeys(arguments[i]);
-        i = {};
+        for (var i2 = 2; i2 < arguments.length; i2++)
+          validateChildKeys(arguments[i2]);
+        i2 = {};
         var key = null;
         if (null != config)
           for (propName in didWarnAboutOldJSXRuntime || !("__self" in config) || "key" in config || (didWarnAboutOldJSXRuntime = true, console.warn(
             "Your app (or one of its dependencies) is using an outdated JSX transform. Update to the modern JSX transform for faster performance: https://react.dev/link/new-jsx-transform"
           )), hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key), config)
-            hasOwnProperty.call(config, propName) && "key" !== propName && "__self" !== propName && "__source" !== propName && (i[propName] = config[propName]);
+            hasOwnProperty.call(config, propName) && "key" !== propName && "__self" !== propName && "__source" !== propName && (i2[propName] = config[propName]);
         var childrenLength = arguments.length - 2;
-        if (1 === childrenLength) i.children = children;
+        if (1 === childrenLength) i2.children = children;
         else if (1 < childrenLength) {
           for (var childArray = Array(childrenLength), _i = 0; _i < childrenLength; _i++)
             childArray[_i] = arguments[_i + 2];
           Object.freeze && Object.freeze(childArray);
-          i.children = childArray;
+          i2.children = childArray;
         }
         if (type && type.defaultProps)
           for (propName in childrenLength = type.defaultProps, childrenLength)
-            void 0 === i[propName] && (i[propName] = childrenLength[propName]);
+            void 0 === i2[propName] && (i2[propName] = childrenLength[propName]);
         key && defineKeyPropWarningGetter(
-          i,
+          i2,
           "function" === typeof type ? type.displayName || type.name || "Unknown" : type
         );
         var propName = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
         return ReactElement(
           type,
           key,
-          i,
+          i2,
           getOwner(),
           propName ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
           propName ? createTask(getTaskName(type)) : unknownOwnerDebugTask
@@ -971,8 +971,8 @@ var require_react_development = __commonJS({
       exports.useOptimistic = function(passthrough, reducer) {
         return resolveDispatcher().useOptimistic(passthrough, reducer);
       };
-      exports.useReducer = function(reducer, initialArg, init2) {
-        return resolveDispatcher().useReducer(reducer, initialArg, init2);
+      exports.useReducer = function(reducer, initialArg, init) {
+        return resolveDispatcher().useReducer(reducer, initialArg, init);
       };
       exports.useRef = function(initialValue) {
         return resolveDispatcher().useRef(initialValue);
@@ -1098,9 +1098,9 @@ var require_scheduler_development = __commonJS({
         }
         return first;
       }
-      function compare(a, b) {
-        var diff = a.sortIndex - b.sortIndex;
-        return 0 !== diff ? diff : a.id - b.id;
+      function compare(a2, b2) {
+        var diff = a2.sortIndex - b2.sortIndex;
+        return 0 !== diff ? diff : a2.id - b2.id;
       }
       function advanceTimers(currentTime) {
         for (var timer = peek(timerQueue); null !== timer; ) {
@@ -1294,7 +1294,7 @@ var require_react_dom_development = __commonJS({
         try {
           testStringCoercion(key);
           var JSCompiler_inline_result = false;
-        } catch (e) {
+        } catch (e2) {
           JSCompiler_inline_result = true;
         }
         JSCompiler_inline_result && (console.error(
@@ -1508,8 +1508,8 @@ var require_react_dom_development = __commonJS({
       exports.requestFormReset = function(form) {
         Internals.d.r(form);
       };
-      exports.unstable_batchedUpdates = function(fn, a) {
-        return fn(a);
+      exports.unstable_batchedUpdates = function(fn, a2) {
+        return fn(a2);
       };
       exports.useFormState = function(action, initialState, permalink) {
         return resolveDispatcher().useFormState(action, initialState, permalink);
@@ -1556,8 +1556,8 @@ var require_react_dom_client_development = __commonJS({
         if (oldPath.length !== newPath.length)
           console.warn("copyWithRename() expects paths of the same length");
         else {
-          for (var i = 0; i < newPath.length - 1; i++)
-            if (oldPath[i] !== newPath[i]) {
+          for (var i2 = 0; i2 < newPath.length - 1; i2++)
+            if (oldPath[i2] !== newPath[i2]) {
               console.warn(
                 "copyWithRename() expects paths to be the same except for the deepest key"
               );
@@ -1674,55 +1674,55 @@ var require_react_dom_client_development = __commonJS({
             throw Error("Unable to find node on an unmounted component.");
           return alternate !== fiber ? null : fiber;
         }
-        for (var a = fiber, b = alternate; ; ) {
-          var parentA = a.return;
+        for (var a2 = fiber, b2 = alternate; ; ) {
+          var parentA = a2.return;
           if (null === parentA) break;
           var parentB = parentA.alternate;
           if (null === parentB) {
-            b = parentA.return;
-            if (null !== b) {
-              a = b;
+            b2 = parentA.return;
+            if (null !== b2) {
+              a2 = b2;
               continue;
             }
             break;
           }
           if (parentA.child === parentB.child) {
             for (parentB = parentA.child; parentB; ) {
-              if (parentB === a) return assertIsMounted(parentA), fiber;
-              if (parentB === b) return assertIsMounted(parentA), alternate;
+              if (parentB === a2) return assertIsMounted(parentA), fiber;
+              if (parentB === b2) return assertIsMounted(parentA), alternate;
               parentB = parentB.sibling;
             }
             throw Error("Unable to find node on an unmounted component.");
           }
-          if (a.return !== b.return) a = parentA, b = parentB;
+          if (a2.return !== b2.return) a2 = parentA, b2 = parentB;
           else {
             for (var didFindChild = false, _child = parentA.child; _child; ) {
-              if (_child === a) {
+              if (_child === a2) {
                 didFindChild = true;
-                a = parentA;
-                b = parentB;
+                a2 = parentA;
+                b2 = parentB;
                 break;
               }
-              if (_child === b) {
+              if (_child === b2) {
                 didFindChild = true;
-                b = parentA;
-                a = parentB;
+                b2 = parentA;
+                a2 = parentB;
                 break;
               }
               _child = _child.sibling;
             }
             if (!didFindChild) {
               for (_child = parentB.child; _child; ) {
-                if (_child === a) {
+                if (_child === a2) {
                   didFindChild = true;
-                  a = parentB;
-                  b = parentA;
+                  a2 = parentB;
+                  b2 = parentA;
                   break;
                 }
-                if (_child === b) {
+                if (_child === b2) {
                   didFindChild = true;
-                  b = parentB;
-                  a = parentA;
+                  b2 = parentB;
+                  a2 = parentA;
                   break;
                 }
                 _child = _child.sibling;
@@ -1733,14 +1733,14 @@ var require_react_dom_client_development = __commonJS({
                 );
             }
           }
-          if (a.alternate !== b)
+          if (a2.alternate !== b2)
             throw Error(
               "Return fibers should always be each others' alternates. This error is likely caused by a bug in React. Please file an issue."
             );
         }
-        if (3 !== a.tag)
+        if (3 !== a2.tag)
           throw Error("Unable to find node on an unmounted component.");
-        return a.stateNode.current === a ? fiber : alternate;
+        return a2.stateNode.current === a2 ? fiber : alternate;
       }
       function findCurrentHostFiberImpl(node) {
         var tag = node.tag;
@@ -1861,8 +1861,8 @@ var require_react_dom_client_development = __commonJS({
           case 29:
             type = fiber._debugInfo;
             if (null != type) {
-              for (var i = type.length - 1; 0 <= i; i--)
-                if ("string" === typeof type[i].name) return type[i].name;
+              for (var i2 = type.length - 1; 0 <= i2; i2--)
+                if ("string" === typeof type[i2].name) return type[i2].name;
             }
             if (null !== fiber.return)
               return getComponentNameFromFiber(fiber.return);
@@ -1881,11 +1881,11 @@ var require_react_dom_client_development = __commonJS({
         fiberStack[index$jscomp$0] = fiber;
         cursor.current = value;
       }
-      function requiredContext(c) {
-        null === c && console.error(
+      function requiredContext(c2) {
+        null === c2 && console.error(
           "Expected host context to exist. This error is likely caused by a bug in React. Please file an issue."
         );
-        return c;
+        return c2;
       }
       function pushHostContainer(fiber, nextRootInstance) {
         push(rootInstanceStackCursor, nextRootInstance, fiber);
@@ -2158,8 +2158,8 @@ var require_react_dom_client_development = __commonJS({
             info += describeFiber(workInProgress2, previous);
             var debugInfo = workInProgress2._debugInfo;
             if (debugInfo)
-              for (var i = debugInfo.length - 1; 0 <= i; i--) {
-                var entry = debugInfo[i];
+              for (var i2 = debugInfo.length - 1; 0 <= i2; i2--) {
+                var entry = debugInfo[i2];
                 if ("string" === typeof entry.name) {
                   var JSCompiler_temp_const = info;
                   a: {
@@ -2272,7 +2272,7 @@ var require_react_dom_client_development = __commonJS({
       function willCoercionThrow(value) {
         try {
           return testStringCoercion(value), false;
-        } catch (e) {
+        } catch (e2) {
           return true;
         }
       }
@@ -2452,7 +2452,7 @@ var require_react_dom_client_development = __commonJS({
         return lane;
       }
       function createLaneMap(initial) {
-        for (var laneMap = [], i = 0; 31 > i; i++) laneMap.push(initial);
+        for (var laneMap = [], i2 = 0; 31 > i2; i2++) laneMap.push(initial);
         return laneMap;
       }
       function markRootUpdated$1(root3, updateLane) {
@@ -2818,7 +2818,7 @@ var require_react_dom_client_development = __commonJS({
         if ("undefined" === typeof doc) return null;
         try {
           return doc.activeElement || doc.body;
-        } catch (e) {
+        } catch (e2) {
           return doc.body;
         }
       }
@@ -2900,20 +2900,20 @@ var require_react_dom_client_development = __commonJS({
         node = node.options;
         if (multiple) {
           multiple = {};
-          for (var i = 0; i < propValue.length; i++)
-            multiple["$" + propValue[i]] = true;
+          for (var i2 = 0; i2 < propValue.length; i2++)
+            multiple["$" + propValue[i2]] = true;
           for (propValue = 0; propValue < node.length; propValue++)
-            i = multiple.hasOwnProperty("$" + node[propValue].value), node[propValue].selected !== i && (node[propValue].selected = i), i && setDefaultSelected && (node[propValue].defaultSelected = true);
+            i2 = multiple.hasOwnProperty("$" + node[propValue].value), node[propValue].selected !== i2 && (node[propValue].selected = i2), i2 && setDefaultSelected && (node[propValue].defaultSelected = true);
         } else {
           propValue = "" + getToStringValue(propValue);
           multiple = null;
-          for (i = 0; i < node.length; i++) {
-            if (node[i].value === propValue) {
-              node[i].selected = true;
-              setDefaultSelected && (node[i].defaultSelected = true);
+          for (i2 = 0; i2 < node.length; i2++) {
+            if (node[i2].value === propValue) {
+              node[i2].selected = true;
+              setDefaultSelected && (node[i2].defaultSelected = true);
               return;
             }
-            null !== multiple || node[i].disabled || (multiple = node[i]);
+            null !== multiple || node[i2].disabled || (multiple = node[i2]);
           }
           null !== multiple && (multiple.selected = true);
         }
@@ -3175,21 +3175,21 @@ var require_react_dom_client_development = __commonJS({
         skipToNode = "";
         var debugInfo = node.fiber._debugInfo;
         if (debugInfo)
-          for (var i = 0; i < debugInfo.length; i++) {
-            var serverComponentName = debugInfo[i].name;
+          for (var i2 = 0; i2 < debugInfo.length; i2++) {
+            var serverComponentName = debugInfo[i2].name;
             "string" === typeof serverComponentName && (skipToNode += indentation(indent) + "<" + serverComponentName + ">\n", indent++);
           }
         debugInfo = "";
-        i = node.fiber.pendingProps;
+        i2 = node.fiber.pendingProps;
         if (6 === node.fiber.tag)
-          debugInfo = describeTextDiff(i, node.serverProps, indent), indent++;
+          debugInfo = describeTextDiff(i2, node.serverProps, indent), indent++;
         else if (serverComponentName = describeFiberType(node.fiber), null !== serverComponentName)
           if (void 0 === node.serverProps) {
             debugInfo = indent;
             var maxLength = 120 - 2 * debugInfo - serverComponentName.length - 2, content = "";
-            for (propName in i)
-              if (i.hasOwnProperty(propName) && "children" !== propName) {
-                var propValue = describePropValue(i[propName], 15);
+            for (propName in i2)
+              if (i2.hasOwnProperty(propName) && "children" !== propName) {
+                var propValue = describePropValue(i2[propName], 15);
                 maxLength -= propName.length + propValue.length + 2;
                 if (0 > maxLength) {
                   content += " ...";
@@ -3202,25 +3202,25 @@ var require_react_dom_client_development = __commonJS({
           } else
             null === node.serverProps ? (debugInfo = describeExpandedElement(
               serverComponentName,
-              i,
+              i2,
               added(indent)
             ), indent++) : "string" === typeof node.serverProps ? console.error(
               "Should not have matched a non HostText fiber to a Text node. This is a bug in React."
             ) : (debugInfo = describeElementDiff(
               serverComponentName,
-              i,
+              i2,
               node.serverProps,
               indent
             ), indent++);
         var propName = "";
-        i = node.fiber.child;
-        for (serverComponentName = 0; i && serverComponentName < node.children.length; )
-          maxLength = node.children[serverComponentName], maxLength.fiber === i ? (propName += describeNode(maxLength, indent), serverComponentName++) : propName += describeSiblingFiber(i, indent), i = i.sibling;
-        i && 0 < node.children.length && (propName += indentation(indent) + "...\n");
-        i = node.serverTail;
+        i2 = node.fiber.child;
+        for (serverComponentName = 0; i2 && serverComponentName < node.children.length; )
+          maxLength = node.children[serverComponentName], maxLength.fiber === i2 ? (propName += describeNode(maxLength, indent), serverComponentName++) : propName += describeSiblingFiber(i2, indent), i2 = i2.sibling;
+        i2 && 0 < node.children.length && (propName += indentation(indent) + "...\n");
+        i2 = node.serverTail;
         null === node.serverProps && indent--;
-        for (node = 0; node < i.length; node++)
-          serverComponentName = i[node], propName = "string" === typeof serverComponentName ? propName + (removed(indent) + describeTextNode(serverComponentName, 120 - 2 * indent) + "\n") : propName + describeExpandedElement(
+        for (node = 0; node < i2.length; node++)
+          serverComponentName = i2[node], propName = "string" === typeof serverComponentName ? propName + (removed(indent) + describeTextNode(serverComponentName, 120 - 2 * indent) + "\n") : propName + describeExpandedElement(
             serverComponentName.type,
             serverComponentName.props,
             removed(indent)
@@ -3499,8 +3499,8 @@ var require_react_dom_client_development = __commonJS({
             if (prevStyles) {
               for (var key in prevStyles)
                 if (prevStyles.hasOwnProperty(key) && !styles.hasOwnProperty(key))
-                  for (var longhands = shorthandToLonghand[key] || [key], i = 0; i < longhands.length; i++)
-                    expandedUpdates[longhands[i]] = key;
+                  for (var longhands = shorthandToLonghand[key] || [key], i2 = 0; i2 < longhands.length; i2++)
+                    expandedUpdates[longhands[i2]] = key;
             }
             for (var _key in styles)
               if (styles.hasOwnProperty(_key) && (!prevStyles || prevStyles[_key] !== styles[_key]))
@@ -3512,12 +3512,12 @@ var require_react_dom_client_development = __commonJS({
                 _key[key[longhands]] = key$jscomp$0;
             key$jscomp$0 = {};
             for (var _key2 in expandedUpdates)
-              if (key = expandedUpdates[_key2], (longhands = _key[_key2]) && key !== longhands && (i = key + "," + longhands, !key$jscomp$0[i])) {
-                key$jscomp$0[i] = true;
-                i = console;
+              if (key = expandedUpdates[_key2], (longhands = _key[_key2]) && key !== longhands && (i2 = key + "," + longhands, !key$jscomp$0[i2])) {
+                key$jscomp$0[i2] = true;
+                i2 = console;
                 var value = styles[key];
-                i.error.call(
-                  i,
+                i2.error.call(
+                  i2,
                   "%s a style property during rerender (%s) when a conflicting property is set (%s) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values.",
                   null == value || "boolean" === typeof value || "" === value ? "Removing" : "Updating",
                   key,
@@ -3876,16 +3876,16 @@ var require_react_dom_client_development = __commonJS({
           }
         }
       }
-      function batchedUpdates$1(fn, a, b) {
-        if (isInsideEventHandler) return fn(a, b);
+      function batchedUpdates$1(fn, a2, b2) {
+        if (isInsideEventHandler) return fn(a2, b2);
         isInsideEventHandler = true;
         try {
-          var JSCompiler_inline_result = fn(a);
+          var JSCompiler_inline_result = fn(a2);
           return JSCompiler_inline_result;
         } finally {
           if (isInsideEventHandler = false, null !== restoreTarget || null !== restoreQueue) {
-            if (flushSyncWork$1(), restoreTarget && (a = restoreTarget, fn = restoreQueue, restoreQueue = restoreTarget = null, restoreStateOfTarget(a), fn))
-              for (a = 0; a < fn.length; a++) restoreStateOfTarget(fn[a]);
+            if (flushSyncWork$1(), restoreTarget && (a2 = restoreTarget, fn = restoreQueue, restoreQueue = restoreTarget = null, restoreStateOfTarget(a2), fn))
+              for (a2 = 0; a2 < fn.length; a2++) restoreStateOfTarget(fn[a2]);
           }
         }
       }
@@ -4190,8 +4190,8 @@ var require_react_dom_client_development = __commonJS({
         registerTwoPhaseEvent(reactName, [domEventName]);
       }
       function getArrayKind(array) {
-        for (var kind = EMPTY_ARRAY, i = 0; i < array.length; i++) {
-          var value = array[i];
+        for (var kind = EMPTY_ARRAY, i2 = 0; i2 < array.length; i2++) {
+          var value = array[i2];
           if ("object" === typeof value && null !== value)
             if (isArrayImpl(value) && 2 === value.length && "string" === typeof value[0]) {
               if (kind !== EMPTY_ARRAY && kind !== ENTRIES_ARRAY)
@@ -4469,8 +4469,8 @@ var require_react_dom_client_development = __commonJS({
         if (supportsUserTiming) {
           var name = getComponentNameFromFiber(fiber);
           if (null !== name) {
-            for (var debugTask = null, properties = [], i = 0; i < errors.length; i++) {
-              var capturedValue = errors[i];
+            for (var debugTask = null, properties = [], i2 = 0; i2 < errors.length; i2++) {
+              var capturedValue = errors[i2];
               null == debugTask && null !== capturedValue.source && (debugTask = capturedValue.source._debugTask);
               capturedValue = capturedValue.value;
               properties.push([
@@ -4505,8 +4505,8 @@ var require_react_dom_client_development = __commonJS({
             var name = getComponentNameFromFiber(fiber);
             if (null !== name) {
               selfTime = [];
-              for (var i = 0; i < errors.length; i++) {
-                var error = errors[i].value;
+              for (var i2 = 0; i2 < errors.length; i2++) {
+                var error = errors[i2].value;
                 selfTime.push([
                   "Error",
                   "object" === typeof error && null !== error && "string" === typeof error.message ? String(error.message) : String(error)
@@ -4622,8 +4622,8 @@ var require_react_dom_client_development = __commonJS({
       function logRecoveredRenderPhase(startTime, endTime, lanes, recoverableErrors, hydrationFailed, debugTask) {
         if (supportsUserTiming && !(endTime <= startTime)) {
           lanes = [];
-          for (var i = 0; i < recoverableErrors.length; i++) {
-            var error = recoverableErrors[i].value;
+          for (var i2 = 0; i2 < recoverableErrors.length; i2++) {
+            var error = recoverableErrors[i2].value;
             lanes.push([
               "Recoverable Error",
               "object" === typeof error && null !== error && "string" === typeof error.message ? String(error.message) : String(error)
@@ -4689,8 +4689,8 @@ var require_react_dom_client_development = __commonJS({
       }
       function logCommitErrored(startTime, endTime, errors, passive, debugTask) {
         if (supportsUserTiming && !(endTime <= startTime)) {
-          for (var properties = [], i = 0; i < errors.length; i++) {
-            var error = errors[i].value;
+          for (var properties = [], i2 = 0; i2 < errors.length; i2++) {
+            var error = errors[i2].value;
             properties.push([
               "Error",
               "object" === typeof error && null !== error && "string" === typeof error.message ? String(error.message) : String(error)
@@ -4735,15 +4735,15 @@ var require_react_dom_client_development = __commonJS({
         ));
       }
       function finishQueueingConcurrentUpdates() {
-        for (var endIndex = concurrentQueuesIndex, i = concurrentlyUpdatedLanes = concurrentQueuesIndex = 0; i < endIndex; ) {
-          var fiber = concurrentQueues[i];
-          concurrentQueues[i++] = null;
-          var queue = concurrentQueues[i];
-          concurrentQueues[i++] = null;
-          var update = concurrentQueues[i];
-          concurrentQueues[i++] = null;
-          var lane = concurrentQueues[i];
-          concurrentQueues[i++] = null;
+        for (var endIndex = concurrentQueuesIndex, i2 = concurrentlyUpdatedLanes = concurrentQueuesIndex = 0; i2 < endIndex; ) {
+          var fiber = concurrentQueues[i2];
+          concurrentQueues[i2++] = null;
+          var queue = concurrentQueues[i2];
+          concurrentQueues[i2++] = null;
+          var update = concurrentQueues[i2];
+          concurrentQueues[i2++] = null;
+          var lane = concurrentQueues[i2];
+          concurrentQueues[i2++] = null;
           if (null !== queue && null !== update) {
             var pending = queue.pending;
             null === pending ? update.next = update : (update.next = pending.next, pending.next = update);
@@ -5377,8 +5377,8 @@ var require_react_dom_client_development = __commonJS({
             a: for (; null !== list; ) {
               var dependency = list;
               list = fiber;
-              for (var i = 0; i < contexts.length; i++)
-                if (dependency.context === contexts[i]) {
+              for (var i2 = 0; i2 < contexts.length; i2++)
+                if (dependency.context === contexts[i2]) {
                   list.lanes |= renderLanes2;
                   dependency = list.alternate;
                   null !== dependency && (dependency.lanes |= renderLanes2);
@@ -5666,7 +5666,7 @@ var require_react_dom_client_development = __commonJS({
           currentEntangledListeners = null;
           currentEntangledLane = 0;
           currentEntangledActionThenable = null;
-          for (var i = 0; i < listeners.length; i++) (0, listeners[i])();
+          for (var i2 = 0; i2 < listeners.length; i2++) (0, listeners[i2])();
         }
       }
       function chainThenableValue(thenable, result) {
@@ -5682,7 +5682,7 @@ var require_react_dom_client_development = __commonJS({
           function() {
             thenableWithOverride.status = "fulfilled";
             thenableWithOverride.value = result;
-            for (var i = 0; i < listeners.length; i++) (0, listeners[i])(result);
+            for (var i2 = 0; i2 < listeners.length; i2++) (0, listeners[i2])(result);
           },
           function(error) {
             thenableWithOverride.status = "rejected";
@@ -5809,17 +5809,17 @@ var require_react_dom_client_development = __commonJS({
       function getCurrentDebugTask() {
         var debugInfo = currentDebugInfo;
         if (null != debugInfo) {
-          for (var i = debugInfo.length - 1; 0 <= i; i--)
-            if (null != debugInfo[i].name) {
-              var debugTask = debugInfo[i].debugTask;
+          for (var i2 = debugInfo.length - 1; 0 <= i2; i2--)
+            if (null != debugInfo[i2].name) {
+              var debugTask = debugInfo[i2].debugTask;
               if (null != debugTask) return debugTask;
             }
         }
         return null;
       }
       function validateFragmentProps(element, fiber, returnFiber) {
-        for (var keys = Object.keys(element.props), i = 0; i < keys.length; i++) {
-          var key = keys[i];
+        for (var keys = Object.keys(element.props), i2 = 0; i2 < keys.length; i2++) {
+          var key = keys[i2];
           if ("children" !== key && "key" !== key) {
             null === fiber && (fiber = createFiberFromElement(element, returnFiber.mode, 0), fiber._debugInfo = currentDebugInfo, fiber.return = returnFiber);
             runWithFiberInDEV(
@@ -6508,10 +6508,10 @@ var require_react_dom_client_development = __commonJS({
             fiber._debugOwner = returnFiber._debugOwner;
             fiber._debugTask = returnFiber._debugTask;
             if (null != debugInfo) {
-              for (var i = debugInfo.length - 1; 0 <= i; i--)
-                if ("string" === typeof debugInfo[i].stack) {
-                  fiber._debugOwner = debugInfo[i];
-                  fiber._debugTask = debugInfo[i].debugTask;
+              for (var i2 = debugInfo.length - 1; 0 <= i2; i2--)
+                if ("string" === typeof debugInfo[i2].stack) {
+                  fiber._debugOwner = debugInfo[i2];
+                  fiber._debugTask = debugInfo[i2].debugTask;
                   break;
                 }
             }
@@ -6841,9 +6841,9 @@ var require_react_dom_client_development = __commonJS({
         if (null !== hookTypesDev && (hookTypesUpdateIndexDev++, hookTypesDev[hookTypesUpdateIndexDev] !== hookName)) {
           var componentName2 = getComponentNameFromFiber(currentlyRenderingFiber);
           if (!didWarnAboutMismatchedHooksForComponent.has(componentName2) && (didWarnAboutMismatchedHooksForComponent.add(componentName2), null !== hookTypesDev)) {
-            for (var table = "", i = 0; i <= hookTypesUpdateIndexDev; i++) {
-              var oldHookName = hookTypesDev[i], newHookName = i === hookTypesUpdateIndexDev ? hookName : oldHookName;
-              for (oldHookName = i + 1 + ". " + oldHookName; 30 > oldHookName.length; )
+            for (var table = "", i2 = 0; i2 <= hookTypesUpdateIndexDev; i2++) {
+              var oldHookName = hookTypesDev[i2], newHookName = i2 === hookTypesUpdateIndexDev ? hookName : oldHookName;
+              for (oldHookName = i2 + 1 + ". " + oldHookName; 30 > oldHookName.length; )
                 oldHookName += " ";
               oldHookName += newHookName + "\n";
               table += oldHookName;
@@ -6888,8 +6888,8 @@ var require_react_dom_client_development = __commonJS({
           "[" + prevDeps.join(", ") + "]",
           "[" + nextDeps.join(", ") + "]"
         );
-        for (var i = 0; i < prevDeps.length && i < nextDeps.length; i++)
-          if (!objectIs(nextDeps[i], prevDeps[i])) return false;
+        for (var i2 = 0; i2 < prevDeps.length && i2 < nextDeps.length; i2++)
+          if (!objectIs(nextDeps[i2], prevDeps[i2])) return false;
         return true;
       }
       function renderWithHooks(current2, workInProgress2, Component, props, secondArg, nextRenderLanes) {
@@ -7110,14 +7110,14 @@ var require_react_dom_client_development = __commonJS({
       function basicStateReducer(state, action) {
         return "function" === typeof action ? action(state) : action;
       }
-      function mountReducer(reducer, initialArg, init2) {
+      function mountReducer(reducer, initialArg, init) {
         var hook = mountWorkInProgressHook();
-        if (void 0 !== init2) {
-          var initialState = init2(initialArg);
+        if (void 0 !== init) {
+          var initialState = init(initialArg);
           if (shouldDoubleInvokeUserFnsInHooksDEV) {
             setIsStrictModeForDevtools(true);
             try {
-              init2(initialArg);
+              init(initialArg);
             } finally {
               setIsStrictModeForDevtools(false);
             }
@@ -7513,7 +7513,7 @@ var require_react_dom_client_development = __commonJS({
       }
       function notifyActionListeners(actionNode) {
         actionNode = actionNode.listeners;
-        for (var i = 0; i < actionNode.length; i++) (0, actionNode[i])();
+        for (var i2 = 0; i2 < actionNode.length; i2++) (0, actionNode[i2])();
       }
       function actionStateReducer(oldState, newState) {
         return newState;
@@ -10676,11 +10676,11 @@ var require_react_dom_client_development = __commonJS({
                 addendum = null === lastEffect ? " You returned null. If your effect does not require clean up, return undefined (or nothing)." : "function" === typeof lastEffect.then ? "\n\nIt looks like you wrote " + hookName + "(async () => ...) or returned a Promise. Instead, write the async function inside your effect and call it immediately:\n\n" + hookName + "(() => {\n  async function fetchData() {\n    // You can await here\n    const response = await MyAPI.getData(someId);\n    // ...\n  }\n  fetchData();\n}, [someId]); // Or [] if effect doesn't need props or state\n\nLearn more about data fetching with Hooks: https://react.dev/link/hooks-data-fetching" : " You returned: " + lastEffect;
                 runWithFiberInDEV(
                   finishedWork,
-                  function(n, a) {
+                  function(n2, a2) {
                     console.error(
                       "%s must not return anything besides a function, which is used for clean-up.%s",
-                      n,
-                      a
+                      n2,
+                      a2
                     );
                   },
                   hookName,
@@ -11606,8 +11606,8 @@ var require_react_dom_client_development = __commonJS({
       function recursivelyTraverseMutationEffects(root$jscomp$0, parentFiber) {
         var deletions = parentFiber.deletions;
         if (null !== deletions)
-          for (var i = 0; i < deletions.length; i++) {
-            var root3 = root$jscomp$0, returnFiber = parentFiber, deletedFiber = deletions[i], prevEffectStart = pushComponentEffectStart(), parent = returnFiber;
+          for (var i2 = 0; i2 < deletions.length; i2++) {
+            var root3 = root$jscomp$0, returnFiber = parentFiber, deletedFiber = deletions[i2], prevEffectStart = pushComponentEffectStart(), parent = returnFiber;
             a: for (; null !== parent; ) {
               switch (parent.tag) {
                 case 27:
@@ -11719,9 +11719,9 @@ var require_react_dom_client_development = __commonJS({
                             existingHiddenCallbacks
                           ).get(flags + (current2.href || ""));
                           if (maybeNodes) {
-                            for (var i = 0; i < maybeNodes.length; i++)
-                              if (currentResource = maybeNodes[i], currentResource.getAttribute("href") === (null == current2.href || "" === current2.href ? null : current2.href) && currentResource.getAttribute("rel") === (null == current2.rel ? null : current2.rel) && currentResource.getAttribute("title") === (null == current2.title ? null : current2.title) && currentResource.getAttribute("crossorigin") === (null == current2.crossOrigin ? null : current2.crossOrigin)) {
-                                maybeNodes.splice(i, 1);
+                            for (var i2 = 0; i2 < maybeNodes.length; i2++)
+                              if (currentResource = maybeNodes[i2], currentResource.getAttribute("href") === (null == current2.href || "" === current2.href ? null : current2.href) && currentResource.getAttribute("rel") === (null == current2.rel ? null : current2.rel) && currentResource.getAttribute("title") === (null == current2.title ? null : current2.title) && currentResource.getAttribute("crossorigin") === (null == current2.crossOrigin ? null : current2.crossOrigin)) {
+                                maybeNodes.splice(i2, 1);
                                 break b;
                               }
                           }
@@ -11737,12 +11737,12 @@ var require_react_dom_client_development = __commonJS({
                             "content",
                             existingHiddenCallbacks
                           ).get(flags + (current2.content || ""))) {
-                            for (i = 0; i < maybeNodes.length; i++)
-                              if (currentResource = maybeNodes[i], checkAttributeStringCoercion(
+                            for (i2 = 0; i2 < maybeNodes.length; i2++)
+                              if (currentResource = maybeNodes[i2], checkAttributeStringCoercion(
                                 current2.content,
                                 "content"
                               ), currentResource.getAttribute("content") === (null == current2.content ? null : "" + current2.content) && currentResource.getAttribute("name") === (null == current2.name ? null : current2.name) && currentResource.getAttribute("property") === (null == current2.property ? null : current2.property) && currentResource.getAttribute("http-equiv") === (null == current2.httpEquiv ? null : current2.httpEquiv) && currentResource.getAttribute("charset") === (null == current2.charSet ? null : current2.charSet)) {
-                                maybeNodes.splice(i, 1);
+                                maybeNodes.splice(i2, 1);
                                 break b;
                               }
                           }
@@ -11959,10 +11959,10 @@ var require_react_dom_client_development = __commonJS({
                   if (null === current2) {
                     wasHidden = root3;
                     try {
-                      i = wasHidden.stateNode, existingHiddenCallbacks ? runWithFiberInDEV(
+                      i2 = wasHidden.stateNode, existingHiddenCallbacks ? runWithFiberInDEV(
                         wasHidden,
                         hideDehydratedBoundary,
-                        i
+                        i2
                       ) : runWithFiberInDEV(
                         wasHidden,
                         unhideDehydratedBoundary,
@@ -12716,8 +12716,8 @@ var require_react_dom_client_development = __commonJS({
         var deletions = parentFiber.deletions;
         if (0 !== (parentFiber.flags & 16)) {
           if (null !== deletions)
-            for (var i = 0; i < deletions.length; i++) {
-              var childToDelete = deletions[i], prevEffectStart = pushComponentEffectStart();
+            for (var i2 = 0; i2 < deletions.length; i2++) {
+              var childToDelete = deletions[i2], prevEffectStart = pushComponentEffectStart();
               nextEffect = childToDelete;
               commitPassiveUnmountEffectsInsideOfDeletedTree_begin(
                 childToDelete,
@@ -12788,8 +12788,8 @@ var require_react_dom_client_development = __commonJS({
         var deletions = parentFiber.deletions;
         if (0 !== (parentFiber.flags & 16)) {
           if (null !== deletions)
-            for (var i = 0; i < deletions.length; i++) {
-              var childToDelete = deletions[i], prevEffectStart = pushComponentEffectStart();
+            for (var i2 = 0; i2 < deletions.length; i2++) {
+              var childToDelete = deletions[i2], prevEffectStart = pushComponentEffectStart();
               nextEffect = childToDelete;
               commitPassiveUnmountEffectsInsideOfDeletedTree_begin(
                 childToDelete,
@@ -13291,8 +13291,8 @@ var require_react_dom_client_development = __commonJS({
         for (var node = finishedWork; ; ) {
           var tag = node.tag;
           if ((0 === tag || 11 === tag || 15 === tag) && node.flags & 16384 && (tag = node.updateQueue, null !== tag && (tag = tag.stores, null !== tag)))
-            for (var i = 0; i < tag.length; i++) {
-              var check = tag[i], getSnapshot = check.getSnapshot;
+            for (var i2 = 0; i2 < tag.length; i2++) {
+              var check = tag[i2], getSnapshot = check.getSnapshot;
               check = check.value;
               try {
                 if (!objectIs(getSnapshot(), check)) return false;
@@ -14884,8 +14884,8 @@ var require_react_dom_client_development = __commonJS({
       }
       function processDispatchQueue(dispatchQueue, eventSystemFlags) {
         eventSystemFlags = 0 !== (eventSystemFlags & 4);
-        for (var i = 0; i < dispatchQueue.length; i++) {
-          var _dispatchQueue$i = dispatchQueue[i];
+        for (var i2 = 0; i2 < dispatchQueue.length; i2++) {
+          var _dispatchQueue$i = dispatchQueue[i2];
           a: {
             var previousInstance = void 0, event = _dispatchQueue$i.event;
             _dispatchQueue$i = _dispatchQueue$i.listeners;
@@ -16334,8 +16334,8 @@ var require_react_dom_client_development = __commonJS({
       function getStylesObjectFromElement(domElement) {
         var serverValueInObjectForm = {};
         domElement = domElement.style;
-        for (var i = 0; i < domElement.length; i++) {
-          var styleName = domElement[i];
+        for (var i2 = 0; i2 < domElement.length; i2++) {
+          var styleName = domElement[i2];
           serverValueInObjectForm[styleName] = domElement.getPropertyValue(styleName);
         }
         return serverValueInObjectForm;
@@ -16471,8 +16471,8 @@ var require_react_dom_client_development = __commonJS({
         warnForPropDifference(propKey, domElement, value, serverDifferences);
       }
       function diffHydratedProperties(domElement, tag, props, hostContext) {
-        for (var serverDifferences = {}, extraAttributes = /* @__PURE__ */ new Set(), attributes = domElement.attributes, i = 0; i < attributes.length; i++)
-          switch (attributes[i].name.toLowerCase()) {
+        for (var serverDifferences = {}, extraAttributes = /* @__PURE__ */ new Set(), attributes = domElement.attributes, i2 = 0; i2 < attributes.length; i2++)
+          switch (attributes[i2].name.toLowerCase()) {
             case "value":
               break;
             case "checked":
@@ -16480,7 +16480,7 @@ var require_react_dom_client_development = __commonJS({
             case "selected":
               break;
             default:
-              extraAttributes.add(attributes[i].name);
+              extraAttributes.add(attributes[i2].name);
           }
         if (isCustomElement(tag))
           for (var propKey in props) {
@@ -16783,11 +16783,11 @@ var require_react_dom_client_development = __commonJS({
                   case "capture":
                   case "download":
                     a: {
-                      i = domElement;
+                      i2 = domElement;
                       var attributeName = attributes = value, serverDifferences$jscomp$0 = serverDifferences;
                       extraAttributes.delete(attributeName);
-                      i = i.getAttribute(attributeName);
-                      if (null === i)
+                      i2 = i2.getAttribute(attributeName);
+                      if (null === i2)
                         switch (typeof propKey) {
                           case "undefined":
                           case "function":
@@ -16802,15 +16802,15 @@ var require_react_dom_client_development = __commonJS({
                           case "symbol":
                             break;
                           case "boolean":
-                            if (true === propKey && "" === i) break a;
+                            if (true === propKey && "" === i2) break a;
                             break;
                           default:
-                            if (checkAttributeStringCoercion(propKey, attributes), i === "" + propKey)
+                            if (checkAttributeStringCoercion(propKey, attributes), i2 === "" + propKey)
                               break a;
                         }
                       warnForPropDifference(
                         attributes,
-                        i,
+                        i2,
                         propKey,
                         serverDifferences$jscomp$0
                       );
@@ -16821,12 +16821,12 @@ var require_react_dom_client_development = __commonJS({
                   case "size":
                   case "span":
                     a: {
-                      i = domElement;
+                      i2 = domElement;
                       attributeName = attributes = value;
                       serverDifferences$jscomp$0 = serverDifferences;
                       extraAttributes.delete(attributeName);
-                      i = i.getAttribute(attributeName);
-                      if (null === i)
+                      i2 = i2.getAttribute(attributeName);
+                      if (null === i2)
                         switch (typeof propKey) {
                           case "undefined":
                           case "function":
@@ -16843,12 +16843,12 @@ var require_react_dom_client_development = __commonJS({
                           case "boolean":
                             break;
                           default:
-                            if (!(isNaN(propKey) || 1 > propKey) && (checkAttributeStringCoercion(propKey, attributes), i === "" + propKey))
+                            if (!(isNaN(propKey) || 1 > propKey) && (checkAttributeStringCoercion(propKey, attributes), i2 === "" + propKey))
                               break a;
                         }
                       warnForPropDifference(
                         attributes,
-                        i,
+                        i2,
                         propKey,
                         serverDifferences$jscomp$0
                       );
@@ -16990,21 +16990,21 @@ var require_react_dom_client_development = __commonJS({
                     continue;
                   default:
                     if (!(2 < value.length) || "o" !== value[0] && "O" !== value[0] || "n" !== value[1] && "N" !== value[1]) {
-                      i = getAttributeAlias(value);
+                      i2 = getAttributeAlias(value);
                       attributes = false;
-                      hostContext.context === HostContextNamespaceNone && "svg" !== tag && "math" !== tag ? extraAttributes.delete(i.toLowerCase()) : (attributeName = value.toLowerCase(), attributeName = possibleStandardNames.hasOwnProperty(
+                      hostContext.context === HostContextNamespaceNone && "svg" !== tag && "math" !== tag ? extraAttributes.delete(i2.toLowerCase()) : (attributeName = value.toLowerCase(), attributeName = possibleStandardNames.hasOwnProperty(
                         attributeName
-                      ) ? possibleStandardNames[attributeName] || null : null, null !== attributeName && attributeName !== value && (attributes = true, extraAttributes.delete(attributeName)), extraAttributes.delete(i));
-                      a: if (attributeName = domElement, serverDifferences$jscomp$0 = i, i = propKey, isAttributeNameSafe(serverDifferences$jscomp$0))
+                      ) ? possibleStandardNames[attributeName] || null : null, null !== attributeName && attributeName !== value && (attributes = true, extraAttributes.delete(attributeName)), extraAttributes.delete(i2));
+                      a: if (attributeName = domElement, serverDifferences$jscomp$0 = i2, i2 = propKey, isAttributeNameSafe(serverDifferences$jscomp$0))
                         if (attributeName.hasAttribute(serverDifferences$jscomp$0))
                           attributeName = attributeName.getAttribute(
                             serverDifferences$jscomp$0
                           ), checkAttributeStringCoercion(
-                            i,
+                            i2,
                             serverDifferences$jscomp$0
-                          ), i = attributeName === "" + i ? i : attributeName;
+                          ), i2 = attributeName === "" + i2 ? i2 : attributeName;
                         else {
-                          switch (typeof i) {
+                          switch (typeof i2) {
                             case "function":
                             case "symbol":
                               break a;
@@ -17012,12 +17012,12 @@ var require_react_dom_client_development = __commonJS({
                               if (attributeName = serverDifferences$jscomp$0.toLowerCase().slice(0, 5), "data-" !== attributeName && "aria-" !== attributeName)
                                 break a;
                           }
-                          i = void 0 === i ? void 0 : null;
+                          i2 = void 0 === i2 ? void 0 : null;
                         }
-                      else i = void 0;
+                      else i2 = void 0;
                       attributes || warnForPropDifference(
                         value,
-                        i,
+                        i2,
                         propKey,
                         serverDifferences
                       );
@@ -17055,18 +17055,18 @@ var require_react_dom_client_development = __commonJS({
       }
       function estimateBandwidth() {
         if ("function" === typeof performance.getEntriesByType) {
-          for (var count = 0, bits = 0, resourceEntries = performance.getEntriesByType("resource"), i = 0; i < resourceEntries.length; i++) {
-            var entry = resourceEntries[i], transferSize = entry.transferSize, initiatorType = entry.initiatorType, duration = entry.duration;
+          for (var count = 0, bits = 0, resourceEntries = performance.getEntriesByType("resource"), i2 = 0; i2 < resourceEntries.length; i2++) {
+            var entry = resourceEntries[i2], transferSize = entry.transferSize, initiatorType = entry.initiatorType, duration = entry.duration;
             if (transferSize && duration && isLikelyStaticResource(initiatorType)) {
               initiatorType = 0;
               duration = entry.responseEnd;
-              for (i += 1; i < resourceEntries.length; i++) {
-                var overlapEntry = resourceEntries[i], overlapStartTime = overlapEntry.startTime;
+              for (i2 += 1; i2 < resourceEntries.length; i2++) {
+                var overlapEntry = resourceEntries[i2], overlapStartTime = overlapEntry.startTime;
                 if (overlapStartTime > duration) break;
                 var overlapTransferSize = overlapEntry.transferSize, overlapInitiatorType = overlapEntry.initiatorType;
                 overlapTransferSize && isLikelyStaticResource(overlapInitiatorType) && (overlapEntry = overlapEntry.responseEnd, initiatorType += overlapTransferSize * (overlapEntry < duration ? 1 : (duration - overlapStartTime) / (overlapEntry - overlapStartTime)));
               }
-              --i;
+              --i2;
               bits += 8 * (transferSize + initiatorType) / (entry.duration / 1e3);
               count++;
               if (10 < count) break;
@@ -17365,8 +17365,8 @@ var require_react_dom_client_development = __commonJS({
       }
       function describeHydratableInstanceForDevWarnings(instance) {
         if (1 === instance.nodeType) {
-          for (var JSCompiler_temp_const = instance.nodeName.toLowerCase(), serverDifferences = {}, attributes = instance.attributes, i = 0; i < attributes.length; i++) {
-            var attr = attributes[i];
+          for (var JSCompiler_temp_const = instance.nodeName.toLowerCase(), serverDifferences = {}, attributes = instance.attributes, i2 = 0; i2 < attributes.length; i2++) {
+            var attr = attributes[i2];
             serverDifferences[getPropNameFromAttributeName(attr.name)] = "style" === attr.name.toLowerCase() ? getStylesObjectFromElement(instance) : attr.value;
           }
           return { type: JSCompiler_temp_const, props: serverDifferences };
@@ -17666,8 +17666,8 @@ var require_react_dom_client_development = __commonJS({
       function insertStylesheet(instance, precedence, root3) {
         for (var nodes = root3.querySelectorAll(
           'link[rel="stylesheet"][data-precedence],style[data-precedence]'
-        ), last = nodes.length ? nodes[nodes.length - 1] : null, prior = last, i = 0; i < nodes.length; i++) {
-          var node = nodes[i];
+        ), last = nodes.length ? nodes[nodes.length - 1] : null, prior = last, i2 = 0; i2 < nodes.length; i2++) {
+          var node = nodes[i2];
           if (node.dataset.precedence === precedence) prior = node;
           else if (prior !== last) break;
         }
@@ -17878,8 +17878,8 @@ var require_react_dom_client_development = __commonJS({
             precedencesByRoot.set(root3, precedences);
             for (var nodes = root3.querySelectorAll(
               "link[data-precedence],style[data-precedence]"
-            ), i = 0; i < nodes.length; i++) {
-              var node = nodes[i];
+            ), i2 = 0; i2 < nodes.length; i2++) {
+              var node = nodes[i2];
               if ("LINK" === node.nodeName || "not all" !== node.getAttribute("media"))
                 precedences.set(node.dataset.precedence, node), last = node;
             }
@@ -17887,14 +17887,14 @@ var require_react_dom_client_development = __commonJS({
           }
           nodes = resource.instance;
           node = nodes.getAttribute("data-precedence");
-          i = precedences.get(node) || last;
-          i === last && precedences.set(LAST_PRECEDENCE, nodes);
+          i2 = precedences.get(node) || last;
+          i2 === last && precedences.set(LAST_PRECEDENCE, nodes);
           precedences.set(node, nodes);
           this.count++;
           last = onUnsuspend.bind(this);
           nodes.addEventListener("load", last);
           nodes.addEventListener("error", last);
-          i ? i.parentNode.insertBefore(nodes, i.nextSibling) : (root3 = 9 === root3.nodeType ? root3.head : root3, root3.insertBefore(nodes, root3.firstChild));
+          i2 ? i2.parentNode.insertBefore(nodes, i2.nextSibling) : (root3 = 9 === root3.nodeType ? root3.head : root3, root3.insertBefore(nodes, root3.firstChild));
           resource.state.loading |= Inserted;
         }
       }
@@ -17987,8 +17987,8 @@ var require_react_dom_client_development = __commonJS({
       function markRetryLaneImpl(fiber, retryLane) {
         fiber = fiber.memoizedState;
         if (null !== fiber && null !== fiber.dehydrated) {
-          var a = fiber.retryLane;
-          fiber.retryLane = 0 !== a && a < retryLane ? a : retryLane;
+          var a2 = fiber.retryLane;
+          fiber.retryLane = 0 !== a2 && a2 < retryLane ? a2 : retryLane;
         }
       }
       function markRetryLaneIfNotHydrated(fiber, retryLane) {
@@ -18395,14 +18395,14 @@ var require_react_dom_client_development = __commonJS({
           Scheduler.unstable_NormalPriority,
           function() {
             lastScheduledReplayQueue === formReplayingQueue && (lastScheduledReplayQueue = null);
-            for (var i = 0; i < formReplayingQueue.length; i += 3) {
-              var form = formReplayingQueue[i], submitterOrAction = formReplayingQueue[i + 1], formData = formReplayingQueue[i + 2];
+            for (var i2 = 0; i2 < formReplayingQueue.length; i2 += 3) {
+              var form = formReplayingQueue[i2], submitterOrAction = formReplayingQueue[i2 + 1], formData = formReplayingQueue[i2 + 2];
               if ("function" !== typeof submitterOrAction)
                 if (null === findInstanceBlockingTarget(submitterOrAction || form))
                   continue;
                 else break;
               var formInst = getInstanceFromNode(form);
-              null !== formInst && (formReplayingQueue.splice(i, 3), i -= 3, form = {
+              null !== formInst && (formReplayingQueue.splice(i2, 3), i2 -= 3, form = {
                 pending: true,
                 data: formData,
                 method: form.method,
@@ -18426,18 +18426,18 @@ var require_react_dom_client_development = __commonJS({
         null !== queuedMouse && scheduleCallbackIfUnblocked(queuedMouse, unblocked);
         queuedPointers.forEach(unblock);
         queuedPointerCaptures.forEach(unblock);
-        for (var i = 0; i < queuedExplicitHydrationTargets.length; i++) {
-          var queuedTarget = queuedExplicitHydrationTargets[i];
+        for (var i2 = 0; i2 < queuedExplicitHydrationTargets.length; i2++) {
+          var queuedTarget = queuedExplicitHydrationTargets[i2];
           queuedTarget.blockedOn === unblocked && (queuedTarget.blockedOn = null);
         }
-        for (; 0 < queuedExplicitHydrationTargets.length && (i = queuedExplicitHydrationTargets[0], null === i.blockedOn); )
-          attemptExplicitHydrationTarget(i), null === i.blockedOn && queuedExplicitHydrationTargets.shift();
-        i = (unblocked.ownerDocument || unblocked).$$reactFormReplay;
-        if (null != i)
-          for (queuedTarget = 0; queuedTarget < i.length; queuedTarget += 3) {
-            var form = i[queuedTarget], submitterOrAction = i[queuedTarget + 1], formProps = form[internalPropsKey] || null;
+        for (; 0 < queuedExplicitHydrationTargets.length && (i2 = queuedExplicitHydrationTargets[0], null === i2.blockedOn); )
+          attemptExplicitHydrationTarget(i2), null === i2.blockedOn && queuedExplicitHydrationTargets.shift();
+        i2 = (unblocked.ownerDocument || unblocked).$$reactFormReplay;
+        if (null != i2)
+          for (queuedTarget = 0; queuedTarget < i2.length; queuedTarget += 3) {
+            var form = i2[queuedTarget], submitterOrAction = i2[queuedTarget + 1], formProps = form[internalPropsKey] || null;
             if ("function" === typeof submitterOrAction)
-              formProps || scheduleReplayQueueIfNeeded(i);
+              formProps || scheduleReplayQueueIfNeeded(i2);
             else if (formProps) {
               var action = null;
               if (submitterOrAction && submitterOrAction.hasAttribute("formAction"))
@@ -18447,8 +18447,8 @@ var require_react_dom_client_development = __commonJS({
                   if (null !== findInstanceBlockingTarget(form)) continue;
                 }
               else action = formProps.action;
-              "function" === typeof action ? i[queuedTarget + 1] = action : (i.splice(queuedTarget, 3), queuedTarget -= 3);
-              scheduleReplayQueueIfNeeded(i);
+              "function" === typeof action ? i2[queuedTarget + 1] = action : (i2.splice(queuedTarget, 3), queuedTarget -= 3);
+              scheduleReplayQueueIfNeeded(i2);
             }
           }
       }
@@ -19337,7 +19337,7 @@ var require_react_dom_client_development = __commonJS({
           });
           window.addEventListener("test", options$jscomp$0, options$jscomp$0);
           window.removeEventListener("test", options$jscomp$0, options$jscomp$0);
-        } catch (e) {
+        } catch (e2) {
           passiveBrowserEventsSupported = false;
         }
       var root2 = null, startText = null, fallbackText = null, EventInterface = {
@@ -19834,8 +19834,8 @@ var require_react_dom_client_development = __commonJS({
         }
       }, callDestroyInDEV = callDestroy.react_stack_bottom_frame.bind(callDestroy), callLazyInit = {
         react_stack_bottom_frame: function(lazy) {
-          var init2 = lazy._init;
-          return init2(lazy._payload);
+          var init = lazy._init;
+          return init(lazy._payload);
         }
       }, callLazyInitInDEV = callLazyInit.react_stack_bottom_frame.bind(callLazyInit), SuspenseException = Error(
         "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`."
@@ -19968,13 +19968,13 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           mountHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnMountInDEV;
           try {
-            return mountReducer(reducer, initialArg, init2);
+            return mountReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20098,13 +20098,13 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           updateHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnMountInDEV;
           try {
-            return mountReducer(reducer, initialArg, init2);
+            return mountReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20228,13 +20228,13 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           updateHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnUpdateInDEV;
           try {
-            return updateReducer(reducer, initialArg, init2);
+            return updateReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20358,13 +20358,13 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           updateHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnRerenderInDEV;
           try {
-            return rerenderReducer(reducer, initialArg, init2);
+            return rerenderReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20499,14 +20499,14 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           warnInvalidHookAccess();
           mountHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnMountInDEV;
           try {
-            return mountReducer(reducer, initialArg, init2);
+            return mountReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20654,14 +20654,14 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           warnInvalidHookAccess();
           updateHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnUpdateInDEV;
           try {
-            return updateReducer(reducer, initialArg, init2);
+            return updateReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20809,14 +20809,14 @@ var require_react_dom_client_development = __commonJS({
             ReactSharedInternals.H = prevDispatcher;
           }
         },
-        useReducer: function(reducer, initialArg, init2) {
+        useReducer: function(reducer, initialArg, init) {
           currentHookNameInDev = "useReducer";
           warnInvalidHookAccess();
           updateHookTypesDev();
           var prevDispatcher = ReactSharedInternals.H;
           ReactSharedInternals.H = InvalidNestedHooksDispatcherOnUpdateInDEV;
           try {
-            return rerenderReducer(reducer, initialArg, init2);
+            return rerenderReducer(reducer, initialArg, init);
           } finally {
             ReactSharedInternals.H = prevDispatcher;
           }
@@ -20987,8 +20987,8 @@ var require_react_dom_client_development = __commonJS({
       var didWarnAboutUpdateInRenderForAnotherComponent = /* @__PURE__ */ new Set();
       var fakeActCallbackNode$1 = {}, firstScheduledRoot = null, lastScheduledRoot = null, didScheduleMicrotask = false, didScheduleMicrotask_act = false, mightHavePendingSyncWork = false, isFlushingWork = false, currentEventTransitionLane = 0, fakeActCallbackNode = {};
       (function() {
-        for (var i = 0; i < simpleEventPluginEvents.length; i++) {
-          var eventName = simpleEventPluginEvents[i], domEventName = eventName.toLowerCase();
+        for (var i2 = 0; i2 < simpleEventPluginEvents.length; i2++) {
+          var eventName = simpleEventPluginEvents[i2], domEventName = eventName.toLowerCase();
           eventName = eventName[0].toUpperCase() + eventName.slice(1);
           registerSimpleEvent(domEventName, "on" + eventName);
         }
@@ -21302,9 +21302,9 @@ var require_react_dom_client_development = __commonJS({
         if (target) {
           var updatePriority = resolveUpdatePriority();
           target = { blockedOn: null, target, priority: updatePriority };
-          for (var i = 0; i < queuedExplicitHydrationTargets.length && 0 !== updatePriority && updatePriority < queuedExplicitHydrationTargets[i].priority; i++) ;
-          queuedExplicitHydrationTargets.splice(i, 0, target);
-          0 === i && attemptExplicitHydrationTarget(target);
+          for (var i2 = 0; i2 < queuedExplicitHydrationTargets.length && 0 !== updatePriority && updatePriority < queuedExplicitHydrationTargets[i2].priority; i2++) ;
+          queuedExplicitHydrationTargets.splice(i2, 0, target);
+          0 === i2 && attemptExplicitHydrationTarget(target);
         }
       };
       (function() {
@@ -21506,7 +21506,7 @@ var require_react_jsx_runtime_development = __commonJS({
         try {
           testStringCoercion(value);
           var JSCompiler_inline_result = false;
-        } catch (e) {
+        } catch (e2) {
           JSCompiler_inline_result = true;
         }
         if (JSCompiler_inline_result) {
@@ -21623,8 +21623,8 @@ var require_react_jsx_runtime_development = __commonJS({
           else validateChildKeys(children);
         if (hasOwnProperty.call(config, "key")) {
           children = getComponentNameFromType(type);
-          var keys = Object.keys(config).filter(function(k) {
-            return "key" !== k;
+          var keys = Object.keys(config).filter(function(k2) {
+            return "key" !== k2;
           });
           isStaticChildren = 0 < keys.length ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
           didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error(
@@ -23734,9 +23734,9 @@ var ExecutionSessionManager = class {
     if (generation > 1024) throw new Error("Execution exceeded 1024 delay generations");
     const values = /* @__PURE__ */ new Map();
     for (const port of scope.inputs) if (port.id in environment) values.set(valueKey(scope.nodeId, port.id), environment[port.id]);
-    const ranks = [...new Set(scope.nodes.map((node) => node.rank))].sort((a, b) => a - b);
+    const ranks = [...new Set(scope.nodes.map((node) => node.rank))].sort((a2, b2) => a2 - b2);
     for (const rank of ranks) {
-      const nodes = scope.nodes.filter((node) => node.rank === rank).sort((a, b) => a.nodeId.localeCompare(b.nodeId));
+      const nodes = scope.nodes.filter((node) => node.rank === rank).sort((a2, b2) => a2.nodeId.localeCompare(b2.nodeId));
       const settled = await Promise.allSettled(nodes.map((node) => this.#executeNode(session, node, values, frame, generation, delayed)));
       settled.forEach((result, index) => {
         if (result.status === "fulfilled") for (const [portId, value] of Object.entries(result.value)) values.set(valueKey(nodes[index].nodeId, portId), value);
@@ -25162,72 +25162,2036 @@ async function sourceDigest(files, paths) {
   return sha2562(joined);
 }
 
-// node_modules/es-module-lexer/dist/lexer.js
-var ImportType;
-!(function(A2) {
-  A2[A2.Static = 1] = "Static", A2[A2.Dynamic = 2] = "Dynamic", A2[A2.ImportMeta = 3] = "ImportMeta", A2[A2.StaticSourcePhase = 4] = "StaticSourcePhase", A2[A2.DynamicSourcePhase = 5] = "DynamicSourcePhase", A2[A2.StaticDeferPhase = 6] = "StaticDeferPhase", A2[A2.DynamicDeferPhase = 7] = "DynamicDeferPhase";
-})(ImportType || (ImportType = {}));
-var A = 1 === new Uint8Array(new Uint16Array([1]).buffer)[0];
-function parse(E2, g = "@") {
-  if (!C) return init.then((() => parse(E2)));
-  const I = E2.length + 1, o = (C.__heap_base.value || C.__heap_base) + 4 * I - C.memory.buffer.byteLength;
-  o > 0 && C.memory.grow(Math.ceil(o / 65536));
-  const D = C.sa(I - 1);
-  if ((A ? B : Q)(E2, new Uint16Array(C.memory.buffer, D, I)), !C.parse()) throw Object.assign(new Error(`Parse error ${g}:${E2.slice(0, C.e()).split("\n").length}:${C.e() - E2.lastIndexOf("\n", C.e() - 1)}`), { idx: C.e() });
-  const K = [], k = [];
-  for (; C.ri(); ) {
-    const A2 = C.is(), Q2 = C.ie(), B2 = C.it(), g2 = C.ai(), I2 = C.id(), o2 = C.ss(), D2 = C.se();
-    let k2;
-    C.ip() && (k2 = w(E2.slice(-1 === I2 ? A2 - 1 : A2, -1 === I2 ? Q2 + 1 : Q2)));
-    const i = [];
-    for (C.rsa(); C.ra(); ) {
-      const A3 = C.aks(), Q3 = C.ake(), B3 = C.avs(), g3 = C.ave();
-      i.push([N(E2.slice(A3, Q3)), N(E2.slice(B3, g3))]);
-    }
-    K.push({ n: k2, t: B2, s: A2, e: Q2, ss: o2, se: D2, d: I2, a: g2, at: i.length > 0 ? i : null });
+// node_modules/es-module-lexer/dist/lexer.asm.js
+var e;
+var a;
+var r;
+var i = 2 << 19;
+var s = 1 === new Uint8Array(new Uint16Array([1]).buffer)[0] ? function(e2, a2) {
+  const r2 = e2.length;
+  let i2 = 0;
+  for (; i2 < r2; ) a2[i2] = e2.charCodeAt(i2++);
+} : function(e2, a2) {
+  const r2 = e2.length;
+  let i2 = 0;
+  for (; i2 < r2; ) {
+    const r3 = e2.charCodeAt(i2);
+    a2[i2++] = (255 & r3) << 8 | r3 >>> 8;
   }
-  for (; C.re(); ) {
-    const A2 = C.es(), Q2 = C.ee(), B2 = C.els(), g2 = C.ele(), I2 = N(E2.slice(A2, Q2)), o2 = B2 < 0 ? void 0 : N(E2.slice(B2, g2));
-    k.push({ s: A2, e: Q2, ls: B2, le: g2, n: I2, ln: o2 });
-  }
-  function w(A2) {
-    try {
-      return (0, eval)(A2);
-    } catch (A3) {
-    }
-  }
-  function N(A2) {
-    if (!A2) return A2;
-    const Q2 = A2[0];
-    return ('"' === Q2 || "'" === Q2) && w(A2) || A2;
-  }
-  return [K, k, !!C.f(), !!C.ms()];
-}
-function Q(A2, Q2) {
-  const B2 = A2.length;
-  let C2 = 0;
-  for (; C2 < B2; ) {
-    const B3 = A2.charCodeAt(C2);
-    Q2[C2++] = (255 & B3) << 8 | B3 >>> 8;
-  }
-}
-function B(A2, Q2) {
-  const B2 = A2.length;
-  let C2 = 0;
-  for (; C2 < B2; ) Q2[C2] = A2.charCodeAt(C2++);
-}
-var C;
-var E = () => {
-  return A2 = "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", "undefined" != typeof Buffer ? Buffer.from(A2, "base64") : Uint8Array.from(atob(A2), ((A3) => A3.charCodeAt(0)));
-  var A2;
 };
-var init = WebAssembly.compile(E()).then(WebAssembly.instantiate).then((({ exports: A2 }) => {
-  C = A2;
-}));
+var f = "xportmportlassforetaourceeferromsyncunctionvoyiedelecontininstantybreareturdebuggeawaithrwhileifcatcfinallels";
+var t;
+var c;
+var n;
+function parse(k2, u2 = "@") {
+  t = k2, c = u2;
+  const l2 = 2 * t.length + (2 << 18);
+  if (l2 > i || !e) {
+    for (; l2 > i; ) i *= 2;
+    a = new ArrayBuffer(i), s(f, new Uint16Array(a, 16, 109)), e = (function(e2, a2, r2) {
+      ;
+      var i2 = new e2.Int8Array(r2), s2 = new e2.Int16Array(r2), f2 = new e2.Int32Array(r2), t2 = new e2.Uint8Array(r2), c2 = new e2.Uint16Array(r2), n2 = 1040;
+      function b2() {
+        var e3 = 0, a3 = 0, r3 = 0, t3 = 0, c3 = 0, b3 = 0, l4 = 0, d3 = 0, C2 = 0, g2 = 0;
+        g2 = n2;
+        n2 = n2 + 10240 | 0;
+        i2[808] = 1;
+        i2[807] = 0;
+        s2[401] = 0;
+        s2[402] = 0;
+        f2[70] = f2[2];
+        i2[809] = 0;
+        f2[68] = 0;
+        i2[806] = 0;
+        f2[71] = g2 + 2048;
+        f2[72] = g2;
+        i2[810] = 0;
+        e3 = (f2[3] | 0) + -2 | 0;
+        f2[73] = e3;
+        a3 = e3 + (f2[66] << 1) | 0;
+        f2[74] = a3;
+        e: while (1) {
+          r3 = e3 + 2 | 0;
+          f2[73] = r3;
+          if (e3 >>> 0 >= a3 >>> 0) {
+            t3 = 18;
+            break;
+          }
+          a: do {
+            switch (s2[r3 >> 1] | 0) {
+              case 9:
+              case 10:
+              case 11:
+              case 12:
+              case 13:
+              case 32:
+                break;
+              case 101: {
+                if ((((s2[402] | 0) == 0 ? J(r3) | 0 : 0) ? (I(e3 + 4 | 0, 16, 10) | 0) == 0 : 0) ? (k3(), (i2[808] | 0) == 0) : 0) {
+                  t3 = 9;
+                  break e;
+                } else t3 = 17;
+                break;
+              }
+              case 105: {
+                if (J(r3) | 0 ? (I(e3 + 4 | 0, 26, 10) | 0) == 0 : 0) {
+                  u3();
+                  t3 = 17;
+                } else t3 = 17;
+                break;
+              }
+              case 59: {
+                t3 = 17;
+                break;
+              }
+              case 47:
+                switch (s2[e3 + 4 >> 1] | 0) {
+                  case 47: {
+                    P();
+                    break a;
+                  }
+                  case 42: {
+                    m(1);
+                    break a;
+                  }
+                  default: {
+                    t3 = 16;
+                    break e;
+                  }
+                }
+              default: {
+                t3 = 16;
+                break e;
+              }
+            }
+          } while (0);
+          if ((t3 | 0) == 17) {
+            t3 = 0;
+            f2[70] = f2[73];
+          }
+          e3 = f2[73] | 0;
+          a3 = f2[74] | 0;
+        }
+        if ((t3 | 0) == 9) {
+          e3 = f2[73] | 0;
+          f2[70] = e3;
+          t3 = 19;
+        } else if ((t3 | 0) == 16) {
+          i2[808] = 0;
+          f2[73] = e3;
+          t3 = 19;
+        } else if ((t3 | 0) == 18) if (!(i2[806] | 0)) {
+          e3 = r3;
+          t3 = 19;
+        } else e3 = 0;
+        do {
+          if ((t3 | 0) == 19) {
+            e: while (1) {
+              a3 = e3 + 2 | 0;
+              f2[73] = a3;
+              if (e3 >>> 0 >= (f2[74] | 0) >>> 0) {
+                t3 = 102;
+                break;
+              }
+              a: do {
+                switch (s2[a3 >> 1] | 0) {
+                  case 9:
+                  case 10:
+                  case 11:
+                  case 12:
+                  case 13:
+                  case 32:
+                    break;
+                  case 101: {
+                    if (((s2[402] | 0) == 0 ? J(a3) | 0 : 0) ? (I(e3 + 4 | 0, 16, 10) | 0) == 0 : 0) {
+                      k3();
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 105: {
+                    if (J(a3) | 0 ? (I(e3 + 4 | 0, 26, 10) | 0) == 0 : 0) {
+                      u3();
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 99: {
+                    if ((J(a3) | 0 ? (I(e3 + 4 | 0, 36, 8) | 0) == 0 : 0) ? X(s2[e3 + 12 >> 1] | 0) | 0 : 0) {
+                      i2[810] = 1;
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 40: {
+                    r3 = f2[71] | 0;
+                    e3 = s2[402] | 0;
+                    t3 = e3 & 65535;
+                    f2[r3 + (t3 << 3) >> 2] = 1;
+                    a3 = f2[70] | 0;
+                    s2[402] = e3 + 1 << 16 >> 16;
+                    f2[r3 + (t3 << 3) + 4 >> 2] = a3;
+                    t3 = 101;
+                    break;
+                  }
+                  case 91: {
+                    r3 = f2[71] | 0;
+                    e3 = s2[402] | 0;
+                    t3 = e3 & 65535;
+                    f2[r3 + (t3 << 3) >> 2] = 8;
+                    a3 = f2[70] | 0;
+                    s2[402] = e3 + 1 << 16 >> 16;
+                    f2[r3 + (t3 << 3) + 4 >> 2] = a3;
+                    t3 = 101;
+                    break;
+                  }
+                  case 93: {
+                    e3 = s2[402] | 0;
+                    if (!(e3 << 16 >> 16)) {
+                      t3 = 37;
+                      break e;
+                    }
+                    s2[402] = e3 + -1 << 16 >> 16;
+                    t3 = 101;
+                    break;
+                  }
+                  case 44: {
+                    t3 = s2[401] | 0;
+                    a3 = t3 & 65535;
+                    if (((t3 << 16 >> 16 != 0 ? (c3 = s2[402] | 0, c3 << 16 >> 16 != 0) : 0) ? (f2[(f2[71] | 0) + ((c3 & 65535) + -1 << 3) >> 2] | 0) == 5 : 0) ? (b3 = f2[(f2[72] | 0) + (a3 + -1 << 2) >> 2] | 0, d3 = b3 + 4 | 0, (f2[d3 >> 2] | 0) == 0) : 0) {
+                      f2[d3 >> 2] = (f2[70] | 0) + 2;
+                      f2[73] = e3 + 4;
+                      w2(1) | 0;
+                      t3 = f2[73] | 0;
+                      f2[b3 + 16 >> 2] = t3;
+                      f2[73] = t3 + -2;
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 41: {
+                    a3 = s2[402] | 0;
+                    if (!(a3 << 16 >> 16)) {
+                      t3 = 45;
+                      break e;
+                    }
+                    r3 = a3 + -1 << 16 >> 16;
+                    s2[402] = r3;
+                    t3 = s2[401] | 0;
+                    a3 = t3 & 65535;
+                    if (t3 << 16 >> 16 != 0 ? (f2[(f2[71] | 0) + ((r3 & 65535) << 3) >> 2] | 0) == 5 : 0) {
+                      a3 = f2[(f2[72] | 0) + (a3 + -1 << 2) >> 2] | 0;
+                      r3 = a3 + 4 | 0;
+                      if (!(f2[r3 >> 2] | 0)) f2[r3 >> 2] = (f2[70] | 0) + 2;
+                      f2[a3 + 12 >> 2] = e3 + 4;
+                      s2[401] = t3 + -1 << 16 >> 16;
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 123: {
+                    t3 = f2[70] | 0;
+                    r3 = f2[63] | 0;
+                    e3 = t3;
+                    do {
+                      if ((s2[t3 >> 1] | 0) == 41 & (r3 | 0) != 0 ? (f2[r3 + 4 >> 2] | 0) == (t3 | 0) : 0) {
+                        a3 = f2[64] | 0;
+                        f2[63] = a3;
+                        if (!a3) {
+                          f2[59] = 0;
+                          break;
+                        } else {
+                          f2[a3 + 36 >> 2] = 0;
+                          break;
+                        }
+                      }
+                    } while (0);
+                    r3 = f2[71] | 0;
+                    a3 = s2[402] | 0;
+                    t3 = a3 & 65535;
+                    f2[r3 + (t3 << 3) >> 2] = (i2[810] | 0) == 0 ? 2 : 6;
+                    s2[402] = a3 + 1 << 16 >> 16;
+                    f2[r3 + (t3 << 3) + 4 >> 2] = e3;
+                    i2[810] = 0;
+                    t3 = 101;
+                    break;
+                  }
+                  case 125: {
+                    e3 = s2[402] | 0;
+                    if (!(e3 << 16 >> 16)) {
+                      t3 = 58;
+                      break e;
+                    }
+                    r3 = f2[71] | 0;
+                    t3 = e3 + -1 << 16 >> 16;
+                    s2[402] = t3;
+                    if ((f2[r3 + ((t3 & 65535) << 3) >> 2] | 0) == 4) {
+                      h2();
+                      t3 = 101;
+                    } else t3 = 101;
+                    break;
+                  }
+                  case 39: {
+                    v2(39);
+                    t3 = 101;
+                    break;
+                  }
+                  case 34: {
+                    v2(34);
+                    t3 = 101;
+                    break;
+                  }
+                  case 47:
+                    switch (s2[e3 + 4 >> 1] | 0) {
+                      case 47: {
+                        P();
+                        break a;
+                      }
+                      case 42: {
+                        m(1);
+                        break a;
+                      }
+                      default: {
+                        e3 = f2[70] | 0;
+                        a3 = s2[e3 >> 1] | 0;
+                        r: do {
+                          if (!(x(a3) | 0)) if (a3 << 16 >> 16 == 41) {
+                            r3 = s2[402] | 0;
+                            if (!(D(f2[(f2[71] | 0) + ((r3 & 65535) << 3) + 4 >> 2] | 0) | 0)) t3 = 74;
+                          } else t3 = 73;
+                          else switch (a3 << 16 >> 16) {
+                            case 46:
+                              if (((s2[e3 + -2 >> 1] | 0) + -48 & 65535) < 10) {
+                                t3 = 73;
+                                break r;
+                              } else break r;
+                            case 43:
+                              if ((s2[e3 + -2 >> 1] | 0) == 43) {
+                                t3 = 73;
+                                break r;
+                              } else break r;
+                            case 45:
+                              if ((s2[e3 + -2 >> 1] | 0) == 45) {
+                                t3 = 73;
+                                break r;
+                              } else break r;
+                            default:
+                              break r;
+                          }
+                        } while (0);
+                        if ((t3 | 0) == 73) {
+                          r3 = s2[402] | 0;
+                          t3 = 74;
+                        }
+                        r: do {
+                          if ((t3 | 0) == 74) {
+                            t3 = 0;
+                            if (r3 << 16 >> 16 != 0 ? (l4 = f2[71] | 0, C2 = (r3 & 65535) + -1 | 0, a3 << 16 >> 16 == 102 ? (f2[l4 + (C2 << 3) >> 2] | 0) == 1 : 0) : 0) {
+                              if (((s2[e3 + -2 >> 1] | 0) == 111 ? A(e3 + -4 | 0) | 0 : 0) ? T(f2[l4 + (C2 << 3) + 4 >> 2] | 0, 44, 3) | 0 : 0) break;
+                            } else t3 = 79;
+                            if ((t3 | 0) == 79 ? (0, a3 << 16 >> 16 == 125) : 0) {
+                              t3 = f2[71] | 0;
+                              r3 = r3 & 65535;
+                              if (y(f2[t3 + (r3 << 3) + 4 >> 2] | 0) | 0) break;
+                              if ((f2[t3 + (r3 << 3) >> 2] | 0) == 6) break;
+                            }
+                            if (!(o2(e3) | 0)) {
+                              switch (a3 << 16 >> 16) {
+                                case 0:
+                                  break r;
+                                case 47: {
+                                  if (i2[809] | 0) break r;
+                                  break;
+                                }
+                                default: {
+                                }
+                              }
+                              t3 = f2[65] | 0;
+                              if ((t3 | 0 ? e3 >>> 0 >= (f2[t3 >> 2] | 0) >>> 0 : 0) ? e3 >>> 0 <= (f2[t3 + 4 >> 2] | 0) >>> 0 : 0) {
+                                p();
+                                i2[809] = 0;
+                                t3 = 101;
+                                break a;
+                              }
+                              r3 = f2[3] | 0;
+                              do {
+                                if (e3 >>> 0 <= r3 >>> 0) break;
+                                e3 = e3 + -2 | 0;
+                                f2[70] = e3;
+                                a3 = s2[e3 >> 1] | 0;
+                              } while (!(E(a3) | 0));
+                              if (F(a3) | 0) {
+                                do {
+                                  if (e3 >>> 0 <= r3 >>> 0) break;
+                                  e3 = e3 + -2 | 0;
+                                  f2[70] = e3;
+                                } while (F(s2[e3 >> 1] | 0) | 0);
+                                if (j(e3) | 0) {
+                                  p();
+                                  i2[809] = 0;
+                                  t3 = 101;
+                                  break a;
+                                }
+                              }
+                              i2[809] = 1;
+                              t3 = 101;
+                              break a;
+                            }
+                          }
+                        } while (0);
+                        p();
+                        i2[809] = 0;
+                        t3 = 101;
+                        break a;
+                      }
+                    }
+                  case 96: {
+                    r3 = f2[71] | 0;
+                    a3 = s2[402] | 0;
+                    t3 = a3 & 65535;
+                    f2[r3 + (t3 << 3) + 4 >> 2] = f2[70];
+                    s2[402] = a3 + 1 << 16 >> 16;
+                    f2[r3 + (t3 << 3) >> 2] = 3;
+                    h2();
+                    t3 = 101;
+                    break;
+                  }
+                  default:
+                    t3 = 101;
+                }
+              } while (0);
+              if ((t3 | 0) == 101) {
+                t3 = 0;
+                f2[70] = f2[73];
+              }
+              e3 = f2[73] | 0;
+            }
+            if ((t3 | 0) == 37) {
+              W();
+              e3 = 0;
+              break;
+            } else if ((t3 | 0) == 45) {
+              W();
+              e3 = 0;
+              break;
+            } else if ((t3 | 0) == 58) {
+              W();
+              e3 = 0;
+              break;
+            } else if ((t3 | 0) == 102) {
+              e3 = (i2[806] | 0) == 0 ? (s2[401] | s2[402]) << 16 >> 16 == 0 : 0;
+              break;
+            }
+          }
+        } while (0);
+        n2 = g2;
+        return e3 | 0;
+      }
+      function k3() {
+        var e3 = 0, a3 = 0, r3 = 0, t3 = 0, c3 = 0, n3 = 0, b3 = 0, k4 = 0, u4 = 0, o3 = 0, h3 = 0, d3 = 0, A2 = 0, g2 = 0;
+        k4 = f2[73] | 0;
+        u4 = f2[65] | 0;
+        g2 = k4 + 12 | 0;
+        f2[73] = g2;
+        r3 = w2(1) | 0;
+        e3 = f2[73] | 0;
+        if (!((e3 | 0) == (g2 | 0) ? !(U(r3) | 0) : 0)) A2 = 3;
+        e: do {
+          if ((A2 | 0) == 3) {
+            a: do {
+              switch (r3 << 16 >> 16) {
+                case 123: {
+                  f2[73] = e3 + 2;
+                  e3 = w2(1) | 0;
+                  a3 = f2[73] | 0;
+                  while (1) {
+                    if (Y(e3) | 0) {
+                      v2(e3);
+                      e3 = (f2[73] | 0) + 2 | 0;
+                      f2[73] = e3;
+                    } else {
+                      q(e3) | 0;
+                      e3 = f2[73] | 0;
+                    }
+                    w2(1) | 0;
+                    e3 = C(a3, e3) | 0;
+                    if (e3 << 16 >> 16 == 44) {
+                      f2[73] = (f2[73] | 0) + 2;
+                      e3 = w2(1) | 0;
+                    }
+                    if (e3 << 16 >> 16 == 125) {
+                      A2 = 15;
+                      break;
+                    }
+                    g2 = a3;
+                    a3 = f2[73] | 0;
+                    if ((a3 | 0) == (g2 | 0)) {
+                      A2 = 12;
+                      break;
+                    }
+                    if (a3 >>> 0 > (f2[74] | 0) >>> 0) {
+                      A2 = 14;
+                      break;
+                    }
+                  }
+                  if ((A2 | 0) == 12) {
+                    W();
+                    break e;
+                  } else if ((A2 | 0) == 14) {
+                    W();
+                    break e;
+                  } else if ((A2 | 0) == 15) {
+                    i2[807] = 1;
+                    f2[73] = (f2[73] | 0) + 2;
+                    break a;
+                  }
+                  break;
+                }
+                case 42: {
+                  f2[73] = e3 + 2;
+                  w2(1) | 0;
+                  g2 = f2[73] | 0;
+                  C(g2, g2) | 0;
+                  break;
+                }
+                default: {
+                  i2[808] = 0;
+                  switch (r3 << 16 >> 16) {
+                    case 100: {
+                      k4 = e3 + 14 | 0;
+                      f2[73] = k4;
+                      switch ((w2(1) | 0) << 16 >> 16) {
+                        case 97: {
+                          a3 = f2[73] | 0;
+                          if ((I(a3 + 2 | 0, 80, 8) | 0) == 0 ? (c3 = a3 + 10 | 0, F(s2[c3 >> 1] | 0) | 0) : 0) {
+                            f2[73] = c3;
+                            w2(0) | 0;
+                            A2 = 22;
+                          }
+                          break;
+                        }
+                        case 102: {
+                          A2 = 22;
+                          break;
+                        }
+                        case 99: {
+                          a3 = f2[73] | 0;
+                          if (((I(a3 + 2 | 0, 36, 8) | 0) == 0 ? (t3 = a3 + 10 | 0, g2 = s2[t3 >> 1] | 0, X(g2) | 0 | g2 << 16 >> 16 == 123) : 0) ? (f2[73] = t3, n3 = w2(1) | 0, n3 << 16 >> 16 != 123) : 0) {
+                            d3 = n3;
+                            A2 = 31;
+                          }
+                          break;
+                        }
+                        default: {
+                        }
+                      }
+                      r: do {
+                        if ((A2 | 0) == 22 ? (b3 = f2[73] | 0, (I(b3 + 2 | 0, 88, 14) | 0) == 0) : 0) {
+                          r3 = b3 + 16 | 0;
+                          a3 = s2[r3 >> 1] | 0;
+                          if (!(X(a3) | 0)) switch (a3 << 16 >> 16) {
+                            case 40:
+                            case 42:
+                              break;
+                            default:
+                              break r;
+                          }
+                          f2[73] = r3;
+                          a3 = w2(1) | 0;
+                          if (a3 << 16 >> 16 == 42) {
+                            f2[73] = (f2[73] | 0) + 2;
+                            a3 = w2(1) | 0;
+                          }
+                          if (a3 << 16 >> 16 != 40) {
+                            d3 = a3;
+                            A2 = 31;
+                          }
+                        }
+                      } while (0);
+                      if ((A2 | 0) == 31 ? (o3 = f2[73] | 0, q(d3) | 0, h3 = f2[73] | 0, h3 >>> 0 > o3 >>> 0) : 0) {
+                        $(e3, k4, o3, h3);
+                        f2[73] = (f2[73] | 0) + -2;
+                        break e;
+                      }
+                      $(e3, k4, 0, 0);
+                      f2[73] = e3 + 12;
+                      break e;
+                    }
+                    case 97: {
+                      f2[73] = e3 + 10;
+                      w2(0) | 0;
+                      e3 = f2[73] | 0;
+                      A2 = 35;
+                      break;
+                    }
+                    case 102: {
+                      A2 = 35;
+                      break;
+                    }
+                    case 99: {
+                      if ((I(e3 + 2 | 0, 36, 8) | 0) == 0 ? (a3 = e3 + 10 | 0, E(s2[a3 >> 1] | 0) | 0) : 0) {
+                        f2[73] = a3;
+                        g2 = w2(1) | 0;
+                        A2 = f2[73] | 0;
+                        q(g2) | 0;
+                        g2 = f2[73] | 0;
+                        $(A2, g2, A2, g2);
+                        f2[73] = (f2[73] | 0) + -2;
+                        break e;
+                      }
+                      e3 = e3 + 4 | 0;
+                      f2[73] = e3;
+                      break;
+                    }
+                    case 108:
+                    case 118:
+                      break;
+                    default:
+                      break e;
+                  }
+                  if ((A2 | 0) == 35) {
+                    f2[73] = e3 + 16;
+                    e3 = w2(1) | 0;
+                    if (e3 << 16 >> 16 == 42) {
+                      f2[73] = (f2[73] | 0) + 2;
+                      e3 = w2(1) | 0;
+                    }
+                    A2 = f2[73] | 0;
+                    q(e3) | 0;
+                    g2 = f2[73] | 0;
+                    $(A2, g2, A2, g2);
+                    f2[73] = (f2[73] | 0) + -2;
+                    break e;
+                  }
+                  f2[73] = e3 + 6;
+                  i2[808] = 0;
+                  r3 = w2(1) | 0;
+                  e3 = f2[73] | 0;
+                  r3 = (q(r3) | 0 | 32) << 16 >> 16 == 123;
+                  t3 = f2[73] | 0;
+                  if (r3) {
+                    f2[73] = t3 + 2;
+                    g2 = w2(1) | 0;
+                    e3 = f2[73] | 0;
+                    q(g2) | 0;
+                  }
+                  r: while (1) {
+                    a3 = f2[73] | 0;
+                    if ((a3 | 0) == (e3 | 0)) break;
+                    $(e3, a3, e3, a3);
+                    a3 = w2(1) | 0;
+                    if (r3) switch (a3 << 16 >> 16) {
+                      case 93:
+                      case 125:
+                        break e;
+                      default: {
+                      }
+                    }
+                    e3 = f2[73] | 0;
+                    if (a3 << 16 >> 16 != 44) {
+                      A2 = 51;
+                      break;
+                    }
+                    f2[73] = e3 + 2;
+                    a3 = w2(1) | 0;
+                    e3 = f2[73] | 0;
+                    switch (a3 << 16 >> 16) {
+                      case 91:
+                      case 123: {
+                        A2 = 51;
+                        break r;
+                      }
+                      default: {
+                      }
+                    }
+                    q(a3) | 0;
+                  }
+                  if ((A2 | 0) == 51) f2[73] = e3 + -2;
+                  if (!r3) break e;
+                  f2[73] = t3 + -2;
+                  break e;
+                }
+              }
+            } while (0);
+            g2 = (w2(1) | 0) << 16 >> 16 == 102;
+            e3 = f2[73] | 0;
+            if (g2 ? (I(e3 + 2 | 0, 74, 6) | 0) == 0 : 0) {
+              f2[73] = e3 + 8;
+              l3(k4, w2(1) | 0, 0);
+              e3 = (u4 | 0) == 0 ? 240 : u4 + 16 | 0;
+              while (1) {
+                e3 = f2[e3 >> 2] | 0;
+                if (!e3) break e;
+                f2[e3 + 12 >> 2] = 0;
+                f2[e3 + 8 >> 2] = 0;
+                e3 = e3 + 16 | 0;
+              }
+            }
+            f2[73] = e3 + -2;
+          }
+        } while (0);
+        return;
+      }
+      function u3() {
+        var e3 = 0, a3 = 0, r3 = 0, t3 = 0, c3 = 0, n3 = 0, b3 = 0;
+        b3 = f2[73] | 0;
+        c3 = b3 + 12 | 0;
+        f2[73] = c3;
+        e3 = w2(1) | 0;
+        t3 = f2[73] | 0;
+        e: do {
+          if (e3 << 16 >> 16 != 46) {
+            if (!(e3 << 16 >> 16 == 115 & t3 >>> 0 > c3 >>> 0)) {
+              if (!(e3 << 16 >> 16 == 100 & t3 >>> 0 > (b3 + 10 | 0) >>> 0)) {
+                t3 = 0;
+                n3 = 28;
+                break;
+              }
+              if (I(t3 + 2 | 0, 66, 8) | 0) {
+                a3 = t3;
+                e3 = 100;
+                t3 = 0;
+                n3 = 59;
+                break;
+              }
+              e3 = t3 + 10 | 0;
+              if (!(X(s2[e3 >> 1] | 0) | 0)) {
+                a3 = t3;
+                e3 = 100;
+                t3 = 0;
+                n3 = 59;
+                break;
+              }
+              f2[73] = e3;
+              e3 = w2(1) | 0;
+              if (e3 << 16 >> 16 == 42) {
+                e3 = 42;
+                t3 = 2;
+                n3 = 61;
+                break;
+              }
+              f2[73] = t3;
+              t3 = 0;
+              n3 = 28;
+              break;
+            }
+            if ((I(t3 + 2 | 0, 56, 10) | 0) == 0 ? (r3 = t3 + 12 | 0, X(s2[r3 >> 1] | 0) | 0) : 0) {
+              f2[73] = r3;
+              e3 = w2(1) | 0;
+              a3 = f2[73] | 0;
+              if ((a3 | 0) != (r3 | 0)) {
+                if (e3 << 16 >> 16 != 102) {
+                  t3 = 1;
+                  n3 = 28;
+                  break;
+                }
+                if (I(a3 + 2 | 0, 74, 6) | 0) {
+                  e3 = 102;
+                  t3 = 1;
+                  n3 = 59;
+                  break;
+                }
+                if (!(E(s2[a3 + 8 >> 1] | 0) | 0)) {
+                  e3 = 102;
+                  t3 = 1;
+                  n3 = 59;
+                  break;
+                }
+              }
+              f2[73] = t3;
+              t3 = 0;
+              n3 = 28;
+            } else {
+              a3 = t3;
+              e3 = 115;
+              t3 = 0;
+              n3 = 59;
+            }
+          } else {
+            f2[73] = t3 + 2;
+            switch ((w2(1) | 0) << 16 >> 16) {
+              case 109: {
+                e3 = f2[73] | 0;
+                if (I(e3 + 2 | 0, 50, 6) | 0) break e;
+                a3 = f2[70] | 0;
+                if (!(G(a3) | 0) ? (s2[a3 >> 1] | 0) == 46 : 0) break e;
+                d2(b3, b3, e3 + 8 | 0, 2);
+                break e;
+              }
+              case 115: {
+                e3 = f2[73] | 0;
+                if (I(e3 + 2 | 0, 56, 10) | 0) break e;
+                a3 = f2[70] | 0;
+                if (!(G(a3) | 0) ? (s2[a3 >> 1] | 0) == 46 : 0) break e;
+                f2[73] = e3 + 12;
+                e3 = w2(1) | 0;
+                t3 = 1;
+                n3 = 28;
+                break e;
+              }
+              case 100: {
+                e3 = f2[73] | 0;
+                if (I(e3 + 2 | 0, 66, 8) | 0) break e;
+                a3 = f2[70] | 0;
+                if (!(G(a3) | 0) ? (s2[a3 >> 1] | 0) == 46 : 0) break e;
+                f2[73] = e3 + 10;
+                e3 = w2(1) | 0;
+                t3 = 2;
+                n3 = 28;
+                break e;
+              }
+              default:
+                break e;
+            }
+          }
+        } while (0);
+        e: do {
+          if ((n3 | 0) == 28) {
+            if (e3 << 16 >> 16 == 40) {
+              r3 = f2[71] | 0;
+              a3 = s2[402] | 0;
+              c3 = a3 & 65535;
+              f2[r3 + (c3 << 3) >> 2] = 5;
+              e3 = f2[73] | 0;
+              s2[402] = a3 + 1 << 16 >> 16;
+              f2[r3 + (c3 << 3) + 4 >> 2] = e3;
+              if ((s2[f2[70] >> 1] | 0) == 46) break;
+              f2[73] = e3 + 2;
+              a3 = w2(1) | 0;
+              d2(b3, f2[73] | 0, 0, e3);
+              if (!t3) e3 = f2[63] | 0;
+              else {
+                e3 = f2[63] | 0;
+                f2[e3 + 28 >> 2] = (t3 | 0) == 1 ? 5 : 7;
+              }
+              c3 = f2[72] | 0;
+              b3 = s2[401] | 0;
+              s2[401] = b3 + 1 << 16 >> 16;
+              f2[c3 + ((b3 & 65535) << 2) >> 2] = e3;
+              switch (a3 << 16 >> 16) {
+                case 39: {
+                  v2(39);
+                  break;
+                }
+                case 34: {
+                  v2(34);
+                  break;
+                }
+                default: {
+                  f2[73] = (f2[73] | 0) + -2;
+                  break e;
+                }
+              }
+              e3 = (f2[73] | 0) + 2 | 0;
+              f2[73] = e3;
+              switch ((w2(1) | 0) << 16 >> 16) {
+                case 44: {
+                  f2[73] = (f2[73] | 0) + 2;
+                  w2(1) | 0;
+                  c3 = f2[63] | 0;
+                  f2[c3 + 4 >> 2] = e3;
+                  b3 = f2[73] | 0;
+                  f2[c3 + 16 >> 2] = b3;
+                  i2[c3 + 24 >> 0] = 1;
+                  f2[73] = b3 + -2;
+                  break e;
+                }
+                case 41: {
+                  s2[402] = (s2[402] | 0) + -1 << 16 >> 16;
+                  b3 = f2[63] | 0;
+                  f2[b3 + 4 >> 2] = e3;
+                  f2[b3 + 12 >> 2] = (f2[73] | 0) + 2;
+                  i2[b3 + 24 >> 0] = 1;
+                  s2[401] = (s2[401] | 0) + -1 << 16 >> 16;
+                  break e;
+                }
+                default: {
+                  f2[73] = (f2[73] | 0) + -2;
+                  break e;
+                }
+              }
+            }
+            if (!((t3 | 0) == 0 & e3 << 16 >> 16 == 123)) {
+              switch (e3 << 16 >> 16) {
+                case 42:
+                case 39:
+                case 34: {
+                  n3 = 61;
+                  break e;
+                }
+                default: {
+                }
+              }
+              a3 = f2[73] | 0;
+              n3 = 59;
+              break;
+            }
+            e3 = f2[73] | 0;
+            if (s2[402] | 0) {
+              f2[73] = e3 + -2;
+              break;
+            }
+            while (1) {
+              if (e3 >>> 0 >= (f2[74] | 0) >>> 0) break;
+              e3 = w2(1) | 0;
+              if (!(Y(e3) | 0)) {
+                if (e3 << 16 >> 16 == 125) {
+                  n3 = 49;
+                  break;
+                }
+              } else v2(e3);
+              e3 = (f2[73] | 0) + 2 | 0;
+              f2[73] = e3;
+            }
+            if ((n3 | 0) == 49) f2[73] = (f2[73] | 0) + 2;
+            c3 = (w2(1) | 0) << 16 >> 16 == 102;
+            e3 = f2[73] | 0;
+            if (c3 ? I(e3 + 2 | 0, 74, 6) | 0 : 0) {
+              W();
+              break;
+            }
+            f2[73] = e3 + 8;
+            e3 = w2(1) | 0;
+            if (Y(e3) | 0) {
+              l3(b3, e3, 0);
+              break;
+            } else {
+              W();
+              break;
+            }
+          }
+        } while (0);
+        if ((n3 | 0) == 59) if ((a3 | 0) == (c3 | 0)) f2[73] = b3 + 10;
+        else n3 = 61;
+        do {
+          if ((n3 | 0) == 61) {
+            if (!((e3 << 16 >> 16 == 42 | (t3 | 0) != 2) & (s2[402] | 0) == 0)) {
+              f2[73] = (f2[73] | 0) + -2;
+              break;
+            }
+            e3 = f2[74] | 0;
+            a3 = f2[73] | 0;
+            while (1) {
+              if (a3 >>> 0 >= e3 >>> 0) {
+                n3 = 68;
+                break;
+              }
+              r3 = s2[a3 >> 1] | 0;
+              if (Y(r3) | 0) {
+                n3 = 66;
+                break;
+              }
+              n3 = a3 + 2 | 0;
+              f2[73] = n3;
+              a3 = n3;
+            }
+            if ((n3 | 0) == 66) {
+              l3(b3, r3, t3);
+              break;
+            } else if ((n3 | 0) == 68) {
+              W();
+              break;
+            }
+          }
+        } while (0);
+        return;
+      }
+      function l3(e3, a3, r3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        r3 = r3 | 0;
+        var i3 = 0, t3 = 0, c3 = 0, n3 = 0, b3 = 0;
+        i3 = (f2[73] | 0) + 2 | 0;
+        switch (a3 << 16 >> 16) {
+          case 39: {
+            v2(39);
+            t3 = 5;
+            break;
+          }
+          case 34: {
+            v2(34);
+            t3 = 5;
+            break;
+          }
+          default:
+            W();
+        }
+        do {
+          if ((t3 | 0) == 5) {
+            d2(e3, i3, f2[73] | 0, 1);
+            if ((r3 | 0) > 0) f2[(f2[63] | 0) + 28 >> 2] = (r3 | 0) == 1 ? 4 : 6;
+            f2[73] = (f2[73] | 0) + 2;
+            n3 = (w2(0) | 0) << 16 >> 16 == 119;
+            c3 = f2[73] | 0;
+            if (((n3 ? (s2[c3 + 2 >> 1] | 0) == 105 : 0) ? (s2[c3 + 4 >> 1] | 0) == 116 : 0) ? (s2[c3 + 6 >> 1] | 0) == 104 : 0) {
+              f2[73] = c3 + 8;
+              if ((w2(1) | 0) << 16 >> 16 != 123) {
+                f2[73] = c3;
+                break;
+              }
+              n3 = f2[73] | 0;
+              i3 = n3;
+              t3 = 0;
+              e: while (1) {
+                f2[73] = i3 + 2;
+                i3 = w2(1) | 0;
+                do {
+                  if (i3 << 16 >> 16 != 39) {
+                    a3 = f2[73] | 0;
+                    if (i3 << 16 >> 16 == 34) {
+                      v2(34);
+                      e3 = (f2[73] | 0) + 2 | 0;
+                      f2[73] = e3;
+                      i3 = w2(1) | 0;
+                      break;
+                    } else {
+                      i3 = q(i3) | 0;
+                      e3 = f2[73] | 0;
+                      break;
+                    }
+                  } else {
+                    a3 = f2[73] | 0;
+                    v2(39);
+                    e3 = (f2[73] | 0) + 2 | 0;
+                    f2[73] = e3;
+                    i3 = w2(1) | 0;
+                  }
+                } while (0);
+                if (i3 << 16 >> 16 != 58) {
+                  t3 = 21;
+                  break;
+                }
+                f2[73] = (f2[73] | 0) + 2;
+                switch ((w2(1) | 0) << 16 >> 16) {
+                  case 39: {
+                    i3 = f2[73] | 0;
+                    v2(39);
+                    break;
+                  }
+                  case 34: {
+                    i3 = f2[73] | 0;
+                    v2(34);
+                    break;
+                  }
+                  default: {
+                    t3 = 25;
+                    break e;
+                  }
+                }
+                b3 = (f2[73] | 0) + 2 | 0;
+                r3 = f2[67] | 0;
+                f2[67] = r3 + 20;
+                f2[r3 >> 2] = a3;
+                f2[r3 + 4 >> 2] = e3;
+                f2[r3 + 8 >> 2] = i3;
+                f2[r3 + 12 >> 2] = b3;
+                f2[r3 + 16 >> 2] = 0;
+                f2[((t3 | 0) == 0 ? (f2[63] | 0) + 32 | 0 : t3 + 16 | 0) >> 2] = r3;
+                f2[73] = (f2[73] | 0) + 2;
+                switch ((w2(1) | 0) << 16 >> 16) {
+                  case 125: {
+                    t3 = 29;
+                    break e;
+                  }
+                  case 44:
+                    break;
+                  default: {
+                    t3 = 27;
+                    break e;
+                  }
+                }
+                i3 = (f2[73] | 0) + 2 | 0;
+                f2[73] = i3;
+                t3 = r3;
+              }
+              if ((t3 | 0) == 21) {
+                f2[73] = c3;
+                break;
+              } else if ((t3 | 0) == 25) {
+                f2[73] = c3;
+                break;
+              } else if ((t3 | 0) == 27) {
+                f2[73] = c3;
+                break;
+              } else if ((t3 | 0) == 29) {
+                b3 = f2[63] | 0;
+                f2[b3 + 16 >> 2] = n3;
+                f2[b3 + 12 >> 2] = (f2[73] | 0) + 2;
+                break;
+              }
+            }
+            f2[73] = c3 + -2;
+          }
+        } while (0);
+        return;
+      }
+      function o2(e3) {
+        e3 = e3 | 0;
+        e: do {
+          switch (s2[e3 >> 1] | 0) {
+            case 100:
+              switch (s2[e3 + -2 >> 1] | 0) {
+                case 105: {
+                  e3 = T(e3 + -4 | 0, 102, 2) | 0;
+                  break e;
+                }
+                case 108: {
+                  e3 = T(e3 + -4 | 0, 106, 3) | 0;
+                  break e;
+                }
+                default: {
+                  e3 = 0;
+                  break e;
+                }
+              }
+            case 101:
+              switch (s2[e3 + -2 >> 1] | 0) {
+                case 115:
+                  switch (s2[e3 + -4 >> 1] | 0) {
+                    case 108: {
+                      e3 = B(e3 + -6 | 0, 101) | 0;
+                      break e;
+                    }
+                    case 97: {
+                      e3 = B(e3 + -6 | 0, 99) | 0;
+                      break e;
+                    }
+                    default: {
+                      e3 = 0;
+                      break e;
+                    }
+                  }
+                case 116: {
+                  e3 = T(e3 + -4 | 0, 112, 4) | 0;
+                  break e;
+                }
+                case 117: {
+                  e3 = T(e3 + -4 | 0, 120, 6) | 0;
+                  break e;
+                }
+                default: {
+                  e3 = 0;
+                  break e;
+                }
+              }
+            case 102: {
+              if ((s2[e3 + -2 >> 1] | 0) == 111 ? (s2[e3 + -4 >> 1] | 0) == 101 : 0) switch (s2[e3 + -6 >> 1] | 0) {
+                case 99: {
+                  e3 = T(e3 + -8 | 0, 132, 6) | 0;
+                  break e;
+                }
+                case 112: {
+                  e3 = T(e3 + -8 | 0, 144, 2) | 0;
+                  break e;
+                }
+                default: {
+                  e3 = 0;
+                  break e;
+                }
+              }
+              else e3 = 0;
+              break;
+            }
+            case 107: {
+              e3 = T(e3 + -2 | 0, 148, 4) | 0;
+              break;
+            }
+            case 110: {
+              e3 = e3 + -2 | 0;
+              if (B(e3, 105) | 0) e3 = 1;
+              else e3 = T(e3, 156, 5) | 0;
+              break;
+            }
+            case 111: {
+              e3 = B(e3 + -2 | 0, 100) | 0;
+              break;
+            }
+            case 114: {
+              e3 = T(e3 + -2 | 0, 166, 7) | 0;
+              break;
+            }
+            case 116: {
+              e3 = T(e3 + -2 | 0, 180, 4) | 0;
+              break;
+            }
+            case 119:
+              switch (s2[e3 + -2 >> 1] | 0) {
+                case 101: {
+                  e3 = B(e3 + -4 | 0, 110) | 0;
+                  break e;
+                }
+                case 111: {
+                  e3 = T(e3 + -4 | 0, 188, 3) | 0;
+                  break e;
+                }
+                default: {
+                  e3 = 0;
+                  break e;
+                }
+              }
+            default:
+              e3 = 0;
+          }
+        } while (0);
+        return e3 | 0;
+      }
+      function h2() {
+        var e3 = 0, a3 = 0, r3 = 0, i3 = 0;
+        a3 = f2[74] | 0;
+        r3 = f2[73] | 0;
+        e: while (1) {
+          e3 = r3 + 2 | 0;
+          if (r3 >>> 0 >= a3 >>> 0) {
+            a3 = 10;
+            break;
+          }
+          switch (s2[e3 >> 1] | 0) {
+            case 96: {
+              a3 = 7;
+              break e;
+            }
+            case 36: {
+              if ((s2[r3 + 4 >> 1] | 0) == 123) {
+                a3 = 6;
+                break e;
+              }
+              break;
+            }
+            case 92: {
+              e3 = r3 + 4 | 0;
+              break;
+            }
+            default: {
+            }
+          }
+          r3 = e3;
+        }
+        if ((a3 | 0) == 6) {
+          e3 = r3 + 4 | 0;
+          f2[73] = e3;
+          a3 = f2[71] | 0;
+          i3 = s2[402] | 0;
+          r3 = i3 & 65535;
+          f2[a3 + (r3 << 3) >> 2] = 4;
+          s2[402] = i3 + 1 << 16 >> 16;
+          f2[a3 + (r3 << 3) + 4 >> 2] = e3;
+        } else if ((a3 | 0) == 7) {
+          f2[73] = e3;
+          r3 = f2[71] | 0;
+          i3 = (s2[402] | 0) + -1 << 16 >> 16;
+          s2[402] = i3;
+          if ((f2[r3 + ((i3 & 65535) << 3) >> 2] | 0) != 3) W();
+        } else if ((a3 | 0) == 10) {
+          f2[73] = e3;
+          W();
+        }
+        return;
+      }
+      function w2(e3) {
+        e3 = e3 | 0;
+        var a3 = 0, r3 = 0, i3 = 0;
+        r3 = f2[73] | 0;
+        e: do {
+          a3 = s2[r3 >> 1] | 0;
+          a: do {
+            if (a3 << 16 >> 16 != 47) if (e3) if (X(a3) | 0) break;
+            else break e;
+            else if (F(a3) | 0) break;
+            else break e;
+            else switch (s2[r3 + 2 >> 1] | 0) {
+              case 47: {
+                P();
+                break a;
+              }
+              case 42: {
+                m(e3);
+                break a;
+              }
+              default: {
+                a3 = 47;
+                break e;
+              }
+            }
+          } while (0);
+          i3 = f2[73] | 0;
+          r3 = i3 + 2 | 0;
+          f2[73] = r3;
+        } while (i3 >>> 0 < (f2[74] | 0) >>> 0);
+        return a3 | 0;
+      }
+      function d2(e3, a3, r3, s3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        r3 = r3 | 0;
+        s3 = s3 | 0;
+        var t3 = 0, c3 = 0;
+        c3 = f2[67] | 0;
+        f2[67] = c3 + 40;
+        t3 = f2[63] | 0;
+        f2[((t3 | 0) == 0 ? 236 : t3 + 36 | 0) >> 2] = c3;
+        f2[64] = t3;
+        f2[63] = c3;
+        f2[c3 + 8 >> 2] = e3;
+        if (2 == (s3 | 0)) {
+          e3 = 3;
+          t3 = r3;
+        } else {
+          t3 = 1 == (s3 | 0);
+          e3 = t3 ? 1 : 2;
+          t3 = t3 ? r3 + 2 | 0 : 0;
+        }
+        f2[c3 + 12 >> 2] = t3;
+        f2[c3 + 28 >> 2] = e3;
+        f2[c3 >> 2] = a3;
+        f2[c3 + 4 >> 2] = r3;
+        f2[c3 + 16 >> 2] = 0;
+        f2[c3 + 20 >> 2] = s3;
+        a3 = 1 == (s3 | 0);
+        i2[c3 + 24 >> 0] = a3 & 1;
+        f2[c3 + 32 >> 2] = 0;
+        f2[c3 + 36 >> 2] = 0;
+        if (a3 | 2 == (s3 | 0)) i2[807] = 1;
+        return;
+      }
+      function v2(e3) {
+        e3 = e3 | 0;
+        var a3 = 0, r3 = 0, i3 = 0, t3 = 0;
+        t3 = f2[74] | 0;
+        a3 = f2[73] | 0;
+        while (1) {
+          i3 = a3 + 2 | 0;
+          if (a3 >>> 0 >= t3 >>> 0) {
+            a3 = 9;
+            break;
+          }
+          r3 = s2[i3 >> 1] | 0;
+          if (r3 << 16 >> 16 == e3 << 16 >> 16) {
+            a3 = 10;
+            break;
+          }
+          if (r3 << 16 >> 16 == 92) {
+            r3 = a3 + 4 | 0;
+            if ((s2[r3 >> 1] | 0) == 13) {
+              a3 = a3 + 6 | 0;
+              a3 = (s2[a3 >> 1] | 0) == 10 ? a3 : r3;
+            } else a3 = r3;
+          } else if (ie(r3) | 0) {
+            a3 = 9;
+            break;
+          } else a3 = i3;
+        }
+        if ((a3 | 0) == 9) {
+          f2[73] = i3;
+          W();
+        } else if ((a3 | 0) == 10) f2[73] = i3;
+        return;
+      }
+      function A(e3) {
+        e3 = e3 | 0;
+        var a3 = 0, r3 = 0;
+        a3 = s2[e3 >> 1] | 0;
+        if (X(a3) | 0) r3 = 3;
+        else switch (a3 << 16 >> 16) {
+          case 41:
+          case 125:
+          case 93: {
+            r3 = 3;
+            break;
+          }
+          default:
+            e3 = 0;
+        }
+        e: do {
+          if ((r3 | 0) == 3) {
+            r3 = f2[3] | 0;
+            while (1) {
+              if (e3 >>> 0 <= r3 >>> 0) break;
+              e3 = e3 + -2 | 0;
+              if (!(X(a3) | 0)) break;
+              a3 = s2[e3 >> 1] | 0;
+            }
+            switch (a3 << 16 >> 16) {
+              case 41:
+              case 125:
+              case 93: {
+                e3 = 1;
+                break e;
+              }
+              default: {
+              }
+            }
+            e3 = (U(a3) | 0) ^ 1;
+          }
+        } while (0);
+        return e3 | 0;
+      }
+      function C(e3, a3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        var r3 = 0, i3 = 0, t3 = 0, c3 = 0;
+        r3 = f2[73] | 0;
+        i3 = s2[r3 >> 1] | 0;
+        c3 = (e3 | 0) == (a3 | 0);
+        t3 = c3 ? 0 : e3;
+        c3 = c3 ? 0 : a3;
+        if (i3 << 16 >> 16 == 97) {
+          f2[73] = r3 + 4;
+          r3 = w2(1) | 0;
+          e3 = f2[73] | 0;
+          if (Y(r3) | 0) {
+            v2(r3);
+            a3 = (f2[73] | 0) + 2 | 0;
+            f2[73] = a3;
+          } else {
+            q(r3) | 0;
+            a3 = f2[73] | 0;
+          }
+          i3 = w2(1) | 0;
+          r3 = f2[73] | 0;
+        }
+        if ((r3 | 0) != (e3 | 0)) $(e3, a3, t3, c3);
+        return i3 | 0;
+      }
+      function g() {
+        var e3 = 0, a3 = 0, r3 = 0;
+        r3 = f2[74] | 0;
+        a3 = f2[73] | 0;
+        e: while (1) {
+          e3 = a3 + 2 | 0;
+          if (a3 >>> 0 >= r3 >>> 0) {
+            a3 = 6;
+            break;
+          }
+          switch (s2[e3 >> 1] | 0) {
+            case 13:
+            case 10: {
+              a3 = 6;
+              break e;
+            }
+            case 93: {
+              a3 = 7;
+              break e;
+            }
+            case 92: {
+              e3 = a3 + 4 | 0;
+              break;
+            }
+            default: {
+            }
+          }
+          a3 = e3;
+        }
+        if ((a3 | 0) == 6) {
+          f2[73] = e3;
+          W();
+          e3 = 0;
+        } else if ((a3 | 0) == 7) {
+          f2[73] = e3;
+          e3 = 93;
+        }
+        return e3 | 0;
+      }
+      function p() {
+        var e3 = 0, a3 = 0, r3 = 0;
+        e: while (1) {
+          e3 = f2[73] | 0;
+          a3 = e3 + 2 | 0;
+          f2[73] = a3;
+          if (e3 >>> 0 >= (f2[74] | 0) >>> 0) {
+            r3 = 7;
+            break;
+          }
+          switch (s2[a3 >> 1] | 0) {
+            case 13:
+            case 10: {
+              r3 = 7;
+              break e;
+            }
+            case 47:
+              break e;
+            case 91: {
+              g() | 0;
+              break;
+            }
+            case 92: {
+              f2[73] = e3 + 4;
+              break;
+            }
+            default: {
+            }
+          }
+        }
+        if ((r3 | 0) == 7) W();
+        return;
+      }
+      function y(e3) {
+        e3 = e3 | 0;
+        switch (s2[e3 >> 1] | 0) {
+          case 62: {
+            e3 = (s2[e3 + -2 >> 1] | 0) == 61;
+            break;
+          }
+          case 41:
+          case 59: {
+            e3 = 1;
+            break;
+          }
+          case 104: {
+            e3 = T(e3 + -2 | 0, 208, 4) | 0;
+            break;
+          }
+          case 121: {
+            e3 = T(e3 + -2 | 0, 216, 6) | 0;
+            break;
+          }
+          case 101: {
+            e3 = T(e3 + -2 | 0, 228, 3) | 0;
+            break;
+          }
+          default:
+            e3 = 0;
+        }
+        return e3 | 0;
+      }
+      function m(e3) {
+        e3 = e3 | 0;
+        var a3 = 0, r3 = 0, i3 = 0, t3 = 0, c3 = 0;
+        t3 = (f2[73] | 0) + 2 | 0;
+        f2[73] = t3;
+        r3 = f2[74] | 0;
+        while (1) {
+          a3 = t3 + 2 | 0;
+          if (t3 >>> 0 >= r3 >>> 0) break;
+          i3 = s2[a3 >> 1] | 0;
+          if (!e3 ? ie(i3) | 0 : 0) break;
+          if (i3 << 16 >> 16 == 42 ? (s2[t3 + 4 >> 1] | 0) == 47 : 0) {
+            c3 = 8;
+            break;
+          }
+          t3 = a3;
+        }
+        if ((c3 | 0) == 8) {
+          f2[73] = a3;
+          a3 = t3 + 4 | 0;
+        }
+        f2[73] = a3;
+        return;
+      }
+      function I(e3, a3, r3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        r3 = r3 | 0;
+        var s3 = 0, f3 = 0;
+        e: do {
+          if (!r3) e3 = 0;
+          else {
+            while (1) {
+              s3 = i2[e3 >> 0] | 0;
+              f3 = i2[a3 >> 0] | 0;
+              if (s3 << 24 >> 24 != f3 << 24 >> 24) break;
+              r3 = r3 + -1 | 0;
+              if (!r3) {
+                e3 = 0;
+                break e;
+              } else {
+                e3 = e3 + 1 | 0;
+                a3 = a3 + 1 | 0;
+              }
+            }
+            e3 = (s3 & 255) - (f3 & 255) | 0;
+          }
+        } while (0);
+        return e3 | 0;
+      }
+      function U(e3) {
+        e3 = e3 | 0;
+        e: do {
+          switch (e3 << 16 >> 16) {
+            case 38:
+            case 37:
+            case 33: {
+              e3 = 1;
+              break;
+            }
+            default:
+              if ((e3 & -8) << 16 >> 16 == 40 | (e3 + -58 & 65535) < 6) e3 = 1;
+              else {
+                switch (e3 << 16 >> 16) {
+                  case 91:
+                  case 93:
+                  case 94: {
+                    e3 = 1;
+                    break e;
+                  }
+                  default: {
+                  }
+                }
+                e3 = (e3 + -123 & 65535) < 4;
+              }
+          }
+        } while (0);
+        return e3 | 0;
+      }
+      function x(e3) {
+        e3 = e3 | 0;
+        e: do {
+          switch (e3 << 16 >> 16) {
+            case 38:
+            case 37:
+            case 33:
+              break;
+            default:
+              if (!((e3 + -58 & 65535) < 6 | (e3 + -40 & 65535) < 7 & e3 << 16 >> 16 != 41)) {
+                switch (e3 << 16 >> 16) {
+                  case 91:
+                  case 94:
+                    break e;
+                  default: {
+                  }
+                }
+                return e3 << 16 >> 16 != 125 & (e3 + -123 & 65535) < 4 | 0;
+              }
+          }
+        } while (0);
+        return 1;
+      }
+      function S(e3) {
+        e3 = e3 | 0;
+        var a3 = 0;
+        a3 = s2[e3 >> 1] | 0;
+        e: do {
+          if ((a3 + -9 & 65535) >= 5) {
+            switch (a3 << 16 >> 16) {
+              case 160:
+              case 32: {
+                a3 = 1;
+                break e;
+              }
+              default: {
+              }
+            }
+            if (U(a3) | 0) return a3 << 16 >> 16 != 46 | (G(e3) | 0) | 0;
+            else a3 = 0;
+          } else a3 = 1;
+        } while (0);
+        return a3 | 0;
+      }
+      function O(e3) {
+        e3 = e3 | 0;
+        var a3 = 0, r3 = 0, i3 = 0, t3 = 0;
+        r3 = n2;
+        n2 = n2 + 16 | 0;
+        i3 = r3;
+        f2[i3 >> 2] = 0;
+        f2[66] = e3;
+        a3 = f2[3] | 0;
+        t3 = a3 + (e3 << 1) | 0;
+        e3 = t3 + 2 | 0;
+        s2[t3 >> 1] = 0;
+        f2[i3 >> 2] = e3;
+        f2[67] = e3;
+        f2[59] = 0;
+        f2[63] = 0;
+        f2[61] = 0;
+        f2[60] = 0;
+        f2[65] = 0;
+        f2[62] = 0;
+        n2 = r3;
+        return a3 | 0;
+      }
+      function $(e3, a3, r3, s3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        r3 = r3 | 0;
+        s3 = s3 | 0;
+        var t3 = 0, c3 = 0;
+        t3 = f2[67] | 0;
+        f2[67] = t3 + 20;
+        c3 = f2[65] | 0;
+        f2[((c3 | 0) == 0 ? 240 : c3 + 16 | 0) >> 2] = t3;
+        f2[65] = t3;
+        f2[t3 >> 2] = e3;
+        f2[t3 + 4 >> 2] = a3;
+        f2[t3 + 8 >> 2] = r3;
+        f2[t3 + 12 >> 2] = s3;
+        f2[t3 + 16 >> 2] = 0;
+        i2[807] = 1;
+        return;
+      }
+      function T(e3, a3, r3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        r3 = r3 | 0;
+        var i3 = 0, s3 = 0;
+        i3 = e3 + (0 - r3 << 1) | 0;
+        s3 = i3 + 2 | 0;
+        e3 = f2[3] | 0;
+        if (s3 >>> 0 >= e3 >>> 0 ? (I(s3, a3, r3 << 1) | 0) == 0 : 0) if ((s3 | 0) == (e3 | 0)) e3 = 1;
+        else e3 = S(i3) | 0;
+        else e3 = 0;
+        return e3 | 0;
+      }
+      function j(e3) {
+        e3 = e3 | 0;
+        switch (s2[e3 >> 1] | 0) {
+          case 107: {
+            e3 = T(e3 + -2 | 0, 148, 4) | 0;
+            break;
+          }
+          case 101: {
+            if ((s2[e3 + -2 >> 1] | 0) == 117) e3 = T(e3 + -4 | 0, 120, 6) | 0;
+            else e3 = 0;
+            break;
+          }
+          default:
+            e3 = 0;
+        }
+        return e3 | 0;
+      }
+      function B(e3, a3) {
+        e3 = e3 | 0;
+        a3 = a3 | 0;
+        var r3 = 0;
+        r3 = f2[3] | 0;
+        if (r3 >>> 0 <= e3 >>> 0 ? (s2[e3 >> 1] | 0) == a3 << 16 >> 16 : 0) if ((r3 | 0) == (e3 | 0)) r3 = 1;
+        else r3 = E(s2[e3 + -2 >> 1] | 0) | 0;
+        else r3 = 0;
+        return r3 | 0;
+      }
+      function E(e3) {
+        e3 = e3 | 0;
+        e: do {
+          if ((e3 + -9 & 65535) < 5) e3 = 1;
+          else {
+            switch (e3 << 16 >> 16) {
+              case 32:
+              case 160: {
+                e3 = 1;
+                break e;
+              }
+              default: {
+              }
+            }
+            e3 = e3 << 16 >> 16 != 46 & (U(e3) | 0);
+          }
+        } while (0);
+        return e3 | 0;
+      }
+      function P() {
+        var e3 = 0, a3 = 0, r3 = 0;
+        e3 = f2[74] | 0;
+        r3 = f2[73] | 0;
+        e: while (1) {
+          a3 = r3 + 2 | 0;
+          if (r3 >>> 0 >= e3 >>> 0) break;
+          switch (s2[a3 >> 1] | 0) {
+            case 13:
+            case 10:
+              break e;
+            default:
+              r3 = a3;
+          }
+        }
+        f2[73] = a3;
+        return;
+      }
+      function q(e3) {
+        e3 = e3 | 0;
+        while (1) {
+          if (X(e3) | 0) break;
+          if (U(e3) | 0) break;
+          e3 = (f2[73] | 0) + 2 | 0;
+          f2[73] = e3;
+          e3 = s2[e3 >> 1] | 0;
+          if (!(e3 << 16 >> 16)) {
+            e3 = 0;
+            break;
+          }
+        }
+        return e3 | 0;
+      }
+      function z() {
+        var e3 = 0;
+        e3 = f2[(f2[61] | 0) + 20 >> 2] | 0;
+        switch (e3 | 0) {
+          case 1: {
+            e3 = -1;
+            break;
+          }
+          case 2: {
+            e3 = -2;
+            break;
+          }
+          default:
+            e3 = e3 - (f2[3] | 0) >> 1;
+        }
+        return e3 | 0;
+      }
+      function D(e3) {
+        e3 = e3 | 0;
+        if (!(T(e3, 194, 5) | 0) ? !(T(e3, 44, 3) | 0) : 0) e3 = T(e3, 204, 2) | 0;
+        else e3 = 1;
+        return e3 | 0;
+      }
+      function F(e3) {
+        e3 = e3 | 0;
+        switch (e3 << 16 >> 16) {
+          case 160:
+          case 32:
+          case 12:
+          case 11:
+          case 9: {
+            e3 = 1;
+            break;
+          }
+          default:
+            e3 = 0;
+        }
+        return e3 | 0;
+      }
+      function G(e3) {
+        e3 = e3 | 0;
+        if ((s2[e3 >> 1] | 0) == 46 ? (s2[e3 + -2 >> 1] | 0) == 46 : 0) e3 = (s2[e3 + -4 >> 1] | 0) == 46;
+        else e3 = 0;
+        return e3 | 0;
+      }
+      function H() {
+        var e3 = 0;
+        e3 = f2[69] | 0;
+        e3 = f2[((e3 | 0) == 0 ? (f2[61] | 0) + 32 | 0 : e3 + 16 | 0) >> 2] | 0;
+        f2[69] = e3;
+        return (e3 | 0) != 0 | 0;
+      }
+      function J(e3) {
+        e3 = e3 | 0;
+        if ((f2[3] | 0) == (e3 | 0)) e3 = 1;
+        else e3 = S(e3 + -2 | 0) | 0;
+        return e3 | 0;
+      }
+      function K() {
+        var e3 = 0;
+        e3 = f2[(f2[62] | 0) + 12 >> 2] | 0;
+        if (!e3) e3 = -1;
+        else e3 = e3 - (f2[3] | 0) >> 1;
+        return e3 | 0;
+      }
+      function L() {
+        var e3 = 0;
+        e3 = f2[(f2[61] | 0) + 12 >> 2] | 0;
+        if (!e3) e3 = -1;
+        else e3 = e3 - (f2[3] | 0) >> 1;
+        return e3 | 0;
+      }
+      function M() {
+        var e3 = 0;
+        e3 = f2[(f2[62] | 0) + 8 >> 2] | 0;
+        if (!e3) e3 = -1;
+        else e3 = e3 - (f2[3] | 0) >> 1;
+        return e3 | 0;
+      }
+      function N() {
+        var e3 = 0;
+        e3 = f2[(f2[61] | 0) + 16 >> 2] | 0;
+        if (!e3) e3 = -1;
+        else e3 = e3 - (f2[3] | 0) >> 1;
+        return e3 | 0;
+      }
+      function Q() {
+        var e3 = 0;
+        e3 = f2[(f2[61] | 0) + 4 >> 2] | 0;
+        if (!e3) e3 = -1;
+        else e3 = e3 - (f2[3] | 0) >> 1;
+        return e3 | 0;
+      }
+      function R() {
+        var e3 = 0;
+        e3 = f2[61] | 0;
+        e3 = f2[((e3 | 0) == 0 ? 236 : e3 + 36 | 0) >> 2] | 0;
+        f2[61] = e3;
+        return (e3 | 0) != 0 | 0;
+      }
+      function V() {
+        var e3 = 0;
+        e3 = f2[62] | 0;
+        e3 = f2[((e3 | 0) == 0 ? 240 : e3 + 16 | 0) >> 2] | 0;
+        f2[62] = e3;
+        return (e3 | 0) != 0 | 0;
+      }
+      function W() {
+        i2[806] = 1;
+        f2[68] = (f2[73] | 0) - (f2[3] | 0) >> 1;
+        f2[73] = (f2[74] | 0) + 2;
+        return;
+      }
+      function X(e3) {
+        e3 = e3 | 0;
+        return (e3 | 128) << 16 >> 16 == 160 | (e3 + -9 & 65535) < 5 | 0;
+      }
+      function Y(e3) {
+        e3 = e3 | 0;
+        return e3 << 16 >> 16 == 39 | e3 << 16 >> 16 == 34 | 0;
+      }
+      function Z() {
+        return (f2[(f2[69] | 0) + 12 >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function _() {
+        return (f2[(f2[69] | 0) + 8 >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function ee() {
+        return (f2[(f2[69] | 0) + 4 >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function ae() {
+        return (f2[(f2[61] | 0) + 8 >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function re() {
+        return (f2[(f2[62] | 0) + 4 >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function ie(e3) {
+        e3 = e3 | 0;
+        return e3 << 16 >> 16 == 13 | e3 << 16 >> 16 == 10 | 0;
+      }
+      function se() {
+        return (f2[f2[69] >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function fe() {
+        return (f2[f2[61] >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function te() {
+        return (f2[f2[62] >> 2] | 0) - (f2[3] | 0) >> 1 | 0;
+      }
+      function ce() {
+        return t2[(f2[61] | 0) + 24 >> 0] | 0 | 0;
+      }
+      function ne(e3) {
+        e3 = e3 | 0;
+        f2[3] = e3;
+        return;
+      }
+      function be() {
+        return f2[(f2[61] | 0) + 28 >> 2] | 0;
+      }
+      function ke() {
+        return (i2[807] | 0) != 0 | 0;
+      }
+      function ue() {
+        return (i2[808] | 0) != 0 | 0;
+      }
+      function le() {
+        f2[69] = 0;
+        return;
+      }
+      function oe() {
+        return f2[68] | 0;
+      }
+      function he(e3) {
+        e3 = e3 | 0;
+        n2 = e3 + 992 + 15 & -16;
+        return 992;
+      }
+      return { su: he, ai: N, ake: ee, aks: se, ave: Z, avs: _, e: oe, ee: re, ele: K, els: M, es: te, f: ue, id: z, ie: Q, ip: ce, is: fe, it: be, ms: ke, p: b2, ra: H, re: V, ri: R, rsa: le, sa: O, se: L, ses: ne, ss: ae };
+    })("undefined" != typeof globalThis ? globalThis : self, {}, a), r = e.su(i - (2 << 17));
+  }
+  const h = t.length + 1;
+  e.ses(r), e.sa(h - 1), s(t, new Uint16Array(a, r, h)), e.p() || (n = e.e(), o());
+  const w = [], d = [];
+  for (; e.ri(); ) {
+    const a2 = e.is(), r2 = e.ie(), i2 = e.ai(), s2 = e.id(), f2 = e.ss(), c2 = e.se(), n2 = e.it();
+    let k3;
+    e.ip() && (k3 = b(-1 === s2 ? a2 : a2 + 1, t.charCodeAt(-1 === s2 ? a2 - 1 : a2)));
+    const u3 = [];
+    for (e.rsa(); e.ra(); ) {
+      const a3 = e.aks(), r3 = e.ake(), i3 = e.avs(), s3 = e.ave(), f3 = v(a3, r3), t2 = v(i3, s3);
+      u3.push([f3, t2]);
+    }
+    w.push({ t: n2, n: k3, s: a2, e: r2, ss: f2, se: c2, d: s2, a: i2, at: u3.length > 0 ? u3 : null });
+  }
+  for (; e.re(); ) {
+    const a2 = e.es(), r2 = e.ee(), i2 = e.els(), s2 = e.ele(), f2 = v(a2, r2), t2 = i2 < 0 ? void 0 : v(i2, s2);
+    d.push({ s: a2, e: r2, ls: i2, le: s2, n: f2, ln: t2 });
+  }
+  return [w, d, !!e.f(), !!e.ms()];
+  function v(e2, a2) {
+    const r2 = t.charCodeAt(e2);
+    return 34 === r2 || 39 === r2 ? b(e2 + 1, r2) : t.slice(e2, a2);
+  }
+}
+function b(e2, a2) {
+  n = e2;
+  let r2 = "", i2 = n;
+  for (; ; ) {
+    n >= t.length && o();
+    const e3 = t.charCodeAt(n);
+    if (e3 === a2) break;
+    92 === e3 ? (r2 += t.slice(i2, n), r2 += k(), i2 = n) : (8232 === e3 || 8233 === e3 || l(e3) && o(), ++n);
+  }
+  return r2 += t.slice(i2, n++), r2;
+}
+function k() {
+  let e2 = t.charCodeAt(++n);
+  switch (++n, e2) {
+    case 110:
+      return "\n";
+    case 114:
+      return "\r";
+    case 120:
+      return String.fromCharCode(u(2));
+    case 117:
+      return (function() {
+        const e3 = t.charCodeAt(n);
+        let a2;
+        123 === e3 ? (++n, a2 = u(t.indexOf("}", n) - n), ++n, a2 > 1114111 && o()) : a2 = u(4);
+        return a2 <= 65535 ? String.fromCharCode(a2) : (a2 -= 65536, String.fromCharCode(55296 + (a2 >> 10), 56320 + (1023 & a2)));
+      })();
+    case 116:
+      return "	";
+    case 98:
+      return "\b";
+    case 118:
+      return "\v";
+    case 102:
+      return "\f";
+    case 13:
+      10 === t.charCodeAt(n) && ++n;
+    case 10:
+      return "";
+    case 56:
+    case 57:
+      o();
+    default:
+      if (e2 >= 48 && e2 <= 55) {
+        let a2 = t.substr(n - 1, 3).match(/^[0-7]+/)[0], r2 = parseInt(a2, 8);
+        return r2 > 255 && (a2 = a2.slice(0, -1), r2 = parseInt(a2, 8)), n += a2.length - 1, e2 = t.charCodeAt(n), "0" === a2 && 56 !== e2 && 57 !== e2 || o(), String.fromCharCode(r2);
+      }
+      return l(e2) ? "" : String.fromCharCode(e2);
+  }
+}
+function u(e2) {
+  const a2 = n;
+  let r2 = 0, i2 = 0;
+  for (let a3 = 0; a3 < e2; ++a3, ++n) {
+    let e3, s2 = t.charCodeAt(n);
+    if (95 !== s2) {
+      if (s2 >= 97) e3 = s2 - 97 + 10;
+      else if (s2 >= 65) e3 = s2 - 65 + 10;
+      else {
+        if (!(s2 >= 48 && s2 <= 57)) break;
+        e3 = s2 - 48;
+      }
+      if (e3 >= 16) break;
+      i2 = s2, r2 = 16 * r2 + e3;
+    } else 95 !== i2 && 0 !== a3 || o(), i2 = s2;
+  }
+  return 95 !== i2 && n - a2 === e2 || o(), r2;
+}
+function l(e2) {
+  return 13 === e2 || 10 === e2;
+}
+function o() {
+  throw Object.assign(Error(`Parse error ${c}:${t.slice(0, n).split("\n").length}:${n - t.lastIndexOf("\n", n - 1)}`), { idx: n });
+}
 
 // pip-editor/pip-host/packages/esm-validation.ts
 async function assertSelfContainedEsm(source, label = "entry.mjs") {
-  await init;
   let imports;
   try {
     [imports] = parse(source, label);
@@ -25862,6 +27826,25 @@ function usePluginCatalog({
   };
 }
 
+// pip-editor/pip-host/view/canvas-entry.module.css
+var canvas_entry_default = {
+  entry: "canvas_entry_entry",
+  notice: "canvas_entry_notice"
+};
+
+// pip-editor/pip-host/view/startup-notice.tsx
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+function StartupNotice({ loading, error, retry }) {
+  if (!loading && !error) return null;
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("aside", { className: canvas_entry_default.notice, role: "status", children: loading ? "\u6B63\u5728\u52A0\u8F7D\u5B98\u7F51\u5DE5\u4F5C\u533A\u2026" : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      "\u5B98\u7F51\u5DE5\u4F5C\u533A\u52A0\u8F7D\u5931\u8D25\uFF1A",
+      error
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { onClick: retry, children: "\u91CD\u8BD5\u52A0\u8F7D" })
+  ] }) });
+}
+
 // pip-editor/pip-host/use-host-effects.ts
 var import_react7 = __toESM(require_react(), 1);
 
@@ -25931,7 +27914,11 @@ async function read_page_launch(manifest_path) {
   const release = await release_response.json();
   if (!/^[a-zA-Z0-9_.-]+\.pip$/.test(release.file))
     throw new Error("Invalid launch package path");
-  const response = await fetch(new URL(release.file, manifest_url));
+  if (!/^[a-f0-9]{64}$/.test(release.sha256))
+    throw new Error("Invalid launch package digest");
+  const package_url = new URL(release.file, manifest_url);
+  package_url.searchParams.set("sha256", release.sha256);
+  const response = await fetch(package_url, { cache: "no-store" });
   if (!response.ok) throw new Error("Launch package unavailable");
   const bytes = new Uint8Array(await response.arrayBuffer());
   if (await pipSha256(bytes) !== release.sha256)
@@ -25956,6 +27943,9 @@ async function activateNodeMapDependencies(portable, host) {
 // pip-editor/pip-host/use-startup-workspace.ts
 function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_error) {
   const started = (0, import_react6.useRef)(false);
+  const [attempt, set_attempt] = (0, import_react6.useState)(0);
+  const [loading, set_loading] = (0, import_react6.useState)(!explicit_launch && auto_load_website);
+  const [error, set_error] = (0, import_react6.useState)("");
   (0, import_react6.useEffect)(() => {
     if (started.current || explicit_launch) return;
     started.current = true;
@@ -25986,10 +27976,19 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
         validate2(portable.nodeMap.graph);
       await catalog.openNodeMap(portable);
     }
-    void launch().catch((error) => on_error(
-      error instanceof Error ? error.message : "\u542F\u52A8\u5DE5\u4F5C\u7A7A\u95F4\u5931\u8D25"
-    ));
-  }, [auto_load_website, explicit_launch, catalog, on_error]);
+    void launch().catch((failure) => {
+      const message = failure instanceof Error ? failure.message : "\u542F\u52A8\u5DE5\u4F5C\u7A7A\u95F4\u5931\u8D25";
+      set_error(message);
+      on_error(message);
+    }).finally(() => set_loading(false));
+  }, [auto_load_website, explicit_launch, catalog, on_error, attempt]);
+  return { loading, error, retry: () => {
+    if (loading) return;
+    started.current = false;
+    set_error("");
+    set_loading(true);
+    set_attempt((value) => value + 1);
+  } };
 }
 
 // pip-editor/pip-host/use-host-effects.ts
@@ -26010,7 +28009,7 @@ function useHostEffects({
   tabWorkspaces,
   workspaces
 }) {
-  useStartupWorkspace(auto_load_website, explicit_launch, catalog, setMessage);
+  const startup = useStartupWorkspace(auto_load_website, explicit_launch, catalog, setMessage);
   const [triggerRuntime] = (0, import_react7.useState)(
     () => new TriggerRuntime({
       registry: nodeTypes,
@@ -26089,6 +28088,7 @@ function useHostEffects({
     addEventListener("intent-pip-hook", handleHook);
     return () => removeEventListener("intent-pip-hook", handleHook);
   }, [setMessage, triggerRuntime]);
+  return startup;
 }
 
 // pip-editor/pip-host/use-system-plugins.ts
@@ -26225,19 +28225,19 @@ function useSystemPlugins(options) {
 }
 
 // pip-editor/pip-host/view/close-workspace-dialog.tsx
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 function CloseWorkspaceDialog({ name, onExport, onDiscard, onCancel }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("h2", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("h2", { children: [
       "\u5173\u95ED\u201C",
       name,
       "\u201D\uFF1F"
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
     ] })
   ] }) });
 }
@@ -26389,13 +28389,13 @@ function project(projection, projectionNode, observed, graph, elements, type, el
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 var objectText = (pip) => !pip.predicate_value ? "\u2014" : pip.predicate_value.value.kind === "const" ? JSON.stringify(pip.predicate_value.value.value) : pip.predicate_value.value.kind === "ref" ? `\u2192 ${pip.predicate_value.value.target.node_id}/${pip.predicate_value.value.target.pip_id}` : `${pip.predicate_value.value.op}(\u2026)`;
 function RawPips({ pips, depth = 0 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("code", { children: pip.id }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: objectText(pip) }),
-    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { children: pip.id }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: objectText(pip) }),
+    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
   ] }, pip.id)) });
 }
 function PluginProjection({ tag, context, onRequest, children }) {
@@ -26457,36 +28457,36 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node,
     execution
   }), [workspaceId, rootNodeIds, workspaceView, graph, node, observed, contextKind, type, selection, projection, projectionData, execution]);
   if (error)
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.orphan, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: node.id }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "projection error" })
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: pip_host_default.orphan, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("strong", { children: node.id }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "projection error" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(RawPips, { pips: node.pips })
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(RawPips, { pips: node.pips })
     ] });
   if (declaration)
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(EmbeddedItems, { projectionNode: node, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) });
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.orphan, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: node.id }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: type?.name ?? "orphan Pip" })
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(EmbeddedItems, { projectionNode: node, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: pip_host_default.orphan, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("strong", { children: node.id }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: type?.name ?? "orphan Pip" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(RawPips, { pips: node.pips })
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(RawPips, { pips: node.pips })
   ] });
 }
 function EmbeddedItems({ projectionNode, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) {
   const items = presentedProjections(projectionNode, graph);
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_jsx_runtime10.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_jsx_runtime11.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
     const node = graphNodes(graph)[projectionNodeId];
     const definition = node && projectionForInstance(node, nodeTypes.projections());
     if (!node || !definition || observationScope(definition) !== "self" || !definition.surfaces?.includes("embedded")) {
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.orphan, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: pip_host_default.orphan, children: [
         "Invalid embedded Projection Instance: ",
         projectionNodeId
       ] }, projectionNodeId);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PipNodeRenderer, { workspaceId, rootNodeIds, workspaceView, graph, node, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest }) }, projectionNodeId);
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(PipNodeRenderer, { workspaceId, rootNodeIds, workspaceView, graph, node, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest }) }, projectionNodeId);
   }) });
 }
 
@@ -26500,7 +28500,7 @@ var creator_window_default = {
 };
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function NodeCreator({
   candidates,
   onChoose,
@@ -26514,7 +28514,7 @@ function NodeCreator({
     ),
     [candidates, query]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
     "div",
     {
       className: creator_window_default.creator,
@@ -26536,7 +28536,7 @@ function NodeCreator({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "input",
           {
             autoFocus: true,
@@ -26548,17 +28548,17 @@ function NodeCreator({
             placeholder: "\u641C\u7D22\u8282\u70B9\u6216\u5DE5\u4F5C\u533A\u5DE5\u5177\u2026"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
           "button",
           {
             type: "button",
             className: index === active ? creator_window_default.creatorActive : "",
             onClick: () => onChoose(item),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("strong", { children: item.label }),
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("small", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("strong", { children: item.label }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("small", { children: [
                   item.category,
                   " \xB7 ",
                   item.description
@@ -26568,16 +28568,16 @@ function NodeCreator({
           },
           `${item.provider}:${item.id}`
         )) }),
-        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
+        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
       ]
     }
   );
 }
 
 // pip-editor/pip-host/view/guanguan-logo.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function GuanguanLogo() {
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
     "svg",
     {
       viewBox: "0 0 40 40",
@@ -26588,13 +28588,13 @@ function GuanguanLogo() {
       "aria-hidden": "true",
       focusable: "false",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("rect", { width: "40", height: "40", rx: "11", fill: "var(--guanguan-back, #334E62)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z", fill: "var(--guanguan-body, #F5EFE5)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z", fill: "var(--guanguan-wing, #86A5BC)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z", fill: "var(--guanguan-feather, #57788F)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z", fill: "#40576B" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("rect", { width: "40", height: "40", rx: "11", fill: "var(--guanguan-back, #334E62)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z", fill: "var(--guanguan-body, #F5EFE5)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z", fill: "var(--guanguan-wing, #86A5BC)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z", fill: "var(--guanguan-feather, #57788F)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z", fill: "#40576B" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
       ]
     }
   );
@@ -26618,9 +28618,9 @@ var workspace_window_default = {
 };
 
 // pip-editor/pip-host/view/window-menu.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 function WindowMenu({ target_ref, close_label }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
     "div",
     {
       className: `${workspace_window_default.windowSystemControls} ${workspace_window_default.windowSystemControlsTop}`,
@@ -26628,12 +28628,12 @@ function WindowMenu({ target_ref, close_label }) {
       "data-window-controls": "top",
       "aria-label": "\u7A97\u53E3\u79FB\u52A8\u533A\u57DF",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("details", { "data-window-menu": true, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GuanguanLogo, {}) }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("details", { "data-window-menu": true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(GuanguanLogo, {}) }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
       ]
     }
   );
@@ -26642,7 +28642,7 @@ function WindowMenu({ target_ref, close_label }) {
 // pip-editor/pip-host/view/active-controls.tsx
 var import_react_dom = __toESM(require_react_dom(), 1);
 var import_react12 = __toESM(require_react(), 1);
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 var ActiveControlsContext = (0, import_react12.createContext)(void 0);
 var WindowControlOwner = (0, import_react12.createContext)({ id: "workspace", active: false });
 var HostCameraTarget = (0, import_react12.createContext)(void 0);
@@ -26670,7 +28670,7 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
   const choices = [...snapshot];
   if (base_target) choices.push(base_target);
   const current = choices.find((item) => item.id === chosen_id) ?? choices.find((item) => item.active) ?? choices.find((item) => item.id !== "host-camera") ?? base_target;
-  const toolbar = enabled && current ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+  const toolbar = enabled && current ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
     "div",
     {
       "data-active-controls": true,
@@ -26679,18 +28679,18 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       onPointerDown: (event) => event.stopPropagation(),
       onClick: (event) => event.stopPropagation(),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: current.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { "aria-label": `\u7F29\u5C0F${current.label}`, onClick: () => current.zoom_out(), children: "\u2212" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: current.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { "aria-label": `\u7F29\u5C0F${current.label}`, onClick: () => current.zoom_out(), children: "\u2212" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
           Math.round(current.scale * 100),
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { "aria-label": `\u653E\u5927${current.label}`, onClick: () => current.zoom_in(), children: "+" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { "aria-label": `\u9002\u5E94${current.label}`, onClick: () => current.fit(), children: "\u9002\u5E94" })
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { "aria-label": `\u653E\u5927${current.label}`, onClick: () => current.zoom_in(), children: "+" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { "aria-label": `\u9002\u5E94${current.label}`, onClick: () => current.fit(), children: "\u9002\u5E94" })
       ]
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
     children,
     portal_target ? (0, import_react_dom.createPortal)(toolbar, portal_target) : toolbar
   ] });
@@ -26791,7 +28791,7 @@ var import_react16 = __toESM(require_react(), 1);
 // pip-editor/pip-host/view/workspace-window-chrome.tsx
 var import_react15 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var WorkspaceWindowChromeContext = (0, import_react15.createContext)(void 0);
 function useWorkspaceWindowChromeTargets() {
   const [targets, setTargets] = (0, import_react15.useState)({});
@@ -26816,8 +28816,8 @@ var controls = ({
   onFit,
   onZoomIn,
   onZoomOut
-}) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className, children: [
-  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+}) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className, children: [
+  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     "button",
     {
       type: "button",
@@ -26826,11 +28826,11 @@ var controls = ({
       children: "\u2212"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { children: [
+  /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { children: [
     Math.round(scale * 100),
     "%"
   ] }),
-  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     "button",
     {
       type: "button",
@@ -26839,7 +28839,7 @@ var controls = ({
       children: "+"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     "button",
     {
       type: "button",
@@ -26859,7 +28859,7 @@ function WindowScaleControls({
   const targets = (0, import_react15.useContext)(WorkspaceWindowChromeContext);
   const registry = (0, import_react15.useContext)(ActiveControlsContext);
   const owner = (0, import_react15.useContext)(WindowControlOwner);
-  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(RegisteredScaleControl, { target: {
+  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RegisteredScaleControl, { target: {
     id: owner.id,
     label: subject,
     scale,
@@ -26878,7 +28878,7 @@ function WindowScaleControls({
       onZoomOut
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_jsx_runtime15.Fragment, { children: targets.top && (0, import_react_dom2.createPortal)(controls({
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: targets.top && (0, import_react_dom2.createPortal)(controls({
     className: workspace_window_default.windowCameraControls,
     scale,
     subject,
@@ -26901,7 +28901,7 @@ function WindowContentScaleControls({
     ...frame,
     contentScale: clampContentScale(next)
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
     WindowScaleControls,
     {
       scale,
@@ -26914,7 +28914,7 @@ function WindowContentScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 var directions = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 var clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 function resized(start, direction, dx, dy, world) {
@@ -27058,7 +29058,7 @@ function WorkspaceWindow({
     }
   };
   const handles = preview.resizeMode === "simple" ? ["e", "s", "se"] : directions;
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
     "article",
     {
       ref: window_ref,
@@ -27095,9 +29095,9 @@ function WorkspaceWindow({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(WindowMenu, { target_ref: set_top_ref, close_label }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(WindowMenu, { target_ref: set_top_ref, close_label }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailLeft}`,
@@ -27105,7 +29105,7 @@ function WorkspaceWindow({
             "aria-label": "\u5DE6\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailRight}`,
@@ -27113,7 +29113,7 @@ function WorkspaceWindow({
             "aria-label": "\u53F3\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "div",
           {
             className: workspace_window_default.windowContent,
@@ -27121,8 +29121,8 @@ function WorkspaceWindow({
             children
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
-        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
+        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "i",
           {
             className: workspace_window_default.resizeHandle,
@@ -27137,7 +29137,7 @@ function WorkspaceWindow({
 }
 
 // pip-editor/pip-host/view/creator-window.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
 var creatorFrameAt = (point, views) => {
   const width = 420;
   const height = 520;
@@ -27158,7 +29158,7 @@ function CreatorWindow({
   onChoose,
   onFrame
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
     WorkspaceWindow,
     {
       id: "host.transient.creator",
@@ -27169,7 +29169,7 @@ function CreatorWindow({
       onClose: onCancel,
       onFrame,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
           NodeCreator,
           {
             candidates,
@@ -27177,7 +29177,7 @@ function CreatorWindow({
             onChoose
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
           WindowContentScaleControls,
           {
             frame,
@@ -27191,7 +29191,7 @@ function CreatorWindow({
 }
 
 // pip-editor/pip-host/view/system-plugin-window.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
 function SystemPluginWindowView({
   active,
   front,
@@ -27207,7 +29207,7 @@ function SystemPluginWindowView({
 }) {
   const Renderer = plugins.Renderer;
   const window_label = plugins.creatorChoices(surface, workspace).find((choice) => choice.id === window2.pluginId)?.label ?? window2.pluginId;
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
     WorkspaceWindow,
     {
       id: window2.id,
@@ -27220,7 +29220,7 @@ function SystemPluginWindowView({
       close_label: `\u5173\u95ED${window_label}`,
       onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           Renderer,
           {
             window: window2,
@@ -27229,7 +29229,7 @@ function SystemPluginWindowView({
             services
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           WindowContentScaleControls,
           {
             frame: window2.frame,
@@ -27256,7 +29256,7 @@ var pip_drop_zone_default = {
 };
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
 var ownsEvent = (event) => {
   const target = event.target;
   return target instanceof Element && target.closest("[data-pip-drop-target]") === event.currentTarget;
@@ -27278,7 +29278,7 @@ var PipDropZone = (0, import_react17.forwardRef)(
       event.stopPropagation();
       return true;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
       "div",
       {
         ...props,
@@ -27318,7 +29318,7 @@ var PipDropZone = (0, import_react17.forwardRef)(
         },
         children: [
           children,
-          active && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
+          active && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
         ]
       }
     );
@@ -27326,7 +29326,7 @@ var PipDropZone = (0, import_react17.forwardRef)(
 );
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 var pointIn = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return { x: clientX - rect.left, y: clientY - rect.top };
@@ -27352,12 +29352,12 @@ function LegacyWorkspaceCanvas({
   const canvas = (0, import_react18.useRef)(null);
   const drag = (0, import_react18.useRef)(void 0);
   const [creator, setCreator] = (0, import_react18.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
     "section",
     {
       className: pip_host_default.canvasWrap,
       "data-testid": "pip-workspace",
-      children: /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
         PipDropZone,
         {
           ref: canvas,
@@ -27409,12 +29409,12 @@ function LegacyWorkspaceCanvas({
             if (moved >= 4) setCreator({ point });
           },
           children: [
-            hasWorkspaceProjection ? roots.map((node) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+            hasWorkspaceProjection ? roots.map((node) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
               "article",
               {
                 "data-node-id": node.id,
                 className: pip_host_default.workspaceProjection,
-                children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -27431,13 +29431,13 @@ function LegacyWorkspaceCanvas({
                 )
               },
               node.id
-            )) : nodes.map((node) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+            )) : nodes.map((node) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
               "article",
               {
                 "data-node-id": node.id,
                 className: `${pip_host_default.node} ${workspace.selection.includes(node.id) ? pip_host_default.selected : ""}`,
                 onClick: () => onSelectionChange([node.id]),
-                children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -27454,8 +29454,8 @@ function LegacyWorkspaceCanvas({
               },
               node.id
             )),
-            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
-            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
+            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
               SystemPluginWindowView,
               {
                 window: item,
@@ -27473,7 +29473,7 @@ function LegacyWorkspaceCanvas({
               },
               item.id
             )),
-            creator && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+            creator && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
               CreatorWindow,
               {
                 candidates: creatorChoices,
@@ -27623,8 +29623,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       }
     };
     const separation = () => {
-      const [a, b] = [...points.values()];
-      return Math.hypot(a.x - b.x, a.y - b.y);
+      const [a2, b2] = [...points.values()];
+      return Math.hypot(a2.x - b2.x, a2.y - b2.y);
     };
     const down = (event) => {
       const active_ids = new Set(Array.from(event.touches, (touch) => touch.identifier));
@@ -27660,8 +29660,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
         pinched = true;
         if (points.size === 2) {
           distance = separation();
-          const [a, b] = [...points.values()];
-          const center = position({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+          const [a2, b2] = [...points.values()];
+          const center = position({ x: (a2.x + b2.x) / 2, y: (a2.y + b2.y) / 2 });
           const current = latest.current;
           pinch_start = { navigation: current.navigation, world: {
             x: (center.x - current.offset.x) / current.navigation.semanticScale,
@@ -27680,8 +29680,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       const current = latest.current;
       if (points.size >= 2) {
         if (event.cancelable) event.preventDefault();
-        const [a, b] = [...points.values()];
-        const center = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+        const [a2, b2] = [...points.values()];
+        const center = { x: (a2.x + b2.x) / 2, y: (a2.y + b2.y) / 2 };
         const next_distance = separation();
         if (!switched && pinch_start && distance > 0) {
           const target = nearest_projection(element, center);
@@ -27829,8 +29829,8 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
         switched = false;
       }
       if (points.size === 2) {
-        const [a, b] = [...points.values()];
-        distance = Math.hypot(a.x - b.x, a.y - b.y);
+        const [a2, b2] = [...points.values()];
+        distance = Math.hypot(a2.x - b2.x, a2.y - b2.y);
         moved = true;
         event.preventDefault();
       }
@@ -27854,10 +29854,10 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
       const current = latest.current;
       if (points.size >= 2) {
         if (event.cancelable) event.preventDefault();
-        const [a, b] = [...points.values()];
-        const next_distance = Math.hypot(a.x - b.x, a.y - b.y);
+        const [a2, b2] = [...points.values()];
+        const next_distance = Math.hypot(a2.x - b2.x, a2.y - b2.y);
         if (!switched && distance > 0) {
-          const anchor = position({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+          const anchor = position({ x: (a2.x + b2.x) / 2, y: (a2.y + b2.y) / 2 });
           const forward = forwardRoute(current.navigation, current.graph, current.node_types, void 0, current.selection[0]);
           const next = applySemanticScale(current.navigation, current.navigation.semanticScale * next_distance / distance, forward);
           switched = next.index !== current.navigation.index;
@@ -27911,7 +29911,7 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
 
 // pip-editor/pip-host/projection/semantic-projection.tsx
 var import_react21 = __toESM(require_react(), 1);
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var mix = (from, to, progress) => from + (to - from) * progress;
 function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation: navigation2, contentOffset, execution, elements, nodeTypes, selection, onRequest }) {
   const viewport = (0, import_react21.useRef)(null), [flip, setFlip] = (0, import_react21.useState)();
@@ -27958,7 +29958,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     setFlip({ key: transitionKey, ...local_point(outer, { width: host.clientWidth, height: host.clientHeight }, { x: inner.left, y: inner.top }), scaleX: inner.width / outer.width, scaleY: inner.height / outer.height, viewportWidth: outer.width, viewportHeight: outer.height });
   }, [flipChildId, forwardFlip, transitionKey]);
   if (!current)
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u5BFC\u822A\u76EE\u6807 ",
       route.projectionNodeId,
       " \u4E0D\u5B58\u5728"
@@ -27973,12 +29973,12 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     const reduced_motion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targetTransform = reduced_motion ? "none" : geometry && forwardFlip ? `translate(${mix(geometry.x, 0, progress)}px,${mix(geometry.y, 0, progress)}px) scale(${mix(geometry.scaleX, 1, progress)},${mix(geometry.scaleY, 1, progress)})` : `scale(${0.88 + progress * 0.12})`;
     const sourceTransform = "scale(1)";
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
       // Keep the current A3 (and its navigation) stable. The opaque target grows
       // over only the declared content viewport, then becomes current at commit.
       opacity: transitionActive ? transition_opacity(progress, target) : opacity,
       clipPath: target && transition ? `inset(${zoomViewport.top}px ${zoomViewport.right}px ${zoomViewport.bottom}px ${zoomViewport.left}px)` : void 0
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: pip_host_default.semanticMotion, style: {
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: pip_host_default.semanticMotion, style: {
       // A2 owns semantic scale only. A3 consumes the pan variables on its innermost spatial surface.
       transform: target ? targetTransform : sourceTransform,
       transformOrigin: geometry && target && forwardFlip ? "top left" : pointerOrigin,
@@ -27989,9 +29989,9 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
       // Freeze the fading source at the exact transition boundary. Resetting it
       // to 1 here causes a visible 1.4→1 jump on the first crossfade frame.
       "--projection-zoom": target ? "1" : transition ? String(forwardFlip ? 1.4 : 0.75) : String(navigation2.semanticScale)
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest }) }) }, entry.projectionNodeId);
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest }) }) }, entry.projectionNodeId);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
     render(route, transitionActive ? 1 - progress : 1),
     transition && render(transition, transitionActive ? progress : 0, true)
   ] });
@@ -28045,7 +30045,7 @@ function choose_projection(state, projection_id, graph, node_types) {
 }
 
 // pip-editor/pip-host/view/projection-navbar.tsx
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_types, onChange: on_change }) {
   const [animation] = (0, import_react22.useState)(() => new NavigationAnimation());
   const latest = (0, import_react22.useRef)({ on_change, navigation: navigation2 });
@@ -28097,17 +30097,17 @@ function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_type
       });
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
       "\u7B2C ",
       navigation2.index + 1,
       " \u5C42 \xB7 ",
       route.scope === "self" ? "\u81EA\u8EAB" : "\u5B50\u7EA7",
       children_count > 0 ? ` \xB7 ${children_count} \u5B50\u9879` : ""
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
     ] })
   ] });
 }
@@ -28141,7 +30141,7 @@ function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, sel
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 function ProjectionScaleControls({
   frame,
   graph,
@@ -28161,7 +30161,7 @@ function ProjectionScaleControls({
     selection,
     selected_anchor(owner.id, selection)
   ));
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
     WindowScaleControls,
     {
       scale: navigation2.semanticScale,
@@ -28174,13 +30174,13 @@ function ProjectionScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-camera-controls.tsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceCameraControls({
   fit,
   persistCamera,
   views
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
     WindowScaleControls,
     {
       scale: views.camera.scale,
@@ -28198,7 +30198,7 @@ function WorkspaceCameraControls({
 }
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 function FreeWorkspaceCanvas({
   is_active,
   creator,
@@ -28231,8 +30231,8 @@ function FreeWorkspaceCanvas({
 }) {
   const host_target = (0, import_react24.useContext)(HostCameraTarget);
   const outer_chrome = (0, import_react24.useContext)(WorkspaceWindowChromeContext);
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(ActiveControlsProvider, { enabled: is_active, base_target: host_target, portal_target: outer_chrome?.bottom, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: pip_host_default.canvasInfo, "data-workspace-status": true, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(ActiveControlsProvider, { enabled: is_active, base_target: host_target, portal_target: outer_chrome?.bottom, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: pip_host_default.canvasInfo, "data-workspace-status": true, children: [
       "Pip \xB7 revision ",
       graphRevision(workspace.graph),
       " \xB7 ",
@@ -28240,7 +30240,7 @@ function FreeWorkspaceCanvas({
       " \u4E2A\u8282\u70B9 \xB7 ",
       status
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
       PipDropZone,
       {
         ref: viewport,
@@ -28259,7 +30259,7 @@ function FreeWorkspaceCanvas({
         onPointerUp: pointer.end,
         onPointerCancel: pointer.cancel,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: pip_host_default.freeWorld, style: {
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: pip_host_default.freeWorld, style: {
             width: views.world.width,
             height: views.world.height,
             transform: `translate(${views.camera.x}px,${views.camera.y}px) scale(${views.camera.scale})`
@@ -28298,41 +30298,41 @@ function FreeWorkspaceCanvas({
                   }
                 }
               });
-              return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(WorkspaceWindow, { id: node.id, frame, views, active: views.activeWindowId === node.id, front: views.frontWindowId === node.id, onActivate: () => onActivateWindow(node.id), onFrame: (next) => onRequest({
+              return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(WorkspaceWindow, { id: node.id, frame, views, active: views.activeWindowId === node.id, front: views.frontWindowId === node.id, onActivate: () => onActivateWindow(node.id), onFrame: (next) => onRequest({
                 kind: "set-workspace-window",
                 windowId: node.id,
                 frame: next
               }), onClose: () => onRequest({
                 kind: "close-workspace-root",
                 nodeId: node.id
-              }), children: navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${pluginChrome ? pip_host_default.pluginChrome : ""}`, children: [
-                !pluginChrome && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(SemanticProjection, { workspace, workspaceView: {
+              }), children: navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${pluginChrome ? pip_host_default.pluginChrome : ""}`, children: [
+                !pluginChrome && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
+                /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(SemanticProjection, { workspace, workspaceView: {
                   ...normalized,
                   projections: {
                     ...normalized.projections,
                     [node.id]: { ...frame, navigation: navigation2 }
                   }
                 }, rootWindowId: node.id, navigation: navigation2, contentOffset: frame.contentOffset ?? { x: 0, y: 0 }, execution, elements, nodeTypes, selection: scopedSelections[node.id] ?? workspace.selection, onRequest }),
-                /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node.id] ?? workspace.selection, onChange: (next) => onRequest({
+                /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node.id] ?? workspace.selection, onChange: (next) => onRequest({
                   kind: "set-workspace-window",
                   windowId: node.id,
                   frame: next
                 }), onFit: resetProjection })
-              ] }) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node, selection: scopedSelections[node.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest }) }, node.id);
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node, selection: scopedSelections[node.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest }) }, node.id);
             }),
-            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
+            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
               kind: "set-workspace-window",
               windowId: item.id,
               frame
             }), onClose: () => onCloseSystemPlugin(item) }, item.id)),
-            creator && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
+            creator && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
           ] }),
-          wire && /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+          wire && /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+            /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
         ]
       }
     )
@@ -28402,6 +30402,50 @@ function workspaceCreatorChoices(workspace, nodeTypes, systemPlugins, creator) {
   return [...systemChoices, ...nodeChoices];
 }
 
+// pip-editor/pip-host/view/creator-swipe.ts
+var CreatorSwipe = class {
+  constructor() {
+    this.start_y = 0;
+    this.extreme_x = 0;
+    this.started_at = 0;
+    this.direction = 0;
+    this.legs = 0;
+    this.active = false;
+  }
+  begin(x, y, time) {
+    this.start_y = y;
+    this.extreme_x = x;
+    this.started_at = time;
+    this.direction = 0;
+    this.legs = 0;
+    this.active = true;
+  }
+  move(x, y, time) {
+    if (!this.active) return;
+    if (time - this.started_at > 1400 || Math.abs(y - this.start_y) > 48) {
+      this.cancel();
+      return;
+    }
+    const delta = x - this.extreme_x;
+    const direction = Math.sign(delta);
+    if (direction === this.direction) {
+      this.extreme_x = x;
+    } else if (Math.abs(delta) >= 36) {
+      this.direction = direction;
+      this.extreme_x = x;
+      this.legs++;
+    }
+  }
+  end(time) {
+    const recognized = this.active && this.legs >= 3 && time - this.started_at <= 1400;
+    this.cancel();
+    return recognized;
+  }
+  cancel() {
+    this.active = false;
+  }
+};
+
 // pip-editor/pip-host/view/workspace-canvas-pointer.ts
 var import_react25 = __toESM(require_react(), 1);
 var pointIn2 = (element, clientX, clientY) => {
@@ -28419,6 +30463,7 @@ function useWorkspaceCanvasPointer({
   viewport,
   views
 }) {
+  const creator_swipe = (0, import_react25.useRef)(new CreatorSwipe());
   const gesture = (0, import_react25.useRef)(void 0);
   const touches = (0, import_react25.useRef)(/* @__PURE__ */ new Map());
   const pinch_camera = (0, import_react25.useRef)(void 0);
@@ -28436,14 +30481,15 @@ function useWorkspaceCanvasPointer({
       event.stopPropagation();
       touches.current.set(event.pointerId, start);
       if (touches.current.size === 2) {
-        const [a, b] = [...touches.current.values()];
+        creator_swipe.current.cancel();
+        const [a2, b2] = [...touches.current.values()];
         const center = {
-          x: (a.x + b.x) / 2,
-          y: (a.y + b.y) / 2
+          x: (a2.x + b2.x) / 2,
+          y: (a2.y + b2.y) / 2
         };
         pinch_camera.current = views.camera;
         pinch.current = {
-          distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)),
+          distance: Math.max(1, Math.hypot(a2.x - b2.x, a2.y - b2.y)),
           world: screenToWorld(center, views),
           camera: views.camera
         };
@@ -28467,6 +30513,8 @@ function useWorkspaceCanvasPointer({
     event.preventDefault();
     element.setPointerCapture(event.pointerId);
     if (!pinch.current) {
+      if (event.pointerType === "touch" && kind === "pan")
+        creator_swipe.current.begin(event.clientX, event.clientY, event.timeStamp);
       gesture.current = {
         kind,
         pointerId: event.pointerId,
@@ -28484,16 +30532,16 @@ function useWorkspaceCanvasPointer({
       touches.current.set(event.pointerId, point);
     }
     if (pinch.current && touches.current.size >= 2) {
-      const [a, b] = [...touches.current.values()];
+      const [a2, b2] = [...touches.current.values()];
       const center = {
-        x: (a.x + b.x) / 2,
-        y: (a.y + b.y) / 2
+        x: (a2.x + b2.x) / 2,
+        y: (a2.y + b2.y) / 2
       };
       const scale = Math.max(
         0.5,
         Math.min(
           2,
-          pinch.current.camera.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.current.distance
+          pinch.current.camera.scale * Math.hypot(a2.x - b2.x, a2.y - b2.y) / pinch.current.distance
         )
       );
       const next_camera = {
@@ -28509,6 +30557,8 @@ function useWorkspaceCanvasPointer({
     const current = gesture.current;
     if (!current || current.pointerId !== event.pointerId) return;
     event.stopPropagation();
+    if (event.pointerType === "touch")
+      creator_swipe.current.move(event.clientX, event.clientY, event.timeStamp);
     const dx = point.x - current.start.x;
     const dy = point.y - current.start.y;
     if (Math.hypot(dx, dy) >= 4) current.moved = true;
@@ -28544,7 +30594,10 @@ function useWorkspaceCanvasPointer({
     );
     gesture.current = void 0;
     if (current.kind === "pan") {
-      onViewsChange({ ...views, activeWindowId: void 0 });
+      const open_creator = event.pointerType === "touch" && creator_swipe.current.end(event.timeStamp);
+      const next_views = open_creator ? { ...views, camera: current.camera } : views;
+      onViewsChange({ ...next_views, activeWindowId: void 0 });
+      if (open_creator) setCreator({ screen, world: screenToWorld(screen, next_views) });
       setPreviewCamera(void 0);
     } else {
       setWire(void 0);
@@ -28558,6 +30611,7 @@ function useWorkspaceCanvasPointer({
     }
   };
   const cancel = (event) => {
+    creator_swipe.current.cancel();
     if (event.pointerType === "touch") {
       if (touches.current.has(event.pointerId)) event.stopPropagation();
       touches.current.delete(event.pointerId);
@@ -28749,7 +30803,7 @@ function useWorkspaceCanvasWheel({
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 var isFree = (views) => Boolean(
   views && typeof views === "object" && ["free-layout", "parallel-projections"].includes(
     String(views.kind)
@@ -28886,7 +30940,7 @@ function NodeCanvas({
     if (camera) persistCamera(camera);
   };
   if (!free) {
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       LegacyWorkspaceCanvas,
       {
         workspace,
@@ -28911,7 +30965,7 @@ function NodeCanvas({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
     FreeWorkspaceCanvas,
     {
       is_active: autoFocus,
@@ -28954,7 +31008,7 @@ function NodeCanvas({
 }
 
 // pip-editor/pip-host/view/workspace-session-canvas.tsx
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceSessionCanvas({
   autoFocus,
   elements,
@@ -28973,7 +31027,7 @@ function WorkspaceSessionCanvas({
   onSelectionChange,
   onViewsChange
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
     NodeCanvas,
     {
       autoFocus,
@@ -29188,9 +31242,26 @@ var HostPresentationStore = class {
   }
 };
 
+// pip-editor/pip-host/view/canvas-creator-entry.tsx
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+function CanvasCreatorEntry({ open }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+    "button",
+    {
+      className: canvas_entry_default.entry,
+      onClick: open,
+      title: "\u6253\u5F00\u521B\u5EFA\u5668\uFF1B\u4E5F\u53EF\u5728\u7A7A\u767D\u753B\u5E03\u5355\u6307\u5DE6\u53F3\u6765\u56DE\u6ED1\u52A8\u4E24\u6B21",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: "\uFF0B \u521B\u5EFA\u5668" }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("small", { children: "\u7A7A\u767D\u5904\u5DE6\u53F3\u6765\u56DE\u6ED1\u52A8" })
+      ]
+    }
+  );
+}
+
 // pip-editor/pip-host/view/host-canvas.tsx
 var import_react28 = __toESM(require_react(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 function HostCanvas({
   creatorRequest,
   focusedWorkspace,
@@ -29278,140 +31349,143 @@ function HostCanvas({
     zoom_out: () => persistCamera({ ...camera, scale: Math.max(0.5, camera.scale - 0.1) }),
     fit: () => persistCamera({ x: 0, y: 0, scale: 1 })
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ActiveControlsProvider, { enabled: !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-    PipDropZone,
-    {
-      ref: viewport,
-      tabIndex: -1,
-      "data-canvas-shortcuts": true,
-      className: `${pip_host_default.canvas} ${pip_host_default.freeViewport}`,
-      pointFromScreen: (screen) => screenToWorld(screen, views),
-      onPipFiles: onPipDrop,
-      onUnsupportedFiles: onUnsupportedPipDrop,
-      onKeyDown: (event) => {
-        const target = event.target;
-        const owner = target.closest("[data-canvas-shortcuts]");
-        if (owner !== event.currentTarget) return;
-        const interactive = target.matches(
-          "input,textarea,select,button,a,[contenteditable=true]"
-        );
-        if (event.code === "Space" && !interactive && !event.repeat) {
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(ActiveControlsProvider, { enabled: !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+      PipDropZone,
+      {
+        ref: viewport,
+        tabIndex: -1,
+        "data-canvas-shortcuts": true,
+        className: `${pip_host_default.canvas} ${pip_host_default.freeViewport}`,
+        pointFromScreen: (screen) => screenToWorld(screen, views),
+        onPipFiles: onPipDrop,
+        onUnsupportedFiles: onUnsupportedPipDrop,
+        onKeyDown: (event) => {
+          const target = event.target;
+          const owner = target.closest("[data-canvas-shortcuts]");
+          if (owner !== event.currentTarget) return;
+          const interactive = target.matches(
+            "input,textarea,select,button,a,[contenteditable=true]"
+          );
+          if (event.code === "Space" && !interactive && !event.repeat) {
+            event.preventDefault();
+            openCreatorAtCenter();
+          }
+          if (event.key === "Escape") {
+            setCreator(void 0);
+            setWire(void 0);
+          }
+        },
+        onWheel: (event) => {
+          const target = event.target;
+          const canvasOwner = target.closest("[data-canvas-shortcuts]");
+          const path = event.nativeEvent.composedPath();
+          if (canvasOwner !== event.currentTarget || path.some((item) => item?.dataset?.nodeId)) return;
           event.preventDefault();
-          openCreatorAtCenter();
-        }
-        if (event.key === "Escape") {
-          setCreator(void 0);
-          setWire(void 0);
-        }
-      },
-      onWheel: (event) => {
-        const target = event.target;
-        const canvasOwner = target.closest("[data-canvas-shortcuts]");
-        const path = event.nativeEvent.composedPath();
-        if (canvasOwner !== event.currentTarget || path.some((item) => item?.dataset?.nodeId)) return;
-        event.preventDefault();
-        if (event.ctrlKey || event.metaKey) {
-          const rect = event.currentTarget.getBoundingClientRect();
-          const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
-          const world = screenToWorld(point, views);
-          const scale = Math.max(0.5, Math.min(2, camera.scale - event.deltaY * 2e-3));
-          persistCamera({
-            scale,
-            x: point.x - world.x * scale,
-            y: point.y - world.y * scale
-          });
-        } else {
-          persistCamera({
-            ...camera,
-            x: camera.x - event.deltaX,
-            y: camera.y - event.deltaY
-          });
-        }
-      },
-      onPointerDown: pointer.begin,
-      onPointerMove: pointer.move,
-      onPointerUp: pointer.end,
-      onPointerCancel: pointer.cancel,
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-          "div",
-          {
-            className: pip_host_default.freeWorld,
-            style: {
-              width: host.world.width,
-              height: host.world.height,
-              transform: `translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`
-            },
-            children: [
-              Object.values(host.workspaceWindows).map((item) => {
-                const workspace = workspaces.find((value) => value.id === item.workspaceId);
-                if (!workspace) return null;
-                const focused = host.activeWindowId === item.id;
-                return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-                  WorkspaceWindow,
-                  {
-                    id: item.id,
-                    frame: item.frame,
-                    views,
-                    active: focused,
-                    front: host.frontWindowId === item.id,
-                    onActivate: () => {
-                      hostStore.activateWindow(item.id);
-                      onFocusWorkspace(workspace.id);
+          if (event.ctrlKey || event.metaKey) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+            const world = screenToWorld(point, views);
+            const scale = Math.max(0.5, Math.min(2, camera.scale - event.deltaY * 2e-3));
+            persistCamera({
+              scale,
+              x: point.x - world.x * scale,
+              y: point.y - world.y * scale
+            });
+          } else {
+            persistCamera({
+              ...camera,
+              x: camera.x - event.deltaX,
+              y: camera.y - event.deltaY
+            });
+          }
+        },
+        onPointerDown: pointer.begin,
+        onPointerMove: pointer.move,
+        onPointerUp: pointer.end,
+        onPointerCancel: pointer.cancel,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+            "div",
+            {
+              className: pip_host_default.freeWorld,
+              style: {
+                width: host.world.width,
+                height: host.world.height,
+                transform: `translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`
+              },
+              children: [
+                Object.values(host.workspaceWindows).map((item) => {
+                  const workspace = workspaces.find((value) => value.id === item.workspaceId);
+                  if (!workspace) return null;
+                  const focused = host.activeWindowId === item.id;
+                  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+                    WorkspaceWindow,
+                    {
+                      id: item.id,
+                      frame: item.frame,
+                      views,
+                      active: focused,
+                      front: host.frontWindowId === item.id,
+                      onActivate: () => {
+                        hostStore.activateWindow(item.id);
+                        onFocusWorkspace(workspace.id);
+                      },
+                      onFrame: (frame) => hostStore.setWindow(item.id, frame),
+                      close_label: "\u8F6C\u4E3A Tab",
+                      onClose: () => onRestoreWorkspaceTab(workspace.id),
+                      children: renderWorkspace(workspace, focused)
                     },
+                    item.id
+                  );
+                }),
+                Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+                  SystemPluginWindowView,
+                  {
+                    window: item,
+                    views,
+                    plugins: systemPlugins,
+                    services: systemPluginServices,
+                    surface: "host",
+                    workspace: focusedWorkspace,
+                    active: host.activeWindowId === item.id,
+                    front: host.frontWindowId === item.id,
+                    onActivate: () => hostStore.activateWindow(item.id),
                     onFrame: (frame) => hostStore.setWindow(item.id, frame),
-                    close_label: "\u8F6C\u4E3A Tab",
-                    onClose: () => onRestoreWorkspaceTab(workspace.id),
-                    children: renderWorkspace(workspace, focused)
+                    onClose: () => onCloseSystemPlugin(item.id)
                   },
                   item.id
-                );
-              }),
-              Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-                SystemPluginWindowView,
-                {
-                  window: item,
-                  views,
-                  plugins: systemPlugins,
-                  services: systemPluginServices,
-                  surface: "host",
-                  workspace: focusedWorkspace,
-                  active: host.activeWindowId === item.id,
-                  front: host.frontWindowId === item.id,
-                  onActivate: () => hostStore.activateWindow(item.id),
-                  onFrame: (frame) => hostStore.setWindow(item.id, frame),
-                  onClose: () => onCloseSystemPlugin(item.id)
-                },
-                item.id
-              )),
-              creator && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-                CreatorWindow,
-                {
-                  candidates: choices,
-                  frame: creator.frame ?? creatorFrameAt(creator.world, views),
-                  views,
-                  onCancel: () => setCreator(void 0),
-                  onChoose: (choice) => {
-                    if (choice.provider === "host") {
-                      onCreateWorkspace(creator.world, viewportSize());
-                    } else {
-                      onOpenSystemPlugin(choice.id, creator.world);
-                    }
-                    setCreator(void 0);
-                  },
-                  onFrame: (frame) => setCreator({ ...creator, frame })
-                }
-              )
-            ]
-          }
-        ),
-        wire && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
-        ] })
-      ]
-    }
-  ) }) }) });
+                )),
+                creator && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+                  CreatorWindow,
+                  {
+                    candidates: choices,
+                    frame: creator.frame ?? creatorFrameAt(creator.world, views),
+                    views,
+                    onCancel: () => setCreator(void 0),
+                    onChoose: (choice) => {
+                      if (choice.provider === "host") {
+                        onCreateWorkspace(creator.world, viewportSize());
+                      } else {
+                        onOpenSystemPlugin(choice.id, creator.world);
+                      }
+                      setCreator(void 0);
+                    },
+                    onFrame: (frame) => setCreator({ ...creator, frame })
+                  }
+                )
+              ]
+            }
+          ),
+          wire && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+            /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(CanvasCreatorEntry, { open: openCreatorAtCenter })
+  ] }) }) });
 }
 
 // pip-editor/pip-host/view/use-tab-touch-drag.ts
@@ -29499,7 +31573,7 @@ var workspace_tabs_default = {
 };
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 var WORKSPACE_DRAG_MIME = "application/x-intent-map-workspace";
 function WorkspaceTabs({
   activeWorkspaceId,
@@ -29513,7 +31587,7 @@ function WorkspaceTabs({
 }) {
   const touch_drag = useTabTouchDrag(onReorder, onTouchDetach);
   const [dragging, setDragging] = (0, import_react30.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
     "nav",
     {
       className: workspace_tabs_default.workspaceTabs,
@@ -29528,7 +31602,7 @@ function WorkspaceTabs({
         workspaces.map((workspace) => {
           const active = workspace.id === activeWorkspaceId;
           const name = nameFor(workspace);
-          return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
             "div",
             {
               role: "presentation",
@@ -29552,7 +31626,7 @@ function WorkspaceTabs({
                   onReorder(dragging, workspace.id);
                 }
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
                 "button",
                 {
                   type: "button",
@@ -29569,9 +31643,9 @@ function WorkspaceTabs({
                       onClose(workspace.id);
                   },
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: name }),
-                    /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
-                    /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
+                    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
+                    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
                       event.stopPropagation();
                       onClose(workspace.id);
                     }, children: "\xD7" })
@@ -29582,7 +31656,7 @@ function WorkspaceTabs({
             workspace.id
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
           event.currentTarget.blur();
           onNew();
         }, title: "\u6253\u5F00\u521B\u5EFA\u5668", "aria-label": "\u6253\u5F00\u521B\u5EFA\u5668", children: "+" })
@@ -29592,7 +31666,7 @@ function WorkspaceTabs({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 function PipHostSurface({
   active,
   activeWorkspaceId,
@@ -29658,7 +31732,7 @@ function PipHostSurface({
       height: rect.height - tabStripHeight
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
     "section",
     {
       ref: surface,
@@ -29670,7 +31744,7 @@ function PipHostSurface({
       },
       onDrop: drop,
       children: [
-        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           WorkspaceTabs,
           {
             workspaces: tabWorkspaces,
@@ -29683,7 +31757,7 @@ function PipHostSurface({
             onTouchDetach: detach_at
           }
         ),
-        active ? renderWorkspace(active, true) : /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        active ? renderWorkspace(active, true) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           HostCanvas,
           {
             creatorRequest,
@@ -29837,7 +31911,7 @@ var workspaceName = (workspace, nodeMaps) => workspace.source.id === "host.new-t
 )?.nodeMap.manifest.name ?? workspace.source.id;
 
 // pip-editor/pip-host/pip-host.tsx
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 function PipHost() {
   const [workspaces, setWorkspaces] = (0, import_react32.useState)([]);
   const [workspaceStore] = (0, import_react32.useState)(
@@ -29984,7 +32058,7 @@ function PipHost() {
       closeNow(id);
     }
   };
-  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
     WorkspaceSessionCanvas,
     {
       autoFocus,
@@ -30008,7 +32082,7 @@ function PipHost() {
   const tabWorkspaces = workspaces.filter(
     (workspace) => !host.workspaceWindows[workspace.id]
   );
-  useHostEffects({
+  const startup = useHostEffects({
     auto_load_website: preferenceStore.snapshot().auto_load_website,
     explicit_launch: false,
     activeWorkspaceId,
@@ -30031,8 +32105,9 @@ function PipHost() {
     tabWorkspaces,
     workspaces
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("main", { className: pip_host_default.shell, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("main", { className: pip_host_default.shell, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(StartupNotice, { ...startup }),
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
       PipHostSurface,
       {
         active,
@@ -30071,7 +32146,7 @@ function PipHost() {
         }
       }
     ),
-    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
       CloseWorkspaceDialog,
       {
         name: nameFor(workspaces.find((item) => item.id === pendingClose)),
@@ -30088,11 +32163,11 @@ function PipHost() {
 }
 
 // pip-editor/web/main.tsx
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 var root = document.getElementById("root");
 if (!root) throw new Error("Editor document requires a #root mount point");
 install_touch_boundary(root);
-(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_react33.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PipHost, {}) }));
+(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_react33.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(PipHost, {}) }));
 /*! Bundled license information:
 
 react/cjs/react.development.js:
