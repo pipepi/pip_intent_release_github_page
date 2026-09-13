@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f8f8f2"/>
+  <path d="M60 540H1140" stroke="#d4ddc8"/>
+  <g font-family="system-ui, sans-serif" fill="#27392f">
+    <text x="70" y="110" font-size="36">Pip Intent · 管画意图（关关）</text>
+    <text x="70" y="280" font-size="66">See your vision.</text>
+    <text x="70" y="365" font-size="66" fill="#71805f">Move toward it.</text>
+    <text x="70" y="455" font-size="23">Draw your intent. Keep it in sight. Make it happen.</text>
+    <text x="70" y="585" font-size="18">Observation → Relation → Intent → Action → Feedback</text>
+  </g>
+  <g transform="translate(805 150) scale(8)">
+    <path d="M5 24c1-8 6-10 11-11 1-6 5-9 9-7 3 2 2 6-1 7-2 1-2 5-5 8-4 4-9 2-14 3Z" fill="#63839B"/>
+    <path d="m25 9 6 2-6 1M13 24v5m5-6 2 6" stroke="#334E62" stroke-width="1.1"/>
+    <path d="M15 16C20 14 22 18 20 23C16 25 11 25 8 24C12 22 13 18 15 16Z" fill="#F5EFE5"/>
+    <circle cx="23" cy="9" r="1" fill="#233A4B"/>
+  </g>
+</svg>

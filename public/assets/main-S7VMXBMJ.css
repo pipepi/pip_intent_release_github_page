@@ -1,0 +1,1611 @@
+/* pip-editor/pip-host/view/pip-host.module.css */
+.pip_host_shell {
+  width: 100vw;
+  height: 100vh;
+  min-width: 0;
+  background: #070a18;
+  color: #e8edff;
+  overflow: hidden;
+}
+.pip_host_panelTitle span {
+  color: #6f80ad;
+  font-size: 10px;
+  letter-spacing: .16em;
+}
+.pip_host_panelTitle h2 {
+  margin: 3px 0 0;
+  font-size: 19px;
+}
+.pip_host_layout {
+  height: 100vh;
+  display: block;
+}
+.pip_host_workspaceArea {
+  width: 100%;
+  height: 100vh;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 42px minmax(0, 1fr);
+}
+.pip_host_workspaceAreaBare {
+  grid-template-rows: minmax(0, 1fr);
+}
+.pip_host_primary {
+  display: block;
+  border: 1px solid #556de8;
+  border-radius: 7px;
+  padding: 9px 14px;
+  color: white;
+  background:
+    linear-gradient(
+      135deg,
+      #287bd9,
+      #6552dc);
+  cursor: pointer;
+  text-align: center;
+}
+.pip_host_canvasWrap {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #141a3a 0,
+      #080b19 60%);
+}
+.pip_host_canvasInfo {
+  position: absolute;
+  z-index: 20;
+  bottom: 0;
+  left: 0;
+  max-width: calc(100% - 20px);
+  padding: 6px 11px;
+  overflow: hidden;
+  border: 1px solid #303858;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0 7px 0 0;
+  color: #a8b2d0;
+  background: #11172aee;
+  box-shadow: 4px -4px 16px #0007;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.pip_host_canvas {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  background-image:
+    linear-gradient(#ffffff08 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      #ffffff08 1px,
+      transparent 1px);
+  background-size: 24px 24px;
+  touch-action: pan-x pan-y;
+}
+.pip_host_pipGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-content: start;
+  gap: 16px;
+  padding: 18px;
+}
+.pip_host_pipGrid .pip_host_node {
+  position: relative;
+  width: auto;
+  min-height: 160px;
+}
+.pip_host_workspaceProjectionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(560px, 1fr));
+  align-content: start;
+  gap: 14px;
+  padding: 14px;
+}
+.pip_host_workspaceProjection {
+  min-width: 0;
+}
+.pip_host_freeViewport {
+  overflow: clip;
+  touch-action: none;
+  cursor: grab;
+}
+.pip_host_freeViewport:focus {
+  outline: none;
+}
+.pip_host_freeViewport:active {
+  cursor: grabbing;
+}
+.pip_host_freeWorld {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.pip_host_projectionShell {
+  display: grid;
+  grid-template-rows: 36px minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.pip_host_projectionShell.pip_host_pluginChrome {
+  grid-template-rows: minmax(0, 1fr);
+}
+.pip_host_projectionNav {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  background: #101936ee;
+  border-bottom: 1px solid #354a7a;
+}
+.pip_host_projectionNav button,
+.pip_host_projectionNav select {
+  height: 27px;
+  color: #dce5ff;
+  background: #172342;
+  border: 1px solid #3a4e7c;
+  border-radius: 6px;
+}
+.pip_host_projectionNav > select {
+  flex: 0 1 180px;
+  width: clamp(110px, 18vw, 180px);
+  min-width: 0;
+  padding: 0 24px 0 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pip_host_projectionNav button:disabled {
+  opacity: .35;
+}
+.pip_host_projectionCrumbs {
+  display: flex;
+  min-width: 80px;
+  max-width: 38%;
+  overflow: hidden;
+}
+.pip_host_projectionCrumbs button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@container (max-width:500px) {
+  .pip_host_projectionNav {
+    gap: 3px;
+    padding-inline: 4px;
+  }
+  .pip_host_projectionCrumbs {
+    display: none;
+  }
+  .pip_host_projectionNav > select {
+    flex: 0 1 120px;
+    width: clamp(88px, 32cqw, 120px);
+    min-width: 0;
+  }
+  .pip_host_projectionNav button {
+    min-width: 27px;
+    padding-inline: 5px;
+  }
+}
+.pip_host_semanticViewport {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+  overflow: clip;
+  contain: paint;
+  background: var(--pip-bg, #080e22);
+}
+.pip_host_semanticLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transition: opacity 120ms linear;
+}
+.pip_host_semanticMotion {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  transition: transform 120ms ease-out;
+}
+.pip_host_semanticMotion > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.pip_host_semanticTarget {
+  pointer-events: none;
+}
+.pip_host_creationWire {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.pip_host_creationWire line {
+  stroke: #7da0ff;
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+}
+.pip_host_creationWire circle {
+  fill: #9ab2ff;
+}
+.pip_host_cameraControls {
+  position: absolute;
+  z-index: 30;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid #354064;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 8px 0 0 0;
+  background: #0d1328e8;
+  box-shadow: -4px -4px 16px #0007;
+}
+.pip_host_cameraControls button {
+  min-width: 30px;
+  height: 28px;
+  border: 0;
+  border-radius: 5px;
+  color: #dbe3ff;
+  background: #1a2342;
+  cursor: pointer;
+}
+.pip_host_cameraControls span {
+  min-width: 48px;
+  color: #9eabd0;
+  text-align: center;
+  font: 10px monospace;
+}
+.pip_host_modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #03050dbb;
+  backdrop-filter: blur(4px);
+}
+.pip_host_closeDialog {
+  width: min(460px, calc(100vw - 40px));
+  padding: 22px;
+  border: 1px solid #405083;
+  border-radius: 13px;
+  background: #111831;
+  box-shadow: 0 30px 90px #000;
+}
+.pip_host_closeDialog h2 {
+  margin: 0;
+  color: #edf2ff;
+}
+.pip_host_closeDialog p {
+  color: #98a5c9;
+  line-height: 1.6;
+}
+.pip_host_closeDialog > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.pip_host_closeDialog button {
+  padding: 9px 12px;
+  border: 1px solid #405083;
+  border-radius: 7px;
+  color: #dbe3ff;
+  background: #182142;
+  cursor: pointer;
+}
+.pip_host_closeDialog .pip_host_primary {
+  display: inline-block;
+  background:
+    linear-gradient(
+      135deg,
+      #287bd9,
+      #6552dc);
+}
+.pip_host_rawPips {
+  display: grid;
+  gap: 5px;
+  color: #aab5d6;
+  font-size: 11px;
+}
+.pip_host_rawPips > div {
+  display: grid;
+  grid-template-columns: minmax(70px, auto) 1fr;
+  gap: 8px;
+}
+.pip_host_rawPips code {
+  color: #67bfff;
+  overflow-wrap: anywhere;
+}
+.pip_host_rawPips span {
+  color: #8996bb;
+  overflow-wrap: anywhere;
+}
+.pip_host_node {
+  position: absolute;
+  z-index: 2;
+  width: 250px;
+  min-height: 220px;
+  padding: 13px;
+  border: 1px solid #34416f;
+  border-radius: 10px;
+  background: #10172e;
+  box-shadow: 0 9px 24px #0006;
+  touch-action: auto;
+}
+.pip_host_node.pip_host_selected {
+  border-color: #39a7ff;
+  box-shadow: 0 0 0 2px #39a7ff55, 0 10px 26px #0009;
+}
+.pip_host_nodeHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.pip_host_nodeHeading span {
+  color: #8d9ac2;
+  font-size: 11px;
+}
+.pip_host_preview {
+  min-height: 54px;
+  padding: 8px;
+  border: 1px solid #263155;
+  border-radius: 7px;
+  background: #0a0f22;
+  overflow: hidden;
+}
+.pip_host_preview p {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.pip_host_nodeImage {
+  display: block;
+  width: 100%;
+  max-height: 130px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.pip_host_imagePlaceholder,
+.pip_host_imageError {
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  color: #6f7ba1;
+  font-size: 11px;
+  text-align: center;
+}
+.pip_host_imageError {
+  color: #ff8ba5;
+}
+.pip_host_fields {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.pip_host_fields label {
+  display: grid;
+  gap: 4px;
+  color: #99a6cc;
+  font-size: 11px;
+}
+.pip_host_fields input,
+.pip_host_fields textarea {
+  width: 100%;
+  padding: 7px 8px;
+  border: 1px solid #34416f;
+  border-radius: 5px;
+  color: #e8edff;
+  background: #090e20;
+  resize: vertical;
+}
+.pip_host_fields textarea {
+  min-height: 48px;
+}
+.pip_host_orphan {
+  color: #ff9ab1;
+}
+.pip_host_orphan p {
+  color: #8b96b9;
+}
+.pip_host_selectionBox {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  border: 1px solid #39a7ff;
+  background: #39a7ff22;
+}
+.pip_host_contextMenu {
+  position: absolute;
+  z-index: 30;
+  width: 240px;
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid #405083;
+  border-radius: 9px;
+  background: #121a35;
+  box-shadow: 0 18px 45px #000a;
+}
+.pip_host_contextMenu > span {
+  padding: 5px 7px;
+  border-radius: 4px;
+  color: #b8c3e5;
+  background: #0b1126;
+  font-family: monospace;
+}
+.pip_host_contextMenu div {
+  display: flex;
+  gap: 7px;
+  margin-top: 3px;
+}
+.pip_host_contextMenu button {
+  flex: 1;
+  padding: 7px;
+  border: 1px solid #405083;
+  border-radius: 5px;
+  background: #1b2852;
+  cursor: pointer;
+}
+.pip_host_contextMenu button:last-child {
+  background: transparent;
+}
+.pip_host_invalidType {
+  color: #ff8ba5 !important;
+}
+.pip_host_panel {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 18px;
+  background: #0d1226;
+  overflow: auto;
+}
+.pip_host_preferenceGroup {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #354268;
+  border-radius: 10px;
+  color: #dbe3fa;
+}
+.pip_host_preferenceGroup label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+.pip_host_panelCollapsed {
+  padding: 12px 7px;
+  overflow: hidden;
+}
+.pip_host_panelTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pip_host_panelTitleActions {
+  display: flex;
+  gap: 5px;
+}
+.pip_host_panelTitleActions button {
+  padding: 5px 7px;
+  border: 1px solid #34416f;
+  border-radius: 5px;
+  color: #b9c4e6;
+  background: #151d39;
+  cursor: pointer;
+}
+.pip_host_panelTitleActions button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+.pip_host_panelCollapsed .pip_host_panelTitle {
+  flex-direction: column;
+  gap: 8px;
+}
+.pip_host_panelCollapsed .pip_host_panelIdentity {
+  display: none;
+}
+.pip_host_panelCollapsed .pip_host_panelTitleActions {
+  width: 100%;
+  flex-direction: column;
+}
+.pip_host_panelCollapsed .pip_host_panelTitleActions button {
+  width: 100%;
+  padding: 6px 0;
+}
+.pip_host_panelTitle h2 {
+  font-size: 17px;
+}
+.pip_host_panel h3 {
+  margin: 20px 0 9px;
+  color: #c4ceec;
+  font-size: 13px;
+}
+.pip_host_panel h3 small {
+  display: block;
+  margin-top: 3px;
+  color: #ff9a70;
+  font-weight: 400;
+}
+.pip_host_panelActions {
+  display: grid;
+  gap: 7px;
+  margin-top: 15px;
+}
+.pip_host_panelActions button {
+  padding: 8px;
+  border: 1px solid #405083;
+  border-radius: 6px;
+  background: #151e3d;
+  cursor: pointer;
+}
+.pip_host_hint {
+  color: #7d88ad;
+  line-height: 1.5;
+}
+.pip_host_message {
+  min-height: 36px;
+  margin: 16px 0 8px;
+  padding: 9px;
+  border-radius: 6px;
+  color: #a9b6dc;
+  background: #121a35;
+}
+.pip_host_sampleLinks {
+  display: flex;
+  gap: 9px;
+  padding: 5px 2px 15px;
+  color: #7481a8;
+  font-size: 12px;
+}
+.pip_host_sampleLinks a {
+  color: #62b8ff;
+}
+.pip_host_pluginList {
+  display: grid;
+  gap: 10px;
+}
+.pip_host_pluginList article {
+  padding: 12px;
+  border: 1px solid #293257;
+  border-radius: 8px;
+  background: #111832;
+}
+.pip_host_pluginList article > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pip_host_pluginList button {
+  padding: 3px 7px;
+  border: 1px solid #65344a;
+  border-radius: 4px;
+  color: #ff91aa;
+  background: #321627;
+  cursor: pointer;
+}
+.pip_host_pluginList p {
+  margin: 10px 0 5px;
+  color: #b8c3e5;
+}
+.pip_host_pluginList small {
+  color: #7481a8;
+  font-family: monospace;
+}
+.pip_host_empty {
+  padding: 28px 10px;
+  border: 1px dashed #34416f;
+  border-radius: 8px;
+  color: #7d88ad;
+  text-align: center;
+  line-height: 1.8;
+}
+@media (max-width: 1500px) {
+  .pip_host_workspaceProjectionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.pip_host_cameraControls {
+  background: var(--pip-panel);
+  border-color: var(--pip-border);
+  box-shadow: -2px -2px 12px var(--pip-window-shadow);
+}
+.pip_host_cameraControls button {
+  background: var(--pip-bg);
+  color: var(--pip-ink);
+}
+.pip_host_cameraControls span {
+  color: var(--pip-muted);
+}
+
+/* pip-editor/pip-host-io/plugin-manager/import-status.module.css */
+.import_status_importStatus {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 18px;
+  padding: 12px;
+  border: 1px solid var(--pip-border);
+  border-radius: 10px;
+  background: var(--pip-bg);
+}
+.import_status_importStatus header,
+.import_status_importStatus li > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.import_status_importStatus header {
+  justify-content: space-between;
+}
+.import_status_importStatus h3,
+.import_status_importStatus p {
+  margin: 0;
+}
+.import_status_importStatus ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.import_status_importStatus li {
+  padding: 8px 10px;
+  border-left: 3px solid var(--pip-muted);
+  border-radius: 6px;
+  background: var(--pip-panel);
+}
+.import_status_importStatus strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+}
+.import_status_importStatus span {
+  color: var(--pip-muted);
+  font-size: 12px;
+}
+.import_status_importStatus p {
+  padding-top: 5px;
+  color: var(--pip-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.import_status_importing {
+  border-left-color: var(--pip-accent) !important;
+}
+.import_status_succeeded {
+  border-left-color: var(--manager-success) !important;
+}
+.import_status_failed {
+  border-left-color: var(--manager-error) !important;
+}
+
+/* pip-editor/pip-host/view/creator-window.module.css */
+.creator_window_creator {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  overflow: auto;
+  color: var(--pip-ink, #eef2ff);
+}
+.creator_window_creator input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--pip-border, #354268);
+  border-radius: 7px;
+  color: var(--pip-ink, #eef2ff);
+  background: var(--pip-bg, #090e20);
+  outline: none;
+}
+.creator_window_creator > div {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+.creator_window_creator button {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 9px;
+  border: 0;
+  border-radius: 7px;
+  color: var(--pip-ink, #dbe3fa);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.creator_window_creator button:hover,
+.creator_window_creatorActive {
+  background: var(--pip-selection, #26345f) !important;
+}
+.creator_window_creator button > b {
+  font-size: 18px;
+}
+.creator_window_creator button > span {
+  display: grid;
+}
+.creator_window_creator small,
+.creator_window_creator p {
+  color: var(--pip-muted, #7f8bad);
+}
+.creator_window_creator p {
+  text-align: center;
+}
+
+/* pip-editor/pip-host/view/workspace-window.module.css */
+.workspace_window_freeWindow {
+  position: absolute;
+  z-index: 2;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+  border-radius: 14px;
+  box-shadow: 0 14px 42px var(--pip-window-shadow, #0008);
+  container-type: inline-size;
+}
+.workspace_window_windowViewport {
+  position: relative;
+  z-index: 16;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+}
+.workspace_window_windowContent {
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+}
+.workspace_window_windowContent > :first-child {
+  width: 100%;
+  height: 100%;
+}
+.workspace_window_windowContent [data-workspace-status] {
+  display: none;
+}
+.workspace_window_windowGlassUnderlay {
+  position: absolute;
+  z-index: 14;
+  inset: -37px -18px;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      var(--pip-glass, #10193678) 42%,
+      #17234208 100%);
+  box-shadow: 0 4px 14px var(--pip-window-shadow, #0004);
+  backdrop-filter: blur(10px) saturate(115%);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.workspace_window_windowSystemControls {
+  position: absolute;
+  z-index: 30;
+  left: -18px;
+  right: -18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  height: 37px;
+  padding: 3px;
+  border: 0;
+  background: transparent;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 120ms ease;
+}
+.workspace_window_windowSystemControlsTop {
+  top: -37px;
+}
+.workspace_window_windowSystemControlsBottom {
+  bottom: -37px;
+}
+.workspace_window_windowSystemControls:active,
+.workspace_window_windowDragRail:active {
+  cursor: grabbing;
+}
+.workspace_window_windowDragRail {
+  position: absolute;
+  z-index: 15;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  background: transparent;
+  visibility: hidden;
+  opacity: 0;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 120ms ease;
+}
+.workspace_window_windowDragRailLeft {
+  left: -18px;
+}
+.workspace_window_windowDragRailRight {
+  right: -18px;
+}
+.workspace_window_windowSystemControls button {
+  width: 29px;
+  height: 29px;
+  padding: 0;
+  border: 1px solid #3a4e7c;
+  border-radius: 6px;
+  color: #dce5ff;
+  background: #172342;
+}
+.workspace_window_windowExtraControls {
+  display: flex;
+  min-width: 0;
+}
+.workspace_window_windowCameraControls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.workspace_window_windowCameraControls button {
+  width: auto;
+  min-width: 29px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+.workspace_window_windowCameraControls span {
+  min-width: 48px;
+  color: #dce5ff;
+  text-align: center;
+  font: 12px monospace;
+}
+.workspace_window_freeWindow:hover .workspace_window_windowSystemControls,
+.workspace_window_freeWindow:focus-within .workspace_window_windowSystemControls {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.workspace_window_freeWindow:hover .workspace_window_windowGlassUnderlay,
+.workspace_window_freeWindow:focus-within .workspace_window_windowGlassUnderlay,
+.workspace_window_freeWindow:hover .workspace_window_windowDragRail,
+.workspace_window_freeWindow:focus-within .workspace_window_windowDragRail {
+  visibility: visible;
+  opacity: 1;
+}
+.workspace_window_resizeHandle {
+  position: absolute;
+  z-index: 20;
+  display: block;
+}
+.workspace_window_resizeHandle[data-direction=n],
+.workspace_window_resizeHandle[data-direction=s] {
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  cursor: ns-resize;
+}
+.workspace_window_resizeHandle[data-direction=n] {
+  top: -4px;
+}
+.workspace_window_resizeHandle[data-direction=s] {
+  bottom: -4px;
+}
+.workspace_window_resizeHandle[data-direction=e],
+.workspace_window_resizeHandle[data-direction=w] {
+  top: 10px;
+  bottom: 10px;
+  width: 8px;
+  cursor: ew-resize;
+}
+.workspace_window_resizeHandle[data-direction=e] {
+  right: -4px;
+}
+.workspace_window_resizeHandle[data-direction=w] {
+  left: -4px;
+}
+.workspace_window_resizeHandle[data-direction=nw],
+.workspace_window_resizeHandle[data-direction=ne],
+.workspace_window_resizeHandle[data-direction=se],
+.workspace_window_resizeHandle[data-direction=sw] {
+  width: 14px;
+  height: 14px;
+}
+.workspace_window_resizeHandle[data-direction=nw] {
+  left: -5px;
+  top: -5px;
+  cursor: nwse-resize;
+}
+.workspace_window_resizeHandle[data-direction=ne] {
+  right: -5px;
+  top: -5px;
+  cursor: nesw-resize;
+}
+.workspace_window_resizeHandle[data-direction=se] {
+  right: -5px;
+  bottom: -5px;
+  cursor: nwse-resize;
+}
+.workspace_window_resizeHandle[data-direction=sw] {
+  left: -5px;
+  bottom: -5px;
+  cursor: nesw-resize;
+}
+.workspace_window_resizeHandle[data-direction=nw]::after,
+.workspace_window_resizeHandle[data-direction=ne]::after,
+.workspace_window_resizeHandle[data-direction=se]::after,
+.workspace_window_resizeHandle[data-direction=sw]::after {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #c5b7ff;
+  border-radius: 2px;
+  background: #2d2460;
+  box-shadow: 0 0 7px rgba(139, 92, 246, .48);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+  content: "";
+}
+.workspace_window_resizeHandle[data-direction=nw]::after {
+  top: 3px;
+  left: 3px;
+}
+.workspace_window_resizeHandle[data-direction=ne]::after {
+  top: 3px;
+  right: 3px;
+}
+.workspace_window_resizeHandle[data-direction=se]::after {
+  right: 3px;
+  bottom: 3px;
+}
+.workspace_window_resizeHandle[data-direction=sw]::after {
+  bottom: 3px;
+  left: 3px;
+}
+.workspace_window_freeWindow:hover .workspace_window_resizeHandle::after,
+.workspace_window_freeWindow:focus-within .workspace_window_resizeHandle::after {
+  visibility: visible;
+  opacity: 1;
+}
+@media (hover: none) {
+  .workspace_window_windowGlassUnderlay,
+  .workspace_window_windowDragRail,
+  .workspace_window_resizeHandle::after {
+    visibility: visible;
+    opacity: 1;
+  }
+  .workspace_window_windowSystemControls {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* pip-editor/pip-host/view/pip-drop-zone.module.css */
+.pip_drop_zone_dropZone {
+  position: relative;
+}
+.pip_drop_zone_dropHint {
+  position: absolute;
+  inset: 14px;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  border: 2px dashed #79a8ff;
+  border-radius: 16px;
+  color: #edf4ff;
+  background: #17264bcc;
+  box-shadow: inset 0 0 50px #4a75d633;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+/* pip-editor/pip-host/view/workspace-tabs.module.css */
+.workspace_tabs_workspaceTabs {
+  min-width: 0;
+  display: flex;
+  align-items: end;
+  gap: 2px;
+  padding: 7px 9px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--pip-border);
+  background: var(--pip-bg);
+  scrollbar-width: thin;
+  touch-action: pan-x;
+}
+.workspace_tabs_workspaceTab {
+  flex: 0 1 220px;
+  min-width: 120px;
+  max-width: 240px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  color: var(--pip-muted);
+  background: var(--pip-panel);
+  cursor: pointer;
+}
+.workspace_tabs_workspaceTab:hover {
+  color: var(--pip-ink);
+  background: var(--pip-panel);
+}
+.workspace_tabs_workspaceTab span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.workspace_tabs_workspaceTab small {
+  flex: none;
+  color: var(--pip-muted);
+  font: 9px monospace;
+}
+.workspace_tabs_workspaceTabActive {
+  position: relative;
+  color: var(--pip-ink);
+  border-color: var(--pip-border);
+  background: var(--pip-panel);
+}
+.workspace_tabs_workspaceTabActive::after {
+  position: absolute;
+  right: 9px;
+  bottom: 0;
+  left: 9px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--pip-accent);
+  content: "";
+}
+.workspace_tabs_workspaceTabClose {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--pip-muted);
+  background: transparent;
+  cursor: pointer;
+}
+.workspace_tabs_workspaceTabClose:hover {
+  color: white;
+  background: #ffffff18;
+}
+.workspace_tabs_workspaceTabAdd {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px 2px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--pip-ink);
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+.workspace_tabs_workspaceTabAdd:hover {
+  background: #ffffff12;
+}
+
+/* pip-editor/web/globals.css */
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter,
+    "Segoe UI",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  background: #070a18;
+  color: #e8edff;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+}
+body {
+  overflow: hidden;
+  background: #070a18;
+  font-size: 13px;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #39a7ff;
+  outline-offset: 2px;
+}
+
+/* pip-editor/web/theme.css */
+:root {
+  --pip-bg: #040910;
+  --pip-panel: #0d1621;
+  --pip-ink: #eeeae2;
+  --pip-muted: #9aaebe;
+  --pip-border: #293b4c;
+  --pip-accent: #abd7ea;
+  --pip-light: 0;
+  --pip-window-shadow: #0008;
+  --pip-glass: #10193678;
+}
+:root[data-theme=light] {
+  --pip-bg: #edf1f3;
+  --pip-panel: #f8fafb;
+  --pip-ink: #192d3b;
+  --pip-muted: #516878;
+  --pip-border: #bbcbd5;
+  --pip-accent: #255e7c;
+  --pip-light: 1;
+  --pip-window-shadow: #344f661c;
+  --pip-glass: #eef4f680;
+}
+html,
+body {
+  background: var(--pip-bg);
+  color: var(--pip-ink);
+}
+[data-canvas-shortcuts] {
+  background-color: var(--pip-bg);
+}
+[data-testid=editor-preferences] {
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+}
+[data-testid=editor-preferences] fieldset {
+  border-color: var(--pip-border);
+  color: var(--pip-ink);
+}
+[data-testid=editor-preferences] select {
+  min-height: 44px;
+  padding: 8px;
+  background: var(--pip-bg);
+  color: var(--pip-ink);
+  border: 1px solid var(--pip-border);
+  border-radius: 6px;
+}
+[data-testid=editor-preferences] input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--pip-accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-root-window] * {
+    scroll-behavior: auto;
+  }
+}
+[data-workspace-status] {
+  color: var(--pip-muted);
+  background: var(--pip-panel);
+  border-color: var(--pip-border);
+}
+
+/* pip-editor/web/canvas-theme.css */
+:root[data-theme=light] {
+  --pip-selection: #dceaf0;
+}
+:root[data-theme=light] [data-testid=host-canvas] {
+  background: #e5edef;
+  color: var(--pip-ink);
+}
+:root[data-theme=light] [data-testid=host-canvas] > [data-canvas-shortcuts] {
+  background-color: #e5edef;
+  background-image:
+    radial-gradient(
+      ellipse at 82% 12%,
+      #fff8e8b3,
+      transparent 55%),
+    radial-gradient(
+      ellipse at 15% 85%,
+      #bcd4de80,
+      transparent 65%),
+    linear-gradient(
+      155deg,
+      #f0f4f3,
+      #e1ebef);
+  background-size: 100% 100%;
+}
+:root[data-theme=light] [data-testid=pip-workspace] {
+  background: #f1f5f5;
+  color: var(--pip-ink);
+}
+:root[data-theme=light] [data-testid=pip-workspace] > [data-canvas-shortcuts] {
+  background-color: #f1f5f5;
+  background-image:
+    radial-gradient(
+      circle,
+      #65839220 .8px,
+      transparent 1px),
+    radial-gradient(
+      ellipse at 90% 0%,
+      #fffaf080,
+      transparent 65%),
+    linear-gradient(
+      165deg,
+      #f7f9f8,
+      #eaf1f3);
+  background-size:
+    24px 24px,
+    100% 100%,
+    100% 100%;
+}
+:root[data-theme=light] [data-window-viewport] {
+  outline: 1px solid #a6bdc94d;
+  outline-offset: -1px;
+}
+:root[data-theme=light] [data-window-controls] button {
+  background: #f9fbfce8;
+  border-color: #b9cbd5;
+  box-shadow: 0 1px 3px #3453650a;
+}
+:root[data-theme=light] [data-window-controls] button:hover {
+  background: #e1edf2;
+  border-color: #7e9cac;
+}
+:root[data-theme=light] [data-resize-direction]::after {
+  background: #50798d;
+  border-color: #f8fcff;
+  box-shadow: 0 0 0 1px #50798d4d;
+}
+:root[data-theme=light] [data-workspace-status] {
+  background: #f7fafbe8;
+  border-color: #bfced6;
+  box-shadow: 0 -2px 12px #3b596308;
+}
+:root[data-theme=light] [role=dialog][aria-label=\521b\5efa\8282\70b9] {
+  background: var(--pip-panel);
+}
+
+/* pip-editor/web/projection-controls.css */
+[data-projection-shell] {
+  grid-template-rows: 36px minmax(0, 1fr);
+}
+[data-projection-nav] {
+  gap: 8px;
+  padding: 3px 10px;
+  background: var(--pip-panel);
+  border-color: color-mix(in srgb, var(--pip-border) 65%, transparent);
+}
+[data-projection-nav] select {
+  flex: 0 0 132px;
+  width: 132px;
+  min-width: 132px;
+  height: 28px;
+  padding: 0 20px 0 8px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--pip-bg) 35%, var(--pip-panel));
+  color: var(--pip-ink);
+  border-color: color-mix(in srgb, var(--pip-border) 60%, transparent);
+  font-size: 12px;
+}
+[data-window-controls] {
+  color: var(--pip-muted);
+  align-items: center;
+  gap: 6px;
+}
+[data-window-controls] button {
+  position: relative;
+  min-width: 28px;
+  width: auto;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: var(--pip-ink);
+  background: color-mix(in srgb, var(--pip-panel) 85%, transparent);
+  border-color: color-mix(in srgb, var(--pip-border) 60%, transparent);
+  box-shadow: none;
+}
+[data-window-controls] button::after {
+  content: "";
+  position: absolute;
+  inset: -4px -2px;
+}
+[data-window-controls] span {
+  color: var(--pip-muted);
+}
+[data-window-controls] div > span {
+  min-width: 40px;
+  font-size: 11px;
+}
+@media (max-width: 600px) {
+  [data-window-controls] {
+    left: 0;
+    right: 0;
+    height: 36px;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  [data-window-controls=top] {
+    top: -36px;
+  }
+  [data-window-controls=bottom] {
+    display: none;
+  }
+}
+[data-active-controls] {
+  position: absolute;
+  right: 8px;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--pip-border);
+  border-radius: 8px;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  font-size: 12px;
+}
+[data-active-controls] button,
+[data-active-controls] select {
+  height: 28px;
+  min-width: 28px;
+  border: 1px solid var(--pip-border);
+  border-radius: 5px;
+  background: var(--pip-bg);
+  color: inherit;
+  font: inherit;
+}
+[data-active-controls] select {
+  width: 92px;
+}
+[data-active-controls] output {
+  width: 38px;
+  text-align: center;
+}
+[data-active-controls] button:focus-visible,
+[data-active-controls] select:focus-visible {
+  outline: 2px solid var(--pip-accent);
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  [data-active-controls] {
+    gap: 0;
+    padding: 0;
+  }
+  [data-active-controls] button {
+    min-width: 44px;
+    height: 44px;
+    border: 8px solid var(--pip-panel);
+    padding: 0;
+  }
+  [data-active-controls] select {
+    height: 44px;
+  }
+  [data-window-controls] button {
+    min-width: 44px;
+    height: 44px;
+  }
+  [data-window-controls] button::after {
+    display: none;
+  }
+}
+[data-window-menu] {
+  position: relative;
+}
+[data-window-menu] summary {
+  list-style: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--pip-border);
+  border-radius: 5px;
+  text-align: center;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+}
+[data-window-menu] summary::-webkit-details-marker {
+  display: none;
+}
+[data-window-menu] > div {
+  position: absolute;
+  right: 0;
+  top: 32px;
+  width: 180px;
+  padding: 6px;
+  border: 1px solid var(--pip-border);
+  border-radius: 8px;
+  background: var(--pip-panel);
+}
+[data-window-menu] > div button {
+  display: block;
+  width: 100%;
+  height: 36px;
+}
+[data-projection-nav] {
+  min-width: 0;
+}
+[data-projection-nav] > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (pointer: coarse) {
+  [data-window-menu] summary {
+    width: 44px;
+    height: 44px;
+  }
+  [data-window-menu] > div {
+    top: 44px;
+  }
+}
+[data-window-controls=top] {
+  max-width: var(--window-visible-width);
+}
+[data-window-menu] summary {
+  display: grid;
+  place-items: center;
+}
+[data-window-menu] summary,
+[data-window-controls] > button[data-window-close] {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+[data-window-controls] > button[data-window-close] {
+  width: 28px;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+@media (pointer: coarse) {
+  [data-window-controls] > button[data-window-close] {
+    width: 44px;
+  }
+}
+[data-window-menu] summary svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+:root[data-theme=dark] [data-window-menu] svg {
+  --guanguan-back: #294457;
+  --guanguan-body: #fff1de;
+  --guanguan-wing: #a3c4d7;
+  --guanguan-feather: #6e91a8;
+}
+:root[data-theme=light] [data-window-menu] svg {
+  --guanguan-back: #334e62;
+  --guanguan-body: #f5efe5;
+  --guanguan-wing: #86a5bc;
+  --guanguan-feather: #57788f;
+}
+[data-window-bottom-controls] {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  height: 37px;
+  z-index: 45;
+}
+[data-window-bottom-controls] > [data-active-controls] {
+  bottom: 0;
+  right: 0;
+  white-space: nowrap;
+}
+@media (pointer: coarse) {
+  [data-window-bottom-controls] {
+    height: 46px;
+  }
+}
+
+/* pip-editor/web/plugin-manager-theme.css */
+[data-testid=plugin-manager] {
+  --manager-success: #72d4ab;
+  --manager-error: #ff9bac;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  scrollbar-color: var(--pip-border) transparent;
+}
+:root[data-theme=light] [data-testid=plugin-manager] {
+  --manager-success: #176a4c;
+  --manager-error: #a12f48;
+}
+[data-testid=plugin-manager] h3,
+[data-testid=plugin-manager] strong {
+  color: var(--pip-ink);
+}
+[data-testid=plugin-manager] h3 small,
+[data-testid=plugin-manager] small,
+[data-testid=plugin-manager] p,
+[data-testid=plugin-manager] span {
+  color: var(--pip-muted);
+  font-size: 12px;
+}
+[data-testid=plugin-manager] button {
+  min-height: 32px;
+  padding: 5px 9px;
+  color: var(--pip-ink);
+  background: var(--pip-bg);
+  border: 1px solid var(--pip-border);
+  border-radius: 6px;
+  font: inherit;
+}
+[data-testid=plugin-manager] button:hover:not(:disabled) {
+  border-color: var(--pip-accent);
+  background: color-mix(in srgb, var(--pip-accent) 10%, var(--pip-panel));
+}
+[data-testid=plugin-manager] button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+[data-testid=plugin-manager] :focus-visible {
+  outline: 2px solid var(--pip-accent);
+  outline-offset: 2px;
+}
+[data-testid=plugin-manager] label[for] {
+  background: var(--pip-accent);
+  color: var(--pip-bg);
+  border-color: var(--pip-accent);
+  min-height: 40px;
+  box-sizing: border-box;
+}
+[data-testid=plugin-manager] article,
+[data-testid=plugin-manager] [data-testid=status-message] {
+  background: var(--pip-bg);
+  border-color: var(--pip-border);
+}
+[data-testid=plugin-manager] article > div {
+  flex-wrap: wrap;
+  align-items: center;
+}
+[data-testid=plugin-manager] article strong {
+  min-width: 0;
+  flex: 1 1 140px;
+}
+[data-testid=plugin-manager] article p {
+  line-height: 1.65;
+}
+@media (pointer: coarse) {
+  [data-testid=plugin-manager] button {
+    min-height: 44px;
+  }
+}
