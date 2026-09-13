@@ -27602,6 +27602,12 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       return Math.hypot(a.x - b.x, a.y - b.y);
     };
     const down = (event) => {
+      const active_ids = new Set(Array.from(event.touches, (touch) => touch.identifier));
+      for (const id of points.keys()) if (!active_ids.has(id)) points.delete(id);
+      if (!points.size) {
+        distance = 0;
+        pinch_start = void 0;
+      }
       const path = event.composedPath();
       if (!points.size) {
         moved = pinched = false;
@@ -27675,14 +27681,17 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
         current.update(current.navigation, { x: current.offset.x + to.x - from.x, y: current.offset.y + to.y - from.y });
       }
     };
-    const end = (event) => {
-      if (!points.size) return;
-      event.stopPropagation();
+    const release = (event) => {
       for (const touch of Array.from(event.changedTouches)) points.delete(touch.identifier);
       if (points.size < 2) {
         distance = 0;
         pinch_start = void 0;
       }
+    };
+    const end = (event) => {
+      if (!points.size) return;
+      event.stopPropagation();
+      release(event);
     };
     const click = (event) => {
       if (!moved && !pinched) return;
@@ -27690,12 +27699,17 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       event.stopPropagation();
       moved = pinched = false;
     };
+    const owner_document = element.ownerDocument;
+    owner_document?.addEventListener("touchend", release, true);
+    owner_document?.addEventListener("touchcancel", release, true);
     element.addEventListener("touchstart", down, { passive: false });
     element.addEventListener("touchmove", move, { passive: false });
     element.addEventListener("touchend", end);
     element.addEventListener("touchcancel", end);
     element.addEventListener("click", click, true);
     return () => {
+      owner_document?.removeEventListener("touchend", release, true);
+      owner_document?.removeEventListener("touchcancel", release, true);
       element.removeEventListener("touchstart", down);
       element.removeEventListener("touchmove", move);
       element.removeEventListener("touchend", end);
