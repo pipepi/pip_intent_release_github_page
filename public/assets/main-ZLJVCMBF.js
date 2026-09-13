@@ -29322,7 +29322,6 @@ function useTabTouchDrag(on_reorder, on_detach) {
       moved: false
     };
     suppress_click.current = false;
-    event.currentTarget.setPointerCapture(event.pointerId);
     event.stopPropagation();
   };
   const move = (event) => {
@@ -29330,6 +29329,7 @@ function useTabTouchDrag(on_reorder, on_detach) {
     if (!current || current.pointer_id !== event.pointerId) return;
     const x = event.clientX - current.start.x, y = event.clientY - current.start.y;
     if (!current.moved && Math.hypot(x, y) < 8) return;
+    if (!current.moved) event.currentTarget.setPointerCapture(event.pointerId);
     current.moved = true;
     event.preventDefault();
     event.stopPropagation();
