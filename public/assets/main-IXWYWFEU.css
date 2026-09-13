@@ -1122,6 +1122,12 @@
 .workspace_tabs_workspaceTabAdd:hover {
   background: #ffffff12;
 }
+.workspace_tabs_workspaceTabs [data-workspace-tab] {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 
 /* pip-editor/web/globals.css */
 :root {
