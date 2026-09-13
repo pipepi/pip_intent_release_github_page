@@ -27585,6 +27585,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     let pinched = false;
     let moved = false;
     let distance = 0;
+    let pinch_start;
     let start_point;
     const position = (point) => local_point(
       surface.getBoundingClientRect(),
@@ -27616,7 +27617,16 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       if (points.size === 1) start_point = [...points.values()][0];
       if (points.size >= 2) {
         pinched = true;
-        distance = separation();
+        if (points.size === 2) {
+          distance = separation();
+          const [a, b] = [...points.values()];
+          const center = position({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+          const current = latest.current;
+          pinch_start = { navigation: current.navigation, world: {
+            x: (center.x - current.offset.x) / current.navigation.semanticScale,
+            y: (center.y - current.offset.y) / current.navigation.semanticScale
+          } };
+        }
         if (event.cancelable) event.preventDefault();
       }
     };
@@ -27631,7 +27641,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
         const [a, b] = [...points.values()];
         const center = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
         const next_distance = separation();
-        if (!switched && distance > 0) {
+        if (!switched && pinch_start && distance > 0) {
           const target = nearest_projection(element, center);
           const forward = forwardRoute(
             current.navigation,
@@ -27641,19 +27651,21 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
             current.selection[0]
           );
           const anchor = position(center);
-          const next = applySemanticScale(current.navigation, current.navigation.semanticScale * next_distance / distance, forward);
+          const next = applySemanticScale(
+            pinch_start.navigation,
+            pinch_start.navigation.semanticScale * next_distance / distance,
+            forward
+          );
           switched = next.index !== current.navigation.index;
-          const ratio = next.semanticScale / current.navigation.semanticScale;
           current.update(switched ? next : {
             ...next,
             semanticOrigin: anchor,
             semanticTargetProjectionId: forward?.projectionNodeId
           }, switched ? current.offset : {
-            x: anchor.x - (anchor.x - current.offset.x) * ratio,
-            y: anchor.y - (anchor.y - current.offset.y) * ratio
+            x: anchor.x - pinch_start.world.x * next.semanticScale,
+            y: anchor.y - pinch_start.world.y * next.semanticScale
           });
         }
-        distance = next_distance;
       } else if (spatial && !pinched) {
         const after = [...points.values()][0];
         if (event.cancelable) event.preventDefault();
@@ -27667,7 +27679,10 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       if (!points.size) return;
       event.stopPropagation();
       for (const touch of Array.from(event.changedTouches)) points.delete(touch.identifier);
-      if (points.size < 2) distance = 0;
+      if (points.size < 2) {
+        distance = 0;
+        pinch_start = void 0;
+      }
     };
     const click = (event) => {
       if (!moved && !pinched) return;
@@ -28308,14 +28323,13 @@ function workspaceCreatorChoices(workspace, nodeTypes, systemPlugins, creator) {
 var import_react25 = __toESM(require_react(), 1);
 var pointIn2 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
-  return { x: clientX - rect.left, y: clientY - rect.top };
+  return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
 };
 var blocksCanvasGesture = (element) => ["BUTTON", "INPUT", "SELECT", "TEXTAREA", "A"].includes(element?.tagName);
 function useWorkspaceCanvasPointer({
   free,
   onViewsChange,
   persistCamera,
-  previewCamera,
   setCreator,
   setPreviewCamera,
   setWire,
@@ -28324,14 +28338,19 @@ function useWorkspaceCanvasPointer({
 }) {
   const gesture = (0, import_react25.useRef)(void 0);
   const touches = (0, import_react25.useRef)(/* @__PURE__ */ new Map());
+  const pinch_camera = (0, import_react25.useRef)(void 0);
   const pinch = (0, import_react25.useRef)(void 0);
   const begin = (event) => {
     if (!free || event.button !== 0 && event.button !== 1) return;
-    const path = event.nativeEvent.composedPath();
-    const port = path.find((item) => item?.dataset?.pipOriginNode);
+    const full_path = event.nativeEvent.composedPath();
     const element = viewport.current;
+    if (full_path.find((item) => item?.hasAttribute?.("data-canvas-shortcuts")) !== element) return;
+    const path = full_path.slice(0, full_path.indexOf(element));
+    const port = path.find((item) => item?.dataset?.pipOriginNode);
     const start = pointIn2(element, event.clientX, event.clientY);
     if (event.pointerType === "touch") {
+      if (path.some((item) => blocksCanvasGesture(item) || item?.dataset?.nodeId)) return;
+      event.stopPropagation();
       touches.current.set(event.pointerId, start);
       if (touches.current.size === 2) {
         const [a, b] = [...touches.current.values()];
@@ -28339,6 +28358,7 @@ function useWorkspaceCanvasPointer({
           x: (a.x + b.x) / 2,
           y: (a.y + b.y) / 2
         };
+        pinch_camera.current = views.camera;
         pinch.current = {
           distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)),
           world: screenToWorld(center, views),
@@ -28393,15 +28413,19 @@ function useWorkspaceCanvasPointer({
           pinch.current.camera.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.current.distance
         )
       );
-      setPreviewCamera({
+      const next_camera = {
         scale,
         x: center.x - pinch.current.world.x * scale,
         y: center.y - pinch.current.world.y * scale
-      });
+      };
+      pinch_camera.current = next_camera;
+      event.stopPropagation();
+      setPreviewCamera(next_camera);
       return;
     }
     const current = gesture.current;
     if (!current || current.pointerId !== event.pointerId) return;
+    event.stopPropagation();
     const dx = point.x - current.start.x;
     const dy = point.y - current.start.y;
     if (Math.hypot(dx, dy) >= 4) current.moved = true;
@@ -28417,12 +28441,14 @@ function useWorkspaceCanvasPointer({
   };
   const end = (event) => {
     if (event.pointerType === "touch") {
+      if (touches.current.has(event.pointerId)) event.stopPropagation();
       touches.current.delete(event.pointerId);
     }
     if (pinch.current) {
       if (touches.current.size < 2) {
         pinch.current = void 0;
-        if (previewCamera) persistCamera(previewCamera);
+        if (pinch_camera.current) persistCamera(pinch_camera.current);
+        pinch_camera.current = void 0;
       }
       return;
     }
@@ -28450,11 +28476,13 @@ function useWorkspaceCanvasPointer({
   };
   const cancel = (event) => {
     if (event.pointerType === "touch") {
+      if (touches.current.has(event.pointerId)) event.stopPropagation();
       touches.current.delete(event.pointerId);
     }
     if (pinch.current && touches.current.size < 2) {
       pinch.current = void 0;
-      if (previewCamera) persistCamera(previewCamera);
+      if (pinch_camera.current) persistCamera(pinch_camera.current);
+      pinch_camera.current = void 0;
     }
     gesture.current = void 0;
     setWire(void 0);
