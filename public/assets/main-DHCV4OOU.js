@@ -27569,6 +27569,38 @@ function nearest_projection(viewport, point) {
   return nearest;
 }
 
+// pip-editor/pip-host/projection/stationary-hold.ts
+var StationaryHold = class {
+  constructor(schedule = (callback) => requestAnimationFrame(callback), unschedule = (id) => cancelAnimationFrame(id)) {
+    this.frame_id = 0;
+    this.schedule = schedule;
+    this.unschedule = unschedule;
+  }
+  begin(point, advance) {
+    this.cancel();
+    this.origin = point;
+    let started;
+    const tick = (time) => {
+      started ??= time;
+      if (!this.origin) return;
+      if (time - started >= 450 && !advance(time - started - 450)) {
+        this.cancel();
+        return;
+      }
+      this.frame_id = this.schedule(tick);
+    };
+    this.frame_id = this.schedule(tick);
+  }
+  move(point) {
+    if (this.origin && Math.hypot(point.x - this.origin.x, point.y - this.origin.y) > 6) this.cancel();
+  }
+  cancel() {
+    if (this.frame_id) this.unschedule(this.frame_id);
+    this.frame_id = 0;
+    this.origin = void 0;
+  }
+};
+
 // pip-editor/pip-host/projection/use-projection-touch.ts
 function useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update) {
   const latest = (0, import_react19.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
@@ -27584,6 +27616,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     let switched = false;
     let pinched = false;
     let moved = false;
+    let held = false;
+    const hold = new StationaryHold();
     let distance = 0;
     let pinch_start;
     let start_point;
@@ -27610,7 +27644,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       }
       const path = event.composedPath();
       if (!points.size) {
-        moved = pinched = false;
+        moved = pinched = held = false;
+        hold.cancel();
         if (path.some((item) => ["INPUT", "SELECT", "TEXTAREA", "BUTTON", "SUMMARY", "A"].includes(item?.tagName))) return;
         spatial = path.some((item) => item?.hasAttribute?.("data-projection-spatial"));
         surface = path.find((item) => item?.hasAttribute?.("data-projection-surface")) ?? element;
@@ -27620,8 +27655,44 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       for (const touch of Array.from(event.changedTouches)) {
         points.set(touch.identifier, { x: touch.clientX, y: touch.clientY });
       }
-      if (points.size === 1) start_point = [...points.values()][0];
+      if (points.size === 1) {
+        start_point = [...points.values()][0];
+        const hold_point = start_point;
+        if (spatial || path.some((item) => item?.hasAttribute?.("data-projection-hold"))) {
+          const base = latest.current;
+          const anchor = position(hold_point);
+          hold.begin(hold_point, (elapsed) => {
+            if (points.size !== 1 || latest.current.navigation.index !== base.navigation.index) return false;
+            held = true;
+            const target = nearest_projection(element, hold_point);
+            const forward = forwardRoute(
+              base.navigation,
+              base.graph,
+              base.node_types,
+              target?.dataset.embeddedProjection,
+              base.selection[0]
+            );
+            const next = applySemanticScale(
+              base.navigation,
+              base.navigation.semanticScale * Math.exp(elapsed * 85e-5),
+              forward
+            );
+            const crossed = next.index !== base.navigation.index;
+            const ratio = next.semanticScale / base.navigation.semanticScale;
+            base.update(crossed ? next : {
+              ...next,
+              semanticOrigin: anchor,
+              semanticTargetProjectionId: forward?.projectionNodeId
+            }, crossed ? base.offset : {
+              x: anchor.x - (anchor.x - base.offset.x) * ratio,
+              y: anchor.y - (anchor.y - base.offset.y) * ratio
+            });
+            return !crossed && next.semanticScale < 1.7;
+          });
+        }
+      }
       if (points.size >= 2) {
+        hold.cancel();
         pinched = true;
         if (points.size === 2) {
           distance = separation();
@@ -27640,6 +27711,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       if (!points.size) return;
       const before = [...points.values()][0];
       refresh(event);
+      if (points.size === 1) hold.move([...points.values()][0]);
       event.stopPropagation();
       const current = latest.current;
       if (points.size >= 2) {
@@ -27672,7 +27744,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
             y: anchor.y - pinch_start.world.y * next.semanticScale
           });
         }
-      } else if (spatial && !pinched) {
+      } else if (spatial && !pinched && !held) {
         const after = [...points.values()][0];
         if (event.cancelable) event.preventDefault();
         if (!moved && start_point && Math.hypot(after.x - start_point.x, after.y - start_point.y) < 4) return;
@@ -27682,6 +27754,7 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       }
     };
     const release = (event) => {
+      if (Array.from(event.changedTouches).some((touch) => points.has(touch.identifier))) hold.cancel();
       for (const touch of Array.from(event.changedTouches)) points.delete(touch.identifier);
       if (points.size < 2) {
         distance = 0;
@@ -27694,11 +27767,15 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
       release(event);
     };
     const click = (event) => {
-      if (!moved && !pinched) return;
+      if (!moved && !pinched && !held) return;
       event.preventDefault();
       event.stopPropagation();
-      moved = pinched = false;
+      moved = pinched = held = false;
     };
+    const context_menu = (event) => {
+      if (held) event.preventDefault();
+    };
+    element.addEventListener("contextmenu", context_menu);
     const owner_document = element.ownerDocument;
     owner_document?.addEventListener("touchend", release, true);
     owner_document?.addEventListener("touchcancel", release, true);
@@ -27708,6 +27785,8 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
     element.addEventListener("touchcancel", end);
     element.addEventListener("click", click, true);
     return () => {
+      hold.cancel();
+      element.removeEventListener("contextmenu", context_menu);
       owner_document?.removeEventListener("touchend", release, true);
       owner_document?.removeEventListener("touchcancel", release, true);
       element.removeEventListener("touchstart", down);
