@@ -28243,7 +28243,7 @@ function CloseWorkspaceDialog({ name, onExport, onDiscard, onCancel }) {
 }
 
 // pip-editor/pip-host/view/workspace-fit.ts
-function workspace_fit_camera(frames, viewport, coarse_pointer = false) {
+function workspace_fit_camera(frames, viewport, coarse_pointer = false, minimum_scale = 0.5) {
   if (!frames.length || viewport.width <= 0 || viewport.height <= 0) return;
   const top = coarse_pointer ? 48 : 37;
   const left = Math.min(...frames.map((frame) => frame.x - 18));
@@ -28252,7 +28252,7 @@ function workspace_fit_camera(frames, viewport, coarse_pointer = false) {
   const lower = Math.max(...frames.map((frame) => frame.y + frame.height + 37));
   const available_width = Math.max(1, viewport.width - 16);
   const available_height = Math.max(1, viewport.height - 68);
-  const scale = Math.max(0.5, Math.min(
+  const scale = Math.max(minimum_scale, Math.min(
     2,
     available_width / (right - left),
     available_height / (lower - upper)
@@ -30538,7 +30538,7 @@ function useWorkspaceCanvasPointer({
         y: (a2.y + b2.y) / 2
       };
       const scale = Math.max(
-        0.5,
+        Math.min(0.5, pinch.current.camera.scale),
         Math.min(
           2,
           pinch.current.camera.scale * Math.hypot(a2.x - b2.x, a2.y - b2.y) / pinch.current.distance
@@ -31242,6 +31242,21 @@ var HostPresentationStore = class {
   }
 };
 
+// pip-editor/pip-host/view/host-fit.ts
+function host_fit_camera(host, viewport, coarse_pointer = false) {
+  if (viewport.width <= 0 || viewport.height <= 60) return;
+  const frames = [
+    ...Object.values(host.workspaceWindows),
+    ...Object.values(host.systemWindows)
+  ].map((window2) => window2.frame);
+  if (!frames.length) return { x: 0, y: 0, scale: 1 };
+  const camera = workspace_fit_camera(frames, {
+    width: viewport.width,
+    height: viewport.height - 60
+  }, coarse_pointer, 0);
+  return camera && { ...camera, y: camera.y + 60 };
+}
+
 // pip-editor/pip-host/view/canvas-creator-entry.tsx
 var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 function CanvasCreatorEntry({ open }) {
@@ -31346,8 +31361,15 @@ function HostCanvas({
     label: "\u5BBF\u4E3B\u753B\u5E03",
     scale: camera.scale,
     zoom_in: () => persistCamera({ ...camera, scale: Math.min(2, camera.scale + 0.1) }),
-    zoom_out: () => persistCamera({ ...camera, scale: Math.max(0.5, camera.scale - 0.1) }),
-    fit: () => persistCamera({ x: 0, y: 0, scale: 1 })
+    zoom_out: () => persistCamera({ ...camera, scale: Math.max(Math.min(0.5, camera.scale), camera.scale - 0.1) }),
+    fit: () => {
+      const next_camera = host_fit_camera(
+        host,
+        viewportSize(),
+        matchMedia("(pointer: coarse)").matches
+      );
+      if (next_camera) persistCamera(next_camera);
+    }
   };
   return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(ActiveControlsProvider, { enabled: !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: [
     /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
@@ -31386,7 +31408,7 @@ function HostCanvas({
             const rect = event.currentTarget.getBoundingClientRect();
             const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
             const world = screenToWorld(point, views);
-            const scale = Math.max(0.5, Math.min(2, camera.scale - event.deltaY * 2e-3));
+            const scale = Math.max(Math.min(0.5, camera.scale), Math.min(2, camera.scale - event.deltaY * 2e-3));
             persistCamera({
               scale,
               x: point.x - world.x * scale,
