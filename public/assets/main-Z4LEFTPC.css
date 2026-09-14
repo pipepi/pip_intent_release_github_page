@@ -1,3 +1,120 @@
+/* pip-editor/pip-host/creation/surface.module.css */
+.surface_surface {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.surface_content {
+  width: 100%;
+  height: 100%;
+}
+.surface_overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: clip;
+}
+.surface_item {
+  position: absolute;
+  pointer-events: auto;
+}
+.surface_missing {
+  position: absolute;
+  left: 4px;
+  top: -22px;
+  font: 12px/22px system-ui;
+  color: var(--pip-ink);
+  background: var(--pip-panel);
+}
+.surface_preview {
+  position: fixed;
+  z-index: 10000;
+  width: 280px;
+  height: 180px;
+  pointer-events: none;
+  border: 2px dashed var(--pip-accent,#8ad);
+  border-radius: 10px;
+  background: #80b0cc20;
+}
+.surface_hint {
+  position: fixed;
+  top: 64px;
+  left: 12px;
+  z-index: 10001;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font: 13px system-ui;
+  color: var(--pip-ink);
+  background: var(--pip-panel);
+  pointer-events: none;
+}
+.surface_events {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  max-width: 260px;
+  max-height: 50%;
+  overflow: auto;
+  pointer-events: auto;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  font: 15px/1.5 system-ui;
+}
+.surface_events:empty {
+  display: none;
+}
+.surface_events article {
+  padding: 8px;
+  border-bottom: 1px solid var(--pip-border);
+}
+.surface_item {
+  --content-header-height:28px;
+}
+.surface_item header button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  color: var(--pip-ink);
+  background: var(--pip-panel);
+}
+@media (pointer: coarse) {
+  .surface_item {
+    --content-header-height:44px;
+  }
+  .surface_item header button {
+    width: 44px;
+    height: 44px;
+  }
+  .surface_item > button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+.surface_relations {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.surface_relations path {
+  fill: none;
+  stroke: var(--pip-accent, #89abc0);
+  stroke-width: 1;
+  opacity: .45;
+}
+.surface_relations text {
+  fill: var(--pip-ink);
+  font: 12px system-ui;
+  opacity: .7;
+}
+.surface_item[data-selected=true] {
+  outline: 2px solid var(--pip-accent, #89abc0);
+  border-radius: 10px;
+}
+
 /* pip-editor/pip-host/view/pip-host.module.css */
 .pip_host_shell {
   width: 100%;
@@ -706,6 +823,50 @@
 }
 .import_status_failed {
   border-left-color: var(--manager-error) !important;
+}
+
+/* pip-editor/pip-host-io/preferences/startup-panel.module.css */
+.startup_panel_list {
+  border: 1px solid var(--pip-border);
+  border-radius: 10px;
+  margin: 0 0 16px;
+  padding: 12px;
+  min-width: 0;
+}
+.startup_panel_plugin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  border-bottom: 1px solid var(--pip-border);
+  padding: 8px 0;
+}
+.startup_panel_plugin strong {
+  flex-basis: 100%;
+  font-size: 15px;
+}
+.startup_panel_plugin label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 13px;
+}
+.startup_panel_plugin button {
+  min-height: 44px;
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--pip-border);
+  border-radius: 7px;
+  background: var(--pip-bg);
+  color: var(--pip-ink);
+}
+.startup_panel_plugin button:disabled {
+  opacity: .6;
+}
+.startup_panel_list p {
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 /* pip-editor/pip-host/view/canvas-entry.module.css */

@@ -1,4 +1,26 @@
 {
+  "plugins": [
+    {
+      "id": "official.website-types",
+      "name": "官网",
+      "auto_load": true,
+      "open_workspace": true,
+      "file": "a4_official_website_node_type_0_1_0_20260913.pip",
+      "sha256": "7e4ce38421431947cdb464eac96f0c4efa22baadd6de95ada46c12054840613b",
+      "workspace": {
+        "file": "a5_official_website_map_0_1_0_20260913.pip",
+        "sha256": "f4a28520aca0d1795e98d3a6f22d4a573ce9f3b69a80a6a9f00e1ce2f0ccc9ef"
+      }
+    },
+    {
+      "id": "official.thought-types",
+      "name": "想法方块 · R",
+      "auto_load": true,
+      "open_workspace": false,
+      "file": "a4_official_thought_node_type_0_1_0_20260913.pip",
+      "sha256": "17b775bc656d9dcef71654acf95c469a4ebd8d8b53936d1b285ef8996089d943"
+    }
+  ],
   "file": "a5_official_website_map_0_1_0_20260913.pip",
-  "sha256": "a43b7c65ac455e9e119c2369118a9e346b323b49419d47249643c73a6d8ce99a"
+  "sha256": "f4a28520aca0d1795e98d3a6f22d4a573ce9f3b69a80a6a9f00e1ce2f0ccc9ef"
 }
