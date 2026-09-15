@@ -21738,7 +21738,7 @@ function install_touch_boundary(root2) {
 }
 
 // pip-editor/web/main.tsx
-var import_react42 = __toESM(require_react(), 1);
+var import_react43 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 
 // pip-editor/pip-host/view/active-space-gestures.ts
@@ -23866,7 +23866,7 @@ function useHostTheme(theme_mode) {
 }
 
 // pip-editor/pip-host/pip-host.tsx
-var import_react41 = __toESM(require_react(), 1);
+var import_react42 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host-io/system-plugin/runtime.ts
 var identity_ref = {
@@ -24651,6 +24651,9 @@ var preferencesSystemPlugin = {
   Component: PreferencesSystemNode
 };
 
+// pip-editor/pip-host/view/space-navigator.tsx
+var import_react8 = __toESM(require_react(), 1);
+
 // pip-editor/pip-host/view/guanguan-context.ts
 var host_space2 = { kind: "host", id: "host" };
 function ordered_navigation_path(snapshot2) {
@@ -24854,6 +24857,7 @@ function SpaceNavigator({
   on_owner_change
 }) {
   const space = useActiveSpace();
+  const compass_ref = (0, import_react8.useRef)(null);
   const open = !collapsed;
   const owner_surface = owner.kind === "surface" ? space.snapshot?.surfaces.find((item) => item.id === owner.surface_id) : void 0;
   const context_snapshot = owner_surface && space.snapshot ? { ...space.snapshot, focus: as_space(owner_surface) } : space.snapshot;
@@ -24949,6 +24953,13 @@ function SpaceNavigator({
                   host ? "pip-open-host-creator" : "pip-open-space-creator",
                   { detail: host ? void 0 : focus_space.workspace_id }
                 ));
+                const compass_rect = compass_ref.current?.getBoundingClientRect();
+                if (compass_rect) {
+                  on_collapsed_change(true, {
+                    x: compass_rect.left + compass_rect.width / 2,
+                    y: compass_rect.top + compass_rect.height / 2
+                  });
+                }
               }, children: "\uFF0B \u521B\u5EFA" })
             ]
           }
@@ -24956,6 +24967,7 @@ function SpaceNavigator({
         /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "button",
           {
+            ref: compass_ref,
             className: space_navigator_default.compass,
             "aria-label": open ? "\u5173\u95ED\u7A7A\u95F4\u5BFC\u822A" : "\u6253\u5F00\u7A7A\u95F4\u5BFC\u822A",
             "aria-expanded": open,
@@ -25316,11 +25328,11 @@ function SystemPluginRenderer({
 }
 
 // pip-editor/pip-host-io/system-plugin/companion-presentations.tsx
-var import_react9 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // pip-editor/pip-host/view/use-companion-frame.ts
-var import_react8 = __toESM(require_react(), 1);
+var import_react9 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/companion-presentation.ts
 var GUANGUAN_PLUGIN_ID = "host.interaction-navigator";
@@ -25478,9 +25490,9 @@ function resize_companion_presentation(presentation, direction, delta, bounds) {
 
 // pip-editor/pip-host/view/use-companion-frame.ts
 function useCompanionFrame(presentation, update, screen_to_local, visible_bounds) {
-  const gesture_ref = (0, import_react8.useRef)();
-  const suppress_click_ref = (0, import_react8.useRef)(false);
-  const [dragging, set_dragging] = (0, import_react8.useState)(false);
+  const gesture_ref = (0, import_react9.useRef)();
+  const suppress_click_ref = (0, import_react9.useRef)(false);
+  const [dragging, set_dragging] = (0, import_react9.useState)(false);
   const on_pointer_down = (event) => {
     const target = event.target;
     const resize = target.closest("[data-companion-resize]")?.dataset.companionResize;
@@ -25664,12 +25676,12 @@ function CompanionPresentations({
 }) {
   const host_services = services;
   const space = useActiveSpace();
-  const [selected_id, set_selected_id] = (0, import_react9.useState)();
+  const [selected_id, set_selected_id] = (0, import_react10.useState)();
   const preferences = host_services.preferences.snapshot().companion;
   const presentations = preferences.presentations.filter(
     (item) => item.plugin_id === GUANGUAN_PLUGIN_ID
   );
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const invalid = preferences.presentations.filter((item) => {
       const definition = registry.get(item.plugin_id);
       return !definition || definition.window.role !== "companion" || definition.instancePolicy !== "multiple";
@@ -25681,7 +25693,7 @@ function CompanionPresentations({
     );
     host_services.onMessage?.(`\u5DF2\u5FFD\u7565 ${invalid.length} \u4E2A\u635F\u574F\u7684\u7A7A\u95F4\u4F34\u4FA3\u8BB0\u5F55`);
   }, [host_services, preferences.presentations, registry]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (preferences.initialized) return;
     const point = {
       x: Math.max(12, innerWidth - 60),
@@ -25689,7 +25701,7 @@ function CompanionPresentations({
     };
     host_services.preferences.update_companion_presentations((current) => current.length ? current : [create_companion_presentation(default_instance_id, point)]);
   }, [host_services.preferences, preferences.initialized]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const create = (event) => {
       const detail = event.detail;
       if (detail.plugin_id !== GUANGUAN_PLUGIN_ID) return;
@@ -25715,7 +25727,7 @@ function CompanionPresentations({
     space.snapshot?.focus?.id,
     space.store
   ]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     for (const presentation of presentations) {
       if (!runtime.get(presentation.instance_id)) {
         runtime.ensure(
@@ -25732,7 +25744,7 @@ function CompanionPresentations({
       }
     }
   }, [presentations, runtime]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (!space.snapshot?.surfaces_ready) return;
     const invalid = presentations.filter(
       (item) => item.owner.kind === "surface" && !space.store?.surface(item.owner.surface_id)
@@ -25751,7 +25763,7 @@ function CompanionPresentations({
       })
     );
   }, [host_services.preferences, presentations, space.snapshot?.surfaces, space.store]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const clear_selection = () => set_selected_id(void 0);
     document.addEventListener("pointerdown", clear_selection);
     return () => document.removeEventListener("pointerdown", clear_selection);
@@ -26486,7 +26498,7 @@ async function dispatchPipElementRequest(request, context) {
 }
 
 // pip-editor/pip-host/use-plugin-catalog.ts
-var import_react11 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/packages/package-identity.ts
 function assertSameImmutablePlugin(current, incoming) {
@@ -29443,7 +29455,7 @@ var readHostLaunchPackage = async () => {
 };
 
 // pip-editor/pip-host/use-pip-import-queue.ts
-var import_react10 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/packages/import-batch.ts
 var layerOrder = {
@@ -29558,13 +29570,13 @@ async function runPreparedPipBatch(initial, prepared, options) {
 
 // pip-editor/pip-host/use-pip-import-queue.ts
 function usePipImportQueue(options) {
-  const optionsRef = (0, import_react10.useRef)(options);
-  (0, import_react10.useEffect)(() => {
+  const optionsRef = (0, import_react11.useRef)(options);
+  (0, import_react11.useEffect)(() => {
     optionsRef.current = options;
   }, [options]);
-  const sequence = (0, import_react10.useRef)(0);
-  const queue = (0, import_react10.useRef)(Promise.resolve());
-  const [importBatch, setImportBatch] = (0, import_react10.useState)();
+  const sequence = (0, import_react11.useRef)(0);
+  const queue = (0, import_react11.useRef)(Promise.resolve());
+  const [importBatch, setImportBatch] = (0, import_react11.useState)();
   const runBatch = async (batchId, files) => {
     const initial = createPendingBatch(batchId, files);
     setImportBatch(initial);
@@ -29606,20 +29618,20 @@ function usePluginCatalog({
   setMessage,
   workspaceStore
 }) {
-  const [elements] = (0, import_react11.useState)(
+  const [elements] = (0, import_react12.useState)(
     () => new ElementPluginRegistry(browserElementRuntime())
   );
-  const [nodeTypes] = (0, import_react11.useState)(
+  const [nodeTypes] = (0, import_react12.useState)(
     () => new NodeTypePluginRegistry(browserNodeTypeRuntime())
   );
-  const [elementPackages, setElementPackages] = (0, import_react11.useState)([]);
-  const [nodeTypePackages, setNodeTypePackages] = (0, import_react11.useState)([]);
-  const [disabledElements, setDisabledElements] = (0, import_react11.useState)(/* @__PURE__ */ new Set());
-  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react11.useState)(
+  const [elementPackages, setElementPackages] = (0, import_react12.useState)([]);
+  const [nodeTypePackages, setNodeTypePackages] = (0, import_react12.useState)([]);
+  const [disabledElements, setDisabledElements] = (0, import_react12.useState)(/* @__PURE__ */ new Set());
+  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react12.useState)(
     /* @__PURE__ */ new Set()
   );
-  const [nodeMaps, setNodeMaps] = (0, import_react11.useState)([]);
-  const nodeMapCatalogRef = (0, import_react11.useRef)(new PortableNodeMapCatalog());
+  const [nodeMaps, setNodeMaps] = (0, import_react12.useState)([]);
+  const nodeMapCatalogRef = (0, import_react12.useRef)(new PortableNodeMapCatalog());
   const persistTrust = async (hashes) => location.protocol === "pip:" ? trustPackageHashes(hashes) : browserTrustHashes(hashes);
   async function installElement(plugin) {
     const status = await elements.install(plugin);
@@ -29747,7 +29759,7 @@ function StartupNotice({ loading, error, retry }) {
 }
 
 // pip-editor/pip-host/use-host-effects.ts
-var import_react13 = __toESM(require_react(), 1);
+var import_react14 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/execution/trigger-runtime.ts
 var TriggerRuntime = class {
@@ -29803,7 +29815,7 @@ var TriggerRuntime = class {
 };
 
 // pip-editor/pip-host/use-startup-workspace.ts
-var import_react12 = __toESM(require_react(), 1);
+var import_react13 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/startup/load-plugins.ts
 async function fetch_startup_asset(asset, base) {
@@ -29859,14 +29871,14 @@ async function load_startup_plugins(manifest_path, choices, auto_load_website, e
 
 // pip-editor/pip-host/use-startup-workspace.ts
 function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_error, startup_plugins = {}) {
-  const started = (0, import_react12.useRef)(false);
-  const launch_imported = (0, import_react12.useRef)(false);
-  const completed = (0, import_react12.useRef)(/* @__PURE__ */ new Set());
-  const requested = (0, import_react12.useRef)(void 0);
-  const [attempt, set_attempt] = (0, import_react12.useState)(0);
-  const [loading, set_loading] = (0, import_react12.useState)(!explicit_launch && auto_load_website);
-  const [error, set_error] = (0, import_react12.useState)("");
-  (0, import_react12.useEffect)(() => {
+  const started = (0, import_react13.useRef)(false);
+  const launch_imported = (0, import_react13.useRef)(false);
+  const completed = (0, import_react13.useRef)(/* @__PURE__ */ new Set());
+  const requested = (0, import_react13.useRef)(void 0);
+  const [attempt, set_attempt] = (0, import_react13.useState)(0);
+  const [loading, set_loading] = (0, import_react13.useState)(!explicit_launch && auto_load_website);
+  const [error, set_error] = (0, import_react13.useState)("");
+  (0, import_react13.useEffect)(() => {
     if (started.current) return;
     started.current = true;
     async function launch() {
@@ -29917,7 +29929,7 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
     set_loading(true);
     set_attempt((value) => value + 1);
   };
-  (0, import_react12.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     const load = (event) => retry(event.detail);
     document.addEventListener("pip-load-startup", load);
     return () => document.removeEventListener("pip-load-startup", load);
@@ -29945,7 +29957,7 @@ function useHostEffects({
   workspaces
 }) {
   const startup = useStartupWorkspace(auto_load_website, explicit_launch, catalog, setMessage, startup_plugins);
-  const [triggerRuntime] = (0, import_react13.useState)(
+  const [triggerRuntime] = (0, import_react14.useState)(
     () => new TriggerRuntime({
       registry: nodeTypes,
       fire: async (workspace, triggerNodeId, payload) => {
@@ -29962,14 +29974,14 @@ function useHostEffects({
       )
     })
   );
-  (0, import_react13.useEffect)(() => {
+  (0, import_react14.useEffect)(() => {
     const preventPageZoom = (event) => {
       if (event.ctrlKey || event.metaKey) event.preventDefault();
     };
     addEventListener("wheel", preventPageZoom, { passive: false });
     return () => removeEventListener("wheel", preventPageZoom);
   }, []);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react14.useEffect)(() => {
     const handleKeyDown = (event) => {
       if (!(event.ctrlKey || event.metaKey)) return;
       const key = event.key.toLowerCase();
@@ -30003,16 +30015,16 @@ function useHostEffects({
     setActiveWorkspaceId,
     tabWorkspaces
   ]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react14.useEffect)(() => {
     for (const workspace of workspaces) {
       executionManager.markWorkspaceStale(workspace.id, graphRevision(workspace.graph));
     }
   }, [executionManager, workspaces]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react14.useEffect)(() => {
     triggerRuntime.sync(workspaces);
   }, [nodeTypePackages, triggerRuntime, workspaces]);
-  (0, import_react13.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react14.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
+  (0, import_react14.useEffect)(() => {
     const handleHook = (event) => {
       const detail = event.detail;
       if (typeof detail?.key !== "string") return;
@@ -30027,7 +30039,7 @@ function useHostEffects({
 }
 
 // pip-editor/pip-host/use-system-plugins.ts
-var import_react14 = __toESM(require_react(), 1);
+var import_react15 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/guanguan-host-service.ts
 function create_guanguan_host_service(workspaces, workspace_store, creator_armed, on_history) {
@@ -30068,18 +30080,18 @@ function useSystemPlugins(options) {
     workspaces,
     workspaceStore
   } = options;
-  const [, setRevision] = (0, import_react14.useState)(0);
-  const [registry] = (0, import_react14.useState)(createBuiltinSystemPluginRegistry);
-  const [runtime] = (0, import_react14.useState)(
+  const [, setRevision] = (0, import_react15.useState)(0);
+  const [registry] = (0, import_react15.useState)(createBuiltinSystemPluginRegistry);
+  const [runtime] = (0, import_react15.useState)(
     () => new SystemPluginRuntime(
       registry,
       () => setRevision((revision) => revision + 1)
     )
   );
-  const [canvas] = (0, import_react14.useState)(
+  const [canvas] = (0, import_react15.useState)(
     () => createSystemPluginCanvasBridge(registry, runtime)
   );
-  (0, import_react14.useEffect)(() => {
+  (0, import_react15.useEffect)(() => {
     for (const definition of registry.list()) {
       if (definition.window.chrome !== "none" || definition.scope !== "host") {
         continue;
@@ -30087,7 +30099,7 @@ function useSystemPlugins(options) {
       runtime.ensure(definition.id);
     }
   }, [registry, runtime]);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react15.useEffect)(() => {
     for (const workspace of workspaces) {
       const views = normalizeFreeLayout(
         workspace.views,
@@ -30105,7 +30117,7 @@ function useSystemPlugins(options) {
       }
     }
   }, [host.systemWindows, registry, runtime, workspaces]);
-  (0, import_react14.useEffect)(() => () => {
+  (0, import_react15.useEffect)(() => () => {
     runtime.disposeAll();
   }, [runtime]);
   const servicesFor = (workspace) => ({
@@ -30252,13 +30264,13 @@ function workspace_fit_camera(frames, viewport, coarse_pointer = false, minimum_
 }
 
 // pip-editor/pip-host/view/use-initial-projection-fit.ts
-var import_react15 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
 function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
-  const latest = (0, import_react15.useRef)({ views, on_change });
-  (0, import_react15.useLayoutEffect)(() => {
+  const latest = (0, import_react16.useRef)({ views, on_change });
+  (0, import_react16.useLayoutEffect)(() => {
     latest.current = { views, on_change };
   });
-  (0, import_react15.useLayoutEffect)(() => {
+  (0, import_react16.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !enabled) return;
     const fit = () => {
@@ -30290,16 +30302,16 @@ function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_react36 = __toESM(require_react(), 1);
+var import_react37 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_react26 = __toESM(require_react(), 1);
+var import_react27 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/creation/content-card.tsx
-var import_react16 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
 var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 function ContentCard({ item, target, graph, position, apply, navigate, close, children }) {
-  const drag = (0, import_react16.useRef)(void 0);
+  const drag = (0, import_react17.useRef)(void 0);
   const preview = (element, x, y) => {
     const start = drag.current;
     if (!start) return;
@@ -30407,7 +30419,7 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
 }
 
 // pip-editor/pip-host/creation/surface.tsx
-var import_react17 = __toESM(require_react(), 1);
+var import_react18 = __toESM(require_react(), 1);
 var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 function anchor_elements(root2) {
   const output = [];
@@ -30420,12 +30432,12 @@ function anchor_elements(root2) {
   return output;
 }
 function ContentSurface({ target, graph, children, render_item, on_request, hidden_ids = [], selection = [], on_close }) {
-  const surface = (0, import_react17.useRef)(null);
-  const content = (0, import_react17.useRef)(null);
-  const events = (0, import_react17.useRef)(null);
-  const [positions, set_positions] = (0, import_react17.useState)({});
-  const items = (0, import_react17.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
-  (0, import_react17.useLayoutEffect)(() => {
+  const surface = (0, import_react18.useRef)(null);
+  const content = (0, import_react18.useRef)(null);
+  const events = (0, import_react18.useRef)(null);
+  const [positions, set_positions] = (0, import_react18.useState)({});
+  const items = (0, import_react18.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
+  (0, import_react18.useLayoutEffect)(() => {
     const root2 = surface.current, body = content.current;
     let frame = 0;
     const update = () => {
@@ -30539,7 +30551,7 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_react18 = __toESM(require_react(), 1);
+var import_react19 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/contracts/json-validation.ts
 var isRecord = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -30629,8 +30641,8 @@ function RawPips({ pips, depth = 0 }) {
   ] }, pip.id)) });
 }
 function PluginProjection({ tag, context, onRequest, children }) {
-  const host = (0, import_react18.useRef)(null);
-  (0, import_react18.useEffect)(() => {
+  const host = (0, import_react19.useRef)(null);
+  (0, import_react19.useEffect)(() => {
     const current = host.current;
     if (!current) return;
     current.context = {
@@ -30661,7 +30673,7 @@ function PluginProjection({ tag, context, onRequest, children }) {
     current.addEventListener("intent-pip-request", listener);
     return () => current.removeEventListener("intent-pip-request", listener);
   }, [context, onRequest]);
-  return (0, import_react18.createElement)(tag, { ref: host }, children);
+  return (0, import_react19.createElement)(tag, { ref: host }, children);
 }
 function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose = "node", projectionContext, execution, elements, nodeTypes, onRequest, root_window_id = node2.id }) {
   const { type, projection, projectionData, declaration, error, observed, context: contextKind } = resolveNodePresentation(
@@ -30672,7 +30684,7 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
     purpose,
     { workspaceId, rootNodeIds, workspaceView, selection, projectionContext }
   );
-  const context = (0, import_react18.useMemo)(() => ({
+  const context = (0, import_react19.useMemo)(() => ({
     workspaceId,
     rootNodeIds,
     workspaceView,
@@ -30771,7 +30783,7 @@ function EmbeddedItems({ root_window_id, projectionNode, workspaceId, rootNodeId
 }
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_react19 = __toESM(require_react(), 1);
+var import_react20 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/creator-window.module.css
 var creator_window_default = {
@@ -30786,9 +30798,9 @@ function NodeCreator({
   onChoose,
   onCancel
 }) {
-  const [query, setQuery] = (0, import_react19.useState)("");
-  const [active, setActive] = (0, import_react19.useState)(0);
-  const filtered = (0, import_react19.useMemo)(
+  const [query, setQuery] = (0, import_react20.useState)("");
+  const [active, setActive] = (0, import_react20.useState)(0);
+  const filtered = (0, import_react20.useMemo)(
     () => candidates.filter(
       (item) => `${item.label} ${item.description ?? ""} ${item.category}`.toLowerCase().includes(query.toLowerCase())
     ),
@@ -30895,18 +30907,18 @@ function WindowMenu({ target_ref, close_label }) {
 
 // pip-editor/pip-host/view/active-controls.tsx
 var import_react_dom2 = __toESM(require_react_dom(), 1);
-var import_react20 = __toESM(require_react(), 1);
+var import_react21 = __toESM(require_react(), 1);
 var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-var ActiveControlsContext = (0, import_react20.createContext)(void 0);
-var WindowControlOwner = (0, import_react20.createContext)({ id: "workspace", active: false });
-var HostCameraTarget = (0, import_react20.createContext)(void 0);
+var ActiveControlsContext = (0, import_react21.createContext)(void 0);
+var WindowControlOwner = (0, import_react21.createContext)({ id: "workspace", active: false });
+var HostCameraTarget = (0, import_react21.createContext)(void 0);
 function ActiveControlsProvider({ children, enabled = true, base_target, portal_target, workspace_id }) {
   const space = useActiveSpace();
-  const targets = (0, import_react20.useRef)(/* @__PURE__ */ new Map());
-  const [snapshot2, set_snapshot] = (0, import_react20.useState)([]);
-  const [chosen_id, set_chosen_id] = (0, import_react20.useState)();
+  const targets = (0, import_react21.useRef)(/* @__PURE__ */ new Map());
+  const [snapshot2, set_snapshot] = (0, import_react21.useState)([]);
+  const [chosen_id, set_chosen_id] = (0, import_react21.useState)();
   const slots = useScaleControlSlots();
-  const update = (0, import_react20.useCallback)((target) => {
+  const update = (0, import_react21.useCallback)((target) => {
     const previous = targets.current.get(target.id);
     targets.current.set(target.id, target);
     if (!previous || previous.label !== target.label || previous.scale !== target.scale || previous.active !== target.active) {
@@ -30919,10 +30931,10 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       if (target.active && !previous?.active) set_chosen_id(target.id);
     }
   }, []);
-  const remove = (0, import_react20.useCallback)((id) => {
+  const remove = (0, import_react21.useCallback)((id) => {
     if (targets.current.delete(id)) set_snapshot((items) => items.filter((item) => item.id !== id));
   }, []);
-  const registry = (0, import_react20.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
+  const registry = (0, import_react21.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
   const choices = [...snapshot2];
   if (base_target) choices.push(base_target);
   const focused_space = space.snapshot?.focus;
@@ -30969,18 +30981,18 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
   ] });
 }
 function RegisteredScaleControl({ target }) {
-  const registry = (0, import_react20.useContext)(ActiveControlsContext);
-  (0, import_react20.useLayoutEffect)(() => {
+  const registry = (0, import_react21.useContext)(ActiveControlsContext);
+  (0, import_react21.useLayoutEffect)(() => {
     registry?.update(target);
   });
-  (0, import_react20.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
+  (0, import_react21.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
   return null;
 }
 
 // pip-editor/pip-host/view/use-window-activation.ts
-var import_react21 = __toESM(require_react(), 1);
+var import_react22 = __toESM(require_react(), 1);
 function useWindowActivation(window_id, on_activate) {
-  const registry = (0, import_react21.useContext)(ActiveControlsContext);
+  const registry = (0, import_react22.useContext)(ActiveControlsContext);
   return (event) => {
     const path = event.nativeEvent.composedPath();
     if (path.some((item) => item?.matches?.("[data-active-controls],details"))) return;
@@ -30991,7 +31003,7 @@ function useWindowActivation(window_id, on_activate) {
 }
 
 // pip-editor/pip-host/view/use-window-bounds.ts
-var import_react22 = __toESM(require_react(), 1);
+var import_react23 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/viewport-bounds.ts
 function constrain_window(frame, bounds, resize_content = false) {
@@ -31008,12 +31020,12 @@ function constrain_window(frame, bounds, resize_content = false) {
 
 // pip-editor/pip-host/view/use-window-bounds.ts
 function useWindowBounds(window_ref, frame, active, on_frame) {
-  const latest = (0, import_react22.useRef)({ frame, on_frame, active });
-  (0, import_react22.useLayoutEffect)(() => {
+  const latest = (0, import_react23.useRef)({ frame, on_frame, active });
+  (0, import_react23.useLayoutEffect)(() => {
     latest.current = { frame, on_frame, active };
   });
-  const [bounds, set_bounds] = (0, import_react22.useState)();
-  (0, import_react22.useLayoutEffect)(() => {
+  const [bounds, set_bounds] = (0, import_react23.useState)();
+  (0, import_react23.useLayoutEffect)(() => {
     const window_element = window_ref.current;
     const world = window_element?.parentElement;
     const viewport = world?.closest("[data-canvas-shortcuts]");
@@ -31059,22 +31071,22 @@ function useWindowBounds(window_ref, frame, active, on_frame) {
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_react24 = __toESM(require_react(), 1);
+var import_react25 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-window-chrome.tsx
-var import_react23 = __toESM(require_react(), 1);
+var import_react24 = __toESM(require_react(), 1);
 var import_react_dom3 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var WorkspaceWindowChromeContext = (0, import_react23.createContext)(void 0);
+var WorkspaceWindowChromeContext = (0, import_react24.createContext)(void 0);
 function useWorkspaceWindowChromeTargets() {
-  const [targets, setTargets] = (0, import_react23.useState)({});
-  const setTop = (0, import_react23.useCallback)((element) => {
+  const [targets, setTargets] = (0, import_react24.useState)({});
+  const setTop = (0, import_react24.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       top: element ?? void 0
     }));
   }, []);
-  const setBottom = (0, import_react23.useCallback)((element) => {
+  const setBottom = (0, import_react24.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       bottom: element ?? void 0
@@ -31129,9 +31141,9 @@ function WindowScaleControls({
   onZoomIn,
   onZoomOut
 }) {
-  const targets = (0, import_react23.useContext)(WorkspaceWindowChromeContext);
-  const registry = (0, import_react23.useContext)(ActiveControlsContext);
-  const owner = (0, import_react23.useContext)(WindowControlOwner);
+  const targets = (0, import_react24.useContext)(WorkspaceWindowChromeContext);
+  const registry = (0, import_react24.useContext)(ActiveControlsContext);
+  const owner = (0, import_react24.useContext)(WindowControlOwner);
   if (registry) return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(RegisteredScaleControl, { target: {
     id: owner.id,
     label: subject,
@@ -31233,23 +31245,23 @@ function WorkspaceWindow({
   onClose,
   close_label = "\u5173\u95ED\u8282\u70B9"
 }) {
-  const window_ref = (0, import_react24.useRef)(null);
+  const window_ref = (0, import_react25.useRef)(null);
   const bounds = useWindowBounds(window_ref, frame, active && !focused_space, onFrame);
-  const [preview, setPreview] = (0, import_react24.useState)(frame);
-  const [operating, setOperating] = (0, import_react24.useState)(false);
+  const [preview, setPreview] = (0, import_react25.useState)(frame);
+  const [operating, setOperating] = (0, import_react25.useState)(false);
   const visible_frame = preview;
   const activation = useWindowActivation(id, onActivate);
   const { targets: chrome_targets, setTop: set_top_ref, setBottom: set_bottom_ref } = useWorkspaceWindowChromeTargets();
-  const gesture = (0, import_react24.useRef)(void 0);
-  const latestPreview = (0, import_react24.useRef)(preview);
-  const outsideRelease = (0, import_react24.useRef)(void 0);
-  (0, import_react24.useEffect)(() => {
+  const gesture = (0, import_react25.useRef)(void 0);
+  const latestPreview = (0, import_react25.useRef)(preview);
+  const outsideRelease = (0, import_react25.useRef)(void 0);
+  (0, import_react25.useEffect)(() => {
     latestPreview.current = preview;
   }, [preview]);
-  (0, import_react24.useEffect)(() => {
+  (0, import_react25.useEffect)(() => {
     if (!gesture.current) setPreview(frame);
   }, [frame]);
-  (0, import_react24.useEffect)(() => () => outsideRelease.current?.abort(), []);
+  (0, import_react25.useEffect)(() => () => outsideRelease.current?.abort(), []);
   const finish = (clientX, clientY) => {
     const current = gesture.current;
     if (!current) return;
@@ -31529,7 +31541,7 @@ function SystemPluginWindowView({
 }
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_react25 = __toESM(require_react(), 1);
+var import_react26 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/pip-drop-files.ts
 var PIP_MIME = "application/vnd.intent-map.pip";
@@ -31548,7 +31560,7 @@ var ownsEvent = (event) => {
   return target instanceof Element && target.closest("[data-pip-drop-target]") === event.currentTarget;
 };
 var carriesFiles = (event) => event.dataTransfer.types.includes("Files");
-var PipDropZone = (0, import_react25.forwardRef)(
+var PipDropZone = (0, import_react26.forwardRef)(
   function PipDropZone2({
     children,
     className,
@@ -31557,7 +31569,7 @@ var PipDropZone = (0, import_react25.forwardRef)(
     pointFromScreen,
     ...props
   }, ref) {
-    const [active, setActive] = (0, import_react25.useState)(false);
+    const [active, setActive] = (0, import_react26.useState)(false);
     const consume = (event) => {
       if (!ownsEvent(event) || !carriesFiles(event)) return false;
       event.preventDefault();
@@ -31635,9 +31647,9 @@ function LegacyWorkspaceCanvas({
   workspace
 }) {
   const views = normalizeFreeLayout(workspace.views, workspace.rootNodeIds);
-  const canvas = (0, import_react26.useRef)(null);
-  const drag = (0, import_react26.useRef)(void 0);
-  const [creator, setCreator] = (0, import_react26.useState)();
+  const canvas = (0, import_react27.useRef)(null);
+  const drag = (0, import_react27.useRef)(void 0);
+  const [creator, setCreator] = (0, import_react27.useState)();
   return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
     "section",
     {
@@ -31783,7 +31795,7 @@ function LegacyWorkspaceCanvas({
 }
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_react33 = __toESM(require_react(), 1);
+var import_react34 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-camera.ts
 function projection_camera(frame, current, next, offset = frame.contentOffset ?? { x: 0, y: 0 }) {
@@ -31823,7 +31835,7 @@ function transition_opacity(progress, target) {
 }
 
 // pip-editor/pip-host/projection/use-projection-input.ts
-var import_react28 = __toESM(require_react(), 1);
+var import_react29 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/semantic-zoom.ts
 var semanticProgress = (scale) => scale >= 1.7 || scale <= 0.6 ? 1 : scale > 1.4 ? (scale - 1.4) / 0.3 : scale < 0.75 ? (0.75 - scale) / 0.15 : 0;
@@ -31834,7 +31846,7 @@ function applySemanticScale(state, scale, forward) {
 }
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
-var import_react27 = __toESM(require_react(), 1);
+var import_react28 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-pointer.ts
 function nearest_projection(viewport, point) {
@@ -31883,11 +31895,11 @@ var TapSequence = class {
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
 function useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
-  const latest = (0, import_react27.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react27.useLayoutEffect)(() => {
+  const latest = (0, import_react28.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react28.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react27.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -32080,11 +32092,11 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
 // pip-editor/pip-host/projection/use-projection-input.ts
 function useProjectionInput(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
   useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled);
-  const latest = (0, import_react28.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react28.useLayoutEffect)(() => {
+  const latest = (0, import_react29.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react29.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react28.useEffect)(() => {
+  (0, import_react29.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -32198,10 +32210,10 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
 }
 
 // pip-editor/pip-host/projection/semantic-projection.tsx
-var import_react30 = __toESM(require_react(), 1);
+var import_react31 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/surface-presentation-layer.tsx
-var import_react29 = __toESM(require_react(), 1);
+var import_react30 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/surface-presentation-layer.module.css
 var surface_presentation_layer_default = {
@@ -32210,7 +32222,7 @@ var surface_presentation_layer_default = {
 
 // pip-editor/pip-host/view/surface-presentation-layer.tsx
 var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var SurfacePresentationLayer = (0, import_react29.forwardRef)(function SurfacePresentationLayer2({ style }, ref) {
+var SurfacePresentationLayer = (0, import_react30.forwardRef)(function SurfacePresentationLayer2({ style }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
     "div",
     {
@@ -32236,9 +32248,9 @@ var mix = (from, to, progress) => from + (to - from) * progress;
 function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation: navigation2, contentOffset, execution, elements, nodeTypes, selection, onRequest }) {
   const space = useActiveSpace();
   const current_space = space.current;
-  const viewport = (0, import_react30.useRef)(null);
-  const presentation_root = (0, import_react30.useRef)(null);
-  const [flip, setFlip] = (0, import_react30.useState)();
+  const viewport = (0, import_react31.useRef)(null);
+  const presentation_root = (0, import_react31.useRef)(null);
+  const [flip, setFlip] = (0, import_react31.useState)();
   const route = currentRoute(navigation2);
   const surface_id = `projection:${workspace.id}:${rootWindowId}:${route.projectionNodeId}`;
   useCanvasSurface(viewport, presentation_root, {
@@ -32272,7 +32284,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     },
     true
   );
-  (0, import_react30.useLayoutEffect)(() => {
+  (0, import_react31.useLayoutEffect)(() => {
     if (!space.store || current_space?.kind !== "projection" || current_space.window_id !== rootWindowId) return;
     space.store.sync_routes(workspace.id, rootWindowId, navigation2.entries.slice(0, navigation2.index + 1).map((entry) => entry.projectionNodeId));
     if (!navigation2.index) return;
@@ -32295,7 +32307,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
   const transitionKey = transition ? `${route.projectionNodeId}->${transition.projectionNodeId}` : "";
   const forwardFlip = navigation2.semanticScale > 1;
   const flipChildId = forwardFlip ? transition?.enteredFrom?.childProjectionId : route.enteredFrom?.childProjectionId;
-  (0, import_react30.useLayoutEffect)(() => {
+  (0, import_react31.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !transitionKey || !flipChildId) {
       setFlip(void 0);
@@ -32390,7 +32402,7 @@ var NavigationAnimation = class {
 };
 
 // pip-editor/pip-host/view/projection-navbar.tsx
-var import_react31 = __toESM(require_react(), 1);
+var import_react32 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-view-choice.ts
 function choose_projection(state, projection_id, graph, node_types) {
@@ -32410,15 +32422,15 @@ function choose_projection(state, projection_id, graph, node_types) {
 // pip-editor/pip-host/view/projection-navbar.tsx
 var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
 function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_types, onChange: on_change }) {
-  const [animation] = (0, import_react31.useState)(() => new NavigationAnimation());
-  const latest = (0, import_react31.useRef)({ on_change, navigation: navigation2 });
-  (0, import_react31.useLayoutEffect)(() => {
+  const [animation] = (0, import_react32.useState)(() => new NavigationAnimation());
+  const latest = (0, import_react32.useRef)({ on_change, navigation: navigation2 });
+  (0, import_react32.useLayoutEffect)(() => {
     latest.current = { on_change, navigation: navigation2 };
   });
-  (0, import_react31.useLayoutEffect)(() => {
+  (0, import_react32.useLayoutEffect)(() => {
     animation.cancel();
   }, [animation, graph]);
-  (0, import_react31.useEffect)(() => {
+  (0, import_react32.useEffect)(() => {
     const cancel = () => {
       if (!animation.cancel()) return;
       latest.current.on_change({
@@ -32476,7 +32488,7 @@ function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_type
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_react32 = __toESM(require_react(), 1);
+var import_react33 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-scale.ts
 function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, selection, anchor) {
@@ -32514,7 +32526,7 @@ function ProjectionScaleControls({
   onChange,
   onFit
 }) {
-  const owner = (0, import_react32.useContext)(WindowControlOwner);
+  const owner = (0, import_react33.useContext)(WindowControlOwner);
   const changeScale = (scale) => onChange(projectionFrameAtScale(
     frame,
     navigation2,
@@ -32591,7 +32603,7 @@ function FreeWorkspaceCanvas({
   workspace
 }) {
   const space = useActiveSpace();
-  const presentation_root = (0, import_react33.useRef)(null);
+  const presentation_root = (0, import_react34.useRef)(null);
   useCanvasSurface(viewport, presentation_root, {
     id: `workspace:${workspace.id}`,
     parentId: "host",
@@ -32600,8 +32612,8 @@ function FreeWorkspaceCanvas({
     workspace_id: workspace.id,
     capabilities: { pan: true, zoom: true, create: true, connect: true, nativeScroll: false }
   });
-  const host_target = (0, import_react33.useContext)(HostCameraTarget);
-  const outer_chrome = (0, import_react33.useContext)(WorkspaceWindowChromeContext);
+  const host_target = (0, import_react34.useContext)(HostCameraTarget);
+  const outer_chrome = (0, import_react34.useContext)(WorkspaceWindowChromeContext);
   const focused_workspace = space.snapshot?.focus?.kind !== "host" && space.snapshot?.focus?.workspace_id === workspace.id;
   return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
     ActiveControlsProvider,
@@ -32802,7 +32814,7 @@ var CreatorSwipe = class {
 };
 
 // pip-editor/pip-host/view/workspace-canvas-pointer.ts
-var import_react34 = __toESM(require_react(), 1);
+var import_react35 = __toESM(require_react(), 1);
 var pointIn2 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -32818,11 +32830,11 @@ function useWorkspaceCanvasPointer({
   viewport,
   views
 }) {
-  const creator_swipe = (0, import_react34.useRef)(new CreatorSwipe());
-  const gesture = (0, import_react34.useRef)(void 0);
-  const touches = (0, import_react34.useRef)(/* @__PURE__ */ new Map());
-  const pinch_camera = (0, import_react34.useRef)(void 0);
-  const pinch = (0, import_react34.useRef)(void 0);
+  const creator_swipe = (0, import_react35.useRef)(new CreatorSwipe());
+  const gesture = (0, import_react35.useRef)(void 0);
+  const touches = (0, import_react35.useRef)(/* @__PURE__ */ new Map());
+  const pinch_camera = (0, import_react35.useRef)(void 0);
+  const pinch = (0, import_react35.useRef)(void 0);
   const begin = (event) => {
     if (!free || event.button !== 0 && event.button !== 1) return;
     const full_path = event.nativeEvent.composedPath();
@@ -32984,7 +32996,7 @@ function useWorkspaceCanvasPointer({
 }
 
 // pip-editor/pip-host/view/workspace-canvas-wheel.ts
-var import_react35 = __toESM(require_react(), 1);
+var import_react36 = __toESM(require_react(), 1);
 var pointIn3 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -33000,11 +33012,11 @@ function useWorkspaceCanvasWheel({
   viewport,
   workspace
 }) {
-  const settleTimers = (0, import_react35.useRef)(
+  const settleTimers = (0, import_react36.useRef)(
     /* @__PURE__ */ new Map()
   );
-  const semanticGestures = (0, import_react35.useRef)(/* @__PURE__ */ new Map());
-  (0, import_react35.useEffect)(() => {
+  const semanticGestures = (0, import_react36.useRef)(/* @__PURE__ */ new Map());
+  (0, import_react36.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     const handle = (event) => {
@@ -33193,24 +33205,24 @@ function NodeCanvas({
   const nodes = Object.values(graphNodes(workspace.graph));
   const roots = workspace.rootNodeIds.map((id) => graphNodes(workspace.graph)[id]).filter(Boolean);
   const free = isFree(workspace.views) || Boolean(space_store && roots.length);
-  const normalized = (0, import_react36.useMemo)(
+  const normalized = (0, import_react37.useMemo)(
     () => normalizeFreeLayout(workspace.views, workspace.rootNodeIds),
     [workspace.views, workspace.rootNodeIds]
   );
-  const [previewCamera, setPreviewCamera] = (0, import_react36.useState)();
-  const [creator, setCreator] = (0, import_react36.useState)();
-  const [wire, setWire] = (0, import_react36.useState)();
-  const viewport = (0, import_react36.useRef)(null);
-  const views = (0, import_react36.useMemo)(
+  const [previewCamera, setPreviewCamera] = (0, import_react37.useState)();
+  const [creator, setCreator] = (0, import_react37.useState)();
+  const [wire, setWire] = (0, import_react37.useState)();
+  const viewport = (0, import_react37.useRef)(null);
+  const views = (0, import_react37.useMemo)(
     () => previewCamera ? { ...normalized, camera: previewCamera } : normalized,
     [normalized, previewCamera]
   );
   useInitialProjectionFit(viewport, normalized, onViewsChange, !space_store || active_space?.kind === "workspace");
-  const scopedSelections = (0, import_react36.useMemo)(
+  const scopedSelections = (0, import_react37.useMemo)(
     () => workspace.scopedSelections ?? {},
     [workspace.scopedSelections]
   );
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     element.scrollLeft = 0;
@@ -33228,7 +33240,7 @@ function NodeCanvas({
       if (timer !== void 0) clearTimeout(timer);
     };
   }, [autoFocus, free, workspace.id]);
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     const handleKeyDown = (event) => {
       const interactive = event.isComposing || event.composedPath().some((target) => target instanceof HTMLElement && (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(target.tagName) || target.isContentEditable));
       if (event.code === "Space" && !interactive) {
@@ -33250,7 +33262,7 @@ function NodeCanvas({
     element?.addEventListener("keydown", handleKeyDown);
     return () => element?.removeEventListener("keydown", handleKeyDown);
   }, [views]);
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     const open_creator = (event) => {
       if (event.detail !== workspace.id || !viewport.current) return;
       const screen = { x: viewport.current.clientWidth / 2, y: viewport.current.clientHeight / 2 };
@@ -33419,7 +33431,7 @@ function WorkspaceSessionCanvas({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_react40 = __toESM(require_react(), 1);
+var import_react41 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/workspace/host-presentation-store.ts
 var DEFAULT_FRAME = {
@@ -33621,7 +33633,7 @@ function host_fit_camera(host, viewport, coarse_pointer = false) {
 }
 
 // pip-editor/pip-host/view/host-canvas.tsx
-var import_react37 = __toESM(require_react(), 1);
+var import_react38 = __toESM(require_react(), 1);
 var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 function HostCanvas({
   creatorRequest,
@@ -33642,20 +33654,20 @@ function HostCanvas({
   onUnsupportedPipDrop
 }) {
   const space = useActiveSpace();
-  const viewport = (0, import_react37.useRef)(null);
-  const presentation_root = (0, import_react37.useRef)(null);
+  const viewport = (0, import_react38.useRef)(null);
+  const presentation_root = (0, import_react38.useRef)(null);
   useCanvasSurface(viewport, presentation_root, {
     id: "host",
     kind: "host",
     label: "\u5BBF\u4E3B\u753B\u5E03",
     capabilities: { pan: true, zoom: true, create: true, connect: false, nativeScroll: false }
   });
-  const [previewCamera, setPreviewCamera] = (0, import_react37.useState)();
-  const [creator, setCreator] = (0, import_react37.useState)();
-  const [wire, setWire] = (0, import_react37.useState)();
+  const [previewCamera, setPreviewCamera] = (0, import_react38.useState)();
+  const [creator, setCreator] = (0, import_react38.useState)();
+  const [wire, setWire] = (0, import_react38.useState)();
   const camera = previewCamera ?? host.camera;
   const focusedProjectionWorkspaceId = space.snapshot?.focus?.kind === "projection" ? space.snapshot.focus.workspace_id : void 0;
-  const views = (0, import_react37.useMemo)(() => ({
+  const views = (0, import_react38.useMemo)(() => ({
     kind: "free-layout",
     world: host.world,
     camera,
@@ -33664,7 +33676,7 @@ function HostCanvas({
     activeWindowId: host.activeWindowId,
     frontWindowId: host.frontWindowId
   }), [camera, host]);
-  const persistCamera = (0, import_react37.useCallback)((next) => {
+  const persistCamera = (0, import_react38.useCallback)((next) => {
     setPreviewCamera(void 0);
     hostStore.setCamera(next);
   }, [hostStore]);
@@ -33694,7 +33706,7 @@ function HostCanvas({
     ...creation_choices,
     ...systemPlugins.creatorChoices("host", focusedWorkspace)
   ];
-  (0, import_react37.useEffect)(() => {
+  (0, import_react38.useEffect)(() => {
     viewport.current?.focus({ preventScroll: true });
   }, []);
   const openCreatorAtCenter = () => {
@@ -33710,15 +33722,15 @@ function HostCanvas({
     width: viewport.current?.clientWidth ?? 0,
     height: viewport.current?.clientHeight ?? 0
   });
-  (0, import_react37.useEffect)(() => {
+  (0, import_react38.useEffect)(() => {
     if (creatorRequest > 0) openCreatorAtCenter();
   }, [creatorRequest]);
-  (0, import_react37.useEffect)(() => {
+  (0, import_react38.useEffect)(() => {
     const open = () => openCreatorAtCenter();
     document.addEventListener("pip-open-host-creator", open);
     return () => document.removeEventListener("pip-open-host-creator", open);
   });
-  (0, import_react37.useEffect)(() => {
+  (0, import_react38.useEffect)(() => {
     const element = viewport.current;
     if (!element) return;
     const handleWheel = (event) => {
@@ -33883,11 +33895,11 @@ function HostCanvas({
 }
 
 // pip-editor/pip-host/view/use-tab-touch-drag.ts
-var import_react38 = __toESM(require_react(), 1);
+var import_react39 = __toESM(require_react(), 1);
 function useTabTouchDrag(on_reorder, on_detach) {
-  const drag = (0, import_react38.useRef)(void 0);
-  const suppress_click = (0, import_react38.useRef)(false);
-  const [preview, set_preview] = (0, import_react38.useState)();
+  const drag = (0, import_react39.useRef)(void 0);
+  const suppress_click = (0, import_react39.useRef)(false);
+  const [preview, set_preview] = (0, import_react39.useState)();
   const down = (event) => {
     if (event.pointerType === "mouse") return;
     if (drag.current) return;
@@ -33955,7 +33967,7 @@ function useTabTouchDrag(on_reorder, on_detach) {
 }
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_react39 = __toESM(require_react(), 1);
+var import_react40 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-tabs.module.css
 var workspace_tabs_default = {
@@ -33980,7 +33992,7 @@ function WorkspaceTabs({
   onTouchDetach
 }) {
   const touch_drag = useTabTouchDrag(onReorder, onTouchDetach);
-  const [dragging, setDragging] = (0, import_react39.useState)();
+  const [dragging, setDragging] = (0, import_react40.useState)();
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
     "nav",
     {
@@ -34090,15 +34102,15 @@ function PipHostSurface({
     id: workspace_space_id(workspace_id),
     workspace_id
   });
-  (0, import_react40.useEffect)(() => {
+  (0, import_react41.useEffect)(() => {
     const current = space.store?.current();
     if (active?.id && (!current || current.kind === "host" || current.workspace_id !== active.id)) space.store?.enter({ kind: "workspace", id: workspace_space_id(active.id), workspace_id: active.id });
   }, [active?.id, space.store]);
-  (0, import_react40.useEffect)(() => {
+  (0, import_react41.useEffect)(() => {
     space.store?.reconcile((item) => item.kind === "host" || workspaces.some((workspace) => workspace.id === item.workspace_id && (item.kind !== "projection" || workspace.rootNodeIds.includes(item.window_id))));
   }, [workspaces, space.store]);
-  const surface = (0, import_react40.useRef)(null);
-  (0, import_react40.useEffect)(() => {
+  const surface = (0, import_react41.useRef)(null);
+  (0, import_react41.useEffect)(() => {
     const element = surface.current;
     if (!element) return;
     const publishViewport = () => {
@@ -34338,22 +34350,22 @@ function PipHost() {
   return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ActiveSpaceProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(PipHostSession, {}) });
 }
 function PipHostSession() {
-  const [workspaces, setWorkspaces] = (0, import_react41.useState)([]);
-  const [workspaceStore] = (0, import_react41.useState)(
+  const [workspaces, setWorkspaces] = (0, import_react42.useState)([]);
+  const [workspaceStore] = (0, import_react42.useState)(
     () => new WorkspaceSessionStore([], setWorkspaces)
   );
-  const [host, setHost] = (0, import_react41.useState)(createHostCanvasState);
-  const [hostStore] = (0, import_react41.useState)(() => new HostPresentationStore(setHost));
-  const [, setPreferences] = (0, import_react41.useState)(defaultEditorPreferences);
-  const [preferenceStore] = (0, import_react41.useState)(
+  const [host, setHost] = (0, import_react42.useState)(createHostCanvasState);
+  const [hostStore] = (0, import_react42.useState)(() => new HostPresentationStore(setHost));
+  const [, setPreferences] = (0, import_react42.useState)(defaultEditorPreferences);
+  const [preferenceStore] = (0, import_react42.useState)(
     () => new EditorPreferenceStore(setPreferences)
   );
-  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react41.useState)();
-  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react41.useState)();
-  const [creatorRequest, setCreatorRequest] = (0, import_react41.useState)(0);
-  const [creator_armed, set_creator_armed] = (0, import_react41.useState)(false);
-  const [pendingClose, setPendingClose] = (0, import_react41.useState)();
-  const [message, setMessage] = (0, import_react41.useState)(
+  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react42.useState)();
+  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react42.useState)();
+  const [creatorRequest, setCreatorRequest] = (0, import_react42.useState)(0);
+  const [creator_armed, set_creator_armed] = (0, import_react42.useState)(false);
+  const [pendingClose, setPendingClose] = (0, import_react42.useState)();
+  const [message, setMessage] = (0, import_react42.useState)(
     "\u7A7A\u683C\u6216 Alt/Option + \u5DE6\u952E\u62D6\u62FD\u53EF\u6253\u5F00\u521B\u5EFA\u5668\u3002"
   );
   const active = workspaces.find((item) => item.id === activeWorkspaceId);
@@ -34384,13 +34396,13 @@ function PipHostSession() {
     setMessage,
     set_creator_armed
   );
-  const [execution, setExecution] = (0, import_react41.useState)({
+  const [execution, setExecution] = (0, import_react42.useState)({
     sessions: []
   });
-  const [executionManager] = (0, import_react41.useState)(
+  const [executionManager] = (0, import_react42.useState)(
     () => new ExecutionSessionManager(nodeTypes, setExecution)
   );
-  const [commandQueues] = (0, import_react41.useState)(() => /* @__PURE__ */ new Map());
+  const [commandQueues] = (0, import_react42.useState)(() => /* @__PURE__ */ new Map());
   const history = (workspace, direction) => {
     try {
       workspaceStore.history(workspace.id, direction, nodeTypes.validators());
@@ -34590,7 +34602,7 @@ var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 var root = document.getElementById("root");
 if (!root) throw new Error("Editor document requires a #root mount point");
 install_touch_boundary(root);
-(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_react42.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(PipHost, {}) }));
+(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_react43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(PipHost, {}) }));
 /*! Bundled license information:
 
 react/cjs/react.development.js:
