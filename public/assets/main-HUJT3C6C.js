@@ -25565,18 +25565,19 @@ var companion_window_default = {
   selected: "companion_window_selected",
   close: "companion_window_close",
   resize_nw: "companion_window_resize_nw",
-  resize_n: "companion_window_resize_n",
   resize_ne: "companion_window_resize_ne",
-  resize_e: "companion_window_resize_e",
   resize_se: "companion_window_resize_se",
-  resize_s: "companion_window_resize_s",
   resize_sw: "companion_window_resize_sw",
+  resize_n: "companion_window_resize_n",
+  resize_e: "companion_window_resize_e",
+  resize_s: "companion_window_resize_s",
   resize_w: "companion_window_resize_w"
 };
 
 // pip-editor/pip-host/view/companion-window.tsx
 var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var resize_directions = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
+var compact_resize_directions = ["nw", "ne", "se", "sw"];
 function CompanionWindow({
   children,
   presentation,
@@ -25618,7 +25619,7 @@ function CompanionWindow({
       children: [
         children(frame),
         selected && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          !presentation.collapsed && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
             "button",
             {
               className: companion_window_default.close,
@@ -25627,7 +25628,7 @@ function CompanionWindow({
               children: "\xD7"
             }
           ),
-          resize_directions.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          (presentation.collapsed ? compact_resize_directions : resize_directions).map((direction) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
             "i",
             {
               className: companion_window_default[`resize_${direction}`],
