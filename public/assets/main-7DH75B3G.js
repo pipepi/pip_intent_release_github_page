@@ -32590,7 +32590,7 @@ function FreeWorkspaceCanvas({
   workspace
 }) {
   const space = useActiveSpace();
-  const presentation_root = useRef(null);
+  const presentation_root = (0, import_react33.useRef)(null);
   useCanvasSurface(viewport, presentation_root, {
     id: `workspace:${workspace.id}`,
     parentId: "host",
