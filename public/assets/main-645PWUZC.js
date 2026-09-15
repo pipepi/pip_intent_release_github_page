@@ -24943,8 +24943,8 @@ function SpaceNavigator({
                 ))
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: space_navigator_default.create, onClick: () => {
-                const focus_space = space.snapshot?.focus;
-                const host = !focus_space || focus_space.kind === "host";
+                const focus_space = context.focus_space;
+                const host = focus_space.kind === "host";
                 document.dispatchEvent(new CustomEvent(
                   host ? "pip-open-host-creator" : "pip-open-space-creator",
                   { detail: host ? void 0 : focus_space.workspace_id }
@@ -33252,14 +33252,13 @@ function NodeCanvas({
   }, [views]);
   (0, import_react36.useEffect)(() => {
     const open_creator = (event) => {
-      const current = space_store?.current();
-      if (!current || current.kind === "host" || current.workspace_id !== workspace.id || event.detail !== workspace.id || !viewport.current) return;
+      if (event.detail !== workspace.id || !viewport.current) return;
       const screen = { x: viewport.current.clientWidth / 2, y: viewport.current.clientHeight / 2 };
       setCreator({ screen, world: screenToWorld(screen, views) });
     };
     document.addEventListener("pip-open-space-creator", open_creator);
     return () => document.removeEventListener("pip-open-space-creator", open_creator);
-  }, [space_store, workspace.id, views]);
+  }, [workspace.id, views]);
   const hasWorkspaceProjection = workspaceHasProjection(workspace, nodeTypes);
   const creatorChoices = workspaceCreatorChoices(
     workspace,
