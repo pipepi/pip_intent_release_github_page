@@ -21738,7 +21738,7 @@ function install_touch_boundary(root2) {
 }
 
 // pip-editor/web/main.tsx
-var import_react38 = __toESM(require_react(), 1);
+var import_react39 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 
 // pip-editor/pip-host/view/active-space-gestures.ts
@@ -21749,24 +21749,31 @@ function bind_space_gestures(store, owner) {
   const pointers = /* @__PURE__ */ new Set();
   let touching = false;
   let touch_ids = /* @__PURE__ */ new Set();
-  const begin = () => {
+  const begin = (event, kind) => {
     if (active_id !== void 0) return;
     const id = ++serial;
-    if (store.begin_gesture(id)) active_id = id;
+    const capability = kind === "wheel" || kind === "touch" ? "zoom" : "pan";
+    const surface = store.path_for_event(event, capability)[0];
+    if (surface) store.focus_surface(surface.id);
+    if (store.claim_gesture(id, surface?.id ?? store.current().id, kind)) active_id = id;
   };
   const finish = () => {
     if (touching || pointers.size || wheel_timer !== void 0) return;
-    if (active_id !== void 0) store.end_gesture(active_id);
+    if (active_id !== void 0) store.release_gesture(active_id);
     active_id = void 0;
   };
   const pointer_down = (event) => {
     if (event.pointerType === "touch") return;
     pointers.add(event.pointerId);
-    begin();
+    begin(event, "pointer");
   };
   const pointer_end = (event) => {
     pointers.delete(event.pointerId);
     finish();
+  };
+  const pointer_move = (event) => {
+    if (event.pointerType === "touch") return;
+    store.set_hover(store.path_for_event(event).map((surface) => surface.id));
   };
   const touch_start = (event) => {
     const next_ids = new Set(Array.from(event.touches, (touch) => touch.identifier));
@@ -21776,15 +21783,15 @@ function bind_space_gestures(store, owner) {
     }
     touch_ids = next_ids;
     touching = touch_ids.size > 0;
-    begin();
+    begin(event, "touch");
   };
   const touch_end = (event) => {
     touch_ids = new Set(Array.from(event.touches, (touch) => touch.identifier));
     touching = touch_ids.size > 0;
     finish();
   };
-  const wheel = () => {
-    begin();
+  const wheel = (event) => {
+    begin(event, "wheel");
     clearTimeout(wheel_timer);
     wheel_timer = setTimeout(() => {
       wheel_timer = void 0;
@@ -21801,6 +21808,7 @@ function bind_space_gestures(store, owner) {
   };
   owner.addEventListener("pointerdown", pointer_down, { capture: true });
   owner.addEventListener("pointerup", pointer_end, { capture: true });
+  owner.addEventListener("pointermove", pointer_move, { capture: true });
   owner.addEventListener("pointercancel", pointer_end, { capture: true });
   owner.addEventListener("touchstart", touch_start, { capture: true, passive: true });
   owner.addEventListener("touchend", touch_end, { capture: true });
@@ -21811,6 +21819,7 @@ function bind_space_gestures(store, owner) {
     cancel();
     owner.removeEventListener("pointerdown", pointer_down, { capture: true });
     owner.removeEventListener("pointerup", pointer_end, { capture: true });
+    owner.removeEventListener("pointermove", pointer_move, { capture: true });
     owner.removeEventListener("pointercancel", pointer_end, { capture: true });
     owner.removeEventListener("touchstart", touch_start, { capture: true });
     owner.removeEventListener("touchend", touch_end, { capture: true });
@@ -21827,7 +21836,14 @@ var import_react = __toESM(require_react(), 1);
 var host_space = { kind: "host", id: "host" };
 var ActiveSpaceStore = class {
   constructor() {
-    this.snapshot = { path: [host_space], transitioned: false };
+    this.snapshot = {
+      path: [host_space],
+      focus: host_space,
+      hoverPath: [],
+      surfaces: [],
+      transitioned: false
+    };
+    this.surfaces = /* @__PURE__ */ new Map();
     this.listeners = /* @__PURE__ */ new Set();
     this.get_snapshot = () => this.snapshot;
     this.subscribe = (listener) => {
@@ -21839,6 +21855,64 @@ var ActiveSpaceStore = class {
   }
   current() {
     return this.snapshot.path[this.snapshot.path.length - 1];
+  }
+  register_surface(surface) {
+    this.surfaces.set(surface.id, surface);
+    this.publish_surfaces();
+    return () => {
+      if (this.surfaces.get(surface.id) === surface) {
+        this.surfaces.delete(surface.id);
+        this.publish_surfaces();
+      }
+    };
+  }
+  surface(id) {
+    return this.surfaces.get(id);
+  }
+  focus_surface(id) {
+    const surface = this.surfaces.get(id);
+    if (!surface) return false;
+    this.focus(surface.kind === "host" ? host_space : surface.kind === "workspace" ? { kind: "workspace", id: surface.id, workspace_id: surface.workspace_id } : {
+      kind: "projection",
+      id: surface.id,
+      workspace_id: surface.workspace_id,
+      window_id: surface.window_id,
+      projection_id: surface.projection_id
+    });
+    return true;
+  }
+  path_for_event(event, capability) {
+    const elements = event.composedPath();
+    return [...this.surfaces.values()].filter((surface) => elements.includes(surface.element) && (!capability || surface.capabilities[capability])).sort((a2, b2) => elements.indexOf(a2.element) - elements.indexOf(b2.element));
+  }
+  set_hover(path) {
+    if (path.join("\0") !== this.snapshot.hoverPath.join("\0")) this.publish({ ...this.snapshot, hoverPath: [...path] });
+  }
+  focus(space) {
+    const path = space.kind === "host" ? [host_space] : space.kind === "workspace" ? [host_space, space] : [...this.snapshot.path.filter((item) => item.kind !== "projection"), space];
+    this.publish({ ...this.snapshot, path, focus: space });
+  }
+  claim_gesture(id, owner, kind) {
+    if (this.snapshot.gesture) return this.snapshot.gesture.owner === owner;
+    this.publish({ ...this.snapshot, gesture: { id, owner, kind }, gesture_id: id, transitioned: false });
+    return true;
+  }
+  release_gesture(id) {
+    if (this.snapshot.gesture?.id !== id) return;
+    this.publish({ ...this.snapshot, gesture: void 0, gesture_id: void 0, transitioned: false });
+  }
+  publish_surfaces() {
+    this.publish({ ...this.snapshot, surfaces: [...this.surfaces.values()].map((item) => ({
+      id: item.id,
+      parentId: item.parentId,
+      kind: item.kind,
+      label: item.label,
+      workspace_id: item.workspace_id,
+      window_id: item.window_id,
+      projection_id: item.projection_id,
+      scope: item.scope,
+      capabilities: item.capabilities
+    })) });
   }
   publish(next) {
     this.snapshot = next;
@@ -21884,11 +21958,11 @@ var ActiveSpaceStore = class {
       projection_id
     }))];
     if (JSON.stringify(path) !== JSON.stringify(this.snapshot.path))
-      this.publish({ ...this.snapshot, path, transitioned: this.snapshot.gesture_id !== void 0 });
+      this.publish({ ...this.snapshot, path, focus: path[path.length - 1], transitioned: this.snapshot.gesture_id !== void 0 });
   }
   switch_path(path) {
     if (path[path.length - 1].id === this.current().id) return false;
-    this.publish({ ...this.snapshot, path, transitioned: this.snapshot.gesture_id !== void 0 });
+    this.publish({ ...this.snapshot, path, focus: path[path.length - 1], transitioned: this.snapshot.gesture_id !== void 0 });
     return true;
   }
   begin_gesture(gesture_id) {
@@ -21898,13 +21972,21 @@ var ActiveSpaceStore = class {
   }
   end_gesture(gesture_id) {
     if (this.snapshot.gesture_id !== gesture_id) return;
-    this.publish({ path: this.snapshot.path, transitioned: false });
+    this.publish({ ...this.snapshot, gesture: void 0, gesture_id: void 0, transitioned: false });
   }
   /** 目标关闭后回退到最近有效父层，不保留悬空的活动空间。 */
   reconcile(exists) {
     const missing = this.snapshot.path.findIndex((space) => space.kind !== "host" && !exists(space));
     if (missing < 0) return;
-    this.publish({ path: this.snapshot.path.slice(0, missing), transitioned: false });
+    const path = this.snapshot.path.slice(0, missing);
+    this.publish({
+      ...this.snapshot,
+      path,
+      focus: path[path.length - 1],
+      gesture: void 0,
+      gesture_id: void 0,
+      transitioned: false
+    });
   }
 };
 
@@ -21924,8 +22006,44 @@ function useActiveSpace() {
   const snapshot2 = (0, import_react.useSyncExternalStore)(store?.subscribe ?? empty_subscribe, store?.get_snapshot ?? empty_snapshot);
   return (0, import_react.useMemo)(() => ({ store, snapshot: snapshot2, current: snapshot2?.path[snapshot2.path.length - 1] }), [store, snapshot2]);
 }
+function useCanvasSurface(ref, surface) {
+  const { store } = useActiveSpace();
+  (0, import_react.useEffect)(() => {
+    const element = ref.current;
+    if (!store || !element) return;
+    element.dataset.canvasSurface = surface.id;
+    return store.register_surface({ ...surface, element });
+  }, [
+    ref,
+    store,
+    surface.id,
+    surface.parentId,
+    surface.kind,
+    surface.label,
+    surface.workspace_id,
+    surface.window_id,
+    surface.projection_id,
+    surface.scope,
+    surface.capabilities
+  ]);
+}
 var workspace_space_id = (workspace_id) => `workspace:${workspace_id}`;
-var projection_space_id = (workspace_id, window_id) => `projection:${workspace_id}:${window_id}`;
+
+// pip-editor/pip-host/creation/enter-created-projection.ts
+function enter_created_projection(store, workspace_id, projection_id) {
+  if (!store || !projection_id) return;
+  const current = store.current();
+  if (current.kind === "host" || current.workspace_id !== workspace_id) {
+    store.enter({ kind: "workspace", id: `workspace:${workspace_id}`, workspace_id });
+  }
+  store.enter({
+    kind: "projection",
+    id: `projection:${workspace_id}:${projection_id}`,
+    workspace_id,
+    window_id: projection_id,
+    projection_id
+  });
+}
 
 // pip-editor/pip-host/workspace/navigation-selection.ts
 function returned_selections(previous, next, selections = {}) {
@@ -23429,21 +23547,13 @@ async function invoke_creator(store, registry, workspace_id, creator_id, point, 
     ));
   }
   store.commitCreation(workspace_id, placed, point, registry.validators());
+  return placed.preferredProjection?.projectionId;
 }
 
 // pip-editor/pip-host/creation/placement-target.ts
 function placement_target_index(candidates, active) {
-  if (!active) return candidates.length ? 0 : -1;
-  for (let index = candidates.length - 1; index >= 0; index -= 1) {
-    const target = candidates[index];
-    if (active.kind === "host") {
-      if (!target.workspace_id) return index;
-    } else if (target.workspace_id === active.workspace_id) {
-      if (active.kind === "workspace" && !target.projection_id) return index;
-      if (active.kind === "projection" && target.projection_id === active.projection_id) return index;
-    }
-  }
-  return -1;
+  void active;
+  return candidates.length ? 0 : -1;
 }
 
 // pip-editor/pip-host/creation/use-placement.tsx
@@ -23466,7 +23576,6 @@ var surface_default = {
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 var editable = (path) => path.some((item) => item instanceof HTMLElement && (item.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(item.tagName)));
 function usePlacement(registry, create, on_error) {
-  const { store: space_store, current: active_space } = useActiveSpace();
   const create_ref = (0, import_react2.useRef)(create);
   (0, import_react2.useLayoutEffect)(() => {
     create_ref.current = create;
@@ -23532,10 +23641,7 @@ function usePlacement(registry, create, on_error) {
       }
       const path = event.composedPath();
       const candidates = path.filter((item) => item instanceof HTMLElement && item.hasAttribute("data-creation-surface"));
-      const target_index = placement_target_index(
-        candidates.map((element) => JSON.parse(element.dataset.creationSurface)),
-        space_store ? active_space : void 0
-      );
+      const target_index = placement_target_index(candidates.map((element) => JSON.parse(element.dataset.creationSurface)));
       const surface = candidates[target_index];
       if (!surface) return;
       const target = JSON.parse(surface.dataset.creationSurface);
@@ -23609,7 +23715,7 @@ function usePlacement(registry, create, on_error) {
       document.removeEventListener("click", click, true);
       document.removeEventListener("pointercancel", cancel, true);
     };
-  }, [armed, on_error, active_space, space_store]);
+  }, [armed, on_error]);
   return armed ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: surface_default.hint, children: "\u70B9\u51FB\u653E\u7F6E\u60F3\u6CD5 \xB7 Esc \u53D6\u6D88" }),
     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: surface_default.preview, style: { left: point.x, top: point.y } })
@@ -23618,18 +23724,21 @@ function usePlacement(registry, create, on_error) {
 
 // pip-editor/pip-host/creation/use-host-placement.tsx
 function useHostPlacement(registry, store, present, on_error) {
+  const { store: space_store } = useActiveSpace();
   return usePlacement(registry, async (id, target, point) => {
     if (target.workspace_id) {
-      await invoke_creator(store, registry, target.workspace_id, id, point, void 0, void 0, target);
+      const projection_id2 = await invoke_creator(store, registry, target.workspace_id, id, point, void 0, void 0, target);
+      enter_created_projection(space_store, target.workspace_id, projection_id2);
       return;
     }
     const scratch = createScratchWorkspace();
     const staging = new WorkspaceSessionStore([scratch], () => {
     });
-    await invoke_creator(staging, registry, scratch.id, id, { x: 160, y: 120 });
+    const projection_id = await invoke_creator(staging, registry, scratch.id, id, { x: 160, y: 120 });
     const created = staging.list()[0];
     store.add(created);
     present(created, point);
+    enter_created_projection(space_store, created.id, projection_id);
   }, on_error);
 }
 
@@ -23643,7 +23752,7 @@ function useHostTheme(theme_mode) {
 }
 
 // pip-editor/pip-host/pip-host.tsx
-var import_react37 = __toESM(require_react(), 1);
+var import_react38 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host-io/system-plugin/runtime.ts
 var identityRef = {
@@ -24196,6 +24305,7 @@ var pluginManagerSystemPlugin = {
   scope: "host",
   surfaces: ["host", "workspace"],
   instancePolicy: "singleton",
+  presentation: "window",
   defaultWindow: {
     width: 640,
     height: 720,
@@ -24395,6 +24505,7 @@ var preferencesSystemPlugin = {
   scope: "host",
   surfaces: ["host", "workspace"],
   instancePolicy: "singleton",
+  presentation: "window",
   defaultWindow: {
     width: 520,
     height: 520,
@@ -24402,6 +24513,105 @@ var preferencesSystemPlugin = {
   },
   buildModel: buildModel2,
   Component: PreferencesSystemNode
+};
+
+// pip-editor/pip-host/view/space-navigator.tsx
+var import_react7 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/view/space-navigator.module.css
+var space_navigator_default = {
+  navigator: "space_navigator_navigator",
+  compass: "space_navigator_compass",
+  map: "space_navigator_map",
+  paths: "space_navigator_paths",
+  current: "space_navigator_current"
+};
+
+// pip-editor/pip-host/view/space-navigator.tsx
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var as_space = (surface) => surface.kind === "host" ? { kind: "host", id: "host" } : surface.kind === "workspace" ? { kind: "workspace", id: surface.id, workspace_id: surface.workspace_id } : {
+  kind: "projection",
+  id: surface.id,
+  workspace_id: surface.workspace_id,
+  window_id: surface.window_id,
+  projection_id: surface.projection_id
+};
+function SpaceNavigator() {
+  const space = useActiveSpace();
+  const [open, setOpen] = (0, import_react7.useState)(false);
+  const surfaces = space.snapshot?.surfaces ?? [];
+  const focus_id = space.snapshot?.focus?.id ?? "host";
+  const focus = (surface) => {
+    space.store?.focus(as_space(surface));
+    const element = space.store?.surface(surface.id)?.element;
+    if (element) {
+      element.dataset.spaceFocused = "";
+      element.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "nearest",
+        inline: "nearest"
+      });
+      setTimeout(() => delete element.dataset.spaceFocused, 420);
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("aside", { className: space_navigator_default.navigator, "data-system-overlay": "host.interaction-navigator", children: [
+    open && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: space_navigator_default.map, role: "dialog", "aria-label": "\u7A7A\u95F4\u8DEF\u5F84\u5BFC\u822A", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: "\u7A7A\u95F4\u8DEF\u5F84" }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: space_navigator_default.paths, children: surfaces.map((surface) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        "button",
+        {
+          className: surface.id === focus_id ? space_navigator_default.current : void 0,
+          onClick: () => focus(surface),
+          "aria-current": surface.id === focus_id ? "location" : void 0,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: surface.kind === "host" ? "\u25C7" : surface.kind === "workspace" ? "\u25A3" : surface.scope === "children" ? "\u2318" : "\u25A1" }),
+            surface.label
+          ]
+        },
+        surface.id
+      )) }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { onClick: () => {
+        const focus2 = space.snapshot?.focus;
+        const host = !focus2 || focus2.kind === "host";
+        document.dispatchEvent(new CustomEvent(
+          host ? "pip-open-host-creator" : "pip-open-space-creator",
+          { detail: host ? void 0 : focus2.workspace_id }
+        ));
+        setOpen(false);
+      }, children: "\uFF0B \u521B\u5EFA" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      "button",
+      {
+        className: space_navigator_default.compass,
+        "aria-label": open ? "\u5173\u95ED\u7A7A\u95F4\u5BFC\u822A" : "\u6253\u5F00\u7A7A\u95F4\u5BFC\u822A",
+        "aria-expanded": open,
+        onClick: () => setOpen((value) => !value),
+        children: "\u233E"
+      }
+    )
+  ] });
+}
+
+// pip-editor/pip-host-io/interaction-navigator/definition.tsx
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+function InteractionNavigator() {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(SpaceNavigator, {});
+}
+var interactionNavigatorSystemPlugin = {
+  id: "host.interaction-navigator",
+  typeNode: createSystemPluginTypeNode("pip.host.type.interaction-navigator"),
+  label: "\u7A7A\u95F4\u5BFC\u822A",
+  description: "\u663E\u793A\u753B\u5E03\u8DEF\u5F84\u5E76\u7BA1\u7406\u5F53\u524D\u4EA4\u4E92\u7126\u70B9",
+  category: "\u7CFB\u7EDF",
+  icon: "\u233E",
+  scope: "host",
+  surfaces: ["host"],
+  instancePolicy: "singleton",
+  presentation: "overlay",
+  buildModel: () => null,
+  Component: InteractionNavigator
 };
 
 // pip-editor/pip-host-io/system-plugin/registry.ts
@@ -24474,7 +24684,7 @@ var SystemPluginRegistry = class {
     if (!["singleton", "multiple"].includes(definition.instancePolicy)) {
       throw new Error(`System plugin ${definition.id} instance policy is invalid`);
     }
-    if (!Number.isFinite(definition.defaultWindow.width) || !Number.isFinite(definition.defaultWindow.height) || definition.defaultWindow.width < 360 || definition.defaultWindow.height < 420 || definition.defaultWindow.width > 1800 || definition.defaultWindow.height > 1200 || !["simple", "full"].includes(definition.defaultWindow.resizeMode)) {
+    if ((definition.presentation ?? "window") === "window" && (!definition.defaultWindow || !Number.isFinite(definition.defaultWindow.width) || !Number.isFinite(definition.defaultWindow.height) || definition.defaultWindow.width < 360 || definition.defaultWindow.height < 420 || definition.defaultWindow.width > 1800 || definition.defaultWindow.height > 1200 || !["simple", "full"].includes(definition.defaultWindow.resizeMode))) {
       throw new Error(`System plugin ${definition.id} window is invalid`);
     }
     assertSystemTypeNode(definition);
@@ -24487,6 +24697,9 @@ var SystemPluginRegistry = class {
 var STORAGE_KEY = "intent-map.editor-preferences.v1";
 var defaultEditorPreferences = () => ({
   schemaVersion: 1,
+  startup_plugins: {
+    "official.thought-types": { auto_load: true, open_workspace: false }
+  },
   workspaceOpenMode: "tab",
   auto_load_website: true,
   theme_mode: "dark"
@@ -24510,7 +24723,10 @@ var EditorPreferenceStore = class {
       if (valid(parsed)) {
         this.#value = {
           ...parsed,
-          startup_plugins: Object.fromEntries(Object.entries(parsed.startup_plugins ?? {}).filter(([, choice]) => choice && typeof choice.auto_load === "boolean" && typeof choice.open_workspace === "boolean")),
+          startup_plugins: {
+            ...defaultEditorPreferences().startup_plugins,
+            ...Object.fromEntries(Object.entries(parsed.startup_plugins ?? {}).filter(([, choice]) => choice && typeof choice.auto_load === "boolean" && typeof choice.open_workspace === "boolean"))
+          },
           theme_mode: parsed.theme_mode === "light" ? "light" : "dark",
           auto_load_website: typeof parsed.auto_load_website === "boolean" ? parsed.auto_load_website : true
         };
@@ -24555,7 +24771,7 @@ var EditorPreferenceStore = class {
 };
 
 // pip-editor/pip-host-io/system-plugin/renderer.tsx
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function SystemPluginRenderer({
   instanceId,
   registry,
@@ -24564,20 +24780,20 @@ function SystemPluginRenderer({
 }) {
   const instance = runtime.get(instanceId);
   if (!instance) {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u672A\u627E\u5230\u7CFB\u7EDF\u63D2\u4EF6\u5B9E\u4F8B\uFF1A",
       instanceId
     ] });
   }
   const definition = registry.get(instance.pluginId);
   if (!definition) {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u672A\u6CE8\u518C\u7CFB\u7EDF\u63D2\u4EF6\uFF1A",
       instance.pluginId
     ] });
   }
   const Component = definition.Component;
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
     Component,
     {
       graph: runtime.snapshot().graph,
@@ -24589,7 +24805,7 @@ function SystemPluginRenderer({
 }
 
 // pip-editor/pip-host-io/system-plugin/canvas-bridge.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function createSystemPluginCanvasBridge(registry, runtime) {
   function Renderer({
     services,
@@ -24597,7 +24813,7 @@ function createSystemPluginCanvasBridge(registry, runtime) {
     window: window2,
     workspace
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       SystemPluginRenderer,
       {
         instanceId: window2.instanceId,
@@ -24611,8 +24827,23 @@ function createSystemPluginCanvasBridge(registry, runtime) {
       }
     );
   }
+  function Overlays({ services }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_jsx_runtime13.Fragment, { children: registry.list().filter((definition) => definition.presentation === "overlay").map((definition) => {
+      const instance = runtime.ensure(definition.id);
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        SystemPluginRenderer,
+        {
+          instanceId: instance.id,
+          registry,
+          runtime,
+          snapshot: { surface: "host", services }
+        },
+        instance.id
+      );
+    }) });
+  }
   return {
-    creatorChoices: (surface, workspace) => registry.list().filter((definition) => definition.surfaces.includes(surface)).filter((definition) => {
+    creatorChoices: (surface, workspace) => registry.list().filter((definition) => (definition.presentation ?? "window") === "window" && definition.surfaces.includes(surface)).filter((definition) => {
       if (!workspace) return definition.scope === "host";
       return definition.accepts?.(workspace) !== false;
     }).map((definition) => ({
@@ -24623,14 +24854,16 @@ function createSystemPluginCanvasBridge(registry, runtime) {
       icon: definition.icon,
       provider: "system"
     })),
-    Renderer
+    Renderer,
+    Overlays
   };
 }
 
 // pip-editor/pip-host-io/index.ts
 var createBuiltinSystemPluginRegistry = () => new SystemPluginRegistry([
   pluginManagerSystemPlugin,
-  preferencesSystemPlugin
+  preferencesSystemPlugin,
+  interactionNavigatorSystemPlugin
 ]);
 
 // pip-editor/pip-host/execution/binding.ts
@@ -25226,7 +25459,7 @@ async function dispatchPipElementRequest(request, context) {
 }
 
 // pip-editor/pip-host/use-plugin-catalog.ts
-var import_react8 = __toESM(require_react(), 1);
+var import_react9 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/packages/package-identity.ts
 function assertSameImmutablePlugin(current, incoming) {
@@ -28183,7 +28416,7 @@ var readHostLaunchPackage = async () => {
 };
 
 // pip-editor/pip-host/use-pip-import-queue.ts
-var import_react7 = __toESM(require_react(), 1);
+var import_react8 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/packages/import-batch.ts
 var layerOrder = {
@@ -28298,13 +28531,13 @@ async function runPreparedPipBatch(initial, prepared, options) {
 
 // pip-editor/pip-host/use-pip-import-queue.ts
 function usePipImportQueue(options) {
-  const optionsRef = (0, import_react7.useRef)(options);
-  (0, import_react7.useEffect)(() => {
+  const optionsRef = (0, import_react8.useRef)(options);
+  (0, import_react8.useEffect)(() => {
     optionsRef.current = options;
   }, [options]);
-  const sequence = (0, import_react7.useRef)(0);
-  const queue = (0, import_react7.useRef)(Promise.resolve());
-  const [importBatch, setImportBatch] = (0, import_react7.useState)();
+  const sequence = (0, import_react8.useRef)(0);
+  const queue = (0, import_react8.useRef)(Promise.resolve());
+  const [importBatch, setImportBatch] = (0, import_react8.useState)();
   const runBatch = async (batchId, files) => {
     const initial = createPendingBatch(batchId, files);
     setImportBatch(initial);
@@ -28346,20 +28579,20 @@ function usePluginCatalog({
   setMessage,
   workspaceStore
 }) {
-  const [elements] = (0, import_react8.useState)(
+  const [elements] = (0, import_react9.useState)(
     () => new ElementPluginRegistry(browserElementRuntime())
   );
-  const [nodeTypes] = (0, import_react8.useState)(
+  const [nodeTypes] = (0, import_react9.useState)(
     () => new NodeTypePluginRegistry(browserNodeTypeRuntime())
   );
-  const [elementPackages, setElementPackages] = (0, import_react8.useState)([]);
-  const [nodeTypePackages, setNodeTypePackages] = (0, import_react8.useState)([]);
-  const [disabledElements, setDisabledElements] = (0, import_react8.useState)(/* @__PURE__ */ new Set());
-  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react8.useState)(
+  const [elementPackages, setElementPackages] = (0, import_react9.useState)([]);
+  const [nodeTypePackages, setNodeTypePackages] = (0, import_react9.useState)([]);
+  const [disabledElements, setDisabledElements] = (0, import_react9.useState)(/* @__PURE__ */ new Set());
+  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react9.useState)(
     /* @__PURE__ */ new Set()
   );
-  const [nodeMaps, setNodeMaps] = (0, import_react8.useState)([]);
-  const nodeMapCatalogRef = (0, import_react8.useRef)(new PortableNodeMapCatalog());
+  const [nodeMaps, setNodeMaps] = (0, import_react9.useState)([]);
+  const nodeMapCatalogRef = (0, import_react9.useRef)(new PortableNodeMapCatalog());
   const persistTrust = async (hashes) => location.protocol === "pip:" ? trustPackageHashes(hashes) : browserTrustHashes(hashes);
   async function installElement(plugin) {
     const status = await elements.install(plugin);
@@ -28474,20 +28707,20 @@ var canvas_entry_default = {
 };
 
 // pip-editor/pip-host/view/startup-notice.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 function StartupNotice({ loading, error, retry }) {
   if (!loading && !error) return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("aside", { className: canvas_entry_default.notice, role: "status", children: loading ? "\u6B63\u5728\u52A0\u8F7D\u542F\u52A8\u63D2\u4EF6\u2026" : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("aside", { className: canvas_entry_default.notice, role: "status", children: loading ? "\u6B63\u5728\u52A0\u8F7D\u542F\u52A8\u63D2\u4EF6\u2026" : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
       "\u542F\u52A8\u63D2\u4EF6\u52A0\u8F7D\u5931\u8D25\uFF1A",
       error
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { onClick: retry, children: "\u91CD\u8BD5\u52A0\u8F7D" })
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { onClick: retry, children: "\u91CD\u8BD5\u52A0\u8F7D" })
   ] }) });
 }
 
 // pip-editor/pip-host/use-host-effects.ts
-var import_react10 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/execution/trigger-runtime.ts
 var TriggerRuntime = class {
@@ -28543,7 +28776,7 @@ var TriggerRuntime = class {
 };
 
 // pip-editor/pip-host/use-startup-workspace.ts
-var import_react9 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/startup/load-plugins.ts
 async function fetch_startup_asset(asset, base) {
@@ -28599,17 +28832,18 @@ async function load_startup_plugins(manifest_path, choices, auto_load_website, e
 
 // pip-editor/pip-host/use-startup-workspace.ts
 function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_error, startup_plugins = {}) {
-  const started = (0, import_react9.useRef)(false);
-  const completed = (0, import_react9.useRef)(/* @__PURE__ */ new Set());
-  const requested = (0, import_react9.useRef)(void 0);
-  const [attempt, set_attempt] = (0, import_react9.useState)(0);
-  const [loading, set_loading] = (0, import_react9.useState)(!explicit_launch && auto_load_website);
-  const [error, set_error] = (0, import_react9.useState)("");
-  (0, import_react9.useEffect)(() => {
+  const started = (0, import_react10.useRef)(false);
+  const launch_imported = (0, import_react10.useRef)(false);
+  const completed = (0, import_react10.useRef)(/* @__PURE__ */ new Set());
+  const requested = (0, import_react10.useRef)(void 0);
+  const [attempt, set_attempt] = (0, import_react10.useState)(0);
+  const [loading, set_loading] = (0, import_react10.useState)(!explicit_launch && auto_load_website);
+  const [error, set_error] = (0, import_react10.useState)("");
+  (0, import_react10.useEffect)(() => {
     if (started.current) return;
     started.current = true;
     async function launch() {
-      const bytes = !explicit_launch && location.protocol === "pip:" ? await readHostLaunchPackage() : void 0;
+      const bytes = !launch_imported.current && !explicit_launch && location.protocol === "pip:" ? await readHostLaunchPackage() : void 0;
       if (bytes) {
         await importPip(bytes, {
           confirmTrust: () => true,
@@ -28620,13 +28854,14 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
           uninstallElement: catalog.rollbackElement,
           uninstallNodeType: catalog.rollbackNodeType
         });
+        launch_imported.current = true;
       }
       const manifest_path = document.getElementById("root")?.dataset.websiteManifest ?? "/site-assets/release.json";
       const errors = await load_startup_plugins(
         manifest_path,
         startup_plugins,
         auto_load_website,
-        explicit_launch || Boolean(bytes),
+        explicit_launch || launch_imported.current,
         {
           confirmTrust: () => true,
           trustHashes: catalog.persistTrust,
@@ -28655,7 +28890,7 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
     set_loading(true);
     set_attempt((value) => value + 1);
   };
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const load = (event) => retry(event.detail);
     document.addEventListener("pip-load-startup", load);
     return () => document.removeEventListener("pip-load-startup", load);
@@ -28683,7 +28918,7 @@ function useHostEffects({
   workspaces
 }) {
   const startup = useStartupWorkspace(auto_load_website, explicit_launch, catalog, setMessage, startup_plugins);
-  const [triggerRuntime] = (0, import_react10.useState)(
+  const [triggerRuntime] = (0, import_react11.useState)(
     () => new TriggerRuntime({
       registry: nodeTypes,
       fire: async (workspace, triggerNodeId, payload) => {
@@ -28700,14 +28935,14 @@ function useHostEffects({
       )
     })
   );
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const preventPageZoom = (event) => {
       if (event.ctrlKey || event.metaKey) event.preventDefault();
     };
     addEventListener("wheel", preventPageZoom, { passive: false });
     return () => removeEventListener("wheel", preventPageZoom);
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const handleKeyDown = (event) => {
       if (!(event.ctrlKey || event.metaKey)) return;
       const key = event.key.toLowerCase();
@@ -28741,16 +28976,16 @@ function useHostEffects({
     setActiveWorkspaceId,
     tabWorkspaces
   ]);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     for (const workspace of workspaces) {
       executionManager.markWorkspaceStale(workspace.id, graphRevision(workspace.graph));
     }
   }, [executionManager, workspaces]);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     triggerRuntime.sync(workspaces);
   }, [nodeTypePackages, triggerRuntime, workspaces]);
-  (0, import_react10.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
+  (0, import_react11.useEffect)(() => {
     const handleHook = (event) => {
       const detail = event.detail;
       if (typeof detail?.key !== "string") return;
@@ -28765,7 +29000,7 @@ function useHostEffects({
 }
 
 // pip-editor/pip-host/use-system-plugins.ts
-var import_react11 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 function useSystemPlugins(options) {
   const {
     catalog,
@@ -28780,18 +29015,18 @@ function useSystemPlugins(options) {
     workspaces,
     workspaceStore
   } = options;
-  const [, setRevision] = (0, import_react11.useState)(0);
-  const [registry] = (0, import_react11.useState)(createBuiltinSystemPluginRegistry);
-  const [runtime] = (0, import_react11.useState)(
+  const [, setRevision] = (0, import_react12.useState)(0);
+  const [registry] = (0, import_react12.useState)(createBuiltinSystemPluginRegistry);
+  const [runtime] = (0, import_react12.useState)(
     () => new SystemPluginRuntime(
       registry,
       () => setRevision((revision) => revision + 1)
     )
   );
-  const [canvas] = (0, import_react11.useState)(
+  const [canvas] = (0, import_react12.useState)(
     () => createSystemPluginCanvasBridge(registry, runtime)
   );
-  (0, import_react11.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     for (const workspace of workspaces) {
       const views = normalizeFreeLayout(
         workspace.views,
@@ -28809,7 +29044,7 @@ function useSystemPlugins(options) {
       }
     }
   }, [host.systemWindows, registry, runtime, workspaces]);
-  (0, import_react11.useEffect)(() => () => {
+  (0, import_react12.useEffect)(() => () => {
     runtime.disposeAll();
   }, [runtime]);
   const servicesFor = (workspace) => ({
@@ -28829,6 +29064,7 @@ function useSystemPlugins(options) {
   });
   const openWorkspace = (workspace, pluginId, point) => {
     const definition = registry.require(pluginId);
+    if (definition.presentation !== "window" || !definition.defaultWindow) return;
     if (!definition.surfaces.includes("workspace")) return;
     if (definition.accepts?.(workspace) === false) return;
     const instance = runtime.ensure(pluginId, workspace.id);
@@ -28842,6 +29078,7 @@ function useSystemPlugins(options) {
   };
   const openHost = (pluginId, point) => {
     const definition = registry.require(pluginId);
+    if (definition.presentation !== "window" || !definition.defaultWindow) return;
     if (!definition.surfaces.includes("host")) return;
     const instance = runtime.ensure(pluginId);
     hostStore.openSystemWindow(
@@ -28898,19 +29135,19 @@ function useSystemPlugins(options) {
 }
 
 // pip-editor/pip-host/view/close-workspace-dialog.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 function CloseWorkspaceDialog({ name, onExport, onDiscard, onCancel }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("h2", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h2", { children: [
       "\u5173\u95ED\u201C",
       name,
       "\u201D\uFF1F"
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
     ] })
   ] }) });
 }
@@ -28938,13 +29175,13 @@ function workspace_fit_camera(frames, viewport, coarse_pointer = false, minimum_
 }
 
 // pip-editor/pip-host/view/use-initial-projection-fit.ts
-var import_react12 = __toESM(require_react(), 1);
+var import_react13 = __toESM(require_react(), 1);
 function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
-  const latest = (0, import_react12.useRef)({ views, on_change });
-  (0, import_react12.useLayoutEffect)(() => {
+  const latest = (0, import_react13.useRef)({ views, on_change });
+  (0, import_react13.useLayoutEffect)(() => {
     latest.current = { views, on_change };
   });
-  (0, import_react12.useLayoutEffect)(() => {
+  (0, import_react13.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !enabled) return;
     const fit = () => {
@@ -28976,16 +29213,16 @@ function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_react32 = __toESM(require_react(), 1);
+var import_react33 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_react23 = __toESM(require_react(), 1);
+var import_react24 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/creation/content-card.tsx
-var import_react13 = __toESM(require_react(), 1);
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_react14 = __toESM(require_react(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 function ContentCard({ item, target, graph, position, apply, navigate, close, children }) {
-  const drag = (0, import_react13.useRef)(void 0);
+  const drag = (0, import_react14.useRef)(void 0);
   const preview = (element, x, y) => {
     const start = drag.current;
     if (!start) return;
@@ -29024,8 +29261,8 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
     }));
     apply({ schemaVersion: 2, baseRevision: graphRevision(graph), operations: [{ op: "put", parent_path: [], pip: node2 }] });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
       "header",
       {
         style: { height: "var(--content-header-height, 28px)", display: "flex", background: "var(--pip-panel)", color: "var(--pip-ink)", fontSize: 12, touchAction: "none" },
@@ -29051,14 +29288,14 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
           drag.current = void 0;
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { flex: 1 }, children: position.missing ? "\u5F85\u5B9A\u4F4D \xB7 \u62D6\u52A8\u653E\u7F6E" : item.kind === "child" ? "\u5B50\u7EA7\u60F3\u6CD5" : "\u9644\u6CE8" }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { onClick: navigate, "aria-label": "\u4E0B\u63A2\u60F3\u6CD5", children: "\u2197" }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { "aria-label": "\u5173\u95ED\u9644\u52A0\u6295\u5F71", onClick: close, children: "\xD7" })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { flex: 1 }, children: position.missing ? "\u5F85\u5B9A\u4F4D \xB7 \u62D6\u52A8\u653E\u7F6E" : item.kind === "child" ? "\u5B50\u7EA7\u60F3\u6CD5" : "\u9644\u6CE8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: navigate, "aria-label": "\u4E0B\u63A2\u60F3\u6CD5", children: "\u2197" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { "aria-label": "\u5173\u95ED\u9644\u52A0\u6295\u5F71", onClick: close, children: "\xD7" })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { height: "calc(100% - var(--content-header-height, 28px))" }, children }),
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { height: "calc(100% - var(--content-header-height, 28px))" }, children }),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       "button",
       {
         "aria-label": "\u8C03\u6574\u60F3\u6CD5\u5927\u5C0F",
@@ -29093,8 +29330,8 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
 }
 
 // pip-editor/pip-host/creation/surface.tsx
-var import_react14 = __toESM(require_react(), 1);
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_react15 = __toESM(require_react(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 function anchor_elements(root2) {
   const output = [];
   for (const element of root2.querySelectorAll("*")) {
@@ -29106,12 +29343,12 @@ function anchor_elements(root2) {
   return output;
 }
 function ContentSurface({ target, graph, children, render_item, on_request, hidden_ids = [], selection = [], on_close }) {
-  const surface = (0, import_react14.useRef)(null);
-  const content = (0, import_react14.useRef)(null);
-  const events = (0, import_react14.useRef)(null);
-  const [positions, set_positions] = (0, import_react14.useState)({});
-  const items = (0, import_react14.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
-  (0, import_react14.useLayoutEffect)(() => {
+  const surface = (0, import_react15.useRef)(null);
+  const content = (0, import_react15.useRef)(null);
+  const events = (0, import_react15.useRef)(null);
+  const [positions, set_positions] = (0, import_react15.useState)({});
+  const items = (0, import_react15.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
+  (0, import_react15.useLayoutEffect)(() => {
     const root2 = surface.current, body = content.current;
     let frame = 0;
     const update = () => {
@@ -29163,25 +29400,25 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
       roots.forEach((root3) => root3.removeEventListener("scroll", schedule, true));
     };
   }, [items, target.view_id]);
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { ref: surface, className: surface_default.surface, "data-creation-surface": JSON.stringify(target), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { ref: content, className: surface_default.content, children }),
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: surface_default.overlay, "data-projection-spatial": target.scope === "children" ? "" : void 0, children: [
-      target.view_id?.endsWith("world-events") && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("section", { ref: events, className: surface_default.events, children: read_content_events(graph, target.observed_id ?? "").map((event) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("article", { "data-pip-anchor": event.id, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { children: event.summary }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("small", { children: event.at })
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { ref: surface, className: surface_default.surface, "data-creation-surface": JSON.stringify(target), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { ref: content, className: surface_default.content, children }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: surface_default.overlay, "data-projection-spatial": target.scope === "children" ? "" : void 0, children: [
+      target.view_id?.endsWith("world-events") && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("section", { ref: events, className: surface_default.events, children: read_content_events(graph, target.observed_id ?? "").map((event) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("article", { "data-pip-anchor": event.id, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { children: event.summary }),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("small", { children: event.at })
       ] }, event.id)) }),
-      target.scope === "children" && items.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("svg", { className: surface_default.relations, "aria-label": "\u7528\u6237\u5B50\u7EA7\u5173\u7CFB", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("text", { x: "12", y: "16", children: "\u5F53\u524D\u5BF9\u8C61" }),
+      target.scope === "children" && items.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("svg", { className: surface_default.relations, "aria-label": "\u7528\u6237\u5B50\u7EA7\u5173\u7CFB", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("text", { x: "12", y: "16", children: "\u5F53\u524D\u5BF9\u8C61" }),
         items.map((item) => {
           const position = positions[item.id] ?? item;
-          return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("path", { d: `M 44 22 L ${position.x + item.width / 2} ${position.y}`, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("title", { children: "\u5F53\u524D\u5BF9\u8C61 \u2192 \u7528\u6237\u5B50\u7EA7" }) }, item.id);
+          return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("path", { d: `M 44 22 L ${position.x + item.width / 2} ${position.y}`, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("title", { children: "\u5F53\u524D\u5BF9\u8C61 \u2192 \u7528\u6237\u5B50\u7EA7" }) }, item.id);
         })
       ] }),
       items.map((item) => {
         const observed_value = graphNodes(graph)[item.projection_id]?.pips.find((pip) => pip.predicate_value?.predicate.node_id === "pip.projection.predicate.observes")?.predicate_value?.value;
         const observed_id = observed_value?.kind === "ref" ? observed_value.target.node_id : void 0;
         const position = positions[item.id] ?? { x: item.x, y: item.y, missing: false };
-        return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
           "article",
           {
             className: surface_default.item,
@@ -29198,11 +29435,11 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
             },
             style: { left: position.x, top: position.y, width: item.width, maxWidth: "100%", height: item.height },
             children: [
-              position.missing && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: surface_default.missing, children: [
+              position.missing && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: surface_default.missing, children: [
                 "\u5F85\u5B9A\u4F4D",
                 item.kind === "child" ? "\u5B50\u7EA7" : "\u9644\u6CE8"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
                 ContentCard,
                 {
                   item,
@@ -29225,7 +29462,7 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_react15 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/contracts/json-validation.ts
 var isRecord = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -29305,18 +29542,18 @@ function project(projection, projectionNode, observed, graph, elements, type, el
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
 var objectText = (pip) => !pip.predicate_value ? "\u2014" : pip.predicate_value.value.kind === "const" ? JSON.stringify(pip.predicate_value.value.value) : pip.predicate_value.value.kind === "ref" ? `\u2192 ${pip.predicate_value.value.target.node_id}/${pip.predicate_value.value.target.pip_id}` : `${pip.predicate_value.value.op}(\u2026)`;
 function RawPips({ pips, depth = 0 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { children: pip.id }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { children: objectText(pip) }),
-    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("code", { children: pip.id }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children: objectText(pip) }),
+    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
   ] }, pip.id)) });
 }
 function PluginProjection({ tag, context, onRequest, children }) {
-  const host = (0, import_react15.useRef)(null);
-  (0, import_react15.useEffect)(() => {
+  const host = (0, import_react16.useRef)(null);
+  (0, import_react16.useEffect)(() => {
     const current = host.current;
     if (!current) return;
     current.context = {
@@ -29347,7 +29584,7 @@ function PluginProjection({ tag, context, onRequest, children }) {
     current.addEventListener("intent-pip-request", listener);
     return () => current.removeEventListener("intent-pip-request", listener);
   }, [context, onRequest]);
-  return (0, import_react15.createElement)(tag, { ref: host }, children);
+  return (0, import_react16.createElement)(tag, { ref: host }, children);
 }
 function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose = "node", projectionContext, execution, elements, nodeTypes, onRequest, root_window_id = node2.id }) {
   const { type, projection, projectionData, declaration, error, observed, context: contextKind } = resolveNodePresentation(
@@ -29358,7 +29595,7 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
     purpose,
     { workspaceId, rootNodeIds, workspaceView, selection, projectionContext }
   );
-  const context = (0, import_react15.useMemo)(() => ({
+  const context = (0, import_react16.useMemo)(() => ({
     workspaceId,
     rootNodeIds,
     workspaceView,
@@ -29373,17 +29610,17 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
     execution
   }), [workspaceId, rootNodeIds, workspaceView, graph, node2, observed, contextKind, type, selection, projection, projectionData, execution]);
   if (error)
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: pip_host_default.orphan, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: node2.id }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { children: "projection error" })
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: pip_host_default.orphan, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("strong", { children: node2.id }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children: "projection error" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RawPips, { pips: node2.pips })
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(RawPips, { pips: node2.pips })
     ] });
   const root_frame = normalizeFreeLayout(workspaceView, rootNodeIds).projections[root_window_id];
   if (declaration)
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       ContentSurface,
       {
         target: {
@@ -29406,7 +29643,7 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
         },
         render_item: (item) => {
           const child = graphNodes(graph)[item.projection_id];
-          return child ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          return child ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             PipNodeRenderer,
             {
               root_window_id,
@@ -29430,34 +29667,34 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
             }
           ) : null;
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(EmbeddedItems, { root_window_id, projectionNode: node2, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(EmbeddedItems, { root_window_id, projectionNode: node2, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) })
       }
     );
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: pip_host_default.orphan, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: node2.id }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { children: type?.name ?? "orphan Pip" })
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: pip_host_default.orphan, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("strong", { children: node2.id }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children: type?.name ?? "orphan Pip" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(RawPips, { pips: node2.pips })
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(RawPips, { pips: node2.pips })
   ] });
 }
 function EmbeddedItems({ root_window_id, projectionNode, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) {
   const items = presentedProjections(projectionNode, graph);
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
     const node2 = graphNodes(graph)[projectionNodeId];
     const definition = node2 && projectionForInstance(node2, nodeTypes.projections());
     if (!node2 || !definition || observationScope(definition) !== "self" || !definition.surfaces?.includes("embedded")) {
-      return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: pip_host_default.orphan, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: pip_host_default.orphan, children: [
         "Invalid embedded Projection Instance: ",
         projectionNodeId
       ] }, projectionNodeId);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(PipNodeRenderer, { root_window_id, workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest }) }, projectionNodeId);
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(PipNodeRenderer, { root_window_id, workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest }) }, projectionNodeId);
   }) });
 }
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_react16 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/creator-window.module.css
 var creator_window_default = {
@@ -29466,21 +29703,21 @@ var creator_window_default = {
 };
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
 function NodeCreator({
   candidates,
   onChoose,
   onCancel
 }) {
-  const [query, setQuery] = (0, import_react16.useState)("");
-  const [active, setActive] = (0, import_react16.useState)(0);
-  const filtered = (0, import_react16.useMemo)(
+  const [query, setQuery] = (0, import_react17.useState)("");
+  const [active, setActive] = (0, import_react17.useState)(0);
+  const filtered = (0, import_react17.useMemo)(
     () => candidates.filter(
       (item) => `${item.label} ${item.description ?? ""} ${item.category}`.toLowerCase().includes(query.toLowerCase())
     ),
     [candidates, query]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
     "div",
     {
       className: creator_window_default.creator,
@@ -29502,7 +29739,7 @@ function NodeCreator({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           "input",
           {
             autoFocus: true,
@@ -29514,17 +29751,17 @@ function NodeCreator({
             placeholder: "\u641C\u7D22\u8282\u70B9\u6216\u5DE5\u4F5C\u533A\u5DE5\u5177\u2026"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
           "button",
           {
             type: "button",
             className: index === active ? creator_window_default.creatorActive : "",
             onClick: () => onChoose(item),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
-              /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("strong", { children: item.label }),
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("small", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
+              /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("strong", { children: item.label }),
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("small", { children: [
                   item.category,
                   " \xB7 ",
                   item.description
@@ -29534,16 +29771,16 @@ function NodeCreator({
           },
           `${item.provider}:${item.id}`
         )) }),
-        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
+        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
       ]
     }
   );
 }
 
 // pip-editor/pip-host/view/guanguan-logo.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
 function GuanguanLogo() {
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
     "svg",
     {
       viewBox: "0 0 40 40",
@@ -29554,13 +29791,13 @@ function GuanguanLogo() {
       "aria-hidden": "true",
       focusable: "false",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("rect", { width: "40", height: "40", rx: "11", fill: "var(--guanguan-back, #334E62)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z", fill: "var(--guanguan-body, #F5EFE5)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z", fill: "var(--guanguan-wing, #86A5BC)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z", fill: "var(--guanguan-feather, #57788F)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z", fill: "#40576B" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("rect", { width: "40", height: "40", rx: "11", fill: "var(--guanguan-back, #334E62)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z", fill: "var(--guanguan-body, #F5EFE5)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z", fill: "var(--guanguan-wing, #86A5BC)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z", fill: "var(--guanguan-feather, #57788F)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z", fill: "#40576B" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
       ]
     }
   );
@@ -29584,9 +29821,9 @@ var workspace_window_default = {
 };
 
 // pip-editor/pip-host/view/window-menu.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 function WindowMenu({ target_ref, close_label }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
     "div",
     {
       className: `${workspace_window_default.windowSystemControls} ${workspace_window_default.windowSystemControlsTop}`,
@@ -29594,12 +29831,12 @@ function WindowMenu({ target_ref, close_label }) {
       "data-window-controls": "top",
       "aria-label": "\u7A97\u53E3\u79FB\u52A8\u533A\u57DF",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("details", { "data-window-menu": true, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(GuanguanLogo, {}) }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("details", { "data-window-menu": true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(GuanguanLogo, {}) }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
       ]
     }
   );
@@ -29607,17 +29844,17 @@ function WindowMenu({ target_ref, close_label }) {
 
 // pip-editor/pip-host/view/active-controls.tsx
 var import_react_dom = __toESM(require_react_dom(), 1);
-var import_react17 = __toESM(require_react(), 1);
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-var ActiveControlsContext = (0, import_react17.createContext)(void 0);
-var WindowControlOwner = (0, import_react17.createContext)({ id: "workspace", active: false });
-var HostCameraTarget = (0, import_react17.createContext)(void 0);
+var import_react18 = __toESM(require_react(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var ActiveControlsContext = (0, import_react18.createContext)(void 0);
+var WindowControlOwner = (0, import_react18.createContext)({ id: "workspace", active: false });
+var HostCameraTarget = (0, import_react18.createContext)(void 0);
 function ActiveControlsProvider({ children, enabled = true, base_target, portal_target }) {
   const space = useActiveSpace();
-  const targets = (0, import_react17.useRef)(/* @__PURE__ */ new Map());
-  const [snapshot2, set_snapshot] = (0, import_react17.useState)([]);
-  const [chosen_id, set_chosen_id] = (0, import_react17.useState)();
-  const update = (0, import_react17.useCallback)((target) => {
+  const targets = (0, import_react18.useRef)(/* @__PURE__ */ new Map());
+  const [snapshot2, set_snapshot] = (0, import_react18.useState)([]);
+  const [chosen_id, set_chosen_id] = (0, import_react18.useState)();
+  const update = (0, import_react18.useCallback)((target) => {
     const previous = targets.current.get(target.id);
     targets.current.set(target.id, target);
     if (!previous || previous.label !== target.label || previous.scale !== target.scale || previous.active !== target.active) {
@@ -29630,16 +29867,15 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       if (target.active && !previous?.active) set_chosen_id(target.id);
     }
   }, []);
-  const remove = (0, import_react17.useCallback)((id) => {
+  const remove = (0, import_react18.useCallback)((id) => {
     if (targets.current.delete(id)) set_snapshot((items) => items.filter((item) => item.id !== id));
   }, []);
-  const registry = (0, import_react17.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
+  const registry = (0, import_react18.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
   const choices = [...snapshot2];
   if (base_target) choices.push(base_target);
   const permitted_id = space.current?.kind === "host" ? "host-camera" : space.current?.kind === "workspace" ? "workspace" : space.current?.window_id;
   const current = space.store ? choices.find((item) => item.id === permitted_id) : choices.find((item) => item.id === chosen_id) ?? (!space.store ? choices.find((item) => item.active) : void 0) ?? (!space.store ? choices.find((item) => item.id !== "host-camera") : void 0) ?? (!space.store ? base_target : void 0);
-  const creation_workspace_id = space.current && space.current.kind !== "host" ? space.current.workspace_id : void 0;
-  const toolbar = enabled && current ? /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+  const toolbar = enabled && current ? /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "div",
     {
       "data-active-controls": true,
@@ -29648,44 +29884,35 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       onPointerDown: (event) => event.stopPropagation(),
       onClick: (event) => event.stopPropagation(),
       children: [
-        space.store ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { "aria-label": "\u5F53\u524D\u6D3B\u52A8\u7A7A\u95F4", children: current.label }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: current.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { "aria-label": `\u7F29\u5C0F${current.label}`, onClick: () => current.zoom_out(), children: "\u2212" }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
+        space.store ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { "aria-label": "\u5F53\u524D\u6D3B\u52A8\u7A7A\u95F4", children: current.label }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: current.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { "aria-label": `\u7F29\u5C0F${current.label}`, onClick: () => current.zoom_out(), children: "\u2212" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
           Math.round(current.scale * 100),
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { "aria-label": `\u653E\u5927${current.label}`, onClick: () => current.zoom_in(), children: "+" }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { "aria-label": `\u9002\u5E94${current.label}`, onClick: () => current.fit(), children: "\u9002\u5E94" }),
-        space.store && space.current?.kind !== "host" && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
-          "button",
-          {
-            "aria-label": "\u5728\u5F53\u524D\u7A7A\u95F4\u521B\u5EFA\u8282\u70B9",
-            title: "\u521B\u5EFA\u8282\u70B9",
-            onClick: () => document.dispatchEvent(new CustomEvent("pip-open-space-creator", { detail: creation_workspace_id })),
-            children: "\u25A2"
-          }
-        )
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { "aria-label": `\u653E\u5927${current.label}`, onClick: () => current.zoom_in(), children: "+" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { "aria-label": `\u9002\u5E94${current.label}`, onClick: () => current.fit(), children: "\u9002\u5E94" })
       ]
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
     children,
     portal_target ? (0, import_react_dom.createPortal)(toolbar, portal_target) : toolbar
   ] });
 }
 function RegisteredScaleControl({ target }) {
-  const registry = (0, import_react17.useContext)(ActiveControlsContext);
-  (0, import_react17.useLayoutEffect)(() => {
+  const registry = (0, import_react18.useContext)(ActiveControlsContext);
+  (0, import_react18.useLayoutEffect)(() => {
     registry?.update(target);
   });
-  (0, import_react17.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
+  (0, import_react18.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
   return null;
 }
 
 // pip-editor/pip-host/view/use-window-activation.ts
-var import_react18 = __toESM(require_react(), 1);
+var import_react19 = __toESM(require_react(), 1);
 function useWindowActivation(window_id, on_activate) {
-  const registry = (0, import_react18.useContext)(ActiveControlsContext);
+  const registry = (0, import_react19.useContext)(ActiveControlsContext);
   return (event) => {
     const path = event.nativeEvent.composedPath();
     if (path.some((item) => item?.matches?.("[data-active-controls],details"))) return;
@@ -29696,7 +29923,7 @@ function useWindowActivation(window_id, on_activate) {
 }
 
 // pip-editor/pip-host/view/use-window-bounds.ts
-var import_react19 = __toESM(require_react(), 1);
+var import_react20 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/viewport-bounds.ts
 function constrain_window(frame, bounds, resize_content = false) {
@@ -29713,12 +29940,12 @@ function constrain_window(frame, bounds, resize_content = false) {
 
 // pip-editor/pip-host/view/use-window-bounds.ts
 function useWindowBounds(window_ref, frame, active, on_frame) {
-  const latest = (0, import_react19.useRef)({ frame, on_frame });
-  (0, import_react19.useLayoutEffect)(() => {
+  const latest = (0, import_react20.useRef)({ frame, on_frame });
+  (0, import_react20.useLayoutEffect)(() => {
     latest.current = { frame, on_frame };
   });
-  const [bounds, set_bounds] = (0, import_react19.useState)();
-  (0, import_react19.useLayoutEffect)(() => {
+  const [bounds, set_bounds] = (0, import_react20.useState)();
+  (0, import_react20.useLayoutEffect)(() => {
     const window_element = window_ref.current;
     const world = window_element?.parentElement;
     const viewport = world?.closest("[data-canvas-shortcuts]");
@@ -29764,22 +29991,22 @@ function useWindowBounds(window_ref, frame, active, on_frame) {
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_react21 = __toESM(require_react(), 1);
+var import_react22 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-window-chrome.tsx
-var import_react20 = __toESM(require_react(), 1);
+var import_react21 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-var WorkspaceWindowChromeContext = (0, import_react20.createContext)(void 0);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var WorkspaceWindowChromeContext = (0, import_react21.createContext)(void 0);
 function useWorkspaceWindowChromeTargets() {
-  const [targets, setTargets] = (0, import_react20.useState)({});
-  const setTop = (0, import_react20.useCallback)((element) => {
+  const [targets, setTargets] = (0, import_react21.useState)({});
+  const setTop = (0, import_react21.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       top: element ?? void 0
     }));
   }, []);
-  const setBottom = (0, import_react20.useCallback)((element) => {
+  const setBottom = (0, import_react21.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       bottom: element ?? void 0
@@ -29794,8 +30021,8 @@ var controls = ({
   onFit,
   onZoomIn,
   onZoomOut
-}) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className, children: [
-  /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+}) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className, children: [
+  /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
     "button",
     {
       type: "button",
@@ -29804,11 +30031,11 @@ var controls = ({
       children: "\u2212"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+  /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { children: [
     Math.round(scale * 100),
     "%"
   ] }),
-  /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
     "button",
     {
       type: "button",
@@ -29817,7 +30044,7 @@ var controls = ({
       children: "+"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
     "button",
     {
       type: "button",
@@ -29834,10 +30061,10 @@ function WindowScaleControls({
   onZoomIn,
   onZoomOut
 }) {
-  const targets = (0, import_react20.useContext)(WorkspaceWindowChromeContext);
-  const registry = (0, import_react20.useContext)(ActiveControlsContext);
-  const owner = (0, import_react20.useContext)(WindowControlOwner);
-  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(RegisteredScaleControl, { target: {
+  const targets = (0, import_react21.useContext)(WorkspaceWindowChromeContext);
+  const registry = (0, import_react21.useContext)(ActiveControlsContext);
+  const owner = (0, import_react21.useContext)(WindowControlOwner);
+  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(RegisteredScaleControl, { target: {
     id: owner.id,
     label: subject,
     scale,
@@ -29856,7 +30083,7 @@ function WindowScaleControls({
       onZoomOut
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_jsx_runtime21.Fragment, { children: targets.top && (0, import_react_dom2.createPortal)(controls({
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_jsx_runtime23.Fragment, { children: targets.top && (0, import_react_dom2.createPortal)(controls({
     className: workspace_window_default.windowCameraControls,
     scale,
     subject,
@@ -29879,7 +30106,7 @@ function WindowContentScaleControls({
     ...frame,
     contentScale: clampContentScale(next)
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
     WindowScaleControls,
     {
       scale,
@@ -29892,7 +30119,7 @@ function WindowContentScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 var directions = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 var clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 function resized(start, direction, dx, dy, world) {
@@ -29937,22 +30164,22 @@ function WorkspaceWindow({
   onClose,
   close_label = "\u5173\u95ED\u8282\u70B9"
 }) {
-  const window_ref = (0, import_react21.useRef)(null);
+  const window_ref = (0, import_react22.useRef)(null);
   const bounds = useWindowBounds(window_ref, frame, active && !focused_space, onFrame);
-  const [preview, setPreview] = (0, import_react21.useState)(frame);
+  const [preview, setPreview] = (0, import_react22.useState)(frame);
   const visible_frame = preview;
   const activation = useWindowActivation(id, onActivate);
   const { targets: chrome_targets, setTop: set_top_ref, setBottom: set_bottom_ref } = useWorkspaceWindowChromeTargets();
-  const gesture = (0, import_react21.useRef)(void 0);
-  const latestPreview = (0, import_react21.useRef)(preview);
-  const outsideRelease = (0, import_react21.useRef)(void 0);
-  (0, import_react21.useEffect)(() => {
+  const gesture = (0, import_react22.useRef)(void 0);
+  const latestPreview = (0, import_react22.useRef)(preview);
+  const outsideRelease = (0, import_react22.useRef)(void 0);
+  (0, import_react22.useEffect)(() => {
     latestPreview.current = preview;
   }, [preview]);
-  (0, import_react21.useEffect)(() => {
+  (0, import_react22.useEffect)(() => {
     if (!gesture.current) setPreview(frame);
   }, [frame]);
-  (0, import_react21.useEffect)(() => () => outsideRelease.current?.abort(), []);
+  (0, import_react22.useEffect)(() => () => outsideRelease.current?.abort(), []);
   const finish = (clientX, clientY) => {
     const current = gesture.current;
     if (!current) return;
@@ -30040,7 +30267,7 @@ function WorkspaceWindow({
     }
   };
   const handles = preview.resizeMode === "simple" ? ["e", "s", "se"] : directions;
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
     "article",
     {
       ref: window_ref,
@@ -30079,9 +30306,9 @@ function WorkspaceWindow({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WindowMenu, { target_ref: set_top_ref, close_label }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(WindowMenu, { target_ref: set_top_ref, close_label }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailLeft}`,
@@ -30089,7 +30316,7 @@ function WorkspaceWindow({
             "aria-label": "\u5DE6\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailRight}`,
@@ -30097,7 +30324,7 @@ function WorkspaceWindow({
             "aria-label": "\u53F3\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "div",
           {
             className: workspace_window_default.windowContent,
@@ -30105,8 +30332,8 @@ function WorkspaceWindow({
             children
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
-        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
+        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "i",
           {
             className: workspace_window_default.resizeHandle,
@@ -30121,7 +30348,7 @@ function WorkspaceWindow({
 }
 
 // pip-editor/pip-host/view/creator-window.tsx
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var creatorFrameAt = (point, views) => {
   const width = 420;
   const height = 520;
@@ -30142,7 +30369,7 @@ function CreatorWindow({
   onChoose,
   onFrame
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
     WorkspaceWindow,
     {
       id: "host.transient.creator",
@@ -30153,7 +30380,7 @@ function CreatorWindow({
       onClose: onCancel,
       onFrame,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
           NodeCreator,
           {
             candidates,
@@ -30161,7 +30388,7 @@ function CreatorWindow({
             onChoose
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
           WindowContentScaleControls,
           {
             frame,
@@ -30175,7 +30402,7 @@ function CreatorWindow({
 }
 
 // pip-editor/pip-host/view/system-plugin-window.tsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 function SystemPluginWindowView({
   active,
   front,
@@ -30191,7 +30418,7 @@ function SystemPluginWindowView({
 }) {
   const Renderer = plugins.Renderer;
   const window_label = plugins.creatorChoices(surface, workspace).find((choice) => choice.id === window2.pluginId)?.label ?? window2.pluginId;
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
     WorkspaceWindow,
     {
       id: window2.id,
@@ -30204,7 +30431,7 @@ function SystemPluginWindowView({
       close_label: `\u5173\u95ED${window_label}`,
       onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           Renderer,
           {
             window: window2,
@@ -30213,7 +30440,7 @@ function SystemPluginWindowView({
             services
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           WindowContentScaleControls,
           {
             frame: window2.frame,
@@ -30227,7 +30454,7 @@ function SystemPluginWindowView({
 }
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_react22 = __toESM(require_react(), 1);
+var import_react23 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/pip-drop-files.ts
 var PIP_MIME = "application/vnd.intent-map.pip";
@@ -30240,13 +30467,13 @@ var pip_drop_zone_default = {
 };
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 var ownsEvent = (event) => {
   const target = event.target;
   return target instanceof Element && target.closest("[data-pip-drop-target]") === event.currentTarget;
 };
 var carriesFiles = (event) => event.dataTransfer.types.includes("Files");
-var PipDropZone = (0, import_react22.forwardRef)(
+var PipDropZone = (0, import_react23.forwardRef)(
   function PipDropZone2({
     children,
     className,
@@ -30255,14 +30482,14 @@ var PipDropZone = (0, import_react22.forwardRef)(
     pointFromScreen,
     ...props
   }, ref) {
-    const [active, setActive] = (0, import_react22.useState)(false);
+    const [active, setActive] = (0, import_react23.useState)(false);
     const consume = (event) => {
       if (!ownsEvent(event) || !carriesFiles(event)) return false;
       event.preventDefault();
       event.stopPropagation();
       return true;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
       "div",
       {
         ...props,
@@ -30302,7 +30529,7 @@ var PipDropZone = (0, import_react22.forwardRef)(
         },
         children: [
           children,
-          active && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
+          active && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
         ]
       }
     );
@@ -30310,7 +30537,7 @@ var PipDropZone = (0, import_react22.forwardRef)(
 );
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var pointIn = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return { x: clientX - rect.left, y: clientY - rect.top };
@@ -30333,15 +30560,15 @@ function LegacyWorkspaceCanvas({
   workspace
 }) {
   const views = normalizeFreeLayout(workspace.views, workspace.rootNodeIds);
-  const canvas = (0, import_react23.useRef)(null);
-  const drag = (0, import_react23.useRef)(void 0);
-  const [creator, setCreator] = (0, import_react23.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  const canvas = (0, import_react24.useRef)(null);
+  const drag = (0, import_react24.useRef)(void 0);
+  const [creator, setCreator] = (0, import_react24.useState)();
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
     "section",
     {
       className: pip_host_default.canvasWrap,
       "data-testid": "pip-workspace",
-      children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
         PipDropZone,
         {
           ref: canvas,
@@ -30395,12 +30622,12 @@ function LegacyWorkspaceCanvas({
             if (moved >= 4) setCreator({ point });
           },
           children: [
-            hasWorkspaceProjection ? roots.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+            hasWorkspaceProjection ? roots.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
               "article",
               {
                 "data-node-id": node2.id,
                 className: pip_host_default.workspaceProjection,
-                children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -30417,13 +30644,13 @@ function LegacyWorkspaceCanvas({
                 )
               },
               node2.id
-            )) : nodes.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+            )) : nodes.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
               "article",
               {
                 "data-node-id": node2.id,
                 className: `${pip_host_default.node} ${workspace.selection.includes(node2.id) ? pip_host_default.selected : ""}`,
                 onClick: () => onSelectionChange([node2.id]),
-                children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -30440,8 +30667,8 @@ function LegacyWorkspaceCanvas({
               },
               node2.id
             )),
-            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
-            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
+            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
               SystemPluginWindowView,
               {
                 window: item,
@@ -30459,7 +30686,7 @@ function LegacyWorkspaceCanvas({
               },
               item.id
             )),
-            creator && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+            creator && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
               CreatorWindow,
               {
                 candidates: creatorChoices,
@@ -30480,44 +30707,6 @@ function LegacyWorkspaceCanvas({
   );
 }
 
-// pip-editor/pip-host/projection/preview-projection.ts
-function preview_projection(root2, graph, registry) {
-  const observed = observedNode(root2, graph);
-  if (!observed) return void 0;
-  return [root2, ...Object.values(graphNodes(graph)).filter((item) => item.id !== root2.id)].find((candidate) => {
-    const definition = projectionForInstance(candidate, registry.projections());
-    return definition && observationScope(definition) === "self" && definition.surfaces?.includes("embedded") && observedNode(candidate, graph)?.id === observed.id;
-  });
-}
-
-// pip-editor/pip-host/view/root-space-preview.tsx
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-function RootSpacePreview({ root: root2, workspace, frame, elements, node_types }) {
-  const node2 = preview_projection(root2, workspace.graph, node_types);
-  if (!node2) return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { style: { padding: 24, color: "var(--pip-ink)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { children: "\u8282\u70B9" }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("strong", { children: observedNode(root2, workspace.graph)?.id ?? root2.id }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { children: "\u8FDB\u5165\u540E\u67E5\u770B\u5185\u5BB9" })
-  ] });
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-    PipNodeRenderer,
-    {
-      workspaceId: workspace.id,
-      rootNodeIds: workspace.rootNodeIds,
-      workspaceView: workspace.views,
-      graph: workspace.graph,
-      node: node2,
-      selection: workspace.selection,
-      elements,
-      nodeTypes: node_types,
-      purpose: "workspace",
-      onRequest: () => {
-      },
-      projectionContext: { kind: "self-embedded", scope: "self", surface: "embedded", parentProjectionNodeId: workspace.id, frame }
-    }
-  );
-}
-
 // pip-editor/pip-host/view/active-space.module.css
 var active_space_default = {
   focused_world: "active_space_focused_world",
@@ -30527,7 +30716,7 @@ var active_space_default = {
 };
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_react29 = __toESM(require_react(), 1);
+var import_react30 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-camera.ts
 function projection_camera(frame, current, next, offset = frame.contentOffset ?? { x: 0, y: 0 }) {
@@ -30567,7 +30756,7 @@ function transition_opacity(progress, target) {
 }
 
 // pip-editor/pip-host/projection/use-projection-input.ts
-var import_react25 = __toESM(require_react(), 1);
+var import_react26 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/semantic-zoom.ts
 var semanticProgress = (scale) => scale >= 1.7 || scale <= 0.6 ? 1 : scale > 1.4 ? (scale - 1.4) / 0.3 : scale < 0.75 ? (0.75 - scale) / 0.15 : 0;
@@ -30578,7 +30767,7 @@ function applySemanticScale(state, scale, forward) {
 }
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
-var import_react24 = __toESM(require_react(), 1);
+var import_react25 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-pointer.ts
 function nearest_projection(viewport, point) {
@@ -30627,11 +30816,11 @@ var TapSequence = class {
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
 function useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
-  const latest = (0, import_react24.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react24.useLayoutEffect)(() => {
+  const latest = (0, import_react25.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react25.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react24.useEffect)(() => {
+  (0, import_react25.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -30824,11 +31013,11 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
 // pip-editor/pip-host/projection/use-projection-input.ts
 function useProjectionInput(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
   useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled);
-  const latest = (0, import_react25.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react25.useLayoutEffect)(() => {
+  const latest = (0, import_react26.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react26.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react25.useEffect)(() => {
+  (0, import_react26.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -30942,13 +31131,26 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
 }
 
 // pip-editor/pip-host/projection/semantic-projection.tsx
-var import_react26 = __toESM(require_react(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_react27 = __toESM(require_react(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var mix = (from, to, progress) => from + (to - from) * progress;
 function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation: navigation2, contentOffset, execution, elements, nodeTypes, selection, onRequest }) {
   const space = useActiveSpace();
-  const input_enabled = !space.store || space.current?.kind === "projection" && space.current.workspace_id === workspace.id && space.current.window_id === rootWindowId;
-  const viewport = (0, import_react26.useRef)(null), [flip, setFlip] = (0, import_react26.useState)();
+  const current_space = space.current;
+  const viewport = (0, import_react27.useRef)(null), [flip, setFlip] = (0, import_react27.useState)();
+  const route = currentRoute(navigation2);
+  const surface_id = `projection:${workspace.id}:${rootWindowId}:${route.projectionNodeId}`;
+  useCanvasSurface(viewport, {
+    id: surface_id,
+    parentId: `workspace:${workspace.id}`,
+    kind: "projection",
+    label: route.scope === "self" ? "\u81EA\u8EAB" : "\u5B50\u7EA7",
+    workspace_id: workspace.id,
+    window_id: rootWindowId,
+    projection_id: route.projectionNodeId,
+    scope: route.scope,
+    capabilities: { pan: true, zoom: true, create: true, connect: true, nativeScroll: route.scope === "self" }
+  });
   useProjectionInput(
     viewport,
     workspace.graph,
@@ -30967,10 +31169,10 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
         frame: projection_camera(frame, navigation2, next_navigation, next_offset)
       });
     },
-    input_enabled
+    true
   );
-  (0, import_react26.useLayoutEffect)(() => {
-    if (!input_enabled || !space.store) return;
+  (0, import_react27.useLayoutEffect)(() => {
+    if (!space.store || current_space?.kind !== "projection" || current_space.window_id !== rootWindowId) return;
     space.store.sync_routes(workspace.id, rootWindowId, navigation2.entries.slice(0, navigation2.index + 1).map((entry) => entry.projectionNodeId));
     if (!navigation2.index) return;
     return space.store.register_back(space.store.current().id, () => {
@@ -30981,8 +31183,8 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
         { ...navigation2, index: navigation2.index - 1, semanticScale: 1 }
       ) });
     });
-  }, [input_enabled, space.store, workspace.id, workspace.rootNodeIds, rootWindowId, navigation2, workspaceView, onRequest]);
-  const route = currentRoute(navigation2), current = graphNodes(workspace.graph)[route.projectionNodeId];
+  }, [space.store, current_space, workspace.id, workspace.rootNodeIds, rootWindowId, navigation2, workspaceView, onRequest]);
+  const current = graphNodes(workspace.graph)[route.projectionNodeId];
   const forward = forwardRoute(navigation2, workspace.graph, nodeTypes, navigation2.semanticTargetProjectionId, selection[0]);
   const reverse = navigation2.index > 0 ? navigation2.entries[navigation2.index - 1] : void 0;
   const transition = navigation2.semanticScale > 1.4 ? forward : navigation2.semanticScale < 0.75 ? reverse : void 0;
@@ -30992,7 +31194,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
   const transitionKey = transition ? `${route.projectionNodeId}->${transition.projectionNodeId}` : "";
   const forwardFlip = navigation2.semanticScale > 1;
   const flipChildId = forwardFlip ? transition?.enteredFrom?.childProjectionId : route.enteredFrom?.childProjectionId;
-  (0, import_react26.useLayoutEffect)(() => {
+  (0, import_react27.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !transitionKey || !flipChildId) {
       setFlip(void 0);
@@ -31007,7 +31209,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     setFlip({ key: transitionKey, ...local_point(outer, { width: host.clientWidth, height: host.clientHeight }, { x: inner.left, y: inner.top }), scaleX: inner.width / outer.width, scaleY: inner.height / outer.height, viewportWidth: outer.width, viewportHeight: outer.height });
   }, [flipChildId, forwardFlip, transitionKey]);
   if (!current)
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u5BFC\u822A\u76EE\u6807 ",
       route.projectionNodeId,
       " \u4E0D\u5B58\u5728"
@@ -31022,12 +31224,12 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     const reduced_motion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targetTransform = reduced_motion ? "none" : geometry && forwardFlip ? `translate(${mix(geometry.x, 0, progress)}px,${mix(geometry.y, 0, progress)}px) scale(${mix(geometry.scaleX, 1, progress)},${mix(geometry.scaleY, 1, progress)})` : `scale(${0.88 + progress * 0.12})`;
     const sourceTransform = "scale(1)";
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
       // Keep the current A3 (and its navigation) stable. The opaque target grows
       // over only the declared content viewport, then becomes current at commit.
       opacity: transitionActive ? transition_opacity(progress, target) : opacity,
       clipPath: target && transition ? `inset(${zoomViewport.top}px ${zoomViewport.right}px ${zoomViewport.bottom}px ${zoomViewport.left}px)` : void 0
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: pip_host_default.semanticMotion, style: {
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: pip_host_default.semanticMotion, style: {
       // A2 owns semantic scale only. A3 consumes the pan variables on its innermost spatial surface.
       transform: target ? targetTransform : sourceTransform,
       transformOrigin: geometry && target && forwardFlip ? "top left" : pointerOrigin,
@@ -31038,9 +31240,9 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
       // Freeze the fading source at the exact transition boundary. Resetting it
       // to 1 here causes a visible 1.4→1 jump on the first crossfade frame.
       "--projection-zoom": target ? "1" : transition ? String(forwardFlip ? 1.4 : 0.75) : String(navigation2.semanticScale)
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(PipNodeRenderer, { root_window_id: rootWindowId, workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node: node2, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest }) }) }, entry.projectionNodeId);
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(PipNodeRenderer, { root_window_id: rootWindowId, workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node: node2, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest }) }) }, entry.projectionNodeId);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
     render(route, transitionActive ? 1 - progress : 1),
     transition && render(transition, transitionActive ? progress : 0, true)
   ] });
@@ -31076,7 +31278,7 @@ var NavigationAnimation = class {
 };
 
 // pip-editor/pip-host/view/projection-navbar.tsx
-var import_react27 = __toESM(require_react(), 1);
+var import_react28 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-view-choice.ts
 function choose_projection(state, projection_id, graph, node_types) {
@@ -31094,17 +31296,17 @@ function choose_projection(state, projection_id, graph, node_types) {
 }
 
 // pip-editor/pip-host/view/projection-navbar.tsx
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_types, onChange: on_change }) {
-  const [animation] = (0, import_react27.useState)(() => new NavigationAnimation());
-  const latest = (0, import_react27.useRef)({ on_change, navigation: navigation2 });
-  (0, import_react27.useLayoutEffect)(() => {
+  const [animation] = (0, import_react28.useState)(() => new NavigationAnimation());
+  const latest = (0, import_react28.useRef)({ on_change, navigation: navigation2 });
+  (0, import_react28.useLayoutEffect)(() => {
     latest.current = { on_change, navigation: navigation2 };
   });
-  (0, import_react27.useLayoutEffect)(() => {
+  (0, import_react28.useLayoutEffect)(() => {
     animation.cancel();
   }, [animation, graph]);
-  (0, import_react27.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     const cancel = () => {
       if (!animation.cancel()) return;
       latest.current.on_change({
@@ -31146,23 +31348,23 @@ function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_type
       });
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
       "\u7B2C ",
       navigation2.index + 1,
       " \u5C42 \xB7 ",
       route.scope === "self" ? "\u81EA\u8EAB" : "\u5B50\u7EA7",
       children_count > 0 ? ` \xB7 ${children_count} \u5B50\u9879` : ""
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
     ] })
   ] });
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_react28 = __toESM(require_react(), 1);
+var import_react29 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-scale.ts
 function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, selection, anchor) {
@@ -31190,7 +31392,7 @@ function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, sel
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 function ProjectionScaleControls({
   frame,
   graph,
@@ -31200,7 +31402,7 @@ function ProjectionScaleControls({
   onChange,
   onFit
 }) {
-  const owner = (0, import_react28.useContext)(WindowControlOwner);
+  const owner = (0, import_react29.useContext)(WindowControlOwner);
   const changeScale = (scale) => onChange(projectionFrameAtScale(
     frame,
     navigation2,
@@ -31210,7 +31412,7 @@ function ProjectionScaleControls({
     selection,
     selected_anchor(owner.id, selection)
   ));
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
     WindowScaleControls,
     {
       scale: navigation2.semanticScale,
@@ -31223,13 +31425,13 @@ function ProjectionScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-camera-controls.tsx
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceCameraControls({
   fit,
   persistCamera,
   views
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
     WindowScaleControls,
     {
       scale: views.camera.scale,
@@ -31247,7 +31449,7 @@ function WorkspaceCameraControls({
 }
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 function FreeWorkspaceCanvas({
   is_active,
   creator,
@@ -31279,11 +31481,19 @@ function FreeWorkspaceCanvas({
   workspace
 }) {
   const space = useActiveSpace();
+  useCanvasSurface(viewport, {
+    id: `workspace:${workspace.id}`,
+    parentId: "host",
+    kind: "workspace",
+    label: "\u5DE5\u4F5C\u533A",
+    workspace_id: workspace.id,
+    capabilities: { pan: true, zoom: true, create: true, connect: true, nativeScroll: false }
+  });
   const projection_active = space.current?.kind === "projection" && space.current.workspace_id === workspace.id;
-  const host_target = (0, import_react29.useContext)(HostCameraTarget);
-  const outer_chrome = (0, import_react29.useContext)(WorkspaceWindowChromeContext);
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(ActiveControlsProvider, { enabled: is_active, base_target: host_target, portal_target: outer_chrome?.bottom, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: pip_host_default.canvasInfo, "data-workspace-status": true, children: [
+  const host_target = (0, import_react30.useContext)(HostCameraTarget);
+  const outer_chrome = (0, import_react30.useContext)(WorkspaceWindowChromeContext);
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(ActiveControlsProvider, { enabled: is_active, base_target: host_target, portal_target: outer_chrome?.bottom, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: pip_host_default.canvasInfo, "data-workspace-status": true, children: [
       "Pip \xB7 revision ",
       graphRevision(workspace.graph),
       " \xB7 ",
@@ -31291,7 +31501,7 @@ function FreeWorkspaceCanvas({
       " \u4E2A\u8282\u70B9 \xB7 ",
       status
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
       PipDropZone,
       {
         ref: viewport,
@@ -31312,7 +31522,7 @@ function FreeWorkspaceCanvas({
         onPointerUp: pointer.end,
         onPointerCancel: pointer.cancel,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: `${pip_host_default.freeWorld} ${projection_active ? active_space_default.focused_world : ""}`, style: {
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: `${pip_host_default.freeWorld} ${projection_active ? active_space_default.focused_world : ""}`, style: {
             width: views.world.width,
             height: views.world.height,
             transform: `translate(${views.camera.x}px,${views.camera.y}px) scale(${views.camera.scale})`
@@ -31351,67 +31561,41 @@ function FreeWorkspaceCanvas({
                   }
                 }
               });
-              const entered = space.current?.kind === "projection" && space.current.workspace_id === workspace.id && space.current.window_id === node2.id;
-              return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(WorkspaceWindow, { space_root: true, focused_space: entered, layout_enabled: !space.store || space.current?.kind === "workspace", id: node2.id, frame, views, active: views.activeWindowId === node2.id, front: views.frontWindowId === node2.id, onActivate: () => onActivateWindow(node2.id), onFrame: (next) => onRequest({
+              return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(WorkspaceWindow, { space_root: true, layout_enabled: true, id: node2.id, frame, views, active: views.activeWindowId === node2.id, front: views.frontWindowId === node2.id, onActivate: () => onActivateWindow(node2.id), onFrame: (next) => onRequest({
                 kind: "set-workspace-window",
                 windowId: node2.id,
                 frame: next
               }), onClose: () => onRequest({
                 kind: "close-workspace-root",
                 nodeId: node2.id
-              }), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
-                  "div",
-                  {
-                    "data-space-preview": !entered ? "" : void 0,
-                    style: { position: "relative", height: "100%" },
-                    onDoubleClick: () => {
-                      if (!entered && space.store) space.store.enter({ kind: "projection", id: projection_space_id(workspace.id, node2.id), workspace_id: workspace.id, window_id: node2.id, projection_id: routeNode?.id ?? node2.id });
-                    },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { inert: Boolean(space.store && !entered), style: { width: "100%", height: "100%", pointerEvents: space.store && !entered ? "none" : void 0 }, children: space.store && !entered ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(RootSpacePreview, { root: node2, workspace, frame, elements, node_types: nodeTypes }) : navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${pluginChrome ? pip_host_default.pluginChrome : ""}`, children: [
-                      !pluginChrome && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
-                      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(SemanticProjection, { workspace, workspaceView: {
-                        ...normalized,
-                        projections: {
-                          ...normalized.projections,
-                          [node2.id]: { ...frame, navigation: navigation2 }
-                        }
-                      }, rootWindowId: node2.id, navigation: navigation2, contentOffset: frame.contentOffset ?? { x: 0, y: 0 }, execution, elements, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onRequest }),
-                      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onChange: (next) => onRequest({
-                        kind: "set-workspace-window",
-                        windowId: node2.id,
-                        frame: next
-                      }), onFit: resetProjection })
-                    ] }) : /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { "data-native-scroll": true, style: { overflow: "auto", height: "100%" }, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node: node2, selection: scopedSelections[node2.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(WindowContentScaleControls, { frame, subject: "\u6295\u5F71", onFrame: (next) => onRequest({ kind: "set-workspace-window", windowId: node2.id, frame: next }) })
-                    ] }) })
+              }), children: navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${pluginChrome ? pip_host_default.pluginChrome : ""}`, children: [
+                !pluginChrome && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SemanticProjection, { workspace, workspaceView: {
+                  ...normalized,
+                  projections: {
+                    ...normalized.projections,
+                    [node2.id]: { ...frame, navigation: navigation2 }
                   }
-                ),
-                space.store && !entered && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { className: active_space_default.enter, onClick: () => {
-                  onActivateWindow(node2.id);
-                  space.store.enter({
-                    kind: "projection",
-                    id: projection_space_id(workspace.id, node2.id),
-                    workspace_id: workspace.id,
-                    window_id: node2.id,
-                    projection_id: routeNode?.id ?? node2.id
-                  });
-                }, children: "\u8FDB\u5165\u8282\u70B9" })
-              ] }, node2.id);
+                }, rootWindowId: node2.id, navigation: navigation2, contentOffset: frame.contentOffset ?? { x: 0, y: 0 }, execution, elements, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onRequest }),
+                /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onChange: (next) => onRequest({
+                  kind: "set-workspace-window",
+                  windowId: node2.id,
+                  frame: next
+                }), onFit: resetProjection })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_jsx_runtime33.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { "data-native-scroll": true, style: { overflow: "auto", height: "100%" }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node: node2, selection: scopedSelections[node2.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest }) }) }) }, node2.id);
             }),
-            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
+            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
               kind: "set-workspace-window",
               windowId: item.id,
               frame
             }), onClose: () => onCloseSystemPlugin(item) }, item.id)),
-            creator && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
+            creator && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
           ] }),
-          wire && /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+          wire && /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
         ]
       }
     )
@@ -31526,7 +31710,7 @@ var CreatorSwipe = class {
 };
 
 // pip-editor/pip-host/view/workspace-canvas-pointer.ts
-var import_react30 = __toESM(require_react(), 1);
+var import_react31 = __toESM(require_react(), 1);
 var pointIn2 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -31542,11 +31726,11 @@ function useWorkspaceCanvasPointer({
   viewport,
   views
 }) {
-  const creator_swipe = (0, import_react30.useRef)(new CreatorSwipe());
-  const gesture = (0, import_react30.useRef)(void 0);
-  const touches = (0, import_react30.useRef)(/* @__PURE__ */ new Map());
-  const pinch_camera = (0, import_react30.useRef)(void 0);
-  const pinch = (0, import_react30.useRef)(void 0);
+  const creator_swipe = (0, import_react31.useRef)(new CreatorSwipe());
+  const gesture = (0, import_react31.useRef)(void 0);
+  const touches = (0, import_react31.useRef)(/* @__PURE__ */ new Map());
+  const pinch_camera = (0, import_react31.useRef)(void 0);
+  const pinch = (0, import_react31.useRef)(void 0);
   const begin = (event) => {
     if (!free || event.button !== 0 && event.button !== 1) return;
     const full_path = event.nativeEvent.composedPath();
@@ -31708,7 +31892,7 @@ function useWorkspaceCanvasPointer({
 }
 
 // pip-editor/pip-host/view/workspace-canvas-wheel.ts
-var import_react31 = __toESM(require_react(), 1);
+var import_react32 = __toESM(require_react(), 1);
 var pointIn3 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -31725,11 +31909,11 @@ function useWorkspaceCanvasWheel({
   workspace
 }) {
   const { store: space_store, current: active_space } = useActiveSpace();
-  const settleTimers = (0, import_react31.useRef)(
+  const settleTimers = (0, import_react32.useRef)(
     /* @__PURE__ */ new Map()
   );
-  const semanticGestures = (0, import_react31.useRef)(/* @__PURE__ */ new Map());
-  (0, import_react31.useEffect)(() => {
+  const semanticGestures = (0, import_react32.useRef)(/* @__PURE__ */ new Map());
+  (0, import_react32.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     const handle = (event) => {
@@ -31903,7 +32087,7 @@ function useWorkspaceCanvasWheel({
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
 var isFree = (views) => Boolean(
   views && typeof views === "object" && ["free-layout", "parallel-projections"].includes(
     String(views.kind)
@@ -31931,24 +32115,24 @@ function NodeCanvas({
   const nodes = Object.values(graphNodes(workspace.graph));
   const roots = workspace.rootNodeIds.map((id) => graphNodes(workspace.graph)[id]).filter(Boolean);
   const free = isFree(workspace.views) || Boolean(space_store && roots.length);
-  const normalized = (0, import_react32.useMemo)(
+  const normalized = (0, import_react33.useMemo)(
     () => normalizeFreeLayout(workspace.views, workspace.rootNodeIds),
     [workspace.views, workspace.rootNodeIds]
   );
-  const [previewCamera, setPreviewCamera] = (0, import_react32.useState)();
-  const [creator, setCreator] = (0, import_react32.useState)();
-  const [wire, setWire] = (0, import_react32.useState)();
-  const viewport = (0, import_react32.useRef)(null);
-  const views = (0, import_react32.useMemo)(
+  const [previewCamera, setPreviewCamera] = (0, import_react33.useState)();
+  const [creator, setCreator] = (0, import_react33.useState)();
+  const [wire, setWire] = (0, import_react33.useState)();
+  const viewport = (0, import_react33.useRef)(null);
+  const views = (0, import_react33.useMemo)(
     () => previewCamera ? { ...normalized, camera: previewCamera } : normalized,
     [normalized, previewCamera]
   );
   useInitialProjectionFit(viewport, normalized, onViewsChange, !space_store || active_space?.kind === "workspace");
-  const scopedSelections = (0, import_react32.useMemo)(
+  const scopedSelections = (0, import_react33.useMemo)(
     () => workspace.scopedSelections ?? {},
     [workspace.scopedSelections]
   );
-  (0, import_react32.useEffect)(() => {
+  (0, import_react33.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     element.scrollLeft = 0;
@@ -31966,7 +32150,7 @@ function NodeCanvas({
       if (timer !== void 0) clearTimeout(timer);
     };
   }, [autoFocus, free, workspace.id]);
-  (0, import_react32.useEffect)(() => {
+  (0, import_react33.useEffect)(() => {
     const handleKeyDown = (event) => {
       const interactive = event.isComposing || event.composedPath().some((target) => target instanceof HTMLElement && (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(target.tagName) || target.isContentEditable));
       if (event.code === "Space" && !interactive) {
@@ -31988,7 +32172,7 @@ function NodeCanvas({
     element?.addEventListener("keydown", handleKeyDown);
     return () => element?.removeEventListener("keydown", handleKeyDown);
   }, [views]);
-  (0, import_react32.useEffect)(() => {
+  (0, import_react33.useEffect)(() => {
     const open_creator = (event) => {
       const current = space_store?.current();
       if (!current || current.kind === "host" || current.workspace_id !== workspace.id || event.detail !== workspace.id || !viewport.current) return;
@@ -32049,7 +32233,7 @@ function NodeCanvas({
     if (camera) persistCamera(camera);
   };
   if (!free) {
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
       LegacyWorkspaceCanvas,
       {
         workspace,
@@ -32074,7 +32258,7 @@ function NodeCanvas({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
     FreeWorkspaceCanvas,
     {
       is_active: autoFocus,
@@ -32117,7 +32301,7 @@ function NodeCanvas({
 }
 
 // pip-editor/pip-host/view/workspace-session-canvas.tsx
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceSessionCanvas({
   autoFocus,
   elements,
@@ -32136,7 +32320,7 @@ function WorkspaceSessionCanvas({
   onSelectionChange,
   onViewsChange
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
     NodeCanvas,
     {
       autoFocus,
@@ -32165,7 +32349,7 @@ function WorkspaceSessionCanvas({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_react36 = __toESM(require_react(), 1);
+var import_react37 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/workspace/host-presentation-store.ts
 var DEFAULT_FRAME = {
@@ -32351,26 +32535,6 @@ var HostPresentationStore = class {
   }
 };
 
-// pip-editor/pip-host/view/workspace-space-preview.tsx
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-function WorkspaceSpacePreview({ workspace, name }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("section", { className: active_space_default.workspace_preview, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { children: "\u5DE5\u4F5C\u533A" }),
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h2", { children: name }),
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("p", { children: [
-      workspace.rootNodeIds.length,
-      " \u4E2A\u6839\u6295\u5F71 \xB7 ",
-      Object.keys(graphNodes(workspace.graph)).length,
-      " \u4E2A\u8282\u70B9"
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("small", { children: [
-      "\u4FEE\u8BA2 ",
-      graphRevision(workspace.graph),
-      " \xB7 \u53CC\u51FB\u8FDB\u5165"
-    ] })
-  ] });
-}
-
 // pip-editor/pip-host/view/host-fit.ts
 function host_fit_camera(host, viewport, coarse_pointer = false) {
   if (viewport.width <= 0 || viewport.height <= 60) return;
@@ -32386,28 +32550,10 @@ function host_fit_camera(host, viewport, coarse_pointer = false) {
   return camera && { ...camera, y: camera.y + 60 };
 }
 
-// pip-editor/pip-host/view/canvas-creator-entry.tsx
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-function CanvasCreatorEntry({ open }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
-    "button",
-    {
-      className: canvas_entry_default.entry,
-      onClick: open,
-      title: "\u6253\u5F00\u521B\u5EFA\u5668\uFF1B\u4E5F\u53EF\u5728\u7A7A\u767D\u753B\u5E03\u5355\u6307\u5DE6\u53F3\u6765\u56DE\u6ED1\u52A8\u4E24\u6B21",
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { children: "\uFF0B \u521B\u5EFA\u5668" }),
-        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("small", { children: "\u7A7A\u767D\u5904\u5DE6\u53F3\u6765\u56DE\u6ED1\u52A8" })
-      ]
-    }
-  );
-}
-
 // pip-editor/pip-host/view/host-canvas.tsx
-var import_react33 = __toESM(require_react(), 1);
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var import_react34 = __toESM(require_react(), 1);
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 function HostCanvas({
-  nameFor = (workspace) => workspace.source.id,
   creatorRequest,
   creation_choices = [],
   focusedWorkspace,
@@ -32426,12 +32572,18 @@ function HostCanvas({
   onUnsupportedPipDrop
 }) {
   const space = useActiveSpace();
-  const viewport = (0, import_react33.useRef)(null);
-  const [previewCamera, setPreviewCamera] = (0, import_react33.useState)();
-  const [creator, setCreator] = (0, import_react33.useState)();
-  const [wire, setWire] = (0, import_react33.useState)();
+  const viewport = (0, import_react34.useRef)(null);
+  useCanvasSurface(viewport, {
+    id: "host",
+    kind: "host",
+    label: "\u5BBF\u4E3B\u753B\u5E03",
+    capabilities: { pan: true, zoom: true, create: true, connect: false, nativeScroll: false }
+  });
+  const [previewCamera, setPreviewCamera] = (0, import_react34.useState)();
+  const [creator, setCreator] = (0, import_react34.useState)();
+  const [wire, setWire] = (0, import_react34.useState)();
   const camera = previewCamera ?? host.camera;
-  const views = (0, import_react33.useMemo)(() => ({
+  const views = (0, import_react34.useMemo)(() => ({
     kind: "free-layout",
     world: host.world,
     camera,
@@ -32440,10 +32592,10 @@ function HostCanvas({
     activeWindowId: host.activeWindowId,
     frontWindowId: host.frontWindowId
   }), [camera, host]);
-  const persistCamera = (next) => {
+  const persistCamera = (0, import_react34.useCallback)((next) => {
     setPreviewCamera(void 0);
     hostStore.setCamera(next);
-  };
+  }, [hostStore]);
   const pointer = useWorkspaceCanvasPointer({
     free: true,
     onViewsChange: (next) => {
@@ -32470,7 +32622,7 @@ function HostCanvas({
     ...creation_choices,
     ...systemPlugins.creatorChoices("host", focusedWorkspace)
   ];
-  (0, import_react33.useEffect)(() => {
+  (0, import_react34.useEffect)(() => {
     viewport.current?.focus({ preventScroll: true });
   }, []);
   const openCreatorAtCenter = () => {
@@ -32486,9 +32638,44 @@ function HostCanvas({
     width: viewport.current?.clientWidth ?? 0,
     height: viewport.current?.clientHeight ?? 0
   });
-  (0, import_react33.useEffect)(() => {
+  (0, import_react34.useEffect)(() => {
     if (creatorRequest > 0) openCreatorAtCenter();
   }, [creatorRequest]);
+  (0, import_react34.useEffect)(() => {
+    const open = () => openCreatorAtCenter();
+    document.addEventListener("pip-open-host-creator", open);
+    return () => document.removeEventListener("pip-open-host-creator", open);
+  });
+  (0, import_react34.useEffect)(() => {
+    const element = viewport.current;
+    if (!element) return;
+    const handleWheel = (event) => {
+      const target = event.target;
+      const canvasOwner = target.closest("[data-canvas-shortcuts]");
+      const path = event.composedPath();
+      if (canvasOwner !== element || path.some((item) => item?.dataset?.nodeId) && !path.some((item) => item?.hasAttribute?.("data-space-preview"))) return;
+      event.preventDefault();
+      if (event.ctrlKey || event.metaKey) {
+        const rect = element.getBoundingClientRect();
+        const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+        const world = screenToWorld(point, views);
+        const scale = Math.max(Math.min(0.5, camera.scale), Math.min(2, camera.scale - event.deltaY * 2e-3));
+        persistCamera({
+          scale,
+          x: point.x - world.x * scale,
+          y: point.y - world.y * scale
+        });
+      } else {
+        persistCamera({
+          ...camera,
+          x: camera.x - event.deltaX,
+          y: camera.y - event.deltaY
+        });
+      }
+    };
+    element.addEventListener("wheel", handleWheel, { passive: false });
+    return () => element.removeEventListener("wheel", handleWheel);
+  }, [camera, persistCamera, views]);
   const host_target = {
     id: "host-camera",
     label: "\u5BBF\u4E3B\u753B\u5E03",
@@ -32504,174 +32691,128 @@ function HostCanvas({
       if (next_camera) persistCamera(next_camera);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(ActiveControlsProvider, { enabled: space.store ? space.current?.kind === "host" : !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-      PipDropZone,
-      {
-        ref: viewport,
-        tabIndex: -1,
-        "data-creation-surface": "{}",
-        "data-creation-camera": JSON.stringify(camera),
-        "data-canvas-shortcuts": true,
-        className: `${pip_host_default.canvas} ${pip_host_default.freeViewport}`,
-        pointFromScreen: (screen) => screenToWorld(screen, views),
-        onPipFiles: onPipDrop,
-        onUnsupportedFiles: onUnsupportedPipDrop,
-        onKeyDown: (event) => {
-          const target = event.target;
-          const owner = target.closest("[data-canvas-shortcuts]");
-          if (owner !== event.currentTarget) return;
-          const interactive = target.matches(
-            "input,textarea,select,button,a,[contenteditable=true]"
-          );
-          if (event.code === "Space" && !interactive && !event.repeat) {
-            event.preventDefault();
-            openCreatorAtCenter();
-          }
-          if (event.key === "Escape") {
-            setCreator(void 0);
-            setWire(void 0);
-          }
-        },
-        onWheel: (event) => {
-          const target = event.target;
-          const canvasOwner = target.closest("[data-canvas-shortcuts]");
-          const path = event.nativeEvent.composedPath();
-          if (canvasOwner !== event.currentTarget || path.some((item) => item?.dataset?.nodeId) && !path.some((item) => item?.hasAttribute?.("data-space-preview"))) return;
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ActiveControlsProvider, { enabled: space.store ? space.current?.kind === "host" : !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+    PipDropZone,
+    {
+      ref: viewport,
+      tabIndex: -1,
+      "data-creation-surface": "{}",
+      "data-creation-camera": JSON.stringify(camera),
+      "data-canvas-shortcuts": true,
+      className: `${pip_host_default.canvas} ${pip_host_default.freeViewport}`,
+      pointFromScreen: (screen) => screenToWorld(screen, views),
+      onPipFiles: onPipDrop,
+      onUnsupportedFiles: onUnsupportedPipDrop,
+      onKeyDown: (event) => {
+        const target = event.target;
+        const owner = target.closest("[data-canvas-shortcuts]");
+        if (owner !== event.currentTarget) return;
+        const interactive = target.matches(
+          "input,textarea,select,button,a,[contenteditable=true]"
+        );
+        if (event.code === "Space" && !interactive && !event.repeat) {
           event.preventDefault();
-          if (event.ctrlKey || event.metaKey) {
-            const rect = event.currentTarget.getBoundingClientRect();
-            const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
-            const world = screenToWorld(point, views);
-            const scale = Math.max(Math.min(0.5, camera.scale), Math.min(2, camera.scale - event.deltaY * 2e-3));
-            persistCamera({
-              scale,
-              x: point.x - world.x * scale,
-              y: point.y - world.y * scale
-            });
-          } else {
-            persistCamera({
-              ...camera,
-              x: camera.x - event.deltaX,
-              y: camera.y - event.deltaY
-            });
-          }
-        },
-        onPointerDown: pointer.begin,
-        onPointerMove: pointer.move,
-        onPointerUp: pointer.end,
-        onPointerCancel: pointer.cancel,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-            "div",
-            {
-              className: pip_host_default.freeWorld,
-              style: {
-                width: host.world.width,
-                height: host.world.height,
-                transform: `translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`
-              },
-              children: [
-                Object.values(host.workspaceWindows).map((item) => {
-                  const workspace = workspaces.find((value) => value.id === item.workspaceId);
-                  if (!workspace) return null;
-                  const focused = host.activeWindowId === item.id;
-                  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                    WorkspaceWindow,
-                    {
-                      id: item.id,
-                      frame: item.frame,
-                      views,
-                      active: focused,
-                      front: host.frontWindowId === item.id,
-                      onActivate: () => {
-                        hostStore.activateWindow(item.id);
-                        onFocusWorkspace(workspace.id);
-                      },
-                      onFrame: (frame) => hostStore.setWindow(item.id, frame),
-                      close_label: "\u8F6C\u4E3A Tab",
-                      onClose: () => onRestoreWorkspaceTab(workspace.id),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-                        "div",
-                        {
-                          "data-space-preview": true,
-                          style: { position: "relative", width: "100%", height: "100%" },
-                          onDoubleClick: () => space.store?.enter({ kind: "workspace", id: workspace_space_id(workspace.id), workspace_id: workspace.id }),
-                          children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { style: { width: "100%", height: "100%", pointerEvents: space.store ? "none" : void 0 }, children: space.store ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(WorkspaceSpacePreview, { workspace, name: nameFor(workspace) }) : renderWorkspace(workspace, focused) }),
-                            space.store && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                              "button",
-                              {
-                                "data-space-enter": true,
-                                style: { position: "absolute", left: 12, top: 12, minHeight: 44 },
-                                onClick: () => space.store.enter({ kind: "workspace", id: workspace_space_id(workspace.id), workspace_id: workspace.id }),
-                                children: "\u8FDB\u5165\u5DE5\u4F5C\u533A"
-                              }
-                            )
-                          ]
-                        }
-                      )
-                    },
-                    item.id
-                  );
-                }),
-                Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                  SystemPluginWindowView,
+          openCreatorAtCenter();
+        }
+        if (event.key === "Escape") {
+          setCreator(void 0);
+          setWire(void 0);
+        }
+      },
+      onPointerDown: pointer.begin,
+      onPointerMove: pointer.move,
+      onPointerUp: pointer.end,
+      onPointerCancel: pointer.cancel,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+          "div",
+          {
+            className: pip_host_default.freeWorld,
+            style: {
+              width: host.world.width,
+              height: host.world.height,
+              transform: `translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`
+            },
+            children: [
+              Object.values(host.workspaceWindows).map((item) => {
+                const workspace = workspaces.find((value) => value.id === item.workspaceId);
+                if (!workspace) return null;
+                const focused = host.activeWindowId === item.id;
+                return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  WorkspaceWindow,
                   {
-                    window: item,
+                    id: item.id,
+                    frame: item.frame,
                     views,
-                    plugins: systemPlugins,
-                    services: systemPluginServices,
-                    surface: "host",
-                    workspace: focusedWorkspace,
-                    active: host.activeWindowId === item.id,
+                    active: focused,
                     front: host.frontWindowId === item.id,
-                    onActivate: () => hostStore.activateWindow(item.id),
+                    onActivate: () => {
+                      hostStore.activateWindow(item.id);
+                      onFocusWorkspace(workspace.id);
+                    },
                     onFrame: (frame) => hostStore.setWindow(item.id, frame),
-                    onClose: () => onCloseSystemPlugin(item.id)
+                    close_label: "\u8F6C\u4E3A Tab",
+                    onClose: () => onRestoreWorkspaceTab(workspace.id),
+                    children: renderWorkspace(workspace, focused)
                   },
                   item.id
-                )),
-                creator && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-                  CreatorWindow,
-                  {
-                    candidates: choices,
-                    frame: creator.frame ?? creatorFrameAt(creator.world, views),
-                    views,
-                    onCancel: () => setCreator(void 0),
-                    onChoose: (choice) => {
-                      if (choice.provider === "node-type") {
-                        document.dispatchEvent(new CustomEvent("pip-arm-creator", { detail: choice.id }));
-                      } else if (choice.provider === "host") {
-                        onCreateWorkspace(creator.world, viewportSize());
-                      } else {
-                        onOpenSystemPlugin(choice.id, creator.world);
-                      }
-                      setCreator(void 0);
-                    },
-                    onFrame: (frame) => setCreator({ ...creator, frame })
-                  }
-                )
-              ]
-            }
-          ),
-          wire && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-            /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
-          ] })
-        ]
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(CanvasCreatorEntry, { open: openCreatorAtCenter })
-  ] }) }) });
+                );
+              }),
+              Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                SystemPluginWindowView,
+                {
+                  window: item,
+                  views,
+                  plugins: systemPlugins,
+                  services: systemPluginServices,
+                  surface: "host",
+                  workspace: focusedWorkspace,
+                  active: host.activeWindowId === item.id,
+                  front: host.frontWindowId === item.id,
+                  onActivate: () => hostStore.activateWindow(item.id),
+                  onFrame: (frame) => hostStore.setWindow(item.id, frame),
+                  onClose: () => onCloseSystemPlugin(item.id)
+                },
+                item.id
+              )),
+              creator && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                CreatorWindow,
+                {
+                  candidates: choices,
+                  frame: creator.frame ?? creatorFrameAt(creator.world, views),
+                  views,
+                  onCancel: () => setCreator(void 0),
+                  onChoose: (choice) => {
+                    if (choice.provider === "node-type") {
+                      document.dispatchEvent(new CustomEvent("pip-arm-creator", { detail: choice.id }));
+                    } else if (choice.provider === "host") {
+                      onCreateWorkspace(creator.world, viewportSize());
+                    } else {
+                      onOpenSystemPlugin(choice.id, creator.world);
+                    }
+                    setCreator(void 0);
+                  },
+                  onFrame: (frame) => setCreator({ ...creator, frame })
+                }
+              )
+            ]
+          }
+        ),
+        wire && /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+        ] })
+      ]
+    }
+  ) }) }) });
 }
 
 // pip-editor/pip-host/view/use-tab-touch-drag.ts
-var import_react34 = __toESM(require_react(), 1);
+var import_react35 = __toESM(require_react(), 1);
 function useTabTouchDrag(on_reorder, on_detach) {
-  const drag = (0, import_react34.useRef)(void 0);
-  const suppress_click = (0, import_react34.useRef)(false);
-  const [preview, set_preview] = (0, import_react34.useState)();
+  const drag = (0, import_react35.useRef)(void 0);
+  const suppress_click = (0, import_react35.useRef)(false);
+  const [preview, set_preview] = (0, import_react35.useState)();
   const down = (event) => {
     if (event.pointerType === "mouse") return;
     if (drag.current) return;
@@ -32739,7 +32880,7 @@ function useTabTouchDrag(on_reorder, on_detach) {
 }
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_react35 = __toESM(require_react(), 1);
+var import_react36 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-tabs.module.css
 var workspace_tabs_default = {
@@ -32751,7 +32892,7 @@ var workspace_tabs_default = {
 };
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
 var WORKSPACE_DRAG_MIME = "application/x-intent-map-workspace";
 function WorkspaceTabs({
   activeWorkspaceId,
@@ -32764,8 +32905,8 @@ function WorkspaceTabs({
   onTouchDetach
 }) {
   const touch_drag = useTabTouchDrag(onReorder, onTouchDetach);
-  const [dragging, setDragging] = (0, import_react35.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+  const [dragging, setDragging] = (0, import_react36.useState)();
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
     "nav",
     {
       className: workspace_tabs_default.workspaceTabs,
@@ -32780,7 +32921,7 @@ function WorkspaceTabs({
         workspaces.map((workspace) => {
           const active = workspace.id === activeWorkspaceId;
           const name = nameFor(workspace);
-          return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             "div",
             {
               role: "presentation",
@@ -32804,7 +32945,7 @@ function WorkspaceTabs({
                   onReorder(dragging, workspace.id);
                 }
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
                 "button",
                 {
                   type: "button",
@@ -32821,9 +32962,9 @@ function WorkspaceTabs({
                       onClose(workspace.id);
                   },
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: name }),
-                    /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
-                    /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
+                    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { children: name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
+                    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
                       event.stopPropagation();
                       onClose(workspace.id);
                     }, children: "\xD7" })
@@ -32834,7 +32975,7 @@ function WorkspaceTabs({
             workspace.id
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
           event.currentTarget.blur();
           onNew();
         }, title: "\u6253\u5F00\u521B\u5EFA\u5668", "aria-label": "\u6253\u5F00\u521B\u5EFA\u5668", children: "+" })
@@ -32844,7 +32985,7 @@ function WorkspaceTabs({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 function PipHostSurface({
   active,
   activeWorkspaceId,
@@ -32874,14 +33015,15 @@ function PipHostSurface({
     id: workspace_space_id(workspace_id),
     workspace_id
   });
-  (0, import_react36.useEffect)(() => {
-    if (active?.id) space.store?.enter({ kind: "workspace", id: workspace_space_id(active.id), workspace_id: active.id });
+  (0, import_react37.useEffect)(() => {
+    const current = space.store?.current();
+    if (active?.id && (!current || current.kind === "host" || current.workspace_id !== active.id)) space.store?.enter({ kind: "workspace", id: workspace_space_id(active.id), workspace_id: active.id });
   }, [active?.id, space.store]);
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     space.store?.reconcile((item) => item.kind === "host" || workspaces.some((workspace) => workspace.id === item.workspace_id && (item.kind !== "projection" || workspace.rootNodeIds.includes(item.window_id))));
   }, [workspaces, space.store]);
-  const surface = (0, import_react36.useRef)(null);
-  (0, import_react36.useEffect)(() => {
+  const surface = (0, import_react37.useRef)(null);
+  (0, import_react37.useEffect)(() => {
     const element = surface.current;
     if (!element) return;
     const publishViewport = () => {
@@ -32926,7 +33068,7 @@ function PipHostSurface({
       height: rect.height - tabStripHeight
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
     "section",
     {
       ref: surface,
@@ -32938,7 +33080,7 @@ function PipHostSurface({
       },
       onDrop: drop,
       children: [
-        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           WorkspaceTabs,
           {
             workspaces: tabWorkspaces,
@@ -32957,17 +33099,7 @@ function PipHostSurface({
             onTouchDetach: detach_at
           }
         ),
-        space.current?.kind !== "host" && space.store && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
-          "button",
-          {
-            className: active_space_default.back,
-            "data-space-back": true,
-            onClick: () => space.store.back(),
-            "aria-label": "\u8FD4\u56DE\u7236\u7A7A\u95F4",
-            children: "\u2190 \u8FD4\u56DE\u7236\u7A7A\u95F4"
-          }
-        ),
-        (space.store ? entered_workspace : active) ? renderWorkspace(space.store ? entered_workspace : active, true) : /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        (space.store ? entered_workspace : active) ? renderWorkspace(space.store ? entered_workspace : active, true) : /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           HostCanvas,
           {
             nameFor,
@@ -33126,28 +33258,28 @@ var workspaceName = (workspace, nodeMaps) => workspace.source.id === "host.new-t
 )?.nodeMap.manifest.name ?? workspace.source.id;
 
 // pip-editor/pip-host/pip-host.tsx
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 function PipHost() {
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ActiveSpaceProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(PipHostSession, {}) });
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(ActiveSpaceProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(PipHostSession, {}) });
 }
 function PipHostSession() {
-  const [workspaces, setWorkspaces] = (0, import_react37.useState)([]);
-  const [workspaceStore] = (0, import_react37.useState)(
+  const [workspaces, setWorkspaces] = (0, import_react38.useState)([]);
+  const [workspaceStore] = (0, import_react38.useState)(
     () => new WorkspaceSessionStore([], setWorkspaces)
   );
-  const [host, setHost] = (0, import_react37.useState)(createHostCanvasState);
-  const [hostStore] = (0, import_react37.useState)(() => new HostPresentationStore(setHost));
-  const [, setPreferences] = (0, import_react37.useState)(
+  const [host, setHost] = (0, import_react38.useState)(createHostCanvasState);
+  const [hostStore] = (0, import_react38.useState)(() => new HostPresentationStore(setHost));
+  const [, setPreferences] = (0, import_react38.useState)(
     () => ({ schemaVersion: 1, workspaceOpenMode: "tab", auto_load_website: true, theme_mode: "dark" })
   );
-  const [preferenceStore] = (0, import_react37.useState)(
+  const [preferenceStore] = (0, import_react38.useState)(
     () => new EditorPreferenceStore(setPreferences)
   );
-  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react37.useState)();
-  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react37.useState)();
-  const [creatorRequest, setCreatorRequest] = (0, import_react37.useState)(0);
-  const [pendingClose, setPendingClose] = (0, import_react37.useState)();
-  const [message, setMessage] = (0, import_react37.useState)(
+  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react38.useState)();
+  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react38.useState)();
+  const [creatorRequest, setCreatorRequest] = (0, import_react38.useState)(0);
+  const [pendingClose, setPendingClose] = (0, import_react38.useState)();
+  const [message, setMessage] = (0, import_react38.useState)(
     "\u7A7A\u683C\u6216 Alt/Option + \u5DE6\u952E\u62D6\u62FD\u53EF\u6253\u5F00\u521B\u5EFA\u5668\u3002"
   );
   const active = workspaces.find((item) => item.id === activeWorkspaceId);
@@ -33172,13 +33304,13 @@ function PipHostSession() {
   const { nodeMaps, nodeTypePackages, nodeTypes, elements } = catalog;
   useHostTheme(preferenceStore.snapshot().theme_mode);
   const placement = useHostPlacement(nodeTypes, workspaceStore, presentWorkspace, setMessage);
-  const [execution, setExecution] = (0, import_react37.useState)({
+  const [execution, setExecution] = (0, import_react38.useState)({
     sessions: []
   });
-  const [executionManager] = (0, import_react37.useState)(
+  const [executionManager] = (0, import_react38.useState)(
     () => new ExecutionSessionManager(nodeTypes, setExecution)
   );
-  const [commandQueues] = (0, import_react37.useState)(() => /* @__PURE__ */ new Map());
+  const [commandQueues] = (0, import_react38.useState)(() => /* @__PURE__ */ new Map());
   const history = (workspace, direction) => {
     try {
       workspaceStore.history(workspace.id, direction, nodeTypes.validators());
@@ -33263,7 +33395,7 @@ function PipHostSession() {
       closeNow(id);
     }
   };
-  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
     WorkspaceSessionCanvas,
     {
       autoFocus,
@@ -33311,10 +33443,12 @@ function PipHostSession() {
     tabWorkspaces,
     workspaces
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("main", { className: pip_host_default.shell, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(StartupNotice, { ...startup }),
+  const SystemOverlays = systemPlugins.canvas.Overlays;
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("main", { className: pip_host_default.shell, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(SystemOverlays, { services: systemPlugins.servicesFor(focused) }),
+    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(StartupNotice, { ...startup }),
     placement,
-    /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       PipHostSurface,
       {
         creation_choices: nodeTypes.creators().filter((item) => item.placement).map((item) => ({ ...item, provider: "node-type" })),
@@ -33354,7 +33488,7 @@ function PipHostSession() {
         }
       }
     ),
-    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       CloseWorkspaceDialog,
       {
         name: nameFor(workspaces.find((item) => item.id === pendingClose)),
@@ -33371,11 +33505,11 @@ function PipHostSession() {
 }
 
 // pip-editor/web/main.tsx
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 var root = document.getElementById("root");
 if (!root) throw new Error("Editor document requires a #root mount point");
 install_touch_boundary(root);
-(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_react38.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(PipHost, {}) }));
+(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_react39.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(PipHost, {}) }));
 /*! Bundled license information:
 
 react/cjs/react.development.js:

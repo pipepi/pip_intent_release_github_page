@@ -869,6 +869,69 @@
   line-height: 1.5;
 }
 
+/* pip-editor/pip-host/view/space-navigator.module.css */
+.space_navigator_navigator {
+  position: fixed;
+  z-index: 1000;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  pointer-events: none;
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+.space_navigator_navigator button {
+  min-width: 44px;
+  min-height: 44px;
+  pointer-events: auto;
+}
+.space_navigator_compass {
+  width: 48px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 36%, transparent);
+  background: color-mix(in srgb, var(--pip-panel) 78%, transparent);
+  color: var(--pip-ink);
+  backdrop-filter: blur(12px);
+  font-size: 24px;
+}
+.space_navigator_map {
+  width: min(78vw, 280px);
+  max-height: min(58vh, 420px);
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 24%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--pip-panel) 84%, transparent);
+  color: var(--pip-ink);
+  box-shadow: 0 14px 42px rgb(0 0 0 / .24);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+}
+.space_navigator_paths {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0;
+}
+.space_navigator_paths button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+}
+.space_navigator_current {
+  outline: 2px solid var(--pip-accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .space_navigator_navigator * {
+    scroll-behavior: auto !important;
+  }
+}
+[data-space-focused] {
+  outline: 2px solid color-mix(in srgb, var(--pip-accent) 72%, transparent);
+  transition: outline-color .38s ease, filter .38s ease;
+  filter: saturate(1.08);
+}
+
 /* pip-editor/pip-host/view/canvas-entry.module.css */
 .canvas_entry_entry {
   position: absolute;

@@ -6,10 +6,10 @@
       "auto_load": true,
       "open_workspace": true,
       "file": "a4_official_website_node_type_0_1_0_20260913.pip",
-      "sha256": "7e4ce38421431947cdb464eac96f0c4efa22baadd6de95ada46c12054840613b",
+      "sha256": "a1a6263f2ec500cf4988968bcd6b3d7b476ddd6cf532e203fa57553245b91a11",
       "workspace": {
         "file": "a5_official_website_map_0_1_0_20260913.pip",
-        "sha256": "f4a28520aca0d1795e98d3a6f22d4a573ce9f3b69a80a6a9f00e1ce2f0ccc9ef"
+        "sha256": "8f34104c8144678c1f91e2d3d4fdae9e8fab18b6dbd0e3e1cfc652da21bd111f"
       }
     },
     {
@@ -22,5 +22,5 @@
     }
   ],
   "file": "a5_official_website_map_0_1_0_20260913.pip",
-  "sha256": "f4a28520aca0d1795e98d3a6f22d4a573ce9f3b69a80a6a9f00e1ce2f0ccc9ef"
+  "sha256": "8f34104c8144678c1f91e2d3d4fdae9e8fab18b6dbd0e3e1cfc652da21bd111f"
 }
