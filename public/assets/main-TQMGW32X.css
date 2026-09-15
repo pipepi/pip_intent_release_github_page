@@ -177,26 +177,6 @@
       #141a3a 0,
       #080b19 60%);
 }
-.pip_host_canvasInfo {
-  position: absolute;
-  z-index: 20;
-  bottom: 0;
-  left: 0;
-  max-width: calc(100% - 20px);
-  padding: 6px 11px;
-  overflow: hidden;
-  border: 1px solid #303858;
-  border-bottom: 0;
-  border-left: 0;
-  border-radius: 0 7px 0 0;
-  color: #a8b2d0;
-  background: #11172aee;
-  box-shadow: 4px -4px 16px #0007;
-  font-size: 11px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-}
 .pip_host_canvas {
   position: relative;
   height: 100%;
@@ -627,36 +607,12 @@
   justify-content: space-between;
   align-items: center;
 }
-.pip_host_panelTitleActions {
-  display: flex;
-  gap: 5px;
-}
-.pip_host_panelTitleActions button {
-  padding: 5px 7px;
-  border: 1px solid #34416f;
-  border-radius: 5px;
-  color: #b9c4e6;
-  background: #151d39;
-  cursor: pointer;
-}
-.pip_host_panelTitleActions button:disabled {
-  opacity: .35;
-  cursor: default;
-}
 .pip_host_panelCollapsed .pip_host_panelTitle {
   flex-direction: column;
   gap: 8px;
 }
 .pip_host_panelCollapsed .pip_host_panelIdentity {
   display: none;
-}
-.pip_host_panelCollapsed .pip_host_panelTitleActions {
-  width: 100%;
-  flex-direction: column;
-}
-.pip_host_panelCollapsed .pip_host_panelTitleActions button {
-  width: 100%;
-  padding: 6px 0;
 }
 .pip_host_panelTitle h2 {
   font-size: 17px;
@@ -869,16 +825,44 @@
   line-height: 1.5;
 }
 
+/* pip-editor/pip-host/view/guanguan-logo.module.css */
+.guanguan_logo_logo {
+  display: block;
+}
+.guanguan_logo_bird,
+.guanguan_logo_wing {
+  transform-box: fill-box;
+  transition: transform 200ms ease;
+}
+.guanguan_logo_bird {
+  transform-origin: center;
+}
+.guanguan_logo_wing {
+  transform-origin: 80% 45%;
+}
+.guanguan_logo_logo[data-pose=folded] .guanguan_logo_wing,
+.guanguan_logo_logo[data-pose=dragging] .guanguan_logo_wing {
+  transform: rotate(13deg) scale(.84, .9) translate(2px, 1px);
+}
+.guanguan_logo_logo[data-pose=open] .guanguan_logo_wing {
+  transform: rotate(-13deg) scale(1.08) translate(-1px, -2px);
+}
+.guanguan_logo_logo[data-pose=dragging] .guanguan_logo_bird {
+  transform: rotate(-6deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .guanguan_logo_bird,
+  .guanguan_logo_wing {
+    transition: none;
+  }
+}
+
 /* pip-editor/pip-host/view/space-navigator.module.css */
 .space_navigator_navigator {
-  position: fixed;
-  z-index: 1000;
-  right: max(12px, env(safe-area-inset-right));
-  bottom: max(12px, env(safe-area-inset-bottom));
+  position: relative;
   pointer-events: none;
-  display: grid;
-  justify-items: end;
-  gap: 8px;
+  width: 100%;
+  height: 100%;
 }
 .space_navigator_navigator button {
   min-width: 44px;
@@ -886,19 +870,30 @@
   pointer-events: auto;
 }
 .space_navigator_compass {
-  width: 48px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--pip-ink) 36%, transparent);
   background: color-mix(in srgb, var(--pip-panel) 78%, transparent);
   color: var(--pip-ink);
   backdrop-filter: blur(12px);
-  font-size: 24px;
+  cursor: grab;
+  touch-action: none;
+}
+.space_navigator_compass:active {
+  cursor: grabbing;
 }
 .space_navigator_map {
-  width: min(78vw, 280px);
-  max-height: min(58vh, 420px);
+  position: absolute;
+  inset: 0;
   overflow: auto;
-  padding: 12px;
+  padding: 12px 12px 64px;
   border: 1px solid color-mix(in srgb, var(--pip-ink) 24%, transparent);
   border-radius: 18px;
   background: color-mix(in srgb, var(--pip-panel) 84%, transparent);
@@ -907,29 +902,315 @@
   backdrop-filter: blur(16px);
   pointer-events: auto;
 }
-.space_navigator_paths {
-  display: grid;
-  gap: 6px;
-  margin: 10px 0;
+.space_navigator_map[hidden] {
+  display: none;
 }
-.space_navigator_paths button {
+.space_navigator_map:not([hidden]) ~ .space_navigator_compass {
+  width: 48px;
+  height: 48px;
+}
+.space_navigator_left .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
+  right: 12px;
+  left: auto;
+}
+.space_navigator_right .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
+  right: auto;
+  left: 12px;
+}
+.space_navigator_above .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
+  top: auto;
+  bottom: 10px;
+}
+.space_navigator_below .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
+  top: 10px;
+  bottom: auto;
+}
+.space_navigator_expandedControls {
+  display: flex;
+  margin: 0 0 8px;
+  padding: 8px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
+}
+.space_navigator_expandedControls:empty {
+  display: none;
+}
+.space_navigator_expandedControls > [data-active-controls] {
+  width: 100%;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.space_navigator_map button {
+  box-sizing: border-box;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 16%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--pip-bg) 42%, transparent);
+  color: var(--pip-ink);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    border-color .16s ease,
+    background-color .16s ease,
+    color .16s ease;
+}
+.space_navigator_map button:hover {
+  border-color: color-mix(in srgb, var(--pip-accent) 42%, transparent);
+  background: color-mix(in srgb, var(--pip-accent) 12%, var(--pip-panel));
+}
+.space_navigator_map button:focus-visible {
+  outline: 2px solid var(--pip-accent);
+  outline-offset: 2px;
+}
+.space_navigator_paths {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
+  scrollbar-width: none;
+}
+.space_navigator_step {
+  display: flex;
+  flex: 1 1 0;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 44px;
+}
+.space_navigator_step > i {
+  flex: 0 0 16px;
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--pip-ink) 48%, transparent);
+  font-size: 20px;
+  font-style: normal;
+  line-height: 20px;
+  text-align: center;
+}
+.space_navigator_pathItem {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+}
+.space_navigator_pathButton {
   display: flex;
   align-items: center;
-  gap: 9px;
-  text-align: left;
+  justify-content: center;
+  width: 100%;
+  min-width: 44px;
+  max-width: none;
 }
-.space_navigator_current {
-  outline: 2px solid var(--pip-accent);
+.space_navigator_name {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.space_navigator_pathItem small {
+  display: block;
+  min-width: 0;
+  max-width: 122px;
+  overflow: hidden;
+  margin-top: 3px;
+  padding-left: 2px;
+  color: color-mix(in srgb, var(--pip-ink) 62%, transparent);
+  font:
+    9px/1 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.space_navigator_pathItem small span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.space_navigator_pathItem small b {
+  color: var(--pip-ink);
+  font-weight: 600;
+}
+.space_navigator_pathItem .space_navigator_pathDescription {
+  display: grid;
+  min-height: 18px;
+  align-items: center;
+}
+.space_navigator_placeholder {
+  visibility: hidden;
+}
+.space_navigator_paths button.space_navigator_current {
+  border-color: color-mix(in srgb, var(--pip-accent) 72%, transparent);
+  background: color-mix(in srgb, var(--pip-accent) 22%, var(--pip-panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pip-accent) 20%, transparent);
+}
+.space_navigator_map .space_navigator_expandedControls [data-active-controls] button {
+  box-sizing: border-box;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 16%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--pip-bg) 42%, transparent);
+}
+.space_navigator_map .space_navigator_expandedControls [data-active-controls] button:hover {
+  border-color: color-mix(in srgb, var(--pip-accent) 42%, transparent);
+  background: color-mix(in srgb, var(--pip-accent) 12%, var(--pip-panel));
+}
+.space_navigator_map .space_navigator_expandedControls [data-active-controls] output {
+  display: grid;
+  min-width: 44px;
+  height: 44px;
+  place-items: center;
+}
+.space_navigator_historyControls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
+}
+.space_navigator_owners {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 0 0 8px;
+  overflow-x: auto;
+  border: 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
+}
+.space_navigator_owners legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.space_navigator_owners button {
+  flex: 0 0 auto;
+}
+.space_navigator_owners button[aria-pressed=true] {
+  border-color: color-mix(in srgb, var(--pip-accent) 72%, transparent);
+  background: color-mix(in srgb, var(--pip-accent) 22%, var(--pip-panel));
+}
+.space_navigator_map button:disabled {
+  cursor: default;
+  opacity: .42;
+}
+.space_navigator_create {
+  width: 100%;
 }
 @media (prefers-reduced-motion: reduce) {
   .space_navigator_navigator * {
     scroll-behavior: auto !important;
   }
 }
-[data-space-focused] {
+[data-navigation-reveal] {
   outline: 2px solid color-mix(in srgb, var(--pip-accent) 72%, transparent);
   transition: outline-color .38s ease, filter .38s ease;
   filter: saturate(1.08);
+}
+
+/* pip-editor/pip-host/view/companion-window.module.css */
+.companion_window_window {
+  position: absolute;
+  z-index: 1000;
+  box-sizing: border-box;
+  pointer-events: auto;
+  touch-action: none;
+}
+.companion_window_viewport {
+  position: fixed;
+}
+.companion_window_selected {
+  border: 1px solid color-mix(in srgb, var(--pip-accent) 58%, transparent);
+  border-radius: 18px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pip-accent) 10%, transparent);
+}
+.companion_window_close {
+  position: absolute;
+  z-index: 4;
+  top: -12px;
+  right: -12px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 26%, transparent);
+  border-radius: 50%;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+}
+.companion_window_window i[data-companion-resize] {
+  position: absolute;
+  z-index: 3;
+  width: 14px;
+  height: 14px;
+}
+.companion_window_resize_nw {
+  top: -7px;
+  left: -7px;
+  cursor: nwse-resize;
+}
+.companion_window_resize_n {
+  top: -7px;
+  left: calc(50% - 7px);
+  cursor: ns-resize;
+}
+.companion_window_resize_ne {
+  top: -7px;
+  right: -7px;
+  cursor: nesw-resize;
+}
+.companion_window_resize_e {
+  top: calc(50% - 7px);
+  right: -7px;
+  cursor: ew-resize;
+}
+.companion_window_resize_se {
+  right: -7px;
+  bottom: -7px;
+  cursor: nwse-resize;
+}
+.companion_window_resize_s {
+  bottom: -7px;
+  left: calc(50% - 7px);
+  cursor: ns-resize;
+}
+.companion_window_resize_sw {
+  bottom: -7px;
+  left: -7px;
+  cursor: nesw-resize;
+}
+.companion_window_resize_w {
+  top: calc(50% - 7px);
+  left: -7px;
+  cursor: ew-resize;
+}
+@media (prefers-reduced-motion: reduce) {
+  .companion_window_window {
+    transition: none;
+  }
 }
 
 /* pip-editor/pip-host/view/canvas-entry.module.css */
@@ -1061,9 +1342,6 @@
   width: 100%;
   height: 100%;
 }
-.workspace_window_windowContent [data-workspace-status] {
-  display: none;
-}
 .workspace_window_windowGlassUnderlay {
   position: absolute;
   z-index: 14;
@@ -1160,6 +1438,7 @@
   font: 12px monospace;
 }
 .workspace_window_freeWindow:hover .workspace_window_windowSystemControls,
+.workspace_window_freeWindow[data-window-active=true] .workspace_window_windowSystemControls,
 .workspace_window_freeWindow:focus-within .workspace_window_windowSystemControls {
   visibility: visible;
   opacity: 1;
@@ -1167,7 +1446,9 @@
 }
 .workspace_window_freeWindow:hover .workspace_window_windowGlassUnderlay,
 .workspace_window_freeWindow:focus-within .workspace_window_windowGlassUnderlay,
+.workspace_window_freeWindow[data-window-active=true] .workspace_window_windowGlassUnderlay,
 .workspace_window_freeWindow:hover .workspace_window_windowDragRail,
+.workspace_window_freeWindow[data-window-active=true] .workspace_window_windowDragRail,
 .workspace_window_freeWindow:focus-within .workspace_window_windowDragRail {
   visibility: visible;
   opacity: 1;
@@ -1264,9 +1545,40 @@
   left: 3px;
 }
 .workspace_window_freeWindow:hover .workspace_window_resizeHandle::after,
+.workspace_window_freeWindow[data-window-active=true] .workspace_window_resizeHandle::after,
 .workspace_window_freeWindow:focus-within .workspace_window_resizeHandle::after {
   visibility: visible;
   opacity: 1;
+}
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]) {
+  box-shadow: 0 0 0 .5px color-mix(in srgb, var(--pip-border, #526184) 14%, transparent);
+}
+.workspace_window_freeWindow[data-projection-focus-target=true]::after {
+  position: absolute;
+  z-index: 29;
+  inset: 0;
+  border: 2px solid color-mix(in srgb, var(--pip-accent,#39a7ff) 82%, transparent);
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px color-mix(in srgb, var(--pip-accent,#39a7ff) 16%, transparent);
+  pointer-events: none;
+  content: "";
+}
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]) > .workspace_window_windowGlassUnderlay,
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]) > .workspace_window_windowSystemControls {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]) > .workspace_window_windowDragRail {
+  opacity: .16;
+  filter: blur(.35px);
+}
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]) > .workspace_window_resizeHandle::after,
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]):hover > .workspace_window_resizeHandle::after,
+.workspace_window_freeWindow[data-projection-focused=true]:not([data-window-operating=true]):focus-within > .workspace_window_resizeHandle::after {
+  visibility: visible;
+  opacity: .18;
+  filter: blur(.3px);
 }
 @media (hover: none) {
   .workspace_window_windowGlassUnderlay,
@@ -1301,78 +1613,14 @@
   pointer-events: none;
 }
 
-/* pip-editor/pip-host/view/active-space.module.css */
-.active_space_focused_world {
-  transform: none !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-.active_space_focused_world > [data-space-root=true] {
-  display: none;
-}
-.active_space_focused_world > [data-space-focused=true] {
-  display: block;
-  left: 0 !important;
-  top: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-.active_space_enter {
+/* pip-editor/pip-host/view/surface-presentation-layer.module.css */
+.surface_presentation_layer_layer {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  min-height: 44px;
-  padding: 6px 12px;
-  color: var(--pip-ink);
-  background: var(--pip-panel);
-  border: 1px solid var(--pip-border);
-  border-radius: 8px;
-}
-.active_space_back {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  z-index: 40;
-  min-height: 36px;
-  width: auto;
-  height: auto;
-  padding: 4px 12px;
-  border: 1px solid var(--pip-border);
-  border-radius: 8px;
-  background: var(--pip-panel);
-  color: var(--pip-ink);
-}
-.active_space_workspace_preview {
-  padding: 64px 24px 24px;
-  min-height: 100%;
-  box-sizing: border-box;
-  color: var(--pip-ink);
-  background: var(--pip-panel);
-  font: 15px/1.6 system-ui;
-}
-.active_space_workspace_preview h2 {
-  font-size: 24px;
-  overflow-wrap: anywhere;
-}
-.active_space_workspace_preview small {
-  opacity: .7;
-  font-size: 12px;
-}
-.active_space_focused_world > [data-space-focused=true] > [data-resize-direction],
-.active_space_focused_world > [data-space-focused=true] > [data-window-drag] {
-  display: none;
-}
-@media (max-width: 400px) {
-  .active_space_back {
-    width: 44px;
-    min-height: 44px;
-    padding: 0;
-    font-size: 0;
-  }
-  .active_space_back::before {
-    content: "\2190";
-    font-size: 18px;
-  }
+  inset: 0;
+  z-index: 20;
+  overflow: visible;
+  pointer-events: none;
+  transform-origin: 0 0;
 }
 
 /* pip-editor/pip-host/view/workspace-tabs.module.css */
@@ -1572,11 +1820,6 @@ body {
     scroll-behavior: auto;
   }
 }
-[data-workspace-status] {
-  color: var(--pip-muted);
-  background: var(--pip-panel);
-  border-color: var(--pip-border);
-}
 
 /* pip-editor/web/canvas-theme.css */
 :root[data-theme=light] {
@@ -1644,11 +1887,6 @@ body {
   background: #50798d;
   border-color: #f8fcff;
   box-shadow: 0 0 0 1px #50798d4d;
-}
-:root[data-theme=light] [data-workspace-status] {
-  background: #f7fafbe8;
-  border-color: #bfced6;
-  box-shadow: 0 -2px 12px #3b596308;
 }
 :root[data-theme=light] [role=dialog][aria-label=\521b\5efa\8282\70b9] {
   background: var(--pip-panel);
@@ -1723,19 +1961,19 @@ body {
   }
 }
 [data-active-controls] {
-  position: absolute;
-  right: 8px;
-  bottom: max(8px, env(safe-area-inset-bottom));
-  z-index: 45;
+  position: static;
   display: flex;
   align-items: center;
   gap: 4px;
   padding: 4px;
   border: 1px solid var(--pip-border);
-  border-radius: 8px;
-  background: var(--pip-panel);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--pip-panel) 84%, transparent);
   color: var(--pip-ink);
   font-size: 12px;
+  box-shadow: 0 8px 26px rgb(0 0 0 / .18);
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
 }
 [data-active-controls] button,
 [data-active-controls] select {
@@ -1880,6 +2118,7 @@ body {
   z-index: 45;
 }
 [data-window-bottom-controls] > [data-active-controls] {
+  position: absolute;
   bottom: 0;
   right: 0;
   white-space: nowrap;
