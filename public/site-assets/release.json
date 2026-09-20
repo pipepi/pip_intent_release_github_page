@@ -1,15 +1,23 @@
 {
   "plugins": [
     {
+      "id": "official.guanguan-elements",
+      "name": "关关宠物形象",
+      "auto_load": true,
+      "open_workspace": false,
+      "file": "a3_guanguan_element_3_0_0_20260920.pip",
+      "sha256": "b48d858e6e91dd02e8e5a7f847ec11111a1b8365ce4037fb1e94c7dad9ab2a14"
+    },
+    {
       "id": "official.website-types",
       "name": "官网",
       "auto_load": true,
       "open_workspace": true,
-      "file": "a4_official_website_node_type_0_1_0_20260913.pip",
-      "sha256": "e46589ba04aa8325aea4519b8f734e1ebad5c42f66cb04a7581e7022dda53935",
+      "file": "a4_website_node_type_3_0_0_20260920.pip",
+      "sha256": "d06d74d72dc610725f730a7c8c94f1c56804395358105b46e68e50fe44b38447",
       "workspace": {
-        "file": "a5_official_website_map_0_1_0_20260913.pip",
-        "sha256": "647f83d3a2f595a09e6c7a4cb2e8644908587c54f37fbb417cdf178a8bddfca6"
+        "file": "a5_website_map_4_0_0_20260920.pip",
+        "sha256": "1df5ecdbc284d3cf78bc7aee3f2b7c910fa088d3c283fa5c455720eb3d71811c"
       }
     },
     {
@@ -17,10 +25,10 @@
       "name": "想法方块 · R",
       "auto_load": true,
       "open_workspace": false,
-      "file": "a4_official_thought_node_type_0_1_0_20260913.pip",
-      "sha256": "359610b721865cae5c36264b328f2fc2cb95b4a2d1060ad550e40de5e5ca52bc"
+      "file": "a4_thought_node_type_3_0_0_20260920.pip",
+      "sha256": "ada980048ab4460847c2d829342160cb0d10193cf68a08c0a58b809691922dfa"
     }
   ],
-  "file": "a5_official_website_map_0_1_0_20260913.pip",
-  "sha256": "647f83d3a2f595a09e6c7a4cb2e8644908587c54f37fbb417cdf178a8bddfca6"
+  "file": "a5_website_map_4_0_0_20260920.pip",
+  "sha256": "1df5ecdbc284d3cf78bc7aee3f2b7c910fa088d3c283fa5c455720eb3d71811c"
 }

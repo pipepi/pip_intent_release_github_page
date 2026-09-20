@@ -30,24 +30,19 @@
 .surface_preview {
   position: fixed;
   z-index: 10000;
-  width: 280px;
-  height: 180px;
+  box-sizing: border-box;
   pointer-events: none;
   border: 2px dashed var(--pip-accent,#8ad);
   border-radius: 10px;
   background: #80b0cc20;
 }
-.surface_hint {
+.surface_placement_status {
   position: fixed;
-  top: 64px;
-  left: 12px;
-  z-index: 10001;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font: 13px system-ui;
-  color: var(--pip-ink);
-  background: var(--pip-panel);
-  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 .surface_events {
   position: absolute;
@@ -240,7 +235,7 @@
   height: 100%;
   overflow: hidden;
 }
-.pip_host_projectionShell.pip_host_pluginChrome {
+.pip_host_projectionShell.pip_host_noNavbar {
   grid-template-rows: minmax(0, 1fr);
 }
 .pip_host_projectionNav {
@@ -857,6 +852,101 @@
   }
 }
 
+/* pip-editor/pip-host/view/companion-visual.module.css */
+.companion_visual_companionElementHost,
+.companion_visual_companionElement,
+.companion_visual_fallbackVisual {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  overflow: visible;
+  pointer-events: none;
+}
+.companion_visual_companionElementHost {
+  display: contents;
+}
+.companion_visual_fallbackAvatar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.companion_visual_fallbackAvatarClip {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #334e62;
+  clip-path: ellipse(50% 50% at 50% 50%);
+}
+.companion_visual_fallbackAvatarClip > svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 200ms ease;
+}
+.companion_visual_fallbackVisual[data-facing=left] .companion_visual_fallbackAvatarClip > svg {
+  transform: scaleX(-1);
+}
+.companion_visual_fallbackVisual:not([data-collapsed]) .companion_visual_fallbackAvatar {
+  width: 48px;
+  height: 48px;
+}
+.companion_visual_fallbackVisual:not([data-collapsed])[data-avatar-horizontal=right] .companion_visual_fallbackAvatar {
+  right: -56px;
+  left: auto;
+}
+.companion_visual_fallbackVisual:not([data-collapsed])[data-avatar-horizontal=left] .companion_visual_fallbackAvatar {
+  right: auto;
+  left: -56px;
+}
+.companion_visual_fallbackVisual:not([data-collapsed])[data-avatar-vertical=bottom] .companion_visual_fallbackAvatar {
+  top: auto;
+  bottom: 10px;
+}
+.companion_visual_fallbackVisual:not([data-collapsed])[data-avatar-vertical=top] .companion_visual_fallbackAvatar {
+  top: 10px;
+  bottom: auto;
+}
+.companion_visual_petMessage {
+  position: absolute;
+  right: calc(100% + 8px);
+  bottom: 4px;
+  z-index: 2;
+  width: max-content;
+  max-width: 150px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--pip-accent) 42%, transparent);
+  border-radius: 12px 12px 4px;
+  background: color-mix(in srgb, var(--pip-panel) 92%, transparent);
+  color: var(--pip-ink);
+  box-shadow: 0 8px 24px rgb(0 0 0 / .2);
+  font: 12px/1.45 system-ui;
+  pointer-events: none;
+}
+.companion_visual_petMessage span {
+  color: color-mix(in srgb, var(--pip-ink) 64%, transparent);
+}
+.companion_visual_petMessage button {
+  min-width: 44px;
+  min-height: 44px;
+  pointer-events: auto;
+}
+.companion_visual_fallbackVisual[data-message-horizontal=right] .companion_visual_petMessage {
+  right: auto;
+  left: calc(100% + 8px);
+  border-radius: 12px 12px 12px 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .companion_visual_fallbackAvatarClip > svg {
+    transition: none;
+  }
+}
+
 /* pip-editor/pip-host/view/space-navigator.module.css */
 .space_navigator_navigator {
   position: relative;
@@ -869,8 +959,33 @@
   min-height: 44px;
   pointer-events: auto;
 }
+.space_navigator_navigator:has(.space_navigator_map:not([hidden]))::after {
+  position: absolute;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border: solid color-mix(in srgb, var(--pip-ink) 24%, transparent);
+  background: color-mix(in srgb, var(--pip-panel) 94%, transparent);
+  content: "";
+  transform: rotate(45deg);
+}
+.space_navigator_left:has(.space_navigator_map:not([hidden]))::after {
+  right: -7px;
+  border-width: 1px 1px 0 0;
+}
+.space_navigator_right:has(.space_navigator_map:not([hidden]))::after {
+  left: -7px;
+  border-width: 0 0 1px 1px;
+}
+.space_navigator_above:has(.space_navigator_map:not([hidden]))::after {
+  bottom: 26px;
+}
+.space_navigator_below:has(.space_navigator_map:not([hidden]))::after {
+  top: 26px;
+}
 .space_navigator_compass {
   position: absolute;
+  z-index: 2;
   right: 0;
   bottom: 0;
   display: grid;
@@ -899,33 +1014,23 @@
   background: transparent;
   backdrop-filter: none;
 }
-.space_navigator_map {
-  position: absolute;
-  inset: 0;
-  overflow: auto;
-  padding: 12px 12px 64px;
-  border: 1px solid color-mix(in srgb, var(--pip-ink) 24%, transparent);
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--pip-panel) 84%, transparent);
-  color: var(--pip-ink);
-  box-shadow: 0 14px 42px rgb(0 0 0 / .24);
-  backdrop-filter: blur(16px);
-  pointer-events: auto;
-}
 .space_navigator_map[hidden] {
   display: none;
 }
 .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
   width: 48px;
   height: 48px;
+  border-color: transparent;
+  background: transparent;
+  backdrop-filter: none;
 }
 .space_navigator_left .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
-  right: 12px;
+  right: -56px;
   left: auto;
 }
 .space_navigator_right .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
   right: auto;
-  left: 12px;
+  left: -56px;
 }
 .space_navigator_above .space_navigator_map:not([hidden]) ~ .space_navigator_compass {
   top: auto;
@@ -937,14 +1042,49 @@
 }
 .space_navigator_expandedControls {
   display: flex;
-  margin: 0 0 8px;
-  padding: 8px 0;
-  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
+  flex: 0 0 auto;
+  margin: 8px 0;
 }
-.space_navigator_expandedControls:empty {
+.space_navigator_toolsSection {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-top: 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 19%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--pip-panel) 70%, transparent);
+}
+.space_navigator_map .space_navigator_toolsSection .space_navigator_toolsToggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+}
+.space_navigator_map .space_navigator_toolsSection .space_navigator_toolsToggle:hover {
+  background: color-mix(in srgb, var(--pip-accent) 9%, transparent);
+}
+.space_navigator_map .space_navigator_toolsSection .space_navigator_toolsToggle:focus-visible {
+  outline-offset: -2px;
+}
+.space_navigator_toolsState {
+  color: color-mix(in srgb, var(--pip-ink) 60%, transparent);
+}
+.space_navigator_toolsBody {
+  min-width: 0;
+  padding: 0 8px 8px;
+}
+.space_navigator_expandedControls:not(:has([data-active-controls])) {
   display: none;
 }
-.space_navigator_expandedControls > [data-active-controls] {
+.space_navigator_expandedControls > [data-space-navigator-controls] {
+  width: 100%;
+}
+.space_navigator_expandedControls [data-active-controls] {
   width: 100%;
   justify-content: space-between;
   gap: 4px;
@@ -981,95 +1121,6 @@
   outline: 2px solid var(--pip-accent);
   outline-offset: 2px;
 }
-.space_navigator_paths {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 0 0 8px;
-  padding-bottom: 8px;
-  overflow-x: auto;
-  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
-  scrollbar-width: none;
-}
-.space_navigator_step {
-  display: flex;
-  flex: 1 1 0;
-  align-items: flex-start;
-  gap: 4px;
-  min-width: 44px;
-}
-.space_navigator_step > i {
-  flex: 0 0 16px;
-  margin-top: 12px;
-  color: color-mix(in srgb, var(--pip-ink) 48%, transparent);
-  font-size: 20px;
-  font-style: normal;
-  line-height: 20px;
-  text-align: center;
-}
-.space_navigator_pathItem {
-  display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
-  flex-direction: column;
-}
-.space_navigator_pathButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-width: 44px;
-  max-width: none;
-}
-.space_navigator_name {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.space_navigator_pathItem small {
-  display: block;
-  min-width: 0;
-  max-width: 122px;
-  overflow: hidden;
-  margin-top: 3px;
-  padding-left: 2px;
-  color: color-mix(in srgb, var(--pip-ink) 62%, transparent);
-  font:
-    9px/1 ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
-  font-variant-numeric: tabular-nums;
-  text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.space_navigator_pathItem small span {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.space_navigator_pathItem small b {
-  color: var(--pip-ink);
-  font-weight: 600;
-}
-.space_navigator_pathItem .space_navigator_pathDescription {
-  display: grid;
-  min-height: 18px;
-  align-items: center;
-}
-.space_navigator_placeholder {
-  visibility: hidden;
-}
-.space_navigator_paths button.space_navigator_current {
-  border-color: color-mix(in srgb, var(--pip-accent) 72%, transparent);
-  background: color-mix(in srgb, var(--pip-accent) 22%, var(--pip-panel));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pip-accent) 20%, transparent);
-}
 .space_navigator_map .space_navigator_expandedControls [data-active-controls] button {
   box-sizing: border-box;
   height: 44px;
@@ -1091,41 +1142,47 @@
 }
 .space_navigator_historyControls {
   display: grid;
+  flex: 0 0 auto;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
-}
-.space_navigator_owners {
-  display: flex;
-  gap: 6px;
-  margin: 0 0 8px;
-  padding: 0 0 8px;
-  overflow-x: auto;
-  border: 0;
-  border-bottom: 1px dashed color-mix(in srgb, var(--pip-ink) 20%, transparent);
-}
-.space_navigator_owners legend {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
-.space_navigator_owners button {
-  flex: 0 0 auto;
-}
-.space_navigator_owners button[aria-pressed=true] {
-  border-color: color-mix(in srgb, var(--pip-accent) 72%, transparent);
-  background: color-mix(in srgb, var(--pip-accent) 22%, var(--pip-panel));
 }
 .space_navigator_map button:disabled {
   cursor: default;
   opacity: .42;
 }
 .space_navigator_create {
+  flex: 0 0 auto;
   width: 100%;
+}
+.space_navigator_agentSection {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 19%, transparent);
+  border-radius: 12px;
+}
+.space_navigator_agentSection p,
+.space_navigator_agentSection ul {
+  margin: 0;
+  font-size: 12px;
+}
+.space_navigator_agentSection textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 18%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--pip-bg) 56%, transparent);
+  color: var(--pip-ink);
+}
+.space_navigator_agentReview {
+  display: grid;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--pip-ink) 16%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
   .space_navigator_navigator * {
@@ -1138,6 +1195,214 @@
   filter: saturate(1.08);
 }
 
+/* pip-editor/pip-host/view/space-navigator-shell.module.css */
+.space_navigator_shell_map {
+  container-type: inline-size;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 24%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--pip-panel) 84%, transparent);
+  color: var(--pip-ink);
+  box-shadow: 0 14px 42px rgb(0 0 0 / .24);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+}
+
+/* pip-editor/pip-host/view/space-inspector.module.css */
+.space_inspector_inspector {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  padding: 4px;
+}
+.space_inspector_inspector h3 {
+  margin: 0;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.space_inspector_inspector dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  margin: 0;
+  font-size: 11px;
+}
+.space_inspector_inspector dt {
+  opacity: .64;
+}
+.space_inspector_inspector dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.space_inspector_inspector label,
+.space_inspector_inspector form {
+  display: grid;
+  gap: 6px;
+}
+.space_inspector_inspector textarea,
+.space_inspector_inspector input,
+.space_inspector_inspector select {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 22%, transparent);
+  border-radius: 8px;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+  font: inherit;
+}
+.space_inspector_inspector textarea {
+  min-height: 110px;
+}
+.space_inspector_inspector button {
+  min-height: 44px;
+}
+.space_inspector_primary {
+  border-color: color-mix(in srgb, var(--pip-accent) 60%, transparent);
+}
+.space_inspector_actions {
+  display: grid;
+  gap: 8px;
+}
+.space_inspector_command {
+  display: grid;
+  gap: 8px;
+}
+.space_inspector_confirm {
+  padding: 12px;
+  border: 1px solid #ff8f9c;
+  border-radius: 12px;
+  background: var(--pip-panel);
+}
+
+/* pip-editor/pip-host/view/space-world-tree.module.css */
+.space_world_tree_tree,
+.space_world_tree_group {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.space_world_tree_item {
+  min-width: 0;
+}
+.space_world_tree_panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 19%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--pip-panel) 70%, transparent);
+}
+.space_world_tree_row {
+  display: flex;
+  min-height: 44px;
+  align-items: stretch;
+}
+.space_world_tree_row:hover {
+  background: color-mix(in srgb, var(--pip-accent) 9%, transparent);
+}
+.space_world_tree_row[data-focused=true] {
+  background: color-mix(in srgb, var(--pip-accent) 17%, transparent);
+}
+.space_world_tree_panel .space_world_tree_row .space_world_tree_label,
+.space_world_tree_panel .space_world_tree_row .space_world_tree_owner,
+.space_world_tree_panel .space_world_tree_row .space_world_tree_label:hover,
+.space_world_tree_panel .space_world_tree_row .space_world_tree_owner:hover {
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.space_world_tree_label {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+}
+.space_world_tree_name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.space_world_tree_label small {
+  color: color-mix(in srgb, var(--pip-ink) 55%, transparent);
+}
+.space_world_tree_navigation {
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  color: color-mix(in srgb, var(--pip-ink) 32%, transparent);
+  pointer-events: none;
+}
+.space_world_tree_navigation[data-active=true] {
+  color: var(--pip-accent);
+}
+.space_world_tree_navigation svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.space_world_tree_owner {
+  flex: 0 0 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--pip-ink) 54%, transparent);
+}
+.space_world_tree_owner[aria-pressed=true] {
+  color: #8fe3c1;
+}
+.space_world_tree_label:focus-visible,
+.space_world_tree_owner:focus-visible {
+  outline: 2px solid var(--pip-accent);
+  outline-offset: -2px;
+}
+.space_world_tree_content {
+  display: grid;
+  gap: 8px;
+  padding: 6px 0 8px;
+}
+.space_world_tree_content > :not(.space_world_tree_group) {
+  margin-inline: 8px;
+}
+.space_world_tree_group {
+  padding-inline: 0;
+}
+
+/* pip-editor/pip-host/view/space-world-console.module.css */
+.space_world_console_console {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 120px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--pip-ink) 17%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--pip-bg) 26%, transparent);
+}
+
 /* pip-editor/pip-host/view/companion-window.module.css */
 .companion_window_window {
   position: absolute;
@@ -1148,6 +1413,10 @@
 }
 .companion_window_viewport {
   position: fixed;
+}
+.companion_window_window[data-companion-gesturing] {
+  user-select: none;
+  -webkit-user-select: none;
 }
 .companion_window_selected {
   border: 1px solid color-mix(in srgb, var(--pip-accent) 58%, transparent);
@@ -1179,6 +1448,9 @@
   z-index: 3;
   width: 14px;
   height: 14px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .companion_window_resize_nw::after,
 .companion_window_resize_ne::after,
@@ -1236,6 +1508,32 @@
   .companion_window_window {
     transition: none;
   }
+}
+
+/* pip-editor/pip-host-io/system-plugin/companion-inspector-fallback.module.css */
+.companion_inspector_fallback_backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgb(0 0 0 / .45);
+}
+.companion_inspector_fallback_panel {
+  width: min(460px, 100%);
+  max-height: min(80dvh, 720px);
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--pip-border);
+  border-radius: 16px;
+  background: var(--pip-panel);
+  color: var(--pip-ink);
+}
+.companion_inspector_fallback_close {
+  float: right;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* pip-editor/pip-host/view/canvas-entry.module.css */

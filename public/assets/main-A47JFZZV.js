@@ -30,7 +30,7 @@ var require_react_development = __commonJS({
     "use strict";
     (function() {
       function defineDeprecationWarning(methodName, info) {
-        Object.defineProperty(Component.prototype, methodName, {
+        Object.defineProperty(Component2.prototype, methodName, {
           get: function() {
             console.warn(
               "%s(...) is deprecated in plain JavaScript React classes. %s",
@@ -55,7 +55,7 @@ var require_react_development = __commonJS({
           publicInstance
         ), didWarnStateUpdateForUnmountedComponent[warningKey] = true);
       }
-      function Component(props, context, updater) {
+      function Component2(props, context, updater) {
         this.props = props;
         this.context = context;
         this.refs = emptyObject;
@@ -508,15 +508,15 @@ var require_react_development = __commonJS({
         }
       }, assign = Object.assign, emptyObject = {};
       Object.freeze(emptyObject);
-      Component.prototype.isReactComponent = {};
-      Component.prototype.setState = function(partialState, callback) {
+      Component2.prototype.isReactComponent = {};
+      Component2.prototype.setState = function(partialState, callback) {
         if ("object" !== typeof partialState && "function" !== typeof partialState && null != partialState)
           throw Error(
             "takes an object of state variables to update or a function which returns an object of state variables."
           );
         this.updater.enqueueSetState(this, partialState, callback, "setState");
       };
-      Component.prototype.forceUpdate = function(callback) {
+      Component2.prototype.forceUpdate = function(callback) {
         this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
       };
       var deprecatedAPIs = {
@@ -531,10 +531,10 @@ var require_react_development = __commonJS({
       };
       for (fnName in deprecatedAPIs)
         deprecatedAPIs.hasOwnProperty(fnName) && defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-      ComponentDummy.prototype = Component.prototype;
+      ComponentDummy.prototype = Component2.prototype;
       deprecatedAPIs = PureComponent.prototype = new ComponentDummy();
       deprecatedAPIs.constructor = PureComponent;
-      assign(deprecatedAPIs, Component.prototype);
+      assign(deprecatedAPIs, Component2.prototype);
       deprecatedAPIs.isPureReactComponent = true;
       var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = {
         H: null,
@@ -622,7 +622,7 @@ var require_react_development = __commonJS({
       };
       exports.Activity = REACT_ACTIVITY_TYPE;
       exports.Children = fnName;
-      exports.Component = Component;
+      exports.Component = Component2;
       exports.Fragment = REACT_FRAGMENT_TYPE;
       exports.Profiler = REACT_PROFILER_TYPE;
       exports.PureComponent = PureComponent;
@@ -1328,7 +1328,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React = require_react(), Internals = {
+      var React2 = require_react(), Internals = {
         d: {
           f: noop,
           r: function() {
@@ -1346,7 +1346,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -1603,9 +1603,9 @@ var require_react_dom_client_development = __commonJS({
       }
       function warnForMissingKey() {
       }
-      function setToSortedString(set) {
+      function setToSortedString(set2) {
         var array = [];
-        set.forEach(function(value) {
+        set2.forEach(function(value) {
           array.push(value);
         });
         return array.sort().join(", ");
@@ -2763,7 +2763,7 @@ var require_react_dom_client_development = __commonJS({
           valueField
         );
         if (!node2.hasOwnProperty(valueField) && "undefined" !== typeof descriptor && "function" === typeof descriptor.get && "function" === typeof descriptor.set) {
-          var get = descriptor.get, set = descriptor.set;
+          var get = descriptor.get, set2 = descriptor.set;
           Object.defineProperty(node2, valueField, {
             configurable: true,
             get: function() {
@@ -2772,7 +2772,7 @@ var require_react_dom_client_development = __commonJS({
             set: function(value) {
               checkFormFieldValueStringCoercion(value);
               currentValue = "" + value;
-              set.call(this, value);
+              set2.call(this, value);
             }
           });
           Object.defineProperty(node2, valueField, {
@@ -2881,7 +2881,7 @@ var require_react_dom_client_development = __commonJS({
         "number" === type && getActiveElement(node2.ownerDocument) === node2 || node2.defaultValue === "" + value || (node2.defaultValue = "" + value);
       }
       function validateOptionProps(element, props) {
-        null == props.value && ("object" === typeof props.children && null !== props.children ? React.Children.forEach(props.children, function(child) {
+        null == props.value && ("object" === typeof props.children && null !== props.children ? React2.Children.forEach(props.children, function(child) {
           null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
             "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
           ));
@@ -3458,8 +3458,8 @@ var require_react_dom_client_development = __commonJS({
         }
         node2.textContent = text;
       }
-      function camelize(string) {
-        return string.replace(hyphenPattern, function(_, character) {
+      function camelize(string2) {
+        return string2.replace(hyphenPattern, function(_, character) {
           return character.toUpperCase();
         });
       }
@@ -4881,9 +4881,9 @@ var require_react_dom_client_development = __commonJS({
         this._debugHookTypes = null;
         hasBadMapPolyfill || "function" !== typeof Object.preventExtensions || Object.preventExtensions(this);
       }
-      function shouldConstruct(Component) {
-        Component = Component.prototype;
-        return !(!Component || !Component.isReactComponent);
+      function shouldConstruct(Component2) {
+        Component2 = Component2.prototype;
+        return !(!Component2 || !Component2.isReactComponent);
       }
       function createWorkInProgress(current2, pendingProps) {
         var workInProgress2 = current2.alternate;
@@ -6892,13 +6892,13 @@ var require_react_dom_client_development = __commonJS({
           if (!objectIs(nextDeps[i2], prevDeps[i2])) return false;
         return true;
       }
-      function renderWithHooks(current2, workInProgress2, Component, props, secondArg, nextRenderLanes) {
+      function renderWithHooks(current2, workInProgress2, Component2, props, secondArg, nextRenderLanes) {
         renderLanes = nextRenderLanes;
         currentlyRenderingFiber = workInProgress2;
         hookTypesDev = null !== current2 ? current2._debugHookTypes : null;
         hookTypesUpdateIndexDev = -1;
         ignorePreviousDependencies = null !== current2 && current2.type !== workInProgress2.type;
-        if ("[object AsyncFunction]" === Object.prototype.toString.call(Component) || "[object AsyncGeneratorFunction]" === Object.prototype.toString.call(Component))
+        if ("[object AsyncFunction]" === Object.prototype.toString.call(Component2) || "[object AsyncGeneratorFunction]" === Object.prototype.toString.call(Component2))
           nextRenderLanes = getComponentNameFromFiber(currentlyRenderingFiber), didWarnAboutAsyncClientComponent.has(nextRenderLanes) || (didWarnAboutAsyncClientComponent.add(nextRenderLanes), console.error(
             "%s is an async Client Component. Only Server Components can be async at the moment. This error is often caused by accidentally adding `'use client'` to a module that was originally written for the server.",
             null === nextRenderLanes ? "An unknown Component" : "<" + nextRenderLanes + ">"
@@ -6908,11 +6908,11 @@ var require_react_dom_client_development = __commonJS({
         workInProgress2.lanes = 0;
         ReactSharedInternals.H = null !== current2 && null !== current2.memoizedState ? HooksDispatcherOnUpdateInDEV : null !== hookTypesDev ? HooksDispatcherOnMountWithHookTypesInDEV : HooksDispatcherOnMountInDEV;
         shouldDoubleInvokeUserFnsInHooksDEV = nextRenderLanes = (workInProgress2.mode & StrictLegacyMode) !== NoMode;
-        var children = callComponentInDEV(Component, props, secondArg);
+        var children = callComponentInDEV(Component2, props, secondArg);
         shouldDoubleInvokeUserFnsInHooksDEV = false;
         didScheduleRenderPhaseUpdateDuringThisPass && (children = renderWithHooksAgain(
           workInProgress2,
-          Component,
+          Component2,
           props,
           secondArg
         ));
@@ -6921,7 +6921,7 @@ var require_react_dom_client_development = __commonJS({
           try {
             children = renderWithHooksAgain(
               workInProgress2,
-              Component,
+              Component2,
               props,
               secondArg
             );
@@ -6960,7 +6960,7 @@ var require_react_dom_client_development = __commonJS({
           "`use` was called from inside a try/catch block. This is not allowed and can lead to unexpected behavior. To handle errors triggered by `use`, wrap your component in a error boundary."
         )));
       }
-      function renderWithHooksAgain(workInProgress2, Component, props, secondArg) {
+      function renderWithHooksAgain(workInProgress2, Component2, props, secondArg) {
         currentlyRenderingFiber = workInProgress2;
         var numberOfReRenders = 0;
         do {
@@ -6983,7 +6983,7 @@ var require_react_dom_client_development = __commonJS({
           }
           hookTypesUpdateIndexDev = -1;
           ReactSharedInternals.H = HooksDispatcherOnRerenderInDEV;
-          children = callComponentInDEV(Component, props, secondArg);
+          children = callComponentInDEV(Component2, props, secondArg);
         } while (didScheduleRenderPhaseUpdateDuringThisPass);
         return children;
       }
@@ -8204,17 +8204,17 @@ var require_react_dom_client_development = __commonJS({
           null
         ));
       }
-      function resolveClassComponentProps(Component, baseProps) {
+      function resolveClassComponentProps(Component2, baseProps) {
         var newProps = baseProps;
         if ("ref" in baseProps) {
           newProps = {};
           for (var propName in baseProps)
             "ref" !== propName && (newProps[propName] = baseProps[propName]);
         }
-        if (Component = Component.defaultProps) {
+        if (Component2 = Component2.defaultProps) {
           newProps === baseProps && (newProps = assign({}, newProps));
-          for (var _propName in Component)
-            void 0 === newProps[_propName] && (newProps[_propName] = Component[_propName]);
+          for (var _propName in Component2)
+            void 0 === newProps[_propName] && (newProps[_propName] = Component2[_propName]);
         }
         return newProps;
       }
@@ -8443,8 +8443,8 @@ var require_react_dom_client_development = __commonJS({
           renderLanes2
         );
       }
-      function updateForwardRef(current2, workInProgress2, Component, nextProps, renderLanes2) {
-        Component = Component.render;
+      function updateForwardRef(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+        Component2 = Component2.render;
         var ref = workInProgress2.ref;
         if ("ref" in nextProps) {
           var propsWithoutRef = {};
@@ -8455,7 +8455,7 @@ var require_react_dom_client_development = __commonJS({
         nextProps = renderWithHooks(
           current2,
           workInProgress2,
-          Component,
+          Component2,
           propsWithoutRef,
           ref,
           renderLanes2
@@ -8468,19 +8468,19 @@ var require_react_dom_client_development = __commonJS({
         reconcileChildren(current2, workInProgress2, nextProps, renderLanes2);
         return workInProgress2.child;
       }
-      function updateMemoComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
+      function updateMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
         if (null === current2) {
-          var type = Component.type;
-          if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component.compare)
-            return Component = resolveFunctionForHotReloading(type), workInProgress2.tag = 15, workInProgress2.type = Component, validateFunctionComponentInDev(workInProgress2, type), updateSimpleMemoComponent(
+          var type = Component2.type;
+          if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component2.compare)
+            return Component2 = resolveFunctionForHotReloading(type), workInProgress2.tag = 15, workInProgress2.type = Component2, validateFunctionComponentInDev(workInProgress2, type), updateSimpleMemoComponent(
               current2,
               workInProgress2,
-              Component,
+              Component2,
               nextProps,
               renderLanes2
             );
           current2 = createFiberFromTypeAndProps(
-            Component.type,
+            Component2.type,
             null,
             nextProps,
             workInProgress2,
@@ -8494,9 +8494,9 @@ var require_react_dom_client_development = __commonJS({
         type = current2.child;
         if (!checkScheduledUpdateOrContext(current2, renderLanes2)) {
           var prevProps = type.memoizedProps;
-          Component = Component.compare;
-          Component = null !== Component ? Component : shallowEqual;
-          if (Component(prevProps, nextProps) && current2.ref === workInProgress2.ref)
+          Component2 = Component2.compare;
+          Component2 = null !== Component2 ? Component2 : shallowEqual;
+          if (Component2(prevProps, nextProps) && current2.ref === workInProgress2.ref)
             return bailoutOnAlreadyFinishedWork(
               current2,
               workInProgress2,
@@ -8509,7 +8509,7 @@ var require_react_dom_client_development = __commonJS({
         current2.return = workInProgress2;
         return workInProgress2.child = current2;
       }
-      function updateSimpleMemoComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
+      function updateSimpleMemoComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
         if (null !== current2) {
           var prevProps = current2.memoizedProps;
           if (shallowEqual(prevProps, nextProps) && current2.ref === workInProgress2.ref && workInProgress2.type === current2.type)
@@ -8521,7 +8521,7 @@ var require_react_dom_client_development = __commonJS({
         return updateFunctionComponent(
           current2,
           workInProgress2,
-          Component,
+          Component2,
           nextProps,
           renderLanes2
         );
@@ -8711,9 +8711,9 @@ var require_react_dom_client_development = __commonJS({
             workInProgress2.flags |= 4194816;
         }
       }
-      function updateFunctionComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
-        if (Component.prototype && "function" === typeof Component.prototype.render) {
-          var componentName2 = getComponentNameFromType(Component) || "Unknown";
+      function updateFunctionComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
+        if (Component2.prototype && "function" === typeof Component2.prototype.render) {
+          var componentName2 = getComponentNameFromType(Component2) || "Unknown";
           didWarnAboutBadClass[componentName2] || (console.error(
             "The <%s /> component appears to have a render method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.",
             componentName2,
@@ -8724,15 +8724,15 @@ var require_react_dom_client_development = __commonJS({
           workInProgress2,
           null
         );
-        null === current2 && (validateFunctionComponentInDev(workInProgress2, workInProgress2.type), Component.contextTypes && (componentName2 = getComponentNameFromType(Component) || "Unknown", didWarnAboutContextTypes[componentName2] || (didWarnAboutContextTypes[componentName2] = true, console.error(
+        null === current2 && (validateFunctionComponentInDev(workInProgress2, workInProgress2.type), Component2.contextTypes && (componentName2 = getComponentNameFromType(Component2) || "Unknown", didWarnAboutContextTypes[componentName2] || (didWarnAboutContextTypes[componentName2] = true, console.error(
           "%s uses the legacy contextTypes API which was removed in React 19. Use React.createContext() with React.useContext() instead. (https://react.dev/link/legacy-context)",
           componentName2
         ))));
         prepareToReadContext(workInProgress2);
-        Component = renderWithHooks(
+        Component2 = renderWithHooks(
           current2,
           workInProgress2,
-          Component,
+          Component2,
           nextProps,
           void 0,
           renderLanes2
@@ -8742,30 +8742,30 @@ var require_react_dom_client_development = __commonJS({
           return bailoutHooks(current2, workInProgress2, renderLanes2), bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
         isHydrating && nextProps && pushMaterializedTreeId(workInProgress2);
         workInProgress2.flags |= 1;
-        reconcileChildren(current2, workInProgress2, Component, renderLanes2);
+        reconcileChildren(current2, workInProgress2, Component2, renderLanes2);
         return workInProgress2.child;
       }
-      function replayFunctionComponent(current2, workInProgress2, nextProps, Component, secondArg, renderLanes2) {
+      function replayFunctionComponent(current2, workInProgress2, nextProps, Component2, secondArg, renderLanes2) {
         prepareToReadContext(workInProgress2);
         hookTypesUpdateIndexDev = -1;
         ignorePreviousDependencies = null !== current2 && current2.type !== workInProgress2.type;
         workInProgress2.updateQueue = null;
         nextProps = renderWithHooksAgain(
           workInProgress2,
-          Component,
+          Component2,
           nextProps,
           secondArg
         );
         finishRenderingHooks(current2, workInProgress2);
-        Component = checkDidRenderIdHook();
+        Component2 = checkDidRenderIdHook();
         if (null !== current2 && !didReceiveUpdate)
           return bailoutHooks(current2, workInProgress2, renderLanes2), bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
-        isHydrating && Component && pushMaterializedTreeId(workInProgress2);
+        isHydrating && Component2 && pushMaterializedTreeId(workInProgress2);
         workInProgress2.flags |= 1;
         reconcileChildren(current2, workInProgress2, nextProps, renderLanes2);
         return workInProgress2.child;
       }
-      function updateClassComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
+      function updateClassComponent(current2, workInProgress2, Component2, nextProps, renderLanes2) {
         switch (shouldErrorImpl(workInProgress2)) {
           case false:
             var _instance = workInProgress2.stateNode, state = new workInProgress2.type(
@@ -8797,18 +8797,18 @@ var require_react_dom_client_development = __commonJS({
         prepareToReadContext(workInProgress2);
         if (null === workInProgress2.stateNode) {
           state = emptyContextObject;
-          _instance = Component.contextType;
-          "contextType" in Component && null !== _instance && (void 0 === _instance || _instance.$$typeof !== REACT_CONTEXT_TYPE) && !didWarnAboutInvalidateContextType.has(Component) && (didWarnAboutInvalidateContextType.add(Component), lane = void 0 === _instance ? " However, it is set to undefined. This can be caused by a typo or by mixing up named and default imports. This can also happen due to a circular dependency, so try moving the createContext() call to a separate file." : "object" !== typeof _instance ? " However, it is set to a " + typeof _instance + "." : _instance.$$typeof === REACT_CONSUMER_TYPE ? " Did you accidentally pass the Context.Consumer instead?" : " However, it is set to an object with keys {" + Object.keys(_instance).join(", ") + "}.", console.error(
+          _instance = Component2.contextType;
+          "contextType" in Component2 && null !== _instance && (void 0 === _instance || _instance.$$typeof !== REACT_CONTEXT_TYPE) && !didWarnAboutInvalidateContextType.has(Component2) && (didWarnAboutInvalidateContextType.add(Component2), lane = void 0 === _instance ? " However, it is set to undefined. This can be caused by a typo or by mixing up named and default imports. This can also happen due to a circular dependency, so try moving the createContext() call to a separate file." : "object" !== typeof _instance ? " However, it is set to a " + typeof _instance + "." : _instance.$$typeof === REACT_CONSUMER_TYPE ? " Did you accidentally pass the Context.Consumer instead?" : " However, it is set to an object with keys {" + Object.keys(_instance).join(", ") + "}.", console.error(
             "%s defines an invalid contextType. contextType should point to the Context object returned by React.createContext().%s",
-            getComponentNameFromType(Component) || "Component",
+            getComponentNameFromType(Component2) || "Component",
             lane
           ));
           "object" === typeof _instance && null !== _instance && (state = readContext(_instance));
-          _instance = new Component(nextProps, state);
+          _instance = new Component2(nextProps, state);
           if (workInProgress2.mode & StrictLegacyMode) {
             setIsStrictModeForDevtools(true);
             try {
-              _instance = new Component(nextProps, state);
+              _instance = new Component2(nextProps, state);
             } finally {
               setIsStrictModeForDevtools(false);
             }
@@ -8818,20 +8818,20 @@ var require_react_dom_client_development = __commonJS({
           workInProgress2.stateNode = _instance;
           _instance._reactInternals = workInProgress2;
           _instance._reactInternalInstance = fakeInternalInstance;
-          "function" === typeof Component.getDerivedStateFromProps && null === state && (state = getComponentNameFromType(Component) || "Component", didWarnAboutUninitializedState.has(state) || (didWarnAboutUninitializedState.add(state), console.error(
+          "function" === typeof Component2.getDerivedStateFromProps && null === state && (state = getComponentNameFromType(Component2) || "Component", didWarnAboutUninitializedState.has(state) || (didWarnAboutUninitializedState.add(state), console.error(
             "`%s` uses `getDerivedStateFromProps` but its initial state is %s. This is not recommended. Instead, define the initial state by assigning an object to `this.state` in the constructor of `%s`. This ensures that `getDerivedStateFromProps` arguments have a consistent shape.",
             state,
             null === _instance.state ? "null" : "undefined",
             state
           )));
-          if ("function" === typeof Component.getDerivedStateFromProps || "function" === typeof _instance.getSnapshotBeforeUpdate) {
+          if ("function" === typeof Component2.getDerivedStateFromProps || "function" === typeof _instance.getSnapshotBeforeUpdate) {
             var foundWillUpdateName = lane = state = null;
             "function" === typeof _instance.componentWillMount && true !== _instance.componentWillMount.__suppressDeprecationWarning ? state = "componentWillMount" : "function" === typeof _instance.UNSAFE_componentWillMount && (state = "UNSAFE_componentWillMount");
             "function" === typeof _instance.componentWillReceiveProps && true !== _instance.componentWillReceiveProps.__suppressDeprecationWarning ? lane = "componentWillReceiveProps" : "function" === typeof _instance.UNSAFE_componentWillReceiveProps && (lane = "UNSAFE_componentWillReceiveProps");
             "function" === typeof _instance.componentWillUpdate && true !== _instance.componentWillUpdate.__suppressDeprecationWarning ? foundWillUpdateName = "componentWillUpdate" : "function" === typeof _instance.UNSAFE_componentWillUpdate && (foundWillUpdateName = "UNSAFE_componentWillUpdate");
             if (null !== state || null !== lane || null !== foundWillUpdateName) {
-              _instance = getComponentNameFromType(Component) || "Component";
-              var newApiName = "function" === typeof Component.getDerivedStateFromProps ? "getDerivedStateFromProps()" : "getSnapshotBeforeUpdate()";
+              _instance = getComponentNameFromType(Component2) || "Component";
+              var newApiName = "function" === typeof Component2.getDerivedStateFromProps ? "getDerivedStateFromProps()" : "getSnapshotBeforeUpdate()";
               didWarnAboutLegacyLifecyclesAndDerivedState.has(_instance) || (didWarnAboutLegacyLifecyclesAndDerivedState.add(_instance), console.error(
                 "Unsafe legacy lifecycles will not be called for components using new component APIs.\n\n%s uses %s but also contains the following legacy lifecycles:%s%s%s\n\nThe above lifecycles should be removed. Learn more about this warning here:\nhttps://react.dev/link/unsafe-component-lifecycles",
                 _instance,
@@ -8843,8 +8843,8 @@ var require_react_dom_client_development = __commonJS({
             }
           }
           _instance = workInProgress2.stateNode;
-          state = getComponentNameFromType(Component) || "Component";
-          _instance.render || (Component.prototype && "function" === typeof Component.prototype.render ? console.error(
+          state = getComponentNameFromType(Component2) || "Component";
+          _instance.render || (Component2.prototype && "function" === typeof Component2.prototype.render ? console.error(
             "No `render` method found on the %s instance: did you accidentally return an object from the constructor?",
             state
           ) : console.error(
@@ -8863,11 +8863,11 @@ var require_react_dom_client_development = __commonJS({
             "contextType was defined as an instance property on %s. Use a static property to define contextType instead.",
             state
           );
-          Component.childContextTypes && !didWarnAboutChildContextTypes.has(Component) && (didWarnAboutChildContextTypes.add(Component), console.error(
+          Component2.childContextTypes && !didWarnAboutChildContextTypes.has(Component2) && (didWarnAboutChildContextTypes.add(Component2), console.error(
             "%s uses the legacy childContextTypes API which was removed in React 19. Use React.createContext() instead. (https://react.dev/link/legacy-context)",
             state
           ));
-          Component.contextTypes && !didWarnAboutContextTypes$1.has(Component) && (didWarnAboutContextTypes$1.add(Component), console.error(
+          Component2.contextTypes && !didWarnAboutContextTypes$1.has(Component2) && (didWarnAboutContextTypes$1.add(Component2), console.error(
             "%s uses the legacy contextTypes API which was removed in React 19. Use React.createContext() with static contextType instead. (https://react.dev/link/legacy-context)",
             state
           ));
@@ -8875,9 +8875,9 @@ var require_react_dom_client_development = __commonJS({
             "%s has a method called componentShouldUpdate(). Did you mean shouldComponentUpdate()? The name is phrased as a question because the function is expected to return a value.",
             state
           );
-          Component.prototype && Component.prototype.isPureReactComponent && "undefined" !== typeof _instance.shouldComponentUpdate && console.error(
+          Component2.prototype && Component2.prototype.isPureReactComponent && "undefined" !== typeof _instance.shouldComponentUpdate && console.error(
             "%s has a method called shouldComponentUpdate(). shouldComponentUpdate should not be used when extending React.PureComponent. Please extend React.Component if shouldComponentUpdate is used.",
-            getComponentNameFromType(Component) || "A pure component"
+            getComponentNameFromType(Component2) || "A pure component"
           );
           "function" === typeof _instance.componentDidUnmount && console.error(
             "%s has a method called componentDidUnmount(). But there is no such lifecycle method. Did you mean componentWillUnmount()?",
@@ -8905,9 +8905,9 @@ var require_react_dom_client_development = __commonJS({
             state,
             state
           );
-          "function" !== typeof _instance.getSnapshotBeforeUpdate || "function" === typeof _instance.componentDidUpdate || didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.has(Component) || (didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.add(Component), console.error(
+          "function" !== typeof _instance.getSnapshotBeforeUpdate || "function" === typeof _instance.componentDidUpdate || didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.has(Component2) || (didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate.add(Component2), console.error(
             "%s: getSnapshotBeforeUpdate() should be used with componentDidUpdate(). This component defines getSnapshotBeforeUpdate() only.",
-            getComponentNameFromType(Component)
+            getComponentNameFromType(Component2)
           ));
           "function" === typeof _instance.getDerivedStateFromProps && console.error(
             "%s: getDerivedStateFromProps() is defined as an instance method and will be ignored. Instead, declare it as a static method.",
@@ -8917,12 +8917,12 @@ var require_react_dom_client_development = __commonJS({
             "%s: getDerivedStateFromError() is defined as an instance method and will be ignored. Instead, declare it as a static method.",
             state
           );
-          "function" === typeof Component.getSnapshotBeforeUpdate && console.error(
+          "function" === typeof Component2.getSnapshotBeforeUpdate && console.error(
             "%s: getSnapshotBeforeUpdate() is defined as a static method and will be ignored. Instead, declare it as an instance method.",
             state
           );
           (lane = _instance.state) && ("object" !== typeof lane || isArrayImpl(lane)) && console.error("%s.state: must be set to an object or null", state);
-          "function" === typeof _instance.getChildContext && "object" !== typeof Component.childContextTypes && console.error(
+          "function" === typeof _instance.getChildContext && "object" !== typeof Component2.childContextTypes && console.error(
             "%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().",
             state
           );
@@ -8931,9 +8931,9 @@ var require_react_dom_client_development = __commonJS({
           _instance.state = workInProgress2.memoizedState;
           _instance.refs = {};
           initializeUpdateQueue(workInProgress2);
-          state = Component.contextType;
+          state = Component2.contextType;
           _instance.context = "object" === typeof state && null !== state ? readContext(state) : emptyContextObject;
-          _instance.state === nextProps && (state = getComponentNameFromType(Component) || "Component", didWarnAboutDirectlyAssigningPropsToState.has(state) || (didWarnAboutDirectlyAssigningPropsToState.add(state), console.error(
+          _instance.state === nextProps && (state = getComponentNameFromType(Component2) || "Component", didWarnAboutDirectlyAssigningPropsToState.has(state) || (didWarnAboutDirectlyAssigningPropsToState.add(state), console.error(
             "%s: It is not recommended to assign props directly to state because updates to props won't be reflected in state. In most cases, it is better to use props directly.",
             state
           )));
@@ -8946,14 +8946,14 @@ var require_react_dom_client_development = __commonJS({
             _instance
           );
           _instance.state = workInProgress2.memoizedState;
-          state = Component.getDerivedStateFromProps;
+          state = Component2.getDerivedStateFromProps;
           "function" === typeof state && (applyDerivedStateFromProps(
             workInProgress2,
-            Component,
+            Component2,
             state,
             nextProps
           ), _instance.state = workInProgress2.memoizedState);
-          "function" === typeof Component.getDerivedStateFromProps || "function" === typeof _instance.getSnapshotBeforeUpdate || "function" !== typeof _instance.UNSAFE_componentWillMount && "function" !== typeof _instance.componentWillMount || (state = _instance.state, "function" === typeof _instance.componentWillMount && _instance.componentWillMount(), "function" === typeof _instance.UNSAFE_componentWillMount && _instance.UNSAFE_componentWillMount(), state !== _instance.state && (console.error(
+          "function" === typeof Component2.getDerivedStateFromProps || "function" === typeof _instance.getSnapshotBeforeUpdate || "function" !== typeof _instance.UNSAFE_componentWillMount && "function" !== typeof _instance.componentWillMount || (state = _instance.state, "function" === typeof _instance.componentWillMount && _instance.componentWillMount(), "function" === typeof _instance.UNSAFE_componentWillMount && _instance.UNSAFE_componentWillMount(), state !== _instance.state && (console.error(
             "%s.componentWillMount(): Assigning directly to this.state is deprecated (except inside a component's constructor). Use setState instead.",
             getComponentNameFromFiber(workInProgress2) || "Component"
           ), classComponentUpdater.enqueueReplaceState(
@@ -8967,13 +8967,13 @@ var require_react_dom_client_development = __commonJS({
         } else if (null === current2) {
           _instance = workInProgress2.stateNode;
           var unresolvedOldProps = workInProgress2.memoizedProps;
-          lane = resolveClassComponentProps(Component, unresolvedOldProps);
+          lane = resolveClassComponentProps(Component2, unresolvedOldProps);
           _instance.props = lane;
           var oldContext = _instance.context;
-          foundWillUpdateName = Component.contextType;
+          foundWillUpdateName = Component2.contextType;
           state = emptyContextObject;
           "object" === typeof foundWillUpdateName && null !== foundWillUpdateName && (state = readContext(foundWillUpdateName));
-          newApiName = Component.getDerivedStateFromProps;
+          newApiName = Component2.getDerivedStateFromProps;
           foundWillUpdateName = "function" === typeof newApiName || "function" === typeof _instance.getSnapshotBeforeUpdate;
           unresolvedOldProps = workInProgress2.pendingProps !== unresolvedOldProps;
           foundWillUpdateName || "function" !== typeof _instance.UNSAFE_componentWillReceiveProps && "function" !== typeof _instance.componentWillReceiveProps || (unresolvedOldProps || oldContext !== state) && callComponentWillReceiveProps(
@@ -8990,12 +8990,12 @@ var require_react_dom_client_development = __commonJS({
           oldContext = workInProgress2.memoizedState;
           unresolvedOldProps || oldState !== oldContext || hasForceUpdate ? ("function" === typeof newApiName && (applyDerivedStateFromProps(
             workInProgress2,
-            Component,
+            Component2,
             newApiName,
             nextProps
           ), oldContext = workInProgress2.memoizedState), (lane = hasForceUpdate || checkShouldComponentUpdate(
             workInProgress2,
-            Component,
+            Component2,
             lane,
             nextProps,
             oldState,
@@ -9006,14 +9006,14 @@ var require_react_dom_client_development = __commonJS({
           _instance = workInProgress2.stateNode;
           cloneUpdateQueue(current2, workInProgress2);
           state = workInProgress2.memoizedProps;
-          foundWillUpdateName = resolveClassComponentProps(Component, state);
+          foundWillUpdateName = resolveClassComponentProps(Component2, state);
           _instance.props = foundWillUpdateName;
           newApiName = workInProgress2.pendingProps;
           oldState = _instance.context;
-          oldContext = Component.contextType;
+          oldContext = Component2.contextType;
           lane = emptyContextObject;
           "object" === typeof oldContext && null !== oldContext && (lane = readContext(oldContext));
-          unresolvedOldProps = Component.getDerivedStateFromProps;
+          unresolvedOldProps = Component2.getDerivedStateFromProps;
           (oldContext = "function" === typeof unresolvedOldProps || "function" === typeof _instance.getSnapshotBeforeUpdate) || "function" !== typeof _instance.UNSAFE_componentWillReceiveProps && "function" !== typeof _instance.componentWillReceiveProps || (state !== newApiName || oldState !== lane) && callComponentWillReceiveProps(
             workInProgress2,
             _instance,
@@ -9028,12 +9028,12 @@ var require_react_dom_client_development = __commonJS({
           var newState = workInProgress2.memoizedState;
           state !== newApiName || oldState !== newState || hasForceUpdate || null !== current2 && null !== current2.dependencies && checkIfContextChanged(current2.dependencies) ? ("function" === typeof unresolvedOldProps && (applyDerivedStateFromProps(
             workInProgress2,
-            Component,
+            Component2,
             unresolvedOldProps,
             nextProps
           ), newState = workInProgress2.memoizedState), (foundWillUpdateName = hasForceUpdate || checkShouldComponentUpdate(
             workInProgress2,
-            Component,
+            Component2,
             foundWillUpdateName,
             nextProps,
             oldState,
@@ -9051,9 +9051,9 @@ var require_react_dom_client_development = __commonJS({
         if (lane || state) {
           lane = workInProgress2.stateNode;
           setCurrentFiber(workInProgress2);
-          if (state && "function" !== typeof Component.getDerivedStateFromError)
-            Component = null, profilerStartTime = -1;
-          else if (Component = callRenderInDEV(lane), workInProgress2.mode & StrictLegacyMode) {
+          if (state && "function" !== typeof Component2.getDerivedStateFromError)
+            Component2 = null, profilerStartTime = -1;
+          else if (Component2 = callRenderInDEV(lane), workInProgress2.mode & StrictLegacyMode) {
             setIsStrictModeForDevtools(true);
             try {
               callRenderInDEV(lane);
@@ -9070,9 +9070,9 @@ var require_react_dom_client_development = __commonJS({
           ), workInProgress2.child = reconcileChildFibers(
             workInProgress2,
             null,
-            Component,
+            Component2,
             renderLanes2
-          )) : reconcileChildren(current2, workInProgress2, Component, renderLanes2);
+          )) : reconcileChildren(current2, workInProgress2, Component2, renderLanes2);
           workInProgress2.memoizedState = lane.state;
           current2 = workInProgress2.child;
         } else
@@ -9094,19 +9094,19 @@ var require_react_dom_client_development = __commonJS({
         reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
         return workInProgress2.child;
       }
-      function validateFunctionComponentInDev(workInProgress2, Component) {
-        Component && Component.childContextTypes && console.error(
+      function validateFunctionComponentInDev(workInProgress2, Component2) {
+        Component2 && Component2.childContextTypes && console.error(
           "childContextTypes cannot be defined on a function component.\n  %s.childContextTypes = ...",
-          Component.displayName || Component.name || "Component"
+          Component2.displayName || Component2.name || "Component"
         );
-        "function" === typeof Component.getDerivedStateFromProps && (workInProgress2 = getComponentNameFromType(Component) || "Unknown", didWarnAboutGetDerivedStateOnFunctionComponent[workInProgress2] || (console.error(
+        "function" === typeof Component2.getDerivedStateFromProps && (workInProgress2 = getComponentNameFromType(Component2) || "Unknown", didWarnAboutGetDerivedStateOnFunctionComponent[workInProgress2] || (console.error(
           "%s: Function components do not support getDerivedStateFromProps.",
           workInProgress2
         ), didWarnAboutGetDerivedStateOnFunctionComponent[workInProgress2] = true));
-        "object" === typeof Component.contextType && null !== Component.contextType && (Component = getComponentNameFromType(Component) || "Unknown", didWarnAboutContextTypeOnFunctionComponent[Component] || (console.error(
+        "object" === typeof Component2.contextType && null !== Component2.contextType && (Component2 = getComponentNameFromType(Component2) || "Unknown", didWarnAboutContextTypeOnFunctionComponent[Component2] || (console.error(
           "%s: Function components do not support contextType.",
-          Component
-        ), didWarnAboutContextTypeOnFunctionComponent[Component] = true));
+          Component2
+        ), didWarnAboutContextTypeOnFunctionComponent[Component2] = true));
       }
       function mountSuspenseOffscreenState(renderLanes2) {
         return { baseLanes: renderLanes2, cachePool: getSuspendedCache() };
@@ -18373,8 +18373,8 @@ var require_react_dom_client_development = __commonJS({
         }
         return true;
       }
-      function attemptReplayContinuousQueuedEventInMap(queuedEvent, key, map) {
-        attemptReplayContinuousQueuedEvent(queuedEvent) && map.delete(key);
+      function attemptReplayContinuousQueuedEventInMap(queuedEvent, key, map2) {
+        attemptReplayContinuousQueuedEvent(queuedEvent) && map2.delete(key);
       }
       function replayUnblockedEvents() {
         hasScheduledReplayAttempt = false;
@@ -18513,14 +18513,14 @@ var require_react_dom_client_development = __commonJS({
         ));
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var Scheduler = require_scheduler(), React = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+      var Scheduler = require_scheduler(), React2 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
       /* @__PURE__ */ Symbol.for("react.scope");
       var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
       /* @__PURE__ */ Symbol.for("react.legacy_hidden");
       /* @__PURE__ */ Symbol.for("react.tracing_marker");
       var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
       /* @__PURE__ */ Symbol.for("react.view_transition");
-      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
         pending: false,
         data: null,
         method: null,
@@ -19759,11 +19759,11 @@ var require_react_dom_client_development = __commonJS({
         pendingLegacyContextWarning = /* @__PURE__ */ new Map();
       };
       var callComponent = {
-        react_stack_bottom_frame: function(Component, props, secondArg) {
+        react_stack_bottom_frame: function(Component2, props, secondArg) {
           var wasRendering = isRendering;
           isRendering = true;
           try {
-            return Component(props, secondArg);
+            return Component2(props, secondArg);
           } finally {
             isRendering = wasRendering;
           }
@@ -21308,7 +21308,7 @@ var require_react_dom_client_development = __commonJS({
         }
       };
       (function() {
-        var isomorphicReactPackageVersion = React.version;
+        var isomorphicReactPackageVersion = React2.version;
         if ("19.2.6" !== isomorphicReactPackageVersion)
           throw Error(
             'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.6\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21662,18 +21662,18 @@ var require_react_jsx_runtime_development = __commonJS({
       function isValidElement(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
       }
-      var React = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+      var React2 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
         return null;
       };
-      React = {
+      React2 = {
         react_stack_bottom_frame: function(callStackForError) {
           return callStackForError();
         }
       };
       var specialPropKeyWarningShown;
       var didWarnAboutElementRef = {};
-      var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(
-        React,
+      var unknownOwnerDebugStack = React2.react_stack_bottom_frame.bind(
+        React2,
         UnknownOwner
       )();
       var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -21717,6 +21717,264 @@ var require_jsx_runtime = __commonJS({
   }
 });
 
+// node_modules/react/cjs/react-jsx-dev-runtime.development.js
+var require_react_jsx_dev_runtime_development = __commonJS({
+  "node_modules/react/cjs/react-jsx-dev-runtime.development.js"(exports) {
+    "use strict";
+    (function() {
+      function getComponentNameFromType(type) {
+        if (null == type) return null;
+        if ("function" === typeof type)
+          return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+        if ("string" === typeof type) return type;
+        switch (type) {
+          case REACT_FRAGMENT_TYPE:
+            return "Fragment";
+          case REACT_PROFILER_TYPE:
+            return "Profiler";
+          case REACT_STRICT_MODE_TYPE:
+            return "StrictMode";
+          case REACT_SUSPENSE_TYPE:
+            return "Suspense";
+          case REACT_SUSPENSE_LIST_TYPE:
+            return "SuspenseList";
+          case REACT_ACTIVITY_TYPE:
+            return "Activity";
+        }
+        if ("object" === typeof type)
+          switch ("number" === typeof type.tag && console.error(
+            "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
+          ), type.$$typeof) {
+            case REACT_PORTAL_TYPE:
+              return "Portal";
+            case REACT_CONTEXT_TYPE:
+              return type.displayName || "Context";
+            case REACT_CONSUMER_TYPE:
+              return (type._context.displayName || "Context") + ".Consumer";
+            case REACT_FORWARD_REF_TYPE:
+              var innerType = type.render;
+              type = type.displayName;
+              type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+              return type;
+            case REACT_MEMO_TYPE:
+              return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
+            case REACT_LAZY_TYPE:
+              innerType = type._payload;
+              type = type._init;
+              try {
+                return getComponentNameFromType(type(innerType));
+              } catch (x) {
+              }
+          }
+        return null;
+      }
+      function testStringCoercion(value) {
+        return "" + value;
+      }
+      function checkKeyStringCoercion(value) {
+        try {
+          testStringCoercion(value);
+          var JSCompiler_inline_result = false;
+        } catch (e2) {
+          JSCompiler_inline_result = true;
+        }
+        if (JSCompiler_inline_result) {
+          JSCompiler_inline_result = console;
+          var JSCompiler_temp_const = JSCompiler_inline_result.error;
+          var JSCompiler_inline_result$jscomp$0 = "function" === typeof Symbol && Symbol.toStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+          JSCompiler_temp_const.call(
+            JSCompiler_inline_result,
+            "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
+            JSCompiler_inline_result$jscomp$0
+          );
+          return testStringCoercion(value);
+        }
+      }
+      function getTaskName(type) {
+        if (type === REACT_FRAGMENT_TYPE) return "<>";
+        if ("object" === typeof type && null !== type && type.$$typeof === REACT_LAZY_TYPE)
+          return "<...>";
+        try {
+          var name = getComponentNameFromType(type);
+          return name ? "<" + name + ">" : "<...>";
+        } catch (x) {
+          return "<...>";
+        }
+      }
+      function getOwner() {
+        var dispatcher = ReactSharedInternals.A;
+        return null === dispatcher ? null : dispatcher.getOwner();
+      }
+      function UnknownOwner() {
+        return Error("react-stack-top-frame");
+      }
+      function hasValidKey(config) {
+        if (hasOwnProperty.call(config, "key")) {
+          var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+          if (getter && getter.isReactWarning) return false;
+        }
+        return void 0 !== config.key;
+      }
+      function defineKeyPropWarningGetter(props, displayName) {
+        function warnAboutAccessingKey() {
+          specialPropKeyWarningShown || (specialPropKeyWarningShown = true, console.error(
+            "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
+            displayName
+          ));
+        }
+        warnAboutAccessingKey.isReactWarning = true;
+        Object.defineProperty(props, "key", {
+          get: warnAboutAccessingKey,
+          configurable: true
+        });
+      }
+      function elementRefGetterWithDeprecationWarning() {
+        var componentName = getComponentNameFromType(this.type);
+        didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = true, console.error(
+          "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
+        ));
+        componentName = this.props.ref;
+        return void 0 !== componentName ? componentName : null;
+      }
+      function ReactElement(type, key, props, owner, debugStack, debugTask) {
+        var refProp = props.ref;
+        type = {
+          $$typeof: REACT_ELEMENT_TYPE,
+          type,
+          key,
+          props,
+          _owner: owner
+        };
+        null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type, "ref", {
+          enumerable: false,
+          get: elementRefGetterWithDeprecationWarning
+        }) : Object.defineProperty(type, "ref", { enumerable: false, value: null });
+        type._store = {};
+        Object.defineProperty(type._store, "validated", {
+          configurable: false,
+          enumerable: false,
+          writable: true,
+          value: 0
+        });
+        Object.defineProperty(type, "_debugInfo", {
+          configurable: false,
+          enumerable: false,
+          writable: true,
+          value: null
+        });
+        Object.defineProperty(type, "_debugStack", {
+          configurable: false,
+          enumerable: false,
+          writable: true,
+          value: debugStack
+        });
+        Object.defineProperty(type, "_debugTask", {
+          configurable: false,
+          enumerable: false,
+          writable: true,
+          value: debugTask
+        });
+        Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+        return type;
+      }
+      function jsxDEVImpl(type, config, maybeKey, isStaticChildren, debugStack, debugTask) {
+        var children = config.children;
+        if (void 0 !== children)
+          if (isStaticChildren)
+            if (isArrayImpl(children)) {
+              for (isStaticChildren = 0; isStaticChildren < children.length; isStaticChildren++)
+                validateChildKeys(children[isStaticChildren]);
+              Object.freeze && Object.freeze(children);
+            } else
+              console.error(
+                "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
+              );
+          else validateChildKeys(children);
+        if (hasOwnProperty.call(config, "key")) {
+          children = getComponentNameFromType(type);
+          var keys = Object.keys(config).filter(function(k2) {
+            return "key" !== k2;
+          });
+          isStaticChildren = 0 < keys.length ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
+          didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error(
+            'A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />',
+            isStaticChildren,
+            children,
+            keys,
+            children
+          ), didWarnAboutKeySpread[children + isStaticChildren] = true);
+        }
+        children = null;
+        void 0 !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
+        hasValidKey(config) && (checkKeyStringCoercion(config.key), children = "" + config.key);
+        if ("key" in config) {
+          maybeKey = {};
+          for (var propName in config)
+            "key" !== propName && (maybeKey[propName] = config[propName]);
+        } else maybeKey = config;
+        children && defineKeyPropWarningGetter(
+          maybeKey,
+          "function" === typeof type ? type.displayName || type.name || "Unknown" : type
+        );
+        return ReactElement(
+          type,
+          children,
+          maybeKey,
+          getOwner(),
+          debugStack,
+          debugTask
+        );
+      }
+      function validateChildKeys(node2) {
+        isValidElement(node2) ? node2._store && (node2._store.validated = 1) : "object" === typeof node2 && null !== node2 && node2.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node2._payload.status ? isValidElement(node2._payload.value) && node2._payload.value._store && (node2._payload.value._store.validated = 1) : node2._store && (node2._store.validated = 1));
+      }
+      function isValidElement(object) {
+        return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
+      }
+      var React2 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        return null;
+      };
+      React2 = {
+        react_stack_bottom_frame: function(callStackForError) {
+          return callStackForError();
+        }
+      };
+      var specialPropKeyWarningShown;
+      var didWarnAboutElementRef = {};
+      var unknownOwnerDebugStack = React2.react_stack_bottom_frame.bind(
+        React2,
+        UnknownOwner
+      )();
+      var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
+      var didWarnAboutKeySpread = {};
+      exports.Fragment = REACT_FRAGMENT_TYPE;
+      exports.jsxDEV = function(type, config, maybeKey, isStaticChildren) {
+        var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
+        return jsxDEVImpl(
+          type,
+          config,
+          maybeKey,
+          isStaticChildren,
+          trackActualOwner ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
+          trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask
+        );
+      };
+    })();
+  }
+});
+
+// node_modules/react/jsx-dev-runtime.js
+var require_jsx_dev_runtime = __commonJS({
+  "node_modules/react/jsx-dev-runtime.js"(exports, module) {
+    "use strict";
+    if (false) {
+      module.exports = null;
+    } else {
+      module.exports = require_react_jsx_dev_runtime_development();
+    }
+  }
+});
+
 // pip-editor/web/touch-boundary.ts
 function install_touch_boundary(root2) {
   const guard_touch = (event) => {
@@ -21738,7 +21996,7 @@ function install_touch_boundary(root2) {
 }
 
 // pip-editor/web/main.tsx
-var import_react43 = __toESM(require_react(), 1);
+var import_react61 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 
 // pip-editor/pip-host/view/active-space-gestures.ts
@@ -21964,9 +22222,10 @@ var ActiveSpaceStore = class {
     if (current.kind !== "projection" || current.workspace_id !== workspace_id || current.window_id !== window_id) return;
     const workspace_index = this.snapshot.path.findIndex((item) => item.kind === "workspace" && item.workspace_id === workspace_id);
     if (workspace_index < 0 || !projection_ids.length) return;
-    const path = [...this.snapshot.path.slice(0, workspace_index + 1), ...projection_ids.map((projection_id, index) => ({
+    const path = [...this.snapshot.path.slice(0, workspace_index + 1), ...projection_ids.map((projection_id) => ({
+      // 路径项必须与实际注册的 surface 同 ID，否则 pointerdown 会反复切换焦点并重建按钮。
       kind: "projection",
-      id: `projection:${workspace_id}:${window_id}:${index}:${projection_id}`,
+      id: `projection:${workspace_id}:${window_id}:${projection_id}`,
       workspace_id,
       window_id,
       projection_id
@@ -22151,7 +22410,7 @@ function enter_created_projection(store, workspace_id, projection_id) {
   }
   store.enter({
     kind: "projection",
-    id: `projection:${workspace_id}:${projection_id}`,
+    id: `projection:${workspace_id}:${projection_id}:${projection_id}`,
     workspace_id,
     window_id: projection_id,
     projection_id
@@ -22279,25 +22538,25 @@ var createGraph = (nodes, revision = 0) => {
 // pip-editor/pip/traversal.ts
 var MAX_PIP_DEPTH = 64;
 var pipKey = ({ node_id: nodeId, pip_id }) => `${nodeId}\0${pip_id}`;
-var visitPipValueRefs = (object, visit) => {
+var visitPipValueRefs = (object, visit3) => {
   if (object.kind === "ref") {
-    visit(object.target);
+    visit3(object.target);
   }
   if (object.kind === "op") {
-    object.args.forEach((argument) => visitPipValueRefs(argument, visit));
+    object.args.forEach((argument) => visitPipValueRefs(argument, visit3));
   }
 };
-var walkPips = (nodeId, pips, visit, pip_id_parent, depth = 0) => {
+var walkPips = (nodeId, pips, visit3, pip_id_parent, depth = 0) => {
   if (depth > MAX_PIP_DEPTH) {
     throw new Error(`Pip depth exceeds ${MAX_PIP_DEPTH}`);
   }
   for (const pip of pips) {
-    visit(pip, {
+    visit3(pip, {
       node_id: nodeId,
       pip_id: pip.id,
       pip_id_parent
     }, depth);
-    walkPips(nodeId, pip.pips, visit, pip.id, depth + 1);
+    walkPips(nodeId, pip.pips, visit3, pip.id, depth + 1);
   }
 };
 var pipValueRefs = (object) => {
@@ -22571,22 +22830,22 @@ var numeric_levels = [
 ];
 function migrate_fork_levels(value) {
   const result = structuredClone(value);
-  const visit = (item, depth) => {
+  const visit3 = (item, depth) => {
     if (depth > 64) {
       throw new Error("Pip depth exceeds 64");
     }
     if (!item || typeof item !== "object" || Array.isArray(item)) {
       return;
     }
-    const record5 = item;
-    if (typeof record5.fork_level === "number" && Number.isInteger(record5.fork_level) && record5.fork_level >= 0 && record5.fork_level < numeric_levels.length) {
-      record5.fork_level = numeric_levels[record5.fork_level];
+    const record6 = item;
+    if (typeof record6.fork_level === "number" && Number.isInteger(record6.fork_level) && record6.fork_level >= 0 && record6.fork_level < numeric_levels.length) {
+      record6.fork_level = numeric_levels[record6.fork_level];
     }
-    if (Array.isArray(record5.pips)) {
-      record5.pips.forEach((child) => visit(child, depth + 1));
+    if (Array.isArray(record6.pips)) {
+      record6.pips.forEach((child) => visit3(child, depth + 1));
     }
   };
-  visit(result, 0);
+  visit3(result, 0);
   return result;
 }
 
@@ -22711,7 +22970,7 @@ function migrate_graph(source) {
     }
     ids.add(next_id);
   }
-  const visit = (pip, owner_id) => {
+  const visit3 = (pip, owner_id) => {
     const old_id = pip.id;
     if (pip.fork_level === PipForkLevel.NODE) {
       pip.id = migrate_identifier(old_id);
@@ -22730,10 +22989,10 @@ function migrate_graph(source) {
       }
     }
     for (const child of pip.pips) {
-      visit(child, owner_id);
+      visit3(child, owner_id);
     }
   };
-  visit(graph);
+  visit3(graph);
   return graph;
 }
 function migrate_legacy_document(source) {
@@ -23265,13 +23524,13 @@ var screenToWorld = (point, views) => ({
 });
 
 // pip-editor/pip-host/workspace/workspace-store.ts
-var graph_safe_views = (value, root_node_ids, graph) => {
+var graph_safe_views = (value, root_node_ids, nodes) => {
   if (!value || typeof value !== "object" || Array.isArray(value) || value.kind !== "free-layout") return value;
   const views = normalizeFreeLayout(value, root_node_ids);
   for (const frame of Object.values(views.projections)) {
     if (!frame.navigation) continue;
     const navigation2 = normalizeProjectionNavigation(frame.navigation);
-    const missing_index = navigation2.entries.findIndex((entry) => !graphNodes(graph)[entry.projectionNodeId]);
+    const missing_index = navigation2.entries.findIndex((entry) => !nodes[entry.projectionNodeId]);
     if (missing_index < 0) continue;
     const entries = navigation2.entries.slice(0, missing_index);
     if (!entries.length) delete frame.navigation;
@@ -23279,7 +23538,7 @@ var graph_safe_views = (value, root_node_ids, graph) => {
   }
   return views;
 };
-var graph_safe_selections = (values, graph) => values.filter((id) => Boolean(graphNodes(graph)[id]));
+var graph_safe_selections = (values, nodes) => values.filter((id) => Boolean(nodes[id]));
 var WorkspaceSessionStore = class {
   #value;
   #publish;
@@ -23416,15 +23675,16 @@ var WorkspaceSessionStore = class {
     const workspace = this.#workspace(workspaceId);
     const applied = applyPipTx(workspace.graph, patch);
     validators.forEach((validate2) => validate2(applied.pip));
-    const root_ids = workspace.rootNodeIds.filter((id) => graphNodes(applied.pip)[id]);
+    const applied_nodes = graphNodes(applied.pip);
+    const root_ids = workspace.rootNodeIds.filter((id) => applied_nodes[id]);
     const removed_roots = root_ids.length !== workspace.rootNodeIds.length;
     const next = {
       ...workspace,
       graph: applied.pip,
       rootNodeIds: root_ids,
-      views: graph_safe_views(workspace.views, root_ids, applied.pip),
-      selection: graph_safe_selections(workspace.selection, applied.pip),
-      scopedSelections: Object.fromEntries(Object.entries(workspace.scopedSelections ?? {}).map(([id, values]) => [id, graph_safe_selections(values, applied.pip)])),
+      views: graph_safe_views(workspace.views, root_ids, applied_nodes),
+      selection: graph_safe_selections(workspace.selection, applied_nodes),
+      scopedSelections: Object.fromEntries(Object.entries(workspace.scopedSelections ?? {}).map(([id, values]) => [id, graph_safe_selections(values, applied_nodes)])),
       undo: recordHistory ? [...workspace.undo, {
         patch: applied.inverse,
         ...removed_roots ? {
@@ -23440,9 +23700,10 @@ var WorkspaceSessionStore = class {
     const workspace = this.#workspace(workspaceId), applied = result.patch ? applyPipTx(workspace.graph, result.patch) : void 0;
     const graph = applied?.pip ?? workspace.graph;
     validators.forEach((validate2) => validate2(graph));
+    const graph_nodes = graphNodes(graph);
     const roots = [.../* @__PURE__ */ new Set([...workspace.rootNodeIds, ...result.addRootNodeIds ?? []])];
     roots.forEach((id) => {
-      if (!graphNodes(graph)[id])
+      if (!graph_nodes[id])
         throw new Error(`Creator returned unknown root ${id}`);
     });
     const views = normalizeFreeLayout(workspace.views, roots);
@@ -23489,12 +23750,13 @@ var WorkspaceSessionStore = class {
       }
       views = freeViews;
     }
+    const applied_nodes = graphNodes(applied.pip);
     const restored = {
       graph: applied.pip,
       rootNodeIds,
-      views: graph_safe_views(views, rootNodeIds, applied.pip),
-      selection: graph_safe_selections(workspace.selection, applied.pip),
-      scopedSelections: Object.fromEntries(Object.entries(workspace.scopedSelections ?? {}).map(([id, values]) => [id, graph_safe_selections(values, applied.pip)]))
+      views: graph_safe_views(views, rootNodeIds, applied_nodes),
+      selection: graph_safe_selections(workspace.selection, applied_nodes),
+      scopedSelections: Object.fromEntries(Object.entries(workspace.scopedSelections ?? {}).map(([id, values]) => [id, graph_safe_selections(values, applied_nodes)]))
     };
     const next = direction === "undo" ? { ...workspace, ...restored, undo: stack.slice(0, -1), redo: [...workspace.redo, inverse] } : { ...workspace, ...restored, redo: stack.slice(0, -1), undo: [...workspace.undo, inverse] };
     this.#replace(this.#value.map((item) => item.id === workspaceId ? next : item));
@@ -23680,23 +23942,81 @@ var surface_default = {
   item: "surface_item",
   missing: "surface_missing",
   preview: "surface_preview",
-  hint: "surface_hint",
+  placement_status: "surface_placement_status",
   events: "surface_events",
   relations: "surface_relations"
 };
 
 // pip-editor/pip-host/creation/use-placement.tsx
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+var preview_width = 280;
+var preview_height = 180;
+var placement_preview = (surface, target, client_x, client_y) => {
+  const rect = surface.getBoundingClientRect();
+  const scale_x = rect.width / Math.max(1, surface.clientWidth);
+  const scale_y = rect.height / Math.max(1, surface.clientHeight);
+  const width = preview_width * scale_x;
+  const height = preview_height * scale_y;
+  if (!target.projection_id) {
+    const camera = surface.dataset.creationCamera ? JSON.parse(surface.dataset.creationCamera) : void 0;
+    const camera_scale_x = (camera?.scale ?? 1) * scale_x;
+    const camera_scale_y = (camera?.scale ?? 1) * scale_y;
+    return {
+      left: client_x - preview_width * camera_scale_x / 2,
+      top: client_y - preview_height * camera_scale_y / 2,
+      width: preview_width * camera_scale_x,
+      height: preview_height * camera_scale_y
+    };
+  }
+  const local_x = (client_x - rect.left) / Math.max(scale_x, Number.EPSILON);
+  const local_y = (client_y - rect.top) / Math.max(scale_y, Number.EPSILON);
+  const safe_x = Math.max(0, Math.min(local_x, surface.clientWidth - preview_width));
+  const safe_y = Math.max(0, Math.min(local_y, surface.clientHeight - preview_height));
+  return {
+    left: rect.left + safe_x * scale_x,
+    top: rect.top + safe_y * scale_y,
+    width,
+    height
+  };
+};
+var preview_from_elements = (elements, client_x, client_y) => {
+  const candidates = elements.filter((item) => item instanceof HTMLElement && item.hasAttribute("data-creation-surface"));
+  const target_index = placement_target_index(candidates.map((element) => JSON.parse(element.dataset.creationSurface)));
+  const surface = candidates[target_index];
+  if (!surface) return void 0;
+  const target = JSON.parse(surface.dataset.creationSurface);
+  return placement_preview(surface, target, client_x, client_y);
+};
 var editable = (path) => path.some((item) => item instanceof HTMLElement && (item.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(item.tagName)));
 function usePlacement(registry, create, on_error, on_armed_change) {
   const create_ref = (0, import_react3.useRef)(create);
+  const last_pointer = (0, import_react3.useRef)(void 0);
   (0, import_react3.useLayoutEffect)(() => {
     create_ref.current = create;
   });
   const [armed, set_armed] = (0, import_react3.useState)();
-  const [point, set_point] = (0, import_react3.useState)({ x: 0, y: 0 });
+  const [preview, set_preview] = (0, import_react3.useState)();
   (0, import_react3.useEffect)(() => on_armed_change?.(Boolean(armed)), [armed, on_armed_change]);
   (0, import_react3.useEffect)(() => {
+    const track_pointer = (event) => {
+      last_pointer.current = { x: event.clientX, y: event.clientY };
+    };
+    document.addEventListener("pointermove", track_pointer, true);
+    return () => document.removeEventListener("pointermove", track_pointer, true);
+  }, []);
+  (0, import_react3.useEffect)(() => {
+    const show_preview_at_pointer = () => {
+      const pointer = last_pointer.current;
+      if (!pointer) {
+        set_preview(void 0);
+        return;
+      }
+      set_preview(preview_from_elements(
+        document.elementsFromPoint(pointer.x, pointer.y),
+        pointer.x,
+        pointer.y
+      ));
+    };
     const key = (event) => {
       if (event.key === "Escape") {
         set_armed(void 0);
@@ -23707,9 +24027,13 @@ function usePlacement(registry, create, on_error, on_armed_change) {
       if (!matches.length) return;
       event.preventDefault();
       if (matches.length > 1) on_error("\u521B\u5EFA\u5FEB\u6377\u952E\u51B2\u7A81\uFF0C\u4F7F\u7528\u5148\u6CE8\u518C\u7684\u521B\u5EFA\u5668");
+      show_preview_at_pointer();
       set_armed(matches[0].id);
     };
-    const arm = (event) => set_armed(event.detail);
+    const arm = (event) => {
+      show_preview_at_pointer();
+      set_armed(event.detail);
+    };
     document.addEventListener("keydown", key, true);
     document.addEventListener("pip-arm-creator", arm);
     return () => {
@@ -23723,7 +24047,11 @@ function usePlacement(registry, create, on_error, on_armed_change) {
     let handing_off = false;
     let suppress_click = false;
     const move = (event) => {
-      set_point({ x: event.clientX, y: event.clientY });
+      set_preview(preview_from_elements(
+        event.composedPath(),
+        event.clientX,
+        event.clientY
+      ));
       if (start && Math.hypot(start.x - event.clientX, start.y - event.clientY) > 8) {
         const captured = start;
         start = void 0;
@@ -23760,7 +24088,7 @@ function usePlacement(registry, create, on_error, on_armed_change) {
       if (!surface) return;
       const target = JSON.parse(surface.dataset.creationSurface);
       const rect = surface.getBoundingClientRect();
-      const point2 = {
+      const point = {
         x: (event.clientX - rect.left) * surface.clientWidth / rect.width,
         y: (event.clientY - rect.top) * surface.clientHeight / rect.height
       };
@@ -23777,23 +24105,23 @@ function usePlacement(registry, create, on_error, on_armed_change) {
         };
       }
       if (target.projection_id && !target.anchor)
-        target.anchor = { block_id: "root", relative_x: 0, relative_y: 0, offset: { x: point2.x, y: point2.y } };
+        target.anchor = { block_id: "root", relative_x: 0, relative_y: 0, offset: { x: point.x, y: point.y } };
       if (target.projection_id) {
-        const safe_x = Math.max(0, Math.min(point2.x, surface.clientWidth - 280));
-        const safe_y = Math.max(0, Math.min(point2.y, surface.clientHeight - 180));
+        const safe_x = Math.max(0, Math.min(point.x, surface.clientWidth - 280));
+        const safe_y = Math.max(0, Math.min(point.y, surface.clientHeight - 180));
         if (target.anchor) {
-          target.anchor.offset.x += safe_x - point2.x;
-          target.anchor.offset.y += safe_y - point2.y;
+          target.anchor.offset.x += safe_x - point.x;
+          target.anchor.offset.y += safe_y - point.y;
         }
-        point2.x = safe_x;
-        point2.y = safe_y;
+        point.x = safe_x;
+        point.y = safe_y;
       }
       const camera = surface.dataset.creationCamera && JSON.parse(surface.dataset.creationCamera);
       if (camera) {
-        point2.x = (point2.x - camera.x) / camera.scale;
-        point2.y = (point2.y - camera.y) / camera.scale;
+        point.x = (point.x - camera.x) / camera.scale;
+        point.y = (point.y - camera.y) / camera.scale;
       }
-      start = { x: event.clientX, y: event.clientY, target, point: point2, element: path[0], event };
+      start = { x: event.clientX, y: event.clientY, target, point, element: path[0], event };
       event.preventDefault();
       event.stopImmediatePropagation();
     };
@@ -23831,13 +24159,13 @@ function usePlacement(registry, create, on_error, on_armed_change) {
     };
   }, [armed, on_error]);
   return armed ? /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: surface_default.hint, children: "\u70B9\u51FB\u653E\u7F6E\u60F3\u6CD5 \xB7 Esc \u53D6\u6D88" }),
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: surface_default.preview, style: { left: point.x, top: point.y } })
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: surface_default.placement_status, role: "status", children: "\u70B9\u51FB\u653E\u7F6E\u60F3\u6CD5\uFF0CEsc \u53D6\u6D88" }),
+    preview && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: surface_default.preview, style: preview })
   ] }) : null;
 }
 
 // pip-editor/pip-host/creation/use-host-placement.tsx
-function useHostPlacement(registry, store, present, on_error, on_armed_change) {
+function useHostPlacement(registry, store, present, initial_workspace_point, on_error, on_armed_change) {
   const { store: space_store } = useActiveSpace();
   return usePlacement(registry, async (id, target, point) => {
     if (target.workspace_id) {
@@ -23848,7 +24176,13 @@ function useHostPlacement(registry, store, present, on_error, on_armed_change) {
     const scratch = createScratchWorkspace();
     const staging = new WorkspaceSessionStore([scratch], () => {
     });
-    const projection_id = await invoke_creator(staging, registry, scratch.id, id, { x: 160, y: 120 });
+    const projection_id = await invoke_creator(
+      staging,
+      registry,
+      scratch.id,
+      id,
+      initial_workspace_point(point)
+    );
     const created = staging.list()[0];
     store.add(created);
     present(created, point);
@@ -23866,1154 +24200,7 @@ function useHostTheme(theme_mode) {
 }
 
 // pip-editor/pip-host/pip-host.tsx
-var import_react42 = __toESM(require_react(), 1);
-
-// pip-editor/pip-host-io/system-plugin/runtime.ts
-var identity_ref = {
-  node_id: "pip.core.identity",
-  pip_id: "identity"
-};
-var createSystemPluginTypeNode = (id) => ({
-  id,
-  fork_level: PipForkLevel.NODE,
-  pips: [
-    {
-      id: "identity",
-      fork_level: PipForkLevel.PIPE,
-      predicate_value: {
-        predicate: identity_ref,
-        value: { kind: "const", value: id }
-      },
-      pips: []
-    },
-    {
-      id: "type",
-      fork_level: PipForkLevel.PIPE,
-      predicate_value: {
-        predicate: { node_id: "pip.core.type", pip_id: "identity" },
-        value: {
-          kind: "ref",
-          target: {
-            node_id: "pip.core.predicate",
-            pip_id: "identity"
-          }
-        }
-      },
-      pips: []
-    }
-  ]
-});
-var create_instance_node = (id, definition) => ({
-  id,
-  fork_level: PipForkLevel.NODE,
-  pips: [
-    {
-      id: "identity",
-      fork_level: PipForkLevel.PIPE,
-      predicate_value: {
-        predicate: identity_ref,
-        value: { kind: "const", value: id }
-      },
-      pips: []
-    },
-    {
-      id: "type",
-      fork_level: PipForkLevel.PIPE,
-      predicate_value: {
-        predicate: { node_id: "pip.core.type", pip_id: "identity" },
-        value: {
-          kind: "ref",
-          target: {
-            node_id: definition.typeNode.id,
-            pip_id: "identity"
-          }
-        }
-      },
-      pips: []
-    }
-  ]
-});
-var SystemPluginRuntime = class {
-  #registry;
-  #instances = /* @__PURE__ */ new Map();
-  #singleton_ids = /* @__PURE__ */ new Map();
-  #publish;
-  #graph;
-  constructor(registry, publish) {
-    this.#registry = registry;
-    this.#publish = publish;
-    const graph = createCorePipGraph();
-    for (const definition of registry.list()) {
-      setGraphNode(graph, structuredClone(definition.typeNode));
-    }
-    assertPipGraph(graph);
-    this.#graph = graph;
-  }
-  snapshot() {
-    return {
-      graph: this.#graph,
-      instances: [...this.#instances.values()]
-    };
-  }
-  get(instance_id) {
-    return this.#instances.get(instance_id);
-  }
-  ensure(plugin_id, workspace_id, requested_id) {
-    const definition = this.#registry.require(plugin_id);
-    if (definition.scope === "workspace" && !workspace_id) {
-      throw new Error(`System plugin ${plugin_id} requires a workspace`);
-    }
-    const singleton_key = definition.scope === "host" ? `host:${plugin_id}` : `workspace:${workspace_id}:${plugin_id}`;
-    if (definition.instancePolicy === "singleton") {
-      const existing_id = this.#singleton_ids.get(singleton_key);
-      const existing = existing_id ? this.#instances.get(existing_id) : void 0;
-      if (existing) return existing;
-    }
-    if (requested_id && this.#instances.has(requested_id)) {
-      const existing = this.#instances.get(requested_id);
-      if (existing.pluginId !== plugin_id) {
-        throw new Error(`System plugin instance ${requested_id} identity mismatch`);
-      }
-      throw new Error(`Duplicate system plugin instance ${requested_id}`);
-    }
-    const instance_id = requested_id ?? (definition.instancePolicy === "singleton" ? `system.instance.${singleton_key}` : `system.instance.${plugin_id}.${crypto.randomUUID()}`);
-    const instance = {
-      id: instance_id,
-      pluginId: plugin_id,
-      node: create_instance_node(instance_id, definition),
-      scope: definition.scope,
-      ...definition.scope === "workspace" ? { workspaceId: workspace_id } : {},
-      state: structuredClone(definition.createState?.() ?? null)
-    };
-    this.#instances.set(instance_id, instance);
-    if (definition.instancePolicy === "singleton") {
-      this.#singleton_ids.set(singleton_key, instance_id);
-    }
-    this.#replace_graph_node(instance.node);
-    return instance;
-  }
-  setState(instance_id, state) {
-    JSON.stringify(state);
-    const instance = this.#require_instance(instance_id);
-    instance.state = structuredClone(state);
-    this.#publish();
-  }
-  releasePresentation(instance_id) {
-    const instance = this.get(instance_id);
-    if (!instance) return;
-    const definition = this.#registry.require(instance.pluginId);
-    if (definition.instancePolicy === "multiple") {
-      this.#dispose(instance, definition);
-    }
-  }
-  disposeWorkspace(workspace_id) {
-    for (const instance of [...this.#instances.values()]) {
-      if (instance.workspaceId !== workspace_id) continue;
-      this.#dispose(instance, this.#registry.require(instance.pluginId));
-    }
-  }
-  /** 应用会话结束时释放包括 host singleton 在内的全部系统插件资源。 */
-  disposeAll() {
-    const errors = [];
-    for (const instance of [...this.#instances.values()]) {
-      try {
-        this.#dispose(instance, this.#registry.require(instance.pluginId));
-      } catch (error) {
-        errors.push(error);
-      }
-    }
-    return errors;
-  }
-  #dispose(instance, definition) {
-    try {
-      definition.dispose?.(instance);
-    } finally {
-      this.#instances.delete(instance.id);
-      for (const [key, value] of this.#singleton_ids) {
-        if (value === instance.id) this.#singleton_ids.delete(key);
-      }
-      const nodes = { ...graphNodes(this.#graph) };
-      delete nodes[instance.node.id];
-      this.#graph = createGraph(nodes, graphRevision(this.#graph) + 1);
-      this.#publish();
-    }
-  }
-  #replace_graph_node(node2) {
-    this.#graph = createGraph({
-      ...graphNodes(this.#graph),
-      [node2.id]: structuredClone(node2)
-    }, graphRevision(this.#graph) + 1);
-    assertPipGraph(this.#graph);
-    this.#publish();
-  }
-  #require_instance(instance_id) {
-    const instance = this.get(instance_id);
-    if (!instance) {
-      throw new Error(`Unknown system plugin instance ${instance_id}`);
-    }
-    return instance;
-  }
-};
-
-// pip-editor/pip-host-io/plugin-manager/panel.tsx
-var import_react5 = __toESM(require_react(), 1);
-
-// pip-editor/pip-host/view/pip-host.module.css
-var pip_host_default = {
-  shell: "pip_host_shell",
-  panelTitle: "pip_host_panelTitle",
-  layout: "pip_host_layout",
-  workspaceArea: "pip_host_workspaceArea",
-  workspaceAreaBare: "pip_host_workspaceAreaBare",
-  primary: "pip_host_primary",
-  canvasWrap: "pip_host_canvasWrap",
-  canvas: "pip_host_canvas",
-  pipGrid: "pip_host_pipGrid",
-  node: "pip_host_node",
-  workspaceProjectionGrid: "pip_host_workspaceProjectionGrid",
-  workspaceProjection: "pip_host_workspaceProjection",
-  freeViewport: "pip_host_freeViewport",
-  freeWorld: "pip_host_freeWorld",
-  projectionShell: "pip_host_projectionShell",
-  pluginChrome: "pip_host_pluginChrome",
-  projectionNav: "pip_host_projectionNav",
-  projectionCrumbs: "pip_host_projectionCrumbs",
-  semanticViewport: "pip_host_semanticViewport",
-  semanticLayer: "pip_host_semanticLayer",
-  semanticMotion: "pip_host_semanticMotion",
-  semanticTarget: "pip_host_semanticTarget",
-  creationWire: "pip_host_creationWire",
-  cameraControls: "pip_host_cameraControls",
-  modalBackdrop: "pip_host_modalBackdrop",
-  closeDialog: "pip_host_closeDialog",
-  rawPips: "pip_host_rawPips",
-  selected: "pip_host_selected",
-  nodeHeading: "pip_host_nodeHeading",
-  preview: "pip_host_preview",
-  nodeImage: "pip_host_nodeImage",
-  imagePlaceholder: "pip_host_imagePlaceholder",
-  imageError: "pip_host_imageError",
-  fields: "pip_host_fields",
-  orphan: "pip_host_orphan",
-  selectionBox: "pip_host_selectionBox",
-  contextMenu: "pip_host_contextMenu",
-  invalidType: "pip_host_invalidType",
-  panel: "pip_host_panel",
-  preferenceGroup: "pip_host_preferenceGroup",
-  panelCollapsed: "pip_host_panelCollapsed",
-  panelIdentity: "pip_host_panelIdentity",
-  panelActions: "pip_host_panelActions",
-  hint: "pip_host_hint",
-  message: "pip_host_message",
-  sampleLinks: "pip_host_sampleLinks",
-  pluginList: "pip_host_pluginList",
-  empty: "pip_host_empty"
-};
-
-// pip-editor/pip-host-io/plugin-manager/package-lists.tsx
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-function ElementPackageList({
-  disabled,
-  packages,
-  onDisable,
-  onUninstall
-}) {
-  if (!packages.length) {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5B89\u88C5 A3" });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: packages.map((plugin) => {
-    const id = plugin.manifest.packageId;
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: plugin.manifest.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: disabled.has(id) ? "\u5DF2\u7981\u7528" : "" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onDisable(id), children: "\u7981\u7528" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onUninstall(id), children: "\u5378\u8F7D" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: plugin.manifest.elements.map((item) => `${item.id}:${item.purpose}`).join("\u3001") }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
-        id,
-        "@",
-        plugin.manifest.packageVersion
-      ] })
-    ] }, id);
-  }) });
-}
-function NodeTypePackageList({
-  disabled,
-  packages,
-  onDisable,
-  onUninstall
-}) {
-  if (!packages.length) {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5B89\u88C5 A4" });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: packages.map((plugin) => {
-    const id = plugin.manifest.packageId;
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: plugin.manifest.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: disabled.has(id) ? "\u5DF2\u7981\u7528" : "" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onDisable(id), children: "\u7981\u7528" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onUninstall(id), children: "\u5378\u8F7D" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: plugin.manifest.typeNodeIds.join("\u3001") }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
-        id,
-        "@",
-        plugin.manifest.packageVersion
-      ] })
-    ] }, id);
-  }) });
-}
-function NodeMapPackageList({
-  nodeMaps,
-  onOpen
-}) {
-  if (!nodeMaps.length) {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5BFC\u5165 A5\uFF1B\u6838\u5FC3\u4E0D\u4F1A\u81EA\u52A8\u83B7\u5F97\u9886\u57DF\u80FD\u529B\u3002" });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: nodeMaps.map((portable) => {
-    const nodeMap = portable.nodeMap;
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: nodeMap.manifest.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => void onOpen(portable), children: "\u518D\u6253\u5F00" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: nodeMap.manifest.rootNodeIds.join("\u3001") }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
-        nodeMap.manifest.packageId,
-        "@",
-        nodeMap.manifest.packageVersion
-      ] })
-    ] }, portable.contentSha256);
-  }) });
-}
-
-// pip-editor/pip-host-io/plugin-manager/import-status.module.css
-var import_status_default = {
-  importStatus: "import_status_importStatus",
-  importing: "import_status_importing",
-  succeeded: "import_status_succeeded",
-  failed: "import_status_failed"
-};
-
-// pip-editor/pip-host-io/plugin-manager/import-status.tsx
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
-var stateLabel = {
-  pending: "\u7B49\u5F85",
-  importing: "\u5BFC\u5165\u4E2D",
-  succeeded: "\u6210\u529F",
-  failed: "\u5931\u8D25"
-};
-function PluginImportStatus({ batch }) {
-  if (!batch) return null;
-  const completed = batch.files.filter(
-    (file) => ["succeeded", "failed"].includes(file.state)
-  ).length;
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("section", { className: import_status_default.importStatus, "aria-live": "polite", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("header", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { children: "\u5BFC\u5165\u8FDB\u5EA6" }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { children: [
-        completed,
-        "/",
-        batch.files.length
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ol", { children: batch.files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
-      "li",
-      {
-        className: import_status_default[file.state],
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: file.fileName }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: file.layer?.toUpperCase() ?? "PIP" }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: stateLabel[file.state] })
-          ] }),
-          file.message && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { children: file.message })
-        ]
-      },
-      file.id
-    )) })
-  ] });
-}
-
-// pip-editor/pip-host-io/plugin-manager/panel.tsx
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-function PluginManagerPanel({
-  activeWorkspaceId,
-  disabledElements,
-  disabledNodeTypes,
-  elements,
-  importBatch,
-  message,
-  nodeMaps,
-  nodeTypes,
-  onDisableElement,
-  onDisableNodeType,
-  onExport,
-  onExportNative,
-  onInstallFiles,
-  onOpenNodeMap,
-  onUninstallElement,
-  onUninstallNodeType
-}) {
-  const inputId = (0, import_react5.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: pip_host_default.panel, "data-testid": "plugin-manager", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.panelTitle, "data-window-drag": true, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: pip_host_default.panelIdentity, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: "PIP EDITOR I/O" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { children: "A3\u2013A5 \u5206\u5C42\u5305" })
-    ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: pip_host_default.panelActions, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: pip_host_default.primary, htmlFor: inputId, children: "\u5BFC\u5165 .pip" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { disabled: !activeWorkspaceId, onClick: onExport, children: "\u5BFC\u51FA A5" }),
-      onExportNative && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-        "button",
-        {
-          disabled: !activeWorkspaceId,
-          onClick: onExportNative,
-          children: "\u5BFC\u51FA\u539F\u751F\u5305"
-        }
-      )
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-      "input",
-      {
-        id: inputId,
-        type: "file",
-        multiple: true,
-        accept: ".pip,application/vnd.intent-map.pip",
-        hidden: true,
-        onChange: (event) => {
-          const files = event.target.files;
-          if (files?.length) onInstallFiles(files);
-          event.currentTarget.value = "";
-        }
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: pip_host_default.message, "data-testid": "status-message", children: message }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(PluginImportStatus, { batch: importBatch }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
-      "A3 Node Element ",
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u8868\u73B0\u4E0E\u4EA4\u4E92" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-      ElementPackageList,
-      {
-        disabled: disabledElements,
-        packages: elements,
-        onDisable: onDisableElement,
-        onUninstall: onUninstallElement
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
-      "A4 Node Type ",
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u8BED\u4E49\u3001\u547D\u4EE4\u4E0E\u6295\u5F71" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-      NodeTypePackageList,
-      {
-        disabled: disabledNodeTypes,
-        packages: nodeTypes,
-        onDisable: onDisableNodeType,
-        onUninstall: onUninstallNodeType
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
-      "A5 Node Map ",
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u7EAF\u6570\u636E\u4E0E\u4FBF\u643A\u95ED\u5305" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(NodeMapPackageList, { nodeMaps, onOpen: onOpenNodeMap }) })
-  ] });
-}
-
-// pip-editor/pip-host-io/plugin-manager/definition.tsx
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-var servicesFrom = (snapshot2) => snapshot2.services;
-function buildModel(snapshot2) {
-  const services = servicesFrom(snapshot2);
-  const {
-    disabledElements,
-    disabledNodeTypes,
-    elementPackages,
-    elements,
-    importBatch,
-    installFiles,
-    nodeMaps,
-    nodeTypePackages,
-    nodeTypes,
-    openNodeMap,
-    setDisabledElements,
-    setDisabledNodeTypes,
-    setElementPackages,
-    setNodeTypePackages
-  } = services.catalog;
-  return {
-    activeWorkspaceId: snapshot2.workspace?.id,
-    disabledElements,
-    disabledNodeTypes,
-    elements: elementPackages,
-    importBatch,
-    message: services.message,
-    nodeMaps,
-    nodeTypes: nodeTypePackages,
-    onInstallFiles: installFiles,
-    onExport: services.onExport,
-    onExportNative: services.onExportNative,
-    onDisableElement: (id) => {
-      elements.disable(id);
-      setDisabledElements((current) => new Set(current).add(id));
-      services.onMessage(`\u5DF2\u7981\u7528 ${id}\uFF1B\u5237\u65B0\u540E\u6E05\u9664\u5DF2\u6267\u884C\u4EE3\u7801`);
-    },
-    onDisableNodeType: (id) => {
-      try {
-        nodeTypes.disable(id);
-      } finally {
-        setDisabledNodeTypes((current) => new Set(current).add(id));
-      }
-    },
-    onUninstallElement: (id) => {
-      elements.uninstall(id);
-      setElementPackages((current) => current.filter(
-        (item) => item.manifest.packageId !== id
-      ));
-    },
-    onUninstallNodeType: (id) => {
-      nodeTypes.uninstall(id);
-      setNodeTypePackages((current) => current.filter(
-        (item) => item.manifest.packageId !== id
-      ));
-    },
-    onOpenNodeMap: openNodeMap
-  };
-}
-function PluginManagerSystemNode({ model }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PluginManagerPanel, { ...model });
-}
-var PLUGIN_MANAGER_SYSTEM_PLUGIN_ID = "host.plugin-manager";
-var pluginManagerSystemPlugin = {
-  id: PLUGIN_MANAGER_SYSTEM_PLUGIN_ID,
-  typeNode: createSystemPluginTypeNode("pip.host.type.plugin-manager"),
-  label: "\u63D2\u4EF6\u7BA1\u7406\u5668",
-  description: "\u5B89\u88C5\u3001\u7981\u7528\u548C\u5BFC\u51FA PIP",
-  category: "\u7CFB\u7EDF",
-  icon: "\u2699",
-  scope: "host",
-  surfaces: ["host", "workspace"],
-  instancePolicy: "singleton",
-  presentation: "window",
-  window: {
-    role: "standard",
-    coordinate_space: "canvas",
-    chrome: "standard",
-    creatable: true,
-    default_size: { width: 640, height: 720 },
-    resize_mode: "full"
-  },
-  buildModel,
-  Component: PluginManagerSystemNode
-};
-
-// pip-editor/pip-host-io/preferences/startup-panel.module.css
-var startup_panel_default = {
-  list: "startup_panel_list",
-  plugin: "startup_panel_plugin"
-};
-
-// pip-editor/pip-host-io/preferences/startup-panel.tsx
-var import_react6 = __toESM(require_react(), 1);
-
-// pip-editor/pip-host/startup/catalog.ts
-var snapshot = [];
-var listeners = /* @__PURE__ */ new Set();
-var startup_snapshot = () => snapshot;
-var subscribe_startup = (listener) => {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
-};
-function publish_startup(next) {
-  snapshot = next;
-  listeners.forEach((listener) => listener());
-}
-
-// pip-editor/pip-host-io/preferences/startup-panel.tsx
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-function StartupPanel({ choices, auto_load_website, change }) {
-  const plugins = (0, import_react6.useSyncExternalStore)(subscribe_startup, startup_snapshot);
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("fieldset", { className: startup_panel_default.list, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("legend", { children: "\u542F\u52A8\u63D2\u4EF6" }),
-    plugins.map((plugin) => {
-      const choice = choices[plugin.id] ?? {
-        auto_load: plugin.id === "official.website-types" ? auto_load_website : plugin.auto_load,
-        open_workspace: plugin.open_workspace
-      };
-      return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: startup_panel_default.plugin, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { children: plugin.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-            "input",
-            {
-              type: "checkbox",
-              "aria-label": `${plugin.name}\u81EA\u52A8\u52A0\u8F7D`,
-              checked: choice.auto_load,
-              onChange: (event) => change(plugin.id, { ...choice, auto_load: event.target.checked })
-            }
-          ),
-          "\u81EA\u52A8\u52A0\u8F7D"
-        ] }),
-        plugin.workspace && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-            "input",
-            {
-              type: "checkbox",
-              "aria-label": `${plugin.name}\u542F\u52A8\u65F6\u6253\u5F00\u5DE5\u4F5C\u533A`,
-              checked: choice.open_workspace,
-              onChange: (event) => change(plugin.id, { ...choice, open_workspace: event.target.checked })
-            }
-          ),
-          "\u542F\u52A8\u65F6\u6253\u5F00\u5DE5\u4F5C\u533A"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-          "button",
-          {
-            disabled: plugin.state === "loading" || plugin.state === "ready",
-            onClick: () => document.dispatchEvent(new CustomEvent("pip-load-startup", { detail: plugin.id })),
-            children: plugin.state === "ready" ? "\u5DF2\u52A0\u8F7D" : plugin.state === "loading" ? "\u52A0\u8F7D\u4E2D\u2026" : plugin.state === "error" ? "\u91CD\u8BD5\u52A0\u8F7D" : "\u7ACB\u5373\u52A0\u8F7D"
-          }
-        ),
-        plugin.error && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { role: "status", children: plugin.error })
-      ] }, plugin.id);
-    }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "\u914D\u7F6E\u4E0B\u6B21\u542F\u52A8\u751F\u6548\uFF1B\u5173\u95ED\u81EA\u52A8\u52A0\u8F7D\u4E0D\u4F1A\u5220\u9664\u5F53\u524D\u5185\u5BB9\u3002" })
-  ] });
-}
-
-// pip-editor/pip-host-io/preferences/panel.tsx
-var import_react7 = __toESM(require_react(), 1);
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-function PreferencesPanel({
-  startup_plugins = {},
-  on_startup_change,
-  theme_mode,
-  on_theme_change,
-  auto_load_website,
-  on_auto_load_website_change,
-  workspaceOpenMode,
-  onWorkspaceOpenModeChange,
-  companion_default_owner,
-  on_companion_default_owner_change
-}) {
-  const workspaceOpenModeGroup = (0, import_react7.useId)();
-  const companion_owner_group = (0, import_react7.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("section", { className: pip_host_default.panel, "data-testid": "editor-preferences", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: pip_host_default.panelTitle, "data-window-drag": true, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: pip_host_default.panelIdentity, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "PIP EDITOR" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { children: "\u5BBF\u4E3B\u504F\u597D\u8BBE\u7F6E" })
-    ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u5916\u89C2" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        "\u4E3B\u9898",
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
-          "select",
-          {
-            "aria-label": "\u4E3B\u9898",
-            value: theme_mode,
-            onChange: (event) => on_theme_change(event.target.value),
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "dark", children: "\u6DF1\u8272 \xB7 \u661F\u7A7A" }),
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "light", children: "\u6D45\u8272 \xB7 \u6668\u96FE" })
-            ]
-          }
-        )
-      ] })
-    ] }),
-    on_startup_change ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(StartupPanel, { choices: startup_plugins, change: on_startup_change, auto_load_website }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u542F\u52A8" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "input",
-          {
-            type: "checkbox",
-            checked: auto_load_website,
-            onChange: (event) => on_auto_load_website_change(event.target.checked)
-          }
-        ),
-        "\u81EA\u52A8\u52A0\u8F7D\u5B98\u7F51"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: "\u4E0B\u6B21\u542F\u52A8\u65F6\u52A0\u8F7D\u5B98\u7F51 A5 \u53CA\u5176\u5DE5\u4F5C\u7A7A\u95F4\u3002\u663E\u5F0F\u6253\u5F00\u7684 A5 \u4F18\u5148\uFF0C\u5173\u95ED\u6B64\u9879\u4E0D\u4F1A\u5173\u95ED\u5F53\u524D\u5DE5\u4F5C\u7A7A\u95F4\u3002" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u65B0\u5DE5\u4F5C\u533A\u9ED8\u8BA4\u5448\u73B0\u65B9\u5F0F" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "input",
-          {
-            type: "radio",
-            name: workspaceOpenModeGroup,
-            checked: workspaceOpenMode === "tab",
-            onChange: () => onWorkspaceOpenModeChange("tab")
-          }
-        ),
-        "\u56FA\u5B9A Tab"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "input",
-          {
-            type: "radio",
-            name: workspaceOpenModeGroup,
-            checked: workspaceOpenMode === "window",
-            onChange: () => onWorkspaceOpenModeChange("window")
-          }
-        ),
-        "\u5BBF\u4E3B\u8282\u70B9\u7A97\u53E3"
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u65B0\u5EFA\u7A7A\u95F4\u4F34\u4FA3\u9ED8\u8BA4\u5F52\u5C5E" }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "input",
-          {
-            type: "radio",
-            name: companion_owner_group,
-            checked: companion_default_owner === "viewport",
-            onChange: () => on_companion_default_owner_change("viewport")
-          }
-        ),
-        "\u5C4F\u5E55\u89C6\u53E3"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "input",
-          {
-            type: "radio",
-            name: companion_owner_group,
-            checked: companion_default_owner === "focused-space",
-            onChange: () => on_companion_default_owner_change("focused-space")
-          }
-        ),
-        "\u5F53\u524D\u805A\u7126\u7A7A\u95F4"
-      ] })
-    ] })
-  ] });
-}
-
-// pip-editor/pip-host-io/preferences/definition.tsx
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-var buildModel2 = (snapshot2) => {
-  const services = snapshot2.services;
-  return {
-    startup_plugins: services.preferences.snapshot().startup_plugins,
-    on_startup_change: (id, choice) => services.preferences.set_startup_plugin(id, choice),
-    theme_mode: services.preferences.snapshot().theme_mode,
-    on_theme_change: (theme_mode) => services.preferences.set_theme_mode(theme_mode),
-    auto_load_website: services.preferences.snapshot().auto_load_website,
-    on_auto_load_website_change: (enabled) => {
-      services.preferences.set_auto_load_website(enabled);
-    },
-    workspaceOpenMode: services.preferences.snapshot().workspaceOpenMode,
-    onWorkspaceOpenModeChange: (mode) => {
-      services.preferences.setWorkspaceOpenMode(mode);
-    },
-    companion_default_owner: services.preferences.snapshot().companion.default_owner,
-    on_companion_default_owner_change: (owner) => {
-      services.preferences.set_companion_default_owner(owner);
-    }
-  };
-};
-function PreferencesSystemNode({ model }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PreferencesPanel, { ...model });
-}
-var preferencesSystemPlugin = {
-  id: "host.preferences",
-  typeNode: createSystemPluginTypeNode("pip.host.type.preferences"),
-  label: "\u504F\u597D\u8BBE\u7F6E",
-  description: "\u8C03\u6574\u7F16\u8F91\u5668\u5BBF\u4E3B\u7684\u9ED8\u8BA4\u884C\u4E3A",
-  category: "\u7CFB\u7EDF",
-  icon: "\u25C8",
-  scope: "host",
-  surfaces: ["host", "workspace"],
-  instancePolicy: "singleton",
-  presentation: "window",
-  window: {
-    role: "standard",
-    coordinate_space: "canvas",
-    chrome: "standard",
-    creatable: true,
-    default_size: { width: 520, height: 520 },
-    resize_mode: "simple"
-  },
-  buildModel: buildModel2,
-  Component: PreferencesSystemNode
-};
-
-// pip-editor/pip-host/view/space-navigator.tsx
-var import_react8 = __toESM(require_react(), 1);
-
-// pip-editor/pip-host/view/guanguan-context.ts
-var host_space2 = { kind: "host", id: "host" };
-function ordered_navigation_path(snapshot2) {
-  const surfaces = snapshot2?.surfaces ?? [];
-  const by_id = new Map(surfaces.map((surface) => [surface.id, surface]));
-  const depth_of = (surface) => {
-    let depth = 0;
-    let parent = surface.parentId ? by_id.get(surface.parentId) : void 0;
-    while (parent) {
-      depth += 1;
-      parent = parent.parentId ? by_id.get(parent.parentId) : void 0;
-    }
-    return depth;
-  };
-  return surfaces.map((surface) => ({ surface, depth: depth_of(surface) })).sort((left, right) => left.depth - right.depth || left.surface.id.localeCompare(right.surface.id)).map(({ surface }) => surface);
-}
-function build_guanguan_context(snapshot2, service) {
-  const focus_space = snapshot2?.focus ?? host_space2;
-  const workspace_id = focus_space.kind === "host" ? void 0 : focus_space.workspace_id;
-  const source = service.workspaces.find((workspace) => workspace.id === workspace_id);
-  if (!source) {
-    return {
-      focus_space,
-      navigation_path: ordered_navigation_path(snapshot2),
-      gesture_owner: snapshot2?.gesture?.owner,
-      creator_armed: service.creator_armed
-    };
-  }
-  const selected_ids = focus_space.kind === "projection" ? source.scoped_selections[focus_space.window_id] ?? source.selection : source.selection;
-  const active_node = selected_ids[0] ? { node_id: selected_ids[0], pip_id: "identity" } : void 0;
-  return {
-    focus_space,
-    navigation_path: ordered_navigation_path(snapshot2),
-    gesture_owner: snapshot2?.gesture?.owner,
-    creator_armed: service.creator_armed,
-    workspace: {
-      id: source.id,
-      revision: source.revision,
-      node_count: source.node_count,
-      active_node,
-      can_undo: source.can_undo,
-      can_redo: source.can_redo
-    }
-  };
-}
-
-// pip-editor/pip-host/view/guanguan-logo.module.css
-var guanguan_logo_default = {
-  logo: "guanguan_logo_logo",
-  bird: "guanguan_logo_bird",
-  wing: "guanguan_logo_wing"
-};
-
-// pip-editor/pip-host/view/guanguan-logo.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-function GuanguanLogo({ pose = "folded", size = 24 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
-    "svg",
-    {
-      className: guanguan_logo_default.logo,
-      "data-pose": pose,
-      viewBox: "0 0 40 40",
-      width: size,
-      height: size,
-      preserveAspectRatio: "xMidYMid meet",
-      fill: "none",
-      "aria-hidden": "true",
-      focusable: "false",
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-          "rect",
-          {
-            width: "40",
-            height: "40",
-            rx: "11",
-            fill: "var(--guanguan-back, #334E62)"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("g", { className: guanguan_logo_default.bird, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "path",
-            {
-              d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z",
-              fill: "var(--guanguan-body, #F5EFE5)"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("g", { className: guanguan_logo_default.wing, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-              "path",
-              {
-                d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z",
-                fill: "var(--guanguan-wing, #86A5BC)"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-              "path",
-              {
-                d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z",
-                fill: "var(--guanguan-feather, #57788F)"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "path",
-            {
-              d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z",
-              fill: "#40576B"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
-        ] })
-      ]
-    }
-  );
-}
-
-// pip-editor/pip-host/view/space-navigator.module.css
-var space_navigator_default = {
-  navigator: "space_navigator_navigator",
-  compass: "space_navigator_compass",
-  map: "space_navigator_map",
-  left: "space_navigator_left",
-  right: "space_navigator_right",
-  above: "space_navigator_above",
-  below: "space_navigator_below",
-  expandedControls: "space_navigator_expandedControls",
-  paths: "space_navigator_paths",
-  step: "space_navigator_step",
-  pathItem: "space_navigator_pathItem",
-  pathButton: "space_navigator_pathButton",
-  name: "space_navigator_name",
-  pathDescription: "space_navigator_pathDescription",
-  placeholder: "space_navigator_placeholder",
-  current: "space_navigator_current",
-  historyControls: "space_navigator_historyControls",
-  owners: "space_navigator_owners",
-  create: "space_navigator_create"
-};
-
-// pip-editor/pip-host/view/space-history-controls.tsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-function SpaceHistoryControls({ context, service }) {
-  const workspace = context.workspace;
-  const run_history = (direction) => {
-    if (workspace) service.history(workspace.id, direction);
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: space_navigator_default.historyControls, "aria-label": "\u5DE5\u4F5C\u533A\u5386\u53F2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      "button",
-      {
-        type: "button",
-        disabled: !workspace?.can_undo,
-        "aria-label": "\u64A4\u9500\u4E0A\u4E00\u6B65",
-        title: "\u64A4\u9500\u4E0A\u4E00\u6B65",
-        onClick: () => run_history("undo"),
-        children: "\u21B6 \u64A4\u9500"
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      "button",
-      {
-        type: "button",
-        disabled: !workspace?.can_redo,
-        "aria-label": "\u91CD\u505A\u4E0A\u4E00\u6B65",
-        title: "\u91CD\u505A\u4E0A\u4E00\u6B65",
-        onClick: () => run_history("redo"),
-        children: "\u21B7 \u91CD\u505A"
-      }
-    )
-  ] });
-}
-
-// pip-editor/pip-host/view/space-navigator.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var as_space = (surface) => {
-  if (surface.kind === "host") return { kind: "host", id: "host" };
-  if (surface.kind === "workspace") {
-    return {
-      kind: "workspace",
-      id: surface.id,
-      workspace_id: surface.workspace_id
-    };
-  }
-  return {
-    kind: "projection",
-    id: surface.id,
-    workspace_id: surface.workspace_id,
-    window_id: surface.window_id,
-    projection_id: surface.projection_id
-  };
-};
-function SpaceNavigator({
-  collapsed,
-  dragging,
-  owner,
-  panel_placement,
-  service,
-  consume_suppressed_click,
-  on_collapsed_change,
-  on_owner_change
-}) {
-  const space = useActiveSpace();
-  const compass_ref = (0, import_react8.useRef)(null);
-  const open = !collapsed;
-  const owner_surface = owner.kind === "surface" ? space.snapshot?.surfaces.find((item) => item.id === owner.surface_id) : void 0;
-  const context_snapshot = owner_surface && space.snapshot ? { ...space.snapshot, focus: as_space(owner_surface) } : space.snapshot;
-  const context = build_guanguan_context(context_snapshot, service);
-  const surfaces = context.navigation_path;
-  const focus_id = space.snapshot?.focus?.id ?? "host";
-  const by_id = new Map(surfaces.map((surface) => [surface.id, surface]));
-  const focused_surface = by_id.get(focus_id) ?? surfaces.find(
-    (surface) => surface.kind === "projection" && surface.window_id === space.snapshot?.focus?.window_id
-  );
-  const current_surface_id = focused_surface?.id ?? focus_id;
-  const focus = (surface) => {
-    space.store?.focus(as_space(surface));
-    const element = space.store?.surface(surface.id)?.element;
-    if (element) {
-      element.dataset.navigationReveal = "";
-      element.scrollIntoView({
-        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "nearest",
-        inline: "nearest"
-      });
-      setTimeout(() => delete element.dataset.navigationReveal, 420);
-    }
-  };
-  const pose = dragging ? "dragging" : open ? "open" : "folded";
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-    "aside",
-    {
-      className: `${space_navigator_default.navigator} ${space_navigator_default[panel_placement.horizontal]} ${space_navigator_default[panel_placement.vertical]}`,
-      "data-system-presentation": "host.interaction-navigator",
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-          "div",
-          {
-            className: space_navigator_default.map,
-            role: "dialog",
-            "aria-label": "\u7A7A\u95F4\u8DEF\u5F84\u5BFC\u822A",
-            hidden: !open,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: space_navigator_default.paths, children: surfaces.map((surface, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { className: space_navigator_default.step, children: [
-                index > 0 && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("i", { "aria-hidden": "true", children: "\u203A" }),
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { className: space_navigator_default.pathItem, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                    "button",
-                    {
-                      className: `${space_navigator_default.pathButton} ${surface.id === current_surface_id ? space_navigator_default.current : ""}`,
-                      onClick: () => focus(surface),
-                      "aria-current": surface.id === current_surface_id ? "location" : void 0,
-                      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: space_navigator_default.name, children: surface.label })
-                    }
-                  ),
-                  surface.kind === "workspace" && context.workspace?.id === surface.workspace_id ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("small", { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { children: [
-                      "v ",
-                      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("b", { children: context.workspace.revision })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { children: [
-                      "n ",
-                      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("b", { children: context.workspace.node_count })
-                    ] })
-                  ] }) : surface.kind === "host" ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("small", { className: space_navigator_default.pathDescription, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: "\u7A7A\u95F4\u8DEF\u5F84" }) }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("small", { className: space_navigator_default.placeholder, "aria-hidden": "true", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: "v 0" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: "n 0" })
-                  ] })
-                ] })
-              ] }, surface.id)) }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: space_navigator_default.expandedControls, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ScaleControlSlot, { space: context.focus_space }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SpaceHistoryControls, { context, service }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("fieldset", { className: space_navigator_default.owners, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("legend", { children: "\u5F52\u5C5E\u7A7A\u95F4" }),
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                  "button",
-                  {
-                    "aria-pressed": owner.kind === "viewport",
-                    onClick: () => on_owner_change({ kind: "viewport" }),
-                    children: "\u5C4F\u5E55"
-                  }
-                ),
-                surfaces.map((surface) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                  "button",
-                  {
-                    "aria-pressed": owner.kind === "surface" && owner.surface_id === surface.id,
-                    onClick: () => on_owner_change({ kind: "surface", surface_id: surface.id }),
-                    children: surface.label
-                  },
-                  surface.id
-                ))
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: space_navigator_default.create, onClick: () => {
-                const focus_space = context.focus_space;
-                const host = focus_space.kind === "host";
-                document.dispatchEvent(new CustomEvent(
-                  host ? "pip-open-host-creator" : "pip-open-space-creator",
-                  { detail: host ? void 0 : focus_space.workspace_id }
-                ));
-                const compass_rect = compass_ref.current?.getBoundingClientRect();
-                if (compass_rect) {
-                  on_collapsed_change(true, {
-                    x: compass_rect.left + compass_rect.width / 2,
-                    y: compass_rect.top + compass_rect.height / 2
-                  });
-                }
-              }, children: "\uFF0B \u521B\u5EFA" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-          "button",
-          {
-            ref: compass_ref,
-            className: space_navigator_default.compass,
-            "aria-label": open ? "\u5173\u95ED\u7A7A\u95F4\u5BFC\u822A" : "\u6253\u5F00\u7A7A\u95F4\u5BFC\u822A",
-            "aria-expanded": open,
-            "data-companion-drag": true,
-            onClick: (pointer_event) => {
-              if (consume_suppressed_click()) return;
-              const rect = pointer_event.currentTarget.getBoundingClientRect();
-              on_collapsed_change(open, {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-              });
-            },
-            children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GuanguanLogo, { pose, size: 32 })
-          }
-        )
-      ]
-    }
-  );
-}
-
-// pip-editor/pip-host-io/interaction-navigator/definition.tsx
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-function InteractionNavigator({ model }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(SpaceNavigator, { ...model });
-}
-var interactionNavigatorSystemPlugin = {
-  id: "host.interaction-navigator",
-  typeNode: createSystemPluginTypeNode("pip.host.type.interaction-navigator"),
-  label: "\u7A7A\u95F4\u5BFC\u822A",
-  description: "\u663E\u793A\u753B\u5E03\u8DEF\u5F84\u5E76\u7BA1\u7406\u5F53\u524D\u4EA4\u4E92\u7126\u70B9",
-  category: "\u7CFB\u7EDF",
-  icon: "\u233E",
-  scope: "host",
-  surfaces: ["host", "workspace"],
-  instancePolicy: "multiple",
-  presentation: "window",
-  window: {
-    role: "companion",
-    coordinate_space: "viewport",
-    chrome: "companion",
-    creatable: true,
-    default_size: { width: 48, height: 48 }
-  },
-  buildModel: (snapshot2) => snapshot2.services.guanguan_window,
-  Component: InteractionNavigator
-};
+var import_react60 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host-io/system-plugin/presentation-normalization.ts
 var overlay_window = {
@@ -25027,7 +24214,8 @@ function normalize_system_plugin_definition(input) {
   if ("window" in input && input.window) {
     return input;
   }
-  const { defaultWindow: default_window, ...definition } = input;
+  const legacy = input;
+  const { defaultWindow: default_window, ...definition } = legacy;
   if (input.presentation === "overlay") {
     return {
       ...definition,
@@ -25144,6 +24332,3326 @@ var SystemPluginRegistry = class {
   }
 };
 
+// pip-editor/pip-host-io/system-plugin/runtime.ts
+var identity_ref = {
+  node_id: "pip.core.identity",
+  pip_id: "identity"
+};
+var createSystemPluginTypeNode = (id) => ({
+  id,
+  fork_level: PipForkLevel.NODE,
+  pips: [
+    {
+      id: "identity",
+      fork_level: PipForkLevel.PIPE,
+      predicate_value: {
+        predicate: identity_ref,
+        value: { kind: "const", value: id }
+      },
+      pips: []
+    },
+    {
+      id: "type",
+      fork_level: PipForkLevel.PIPE,
+      predicate_value: {
+        predicate: { node_id: "pip.core.type", pip_id: "identity" },
+        value: {
+          kind: "ref",
+          target: {
+            node_id: "pip.core.predicate",
+            pip_id: "identity"
+          }
+        }
+      },
+      pips: []
+    }
+  ]
+});
+var create_instance_node = (id, definition) => ({
+  id,
+  fork_level: PipForkLevel.NODE,
+  pips: [
+    {
+      id: "identity",
+      fork_level: PipForkLevel.PIPE,
+      predicate_value: {
+        predicate: identity_ref,
+        value: { kind: "const", value: id }
+      },
+      pips: []
+    },
+    {
+      id: "type",
+      fork_level: PipForkLevel.PIPE,
+      predicate_value: {
+        predicate: { node_id: "pip.core.type", pip_id: "identity" },
+        value: {
+          kind: "ref",
+          target: {
+            node_id: definition.typeNode.id,
+            pip_id: "identity"
+          }
+        }
+      },
+      pips: []
+    }
+  ]
+});
+var SystemPluginRuntime = class {
+  #registry;
+  #definitions = /* @__PURE__ */ new Map();
+  #instances = /* @__PURE__ */ new Map();
+  #singleton_ids = /* @__PURE__ */ new Map();
+  #publish;
+  #listeners = /* @__PURE__ */ new Set();
+  #revision = 0;
+  #graph;
+  constructor(registry, publish) {
+    this.#registry = registry;
+    this.#publish = publish;
+    this.#graph = createCorePipGraph();
+    this.synchronize_definitions(registry.list(), false);
+  }
+  /** 只消费统一运行时已经 commit 的定义，并清理被禁用 owner 的实例。 */
+  synchronize_definitions(definitions, publish = true) {
+    const validated = new SystemPluginRegistry(definitions).list();
+    const next = new Map(validated.map((definition) => [definition.id, definition]));
+    for (const instance of [...this.#instances.values()]) {
+      const previous = this.#definitions.get(instance.pluginId);
+      const incoming = next.get(instance.pluginId);
+      if (!previous || !incoming || previous.typeNode.id !== incoming.typeNode.id) {
+        if (previous) this.#dispose(instance, previous);
+      }
+    }
+    this.#definitions.clear();
+    for (const definition of validated) this.#definitions.set(definition.id, definition);
+    const nodes = { ...graphNodes(createCorePipGraph()) };
+    for (const definition of validated) {
+      nodes[definition.typeNode.id] = structuredClone(definition.typeNode);
+    }
+    for (const instance of this.#instances.values()) {
+      nodes[instance.node.id] = structuredClone(instance.node);
+    }
+    this.#graph = createGraph(nodes, graphRevision(this.#graph) + 1);
+    assertPipGraph(this.#graph);
+    if (publish) this.#notify();
+  }
+  snapshot() {
+    return {
+      graph: this.#graph,
+      instances: [...this.#instances.values()]
+    };
+  }
+  revision() {
+    return this.#revision;
+  }
+  subscribe(listener) {
+    this.#listeners.add(listener);
+    return () => this.#listeners.delete(listener);
+  }
+  get(instance_id) {
+    return this.#instances.get(instance_id);
+  }
+  has_definition(plugin_id) {
+    return this.#definitions.has(plugin_id);
+  }
+  ensure(plugin_id, workspace_id, requested_id) {
+    if (!this.#definitions.has(plugin_id) && this.#registry.get(plugin_id)) {
+      this.synchronize_definitions(this.#registry.list());
+    }
+    const definition = this.#require_definition(plugin_id);
+    if (definition.scope === "workspace" && !workspace_id) {
+      throw new Error(`System plugin ${plugin_id} requires a workspace`);
+    }
+    const singleton_key = definition.scope === "host" ? `host:${plugin_id}` : `workspace:${workspace_id}:${plugin_id}`;
+    if (definition.instancePolicy === "singleton") {
+      const existing_id = this.#singleton_ids.get(singleton_key);
+      const existing = existing_id ? this.#instances.get(existing_id) : void 0;
+      if (existing) return existing;
+    }
+    if (requested_id && this.#instances.has(requested_id)) {
+      const existing = this.#instances.get(requested_id);
+      if (existing.pluginId !== plugin_id) {
+        throw new Error(`System plugin instance ${requested_id} identity mismatch`);
+      }
+      throw new Error(`Duplicate system plugin instance ${requested_id}`);
+    }
+    const instance_id = requested_id ?? (definition.instancePolicy === "singleton" ? `system.instance.${singleton_key}` : `system.instance.${plugin_id}.${crypto.randomUUID()}`);
+    const instance = {
+      id: instance_id,
+      pluginId: plugin_id,
+      node: create_instance_node(instance_id, definition),
+      scope: definition.scope,
+      ...definition.scope === "workspace" ? { workspaceId: workspace_id } : {},
+      state: structuredClone(definition.createState?.() ?? null)
+    };
+    this.#instances.set(instance_id, instance);
+    if (definition.instancePolicy === "singleton") {
+      this.#singleton_ids.set(singleton_key, instance_id);
+    }
+    this.#replace_graph_node(instance.node);
+    return instance;
+  }
+  setState(instance_id, state) {
+    JSON.stringify(state);
+    const instance = this.#require_instance(instance_id);
+    instance.state = structuredClone(state);
+    this.#notify();
+  }
+  releasePresentation(instance_id) {
+    const instance = this.get(instance_id);
+    if (!instance) return;
+    const definition = this.#require_definition(instance.pluginId);
+    if (definition.instancePolicy === "multiple") {
+      this.#dispose(instance, definition);
+    }
+  }
+  disposeWorkspace(workspace_id) {
+    for (const instance of [...this.#instances.values()]) {
+      if (instance.workspaceId !== workspace_id) continue;
+      this.#dispose(instance, this.#require_definition(instance.pluginId));
+    }
+  }
+  /** 应用会话结束时释放包括 host singleton 在内的全部系统插件资源。 */
+  disposeAll() {
+    const errors = [];
+    for (const instance of [...this.#instances.values()]) {
+      try {
+        this.#dispose(instance, this.#require_definition(instance.pluginId));
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    return errors;
+  }
+  #dispose(instance, definition) {
+    try {
+      definition.dispose?.(instance);
+    } finally {
+      this.#instances.delete(instance.id);
+      for (const [key, value] of this.#singleton_ids) {
+        if (value === instance.id) this.#singleton_ids.delete(key);
+      }
+      const nodes = { ...graphNodes(this.#graph) };
+      delete nodes[instance.node.id];
+      this.#graph = createGraph(nodes, graphRevision(this.#graph) + 1);
+      this.#notify();
+    }
+  }
+  #replace_graph_node(node2) {
+    this.#graph = createGraph({
+      ...graphNodes(this.#graph),
+      [node2.id]: structuredClone(node2)
+    }, graphRevision(this.#graph) + 1);
+    assertPipGraph(this.#graph);
+    this.#notify();
+  }
+  #notify() {
+    this.#revision += 1;
+    this.#publish();
+    for (const listener of this.#listeners) listener();
+  }
+  #require_instance(instance_id) {
+    const instance = this.get(instance_id);
+    if (!instance) {
+      throw new Error(`Unknown system plugin instance ${instance_id}`);
+    }
+    return instance;
+  }
+  #require_definition(plugin_id) {
+    const definition = this.#definitions.get(plugin_id);
+    if (!definition) throw new Error(`Unknown system plugin ${plugin_id}`);
+    return definition;
+  }
+};
+
+// pip-editor/pip-host-io/plugin-manager/panel.tsx
+var import_react5 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/view/pip-host.module.css
+var pip_host_default = {
+  shell: "pip_host_shell",
+  panelTitle: "pip_host_panelTitle",
+  layout: "pip_host_layout",
+  workspaceArea: "pip_host_workspaceArea",
+  workspaceAreaBare: "pip_host_workspaceAreaBare",
+  primary: "pip_host_primary",
+  canvasWrap: "pip_host_canvasWrap",
+  canvas: "pip_host_canvas",
+  pipGrid: "pip_host_pipGrid",
+  node: "pip_host_node",
+  workspaceProjectionGrid: "pip_host_workspaceProjectionGrid",
+  workspaceProjection: "pip_host_workspaceProjection",
+  freeViewport: "pip_host_freeViewport",
+  freeWorld: "pip_host_freeWorld",
+  projectionShell: "pip_host_projectionShell",
+  noNavbar: "pip_host_noNavbar",
+  projectionNav: "pip_host_projectionNav",
+  projectionCrumbs: "pip_host_projectionCrumbs",
+  semanticViewport: "pip_host_semanticViewport",
+  semanticLayer: "pip_host_semanticLayer",
+  semanticMotion: "pip_host_semanticMotion",
+  semanticTarget: "pip_host_semanticTarget",
+  creationWire: "pip_host_creationWire",
+  cameraControls: "pip_host_cameraControls",
+  modalBackdrop: "pip_host_modalBackdrop",
+  closeDialog: "pip_host_closeDialog",
+  rawPips: "pip_host_rawPips",
+  selected: "pip_host_selected",
+  nodeHeading: "pip_host_nodeHeading",
+  preview: "pip_host_preview",
+  nodeImage: "pip_host_nodeImage",
+  imagePlaceholder: "pip_host_imagePlaceholder",
+  imageError: "pip_host_imageError",
+  fields: "pip_host_fields",
+  orphan: "pip_host_orphan",
+  selectionBox: "pip_host_selectionBox",
+  contextMenu: "pip_host_contextMenu",
+  invalidType: "pip_host_invalidType",
+  panel: "pip_host_panel",
+  preferenceGroup: "pip_host_preferenceGroup",
+  panelCollapsed: "pip_host_panelCollapsed",
+  panelIdentity: "pip_host_panelIdentity",
+  panelActions: "pip_host_panelActions",
+  hint: "pip_host_hint",
+  message: "pip_host_message",
+  sampleLinks: "pip_host_sampleLinks",
+  pluginList: "pip_host_pluginList",
+  empty: "pip_host_empty"
+};
+
+// pip-editor/pip-host-io/plugin-manager/package-lists.tsx
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+function ElementPackageList({
+  disabled,
+  packages,
+  declared_contributions,
+  onDisable,
+  onUninstall
+}) {
+  if (!packages.length) {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5B89\u88C5 A3" });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: packages.map((plugin) => {
+    const id = plugin.manifest.packageId;
+    const declarations = declared_contributions.filter((item) => item.package_id === id);
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: plugin.manifest.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: disabled.has(id) ? "\u5DF2\u7981\u7528" : "" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onDisable(id), children: disabled.has(id) ? "\u542F\u7528" : "\u7981\u7528" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onUninstall(id), children: "\u5378\u8F7D" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: declarations.length ? declarations.map((item) => `${item.instance_id} \xB7 ${item.id}:${item.purpose} [${item.state}]`).join("\u3001") : plugin.manifest.elements.map((item) => `${item.id}:${item.purpose}`).join("\u3001") }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
+        id,
+        "@",
+        plugin.manifest.packageVersion
+      ] })
+    ] }, id);
+  }) });
+}
+function NodeTypePackageList({
+  disabled,
+  packages,
+  onDisable,
+  onUninstall
+}) {
+  if (!packages.length) {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5B89\u88C5 A4" });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: packages.map((plugin) => {
+    const id = plugin.manifest.packageId;
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: plugin.manifest.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: disabled.has(id) ? "\u5DF2\u7981\u7528" : "" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onDisable(id), children: disabled.has(id) ? "\u542F\u7528" : "\u7981\u7528" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => onUninstall(id), children: "\u5378\u8F7D" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: plugin.manifest.typeNodeIds.join("\u3001") }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
+        id,
+        "@",
+        plugin.manifest.packageVersion
+      ] })
+    ] }, id);
+  }) });
+}
+function NodeMapPackageList({
+  nodeMaps,
+  onOpen
+}) {
+  if (!nodeMaps.length) {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: pip_host_default.empty, children: "\u672A\u5BFC\u5165 A5\uFF1B\u6838\u5FC3\u4E0D\u4F1A\u81EA\u52A8\u83B7\u5F97\u9886\u57DF\u80FD\u529B\u3002" });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: nodeMaps.map((portable) => {
+    const nodeMap = portable.nodeMap;
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("article", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: nodeMap.manifest.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => void onOpen(portable), children: "\u518D\u6253\u5F00" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: nodeMap.manifest.rootNodeIds.join("\u3001") }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { children: [
+        nodeMap.manifest.packageId,
+        "@",
+        nodeMap.manifest.packageVersion
+      ] })
+    ] }, portable.contentSha256);
+  }) });
+}
+
+// pip-editor/pip-host-io/plugin-manager/import-status.module.css
+var import_status_default = {
+  importStatus: "import_status_importStatus",
+  importing: "import_status_importing",
+  succeeded: "import_status_succeeded",
+  failed: "import_status_failed"
+};
+
+// pip-editor/pip-host-io/plugin-manager/import-status.tsx
+var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var stateLabel = {
+  pending: "\u7B49\u5F85",
+  importing: "\u5BFC\u5165\u4E2D",
+  succeeded: "\u6210\u529F",
+  failed: "\u5931\u8D25"
+};
+function PluginImportStatus({ batch }) {
+  if (!batch) return null;
+  const completed = batch.files.filter(
+    (file) => ["succeeded", "failed"].includes(file.state)
+  ).length;
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("section", { className: import_status_default.importStatus, "aria-live": "polite", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("header", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { children: "\u5BFC\u5165\u8FDB\u5EA6" }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { children: [
+        completed,
+        "/",
+        batch.files.length
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ol", { children: batch.files.map((file) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      "li",
+      {
+        className: import_status_default[file.state],
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: file.fileName }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: file.layer?.toUpperCase() ?? "PIP" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: stateLabel[file.state] })
+          ] }),
+          file.message && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { children: file.message })
+        ]
+      },
+      file.id
+    )) })
+  ] });
+}
+
+// pip-editor/pip-host-io/plugin-manager/panel.tsx
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+function PluginManagerPanel({
+  activeWorkspaceId,
+  disabledElements,
+  disabledNodeTypes,
+  elements,
+  importBatch,
+  message,
+  nodeMaps,
+  nodeTypes,
+  diagnostics,
+  declared_contributions,
+  onDisableElement,
+  onDisableNodeType,
+  onExport,
+  onExportNative,
+  onInstallFiles,
+  onOpenNodeMap,
+  onUninstallElement,
+  onUninstallNodeType
+}) {
+  const inputId = (0, import_react5.useId)();
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: pip_host_default.panel, "data-testid": "plugin-manager", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.panelTitle, "data-window-drag": true, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: pip_host_default.panelIdentity, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: "PIP EDITOR I/O" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { children: "A3\u2013A5 \u5206\u5C42\u5305" })
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: pip_host_default.panelActions, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: pip_host_default.primary, htmlFor: inputId, children: "\u5BFC\u5165 .pip" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { disabled: !activeWorkspaceId, onClick: onExport, children: "\u5BFC\u51FA A5" }),
+      onExportNative && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        "button",
+        {
+          disabled: !activeWorkspaceId,
+          onClick: onExportNative,
+          children: "\u5BFC\u51FA\u539F\u751F\u5305"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      "input",
+      {
+        id: inputId,
+        type: "file",
+        multiple: true,
+        accept: ".pip,application/vnd.intent-map.pip",
+        hidden: true,
+        onChange: (event) => {
+          const files = event.target.files;
+          if (files?.length) onInstallFiles(files);
+          event.currentTarget.value = "";
+        }
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: pip_host_default.message, "data-testid": "status-message", children: message }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(PluginImportStatus, { batch: importBatch }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
+      "\u8FD0\u884C\u65F6\u72B6\u6001 ",
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u5B9E\u4F8B\u3001\u4F9D\u8D56\u4E0E\u6FC0\u6D3B\u8BCA\u65AD" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: pip_host_default.pluginList, "data-testid": "plugin-diagnostics", children: [
+      !diagnostics.length && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.empty, children: "\u6682\u65E0\u63D2\u4EF6\u5B9E\u4F8B" }),
+      diagnostics.map((diagnostic) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("article", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("strong", { children: diagnostic.plugin_name }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: diagnostic.state })
+        ] }),
+        diagnostic.missing_services.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { children: [
+          "\u7F3A\u5C11\u670D\u52A1\uFF1A",
+          diagnostic.missing_services.join("\u3001")
+        ] }),
+        diagnostic.error && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { role: "alert", children: diagnostic.error }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("small", { children: [
+          diagnostic.instance_id,
+          " \xB7 generation ",
+          diagnostic.generation
+        ] })
+      ] }, diagnostic.instance_id))
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
+      "A3 Node Element ",
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u8868\u73B0\u4E0E\u4EA4\u4E92" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      ElementPackageList,
+      {
+        disabled: disabledElements,
+        packages: elements,
+        declared_contributions,
+        onDisable: onDisableElement,
+        onUninstall: onUninstallElement
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
+      "A4 Node Type ",
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u8BED\u4E49\u3001\u547D\u4EE4\u4E0E\u6295\u5F71" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      NodeTypePackageList,
+      {
+        disabled: disabledNodeTypes,
+        packages: nodeTypes,
+        onDisable: onDisableNodeType,
+        onUninstall: onUninstallNodeType
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { children: [
+      "A5 Node Map ",
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { children: "\u7EAF\u6570\u636E\u4E0E\u4FBF\u643A\u95ED\u5305" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: pip_host_default.pluginList, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(NodeMapPackageList, { nodeMaps, onOpen: onOpenNodeMap }) })
+  ] });
+}
+
+// pip-editor/pip-host-io/plugin-manager/definition.tsx
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var servicesFrom = (snapshot2) => snapshot2.services;
+function buildModel(snapshot2) {
+  const services = servicesFrom(snapshot2);
+  const {
+    disabledElements,
+    disabledNodeTypes,
+    elementPackages,
+    importBatch,
+    installFiles,
+    nodeMaps,
+    nodeTypePackages,
+    rollbackElement,
+    rollbackNodeType,
+    openNodeMap,
+    set_element_enabled,
+    set_node_type_enabled,
+    plugin_diagnostics,
+    declared_contributions
+  } = services.catalog;
+  return {
+    activeWorkspaceId: snapshot2.workspace?.id,
+    disabledElements,
+    disabledNodeTypes,
+    elements: elementPackages,
+    diagnostics: plugin_diagnostics(),
+    declared_contributions: declared_contributions(),
+    importBatch,
+    message: services.message,
+    nodeMaps,
+    nodeTypes: nodeTypePackages,
+    onInstallFiles: installFiles,
+    onExport: services.onExport,
+    onExportNative: services.onExportNative,
+    onDisableElement: (id) => {
+      const enabled = disabledElements.has(id);
+      void set_element_enabled(id, enabled).then(
+        () => services.onMessage(`${enabled ? "\u5DF2\u542F\u7528" : "\u5DF2\u7981\u7528"} ${id}`),
+        (error) => services.onMessage(
+          `${enabled ? "\u542F\u7528" : "\u7981\u7528"}\u5931\u8D25\uFF1A${error instanceof Error ? error.message : String(error)}`
+        )
+      );
+    },
+    onDisableNodeType: (id) => {
+      const enabled = disabledNodeTypes.has(id);
+      void set_node_type_enabled(id, enabled).then(
+        () => services.onMessage(`${enabled ? "\u5DF2\u542F\u7528" : "\u5DF2\u7981\u7528"} ${id}`),
+        (error) => services.onMessage(
+          `${enabled ? "\u542F\u7528" : "\u7981\u7528"}\u5931\u8D25\uFF1A${error instanceof Error ? error.message : String(error)}`
+        )
+      );
+    },
+    onUninstallElement: (id) => {
+      rollbackElement(id);
+    },
+    onUninstallNodeType: (id) => {
+      rollbackNodeType(id);
+    },
+    onOpenNodeMap: openNodeMap
+  };
+}
+function PluginManagerSystemNode({ model }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PluginManagerPanel, { ...model });
+}
+var PLUGIN_MANAGER_SYSTEM_PLUGIN_ID = "host.plugin-manager";
+var pluginManagerSystemPlugin = {
+  id: PLUGIN_MANAGER_SYSTEM_PLUGIN_ID,
+  typeNode: createSystemPluginTypeNode("pip.host.type.plugin-manager"),
+  label: "\u63D2\u4EF6\u7BA1\u7406\u5668",
+  description: "\u5B89\u88C5\u3001\u7981\u7528\u548C\u5BFC\u51FA PIP",
+  category: "\u7CFB\u7EDF",
+  icon: "\u2699",
+  scope: "host",
+  surfaces: ["host", "workspace"],
+  instancePolicy: "singleton",
+  presentation: "window",
+  window: {
+    role: "standard",
+    coordinate_space: "canvas",
+    chrome: "standard",
+    creatable: true,
+    default_size: { width: 640, height: 720 },
+    resize_mode: "full"
+  },
+  buildModel,
+  Component: PluginManagerSystemNode
+};
+
+// pip-editor/pip-host-io/preferences/startup-panel.module.css
+var startup_panel_default = {
+  list: "startup_panel_list",
+  plugin: "startup_panel_plugin"
+};
+
+// pip-editor/pip-host-io/preferences/startup-panel.tsx
+var import_react6 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/startup/catalog.ts
+var snapshot = [];
+var listeners = /* @__PURE__ */ new Set();
+var startup_snapshot = () => snapshot;
+var subscribe_startup = (listener) => {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+};
+function publish_startup(next) {
+  snapshot = next;
+  listeners.forEach((listener) => listener());
+}
+
+// pip-editor/pip-host-io/preferences/startup-panel.tsx
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+function StartupPanel({ choices, auto_load_website, change }) {
+  const plugins = (0, import_react6.useSyncExternalStore)(subscribe_startup, startup_snapshot);
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("fieldset", { className: startup_panel_default.list, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("legend", { children: "\u542F\u52A8\u63D2\u4EF6" }),
+    plugins.map((plugin) => {
+      const choice = choices[plugin.id] ?? {
+        auto_load: plugin.id === "official.website-types" ? auto_load_website : plugin.auto_load,
+        open_workspace: plugin.open_workspace
+      };
+      return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: startup_panel_default.plugin, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { children: plugin.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            "input",
+            {
+              type: "checkbox",
+              "aria-label": `${plugin.name}\u81EA\u52A8\u52A0\u8F7D`,
+              checked: choice.auto_load,
+              onChange: (event) => change(plugin.id, { ...choice, auto_load: event.target.checked })
+            }
+          ),
+          "\u81EA\u52A8\u52A0\u8F7D"
+        ] }),
+        plugin.workspace && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            "input",
+            {
+              type: "checkbox",
+              "aria-label": `${plugin.name}\u542F\u52A8\u65F6\u6253\u5F00\u5DE5\u4F5C\u533A`,
+              checked: choice.open_workspace,
+              onChange: (event) => change(plugin.id, { ...choice, open_workspace: event.target.checked })
+            }
+          ),
+          "\u542F\u52A8\u65F6\u6253\u5F00\u5DE5\u4F5C\u533A"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          "button",
+          {
+            disabled: plugin.state === "loading" || plugin.state === "ready",
+            onClick: () => document.dispatchEvent(new CustomEvent("pip-load-startup", { detail: plugin.id })),
+            children: plugin.state === "ready" ? "\u5DF2\u52A0\u8F7D" : plugin.state === "loading" ? "\u52A0\u8F7D\u4E2D\u2026" : plugin.state === "error" ? "\u91CD\u8BD5\u52A0\u8F7D" : "\u7ACB\u5373\u52A0\u8F7D"
+          }
+        ),
+        plugin.error && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { role: "status", children: plugin.error })
+      ] }, plugin.id);
+    }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "\u914D\u7F6E\u4E0B\u6B21\u542F\u52A8\u751F\u6548\uFF1B\u5173\u95ED\u81EA\u52A8\u52A0\u8F7D\u4E0D\u4F1A\u5220\u9664\u5F53\u524D\u5185\u5BB9\u3002" })
+  ] });
+}
+
+// pip-editor/pip-host-io/preferences/panel.tsx
+var import_react7 = __toESM(require_react(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+function PreferencesPanel({
+  startup_plugins = {},
+  on_startup_change,
+  theme_mode,
+  on_theme_change,
+  projection_control_mode,
+  on_projection_control_mode_change,
+  auto_load_website,
+  on_auto_load_website_change,
+  workspaceOpenMode,
+  onWorkspaceOpenModeChange,
+  companion_default_owner,
+  on_companion_default_owner_change
+}) {
+  const workspaceOpenModeGroup = (0, import_react7.useId)();
+  const companion_owner_group = (0, import_react7.useId)();
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("section", { className: pip_host_default.panel, "data-testid": "editor-preferences", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: pip_host_default.panelTitle, "data-window-drag": true, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: pip_host_default.panelIdentity, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "PIP EDITOR" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { children: "\u5BBF\u4E3B\u504F\u597D\u8BBE\u7F6E" })
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u5916\u89C2" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        "\u4E3B\u9898",
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+          "select",
+          {
+            "aria-label": "\u4E3B\u9898",
+            value: theme_mode,
+            onChange: (event) => on_theme_change(event.target.value),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "dark", children: "\u6DF1\u8272 \xB7 \u661F\u7A7A" }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("option", { value: "light", children: "\u6D45\u8272 \xB7 \u6668\u96FE" })
+            ]
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u6295\u5F71\u7A97\u53E3\u63A7\u4EF6" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "checkbox",
+            checked: projection_control_mode === "legacy",
+            onChange: (event) => on_projection_control_mode_change(
+              event.target.checked ? "legacy" : "compact"
+            )
+          }
+        ),
+        "\u663E\u793A\u4F20\u7EDF\u6295\u5F71\u89C6\u56FE\u63A7\u5236\u680F"
+      ] })
+    ] }),
+    on_startup_change ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(StartupPanel, { choices: startup_plugins, change: on_startup_change, auto_load_website }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u542F\u52A8" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "checkbox",
+            checked: auto_load_website,
+            onChange: (event) => on_auto_load_website_change(event.target.checked)
+          }
+        ),
+        "\u81EA\u52A8\u52A0\u8F7D\u5B98\u7F51"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: "\u4E0B\u6B21\u542F\u52A8\u65F6\u52A0\u8F7D\u5B98\u7F51 A5 \u53CA\u5176\u5DE5\u4F5C\u7A7A\u95F4\u3002\u663E\u5F0F\u6253\u5F00\u7684 A5 \u4F18\u5148\uFF0C\u5173\u95ED\u6B64\u9879\u4E0D\u4F1A\u5173\u95ED\u5F53\u524D\u5DE5\u4F5C\u7A7A\u95F4\u3002" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u65B0\u5DE5\u4F5C\u533A\u9ED8\u8BA4\u5448\u73B0\u65B9\u5F0F" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "radio",
+            name: workspaceOpenModeGroup,
+            checked: workspaceOpenMode === "tab",
+            onChange: () => onWorkspaceOpenModeChange("tab")
+          }
+        ),
+        "\u56FA\u5B9A Tab"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "radio",
+            name: workspaceOpenModeGroup,
+            checked: workspaceOpenMode === "window",
+            onChange: () => onWorkspaceOpenModeChange("window")
+          }
+        ),
+        "\u5BBF\u4E3B\u8282\u70B9\u7A97\u53E3"
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("fieldset", { className: pip_host_default.preferenceGroup, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("legend", { children: "\u65B0\u5EFA\u7A7A\u95F4\u4F34\u4FA3\u9ED8\u8BA4\u5F52\u5C5E" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "radio",
+            name: companion_owner_group,
+            checked: companion_default_owner === "viewport",
+            onChange: () => on_companion_default_owner_change("viewport")
+          }
+        ),
+        "\u5C4F\u5E55\u89C6\u53E3"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            type: "radio",
+            name: companion_owner_group,
+            checked: companion_default_owner === "focused-space",
+            onChange: () => on_companion_default_owner_change("focused-space")
+          }
+        ),
+        "\u5F53\u524D\u805A\u7126\u7A7A\u95F4"
+      ] })
+    ] })
+  ] });
+}
+
+// pip-editor/pip-host-io/preferences/definition.tsx
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var buildModel2 = (snapshot2) => {
+  const services = snapshot2.services;
+  return {
+    startup_plugins: services.preferences.snapshot().startup_plugins,
+    on_startup_change: (id, choice) => services.preferences.set_startup_plugin(id, choice),
+    theme_mode: services.preferences.snapshot().theme_mode,
+    on_theme_change: (theme_mode) => services.preferences.set_theme_mode(theme_mode),
+    projection_control_mode: services.preferences.snapshot().projection_control_mode,
+    on_projection_control_mode_change: (mode) => services.preferences.set_projection_control_mode(mode),
+    auto_load_website: services.preferences.snapshot().auto_load_website,
+    on_auto_load_website_change: (enabled) => {
+      services.preferences.set_auto_load_website(enabled);
+    },
+    workspaceOpenMode: services.preferences.snapshot().workspaceOpenMode,
+    onWorkspaceOpenModeChange: (mode) => {
+      services.preferences.setWorkspaceOpenMode(mode);
+    },
+    companion_default_owner: services.preferences.snapshot().companion.default_owner,
+    on_companion_default_owner_change: (owner) => {
+      services.preferences.set_companion_default_owner(owner);
+    }
+  };
+};
+function PreferencesSystemNode({ model }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PreferencesPanel, { ...model });
+}
+var preferencesSystemPlugin = {
+  id: "host.preferences",
+  typeNode: createSystemPluginTypeNode("pip.host.type.preferences"),
+  label: "\u504F\u597D\u8BBE\u7F6E",
+  description: "\u8C03\u6574\u7F16\u8F91\u5668\u5BBF\u4E3B\u7684\u9ED8\u8BA4\u884C\u4E3A",
+  category: "\u7CFB\u7EDF",
+  icon: "\u25C8",
+  scope: "host",
+  surfaces: ["host", "workspace"],
+  instancePolicy: "singleton",
+  presentation: "window",
+  window: {
+    role: "standard",
+    coordinate_space: "canvas",
+    chrome: "standard",
+    creatable: true,
+    default_size: { width: 520, height: 520 },
+    resize_mode: "simple"
+  },
+  buildModel: buildModel2,
+  Component: PreferencesSystemNode
+};
+
+// pip-editor/pip-host/view/space-navigator.tsx
+var import_react16 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/view/guanguan-context.ts
+var host_space2 = { kind: "host", id: "host" };
+function ordered_navigation_path(snapshot2) {
+  const surfaces = snapshot2?.surfaces ?? [];
+  const by_id = new Map(surfaces.map((surface) => [surface.id, surface]));
+  const depth_of = (surface) => {
+    let depth = 0;
+    let parent = surface.parentId ? by_id.get(surface.parentId) : void 0;
+    while (parent) {
+      depth += 1;
+      parent = parent.parentId ? by_id.get(parent.parentId) : void 0;
+    }
+    return depth;
+  };
+  return surfaces.map((surface) => ({ surface, depth: depth_of(surface) })).sort((left, right) => left.depth - right.depth || left.surface.id.localeCompare(right.surface.id)).map(({ surface }) => surface);
+}
+function build_guanguan_context(snapshot2, service) {
+  const focus_space = snapshot2?.focus ?? host_space2;
+  const workspace_id = focus_space.kind === "host" ? void 0 : focus_space.workspace_id;
+  const source = service.workspaces.find((workspace) => workspace.id === workspace_id);
+  if (!source) {
+    return {
+      focus_space,
+      navigation_path: ordered_navigation_path(snapshot2),
+      gesture_owner: snapshot2?.gesture?.owner,
+      creator_armed: service.creator_armed
+    };
+  }
+  const selected_ids = focus_space.kind === "projection" ? source.scoped_selections[focus_space.window_id] ?? source.selection : source.selection;
+  const active_node = selected_ids[0] ? { node_id: selected_ids[0], pip_id: "identity" } : void 0;
+  return {
+    focus_space,
+    navigation_path: ordered_navigation_path(snapshot2),
+    gesture_owner: snapshot2?.gesture?.owner,
+    creator_armed: service.creator_armed,
+    workspace: {
+      id: source.id,
+      revision: source.revision,
+      node_count: source.node_count,
+      active_node,
+      can_undo: source.can_undo,
+      can_redo: source.can_redo
+    }
+  };
+}
+
+// pip-editor/pip-host/view/companion-visual.tsx
+var import_react9 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/contracts/companion-visual.ts
+var companion_action_event = "pip-companion-message-action";
+var companion_dismiss_event = "pip-companion-message-dismiss";
+
+// pip-editor/pip-host/view/guanguan-logo.module.css
+var guanguan_logo_default = {
+  logo: "guanguan_logo_logo",
+  bird: "guanguan_logo_bird",
+  wing: "guanguan_logo_wing"
+};
+
+// pip-editor/pip-host/view/guanguan-logo.tsx
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+function GuanguanLogo({ pose = "folded", size = 24 }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    "svg",
+    {
+      className: guanguan_logo_default.logo,
+      "data-pose": pose,
+      viewBox: "0 0 40 40",
+      width: size,
+      height: size,
+      preserveAspectRatio: "xMidYMid meet",
+      fill: "none",
+      "aria-hidden": "true",
+      focusable: "false",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          "rect",
+          {
+            width: "40",
+            height: "40",
+            rx: "11",
+            fill: "var(--guanguan-back, #334E62)"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("g", { className: guanguan_logo_default.bird, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "path",
+            {
+              d: "M11 30C17 25 13 18 18 12C21 7 28 8 30 13C33 21 29 33 17 33Z",
+              fill: "var(--guanguan-body, #F5EFE5)"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("g", { className: guanguan_logo_default.wing, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "path",
+              {
+                d: "M7 28C10 19 17 17 23 20C24 26 18 30 7 28Z",
+                fill: "var(--guanguan-wing, #86A5BC)"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "path",
+              {
+                d: "M7 28C14 28 20 24 23 20C24 28 16 32 7 28Z",
+                fill: "var(--guanguan-feather, #57788F)"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "path",
+            {
+              d: "M17 16C21 11 27 11 30 16C25 14 22 17 19 19Z",
+              fill: "#40576B"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M30 14L36 12L31 18Z", fill: "#E5B491" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("circle", { cx: "27", cy: "14", r: "1.7", fill: "#233A4B" })
+        ] })
+      ]
+    }
+  );
+}
+
+// pip-editor/pip-host/view/companion-visual.module.css
+var companion_visual_default = {
+  companionElementHost: "companion_visual_companionElementHost",
+  companionElement: "companion_visual_companionElement",
+  fallbackVisual: "companion_visual_fallbackVisual",
+  fallbackAvatar: "companion_visual_fallbackAvatar",
+  fallbackAvatarClip: "companion_visual_fallbackAvatarClip",
+  petMessage: "companion_visual_petMessage"
+};
+
+// pip-editor/pip-runtime/config.ts
+var ConfigValidationError = class extends TypeError {
+  constructor(issues) {
+    super(`\u63D2\u4EF6\u914D\u7F6E\u65E0\u6548\uFF1A
+${issues.map((item) => `- ${item}`).join("\n")}`);
+    this.name = "ConfigValidationError";
+    this.issues = issues;
+  }
+};
+function resolve_value(schema4, value, path, issues) {
+  if (value === void 0 && "default" in schema4) {
+    return structuredClone(schema4.default);
+  }
+  if (schema4.type === "object") {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      issues.push(`${path} \u5FC5\u987B\u662F\u5BF9\u8C61`);
+      return {};
+    }
+    const source = value;
+    const result = {};
+    for (const required of schema4.required ?? []) {
+      if (source[required] === void 0 && schema4.properties[required]?.default === void 0) {
+        issues.push(`${path}.${required} \u662F\u5FC5\u586B\u9879`);
+      }
+    }
+    for (const [key, child] of Object.entries(schema4.properties)) {
+      const resolved = resolve_value(child, source[key], `${path}.${key}`, issues);
+      if (resolved !== void 0) result[key] = resolved;
+    }
+    if (schema4.additional_properties === false) {
+      for (const key of Object.keys(source)) {
+        if (!(key in schema4.properties)) issues.push(`${path}.${key} \u672A\u58F0\u660E`);
+      }
+    }
+    const cross_field_issue = schema4.validate?.(result);
+    if (cross_field_issue) issues.push(`${path}: ${cross_field_issue}`);
+    return result;
+  }
+  if (schema4.type === "array") {
+    if (!Array.isArray(value)) {
+      issues.push(`${path} \u5FC5\u987B\u662F\u6570\u7EC4`);
+      return [];
+    }
+    return value.map((item, index) => resolve_value(schema4.items, item, `${path}[${index}]`, issues));
+  }
+  if (value === void 0) return void 0;
+  const valid_type = schema4.type === "integer" ? typeof value === "number" && Number.isInteger(value) : typeof value === schema4.type;
+  if (!valid_type) {
+    issues.push(`${path} \u5FC5\u987B\u662F ${schema4.type}`);
+    return value;
+  }
+  if (schema4.enum && !schema4.enum.some((item) => Object.is(item, value))) {
+    issues.push(`${path} \u4E0D\u5728\u5141\u8BB8\u503C\u4E2D`);
+  }
+  if (typeof value === "number") {
+    if (schema4.minimum !== void 0 && value < schema4.minimum) {
+      issues.push(`${path} \u4E0D\u80FD\u5C0F\u4E8E ${schema4.minimum}`);
+    }
+    if (schema4.maximum !== void 0 && value > schema4.maximum) {
+      issues.push(`${path} \u4E0D\u80FD\u5927\u4E8E ${schema4.maximum}`);
+    }
+  }
+  return value;
+}
+function resolve_config(schema4, value) {
+  if (!schema4) return value;
+  const issues = [];
+  const resolved = resolve_value(schema4, value, "config", issues);
+  if (issues.length) throw new ConfigValidationError(issues);
+  return resolved;
+}
+
+// pip-editor/pip-runtime/activation-overlay.ts
+function is_transactional(value) {
+  return Boolean(value && typeof value === "object" && "begin_activation" in value && typeof value.begin_activation === "function");
+}
+var ActivationOverlay = class {
+  #transactions;
+  #published = false;
+  constructor(services, owner_id) {
+    const transactions = [];
+    const visible_services = {};
+    for (const [service_id, service] of Object.entries(services)) {
+      if (!is_transactional(service)) {
+        visible_services[service_id] = service;
+        continue;
+      }
+      const transaction = service.begin_activation(owner_id);
+      transactions.push(transaction);
+      visible_services[service_id] = transaction.service;
+    }
+    this.#transactions = transactions;
+    this.services = Object.freeze(visible_services);
+  }
+  async publish() {
+    const disposers = [];
+    try {
+      for (const transaction of this.#transactions) await transaction.prepare();
+      for (const transaction of this.#transactions) {
+        disposers.push(await transaction.publish());
+      }
+      this.#published = true;
+      for (const transaction of this.#transactions) transaction.notify();
+    } catch (error) {
+      for (const dispose of disposers.reverse()) await dispose();
+      await this.rollback();
+      throw error;
+    }
+    return async () => {
+      for (const dispose of disposers.reverse()) await dispose();
+      for (const transaction of this.#transactions) transaction.notify();
+    };
+  }
+  async rollback() {
+    if (this.#published) return;
+    for (const transaction of [...this.#transactions].reverse()) {
+      await transaction.rollback();
+    }
+  }
+};
+
+// pip-editor/pip-runtime/events.ts
+var RuntimeEvents = class {
+  #hooks = /* @__PURE__ */ new Map();
+  #modes = /* @__PURE__ */ new Map();
+  #next_id = 0;
+  define(event_id, mode) {
+    const current = this.#modes.get(event_id);
+    if (current && current !== mode) throw new Error(`\u4E8B\u4EF6 ${event_id} \u5DF2\u5B9A\u4E49\u4E3A ${current}`);
+    this.#modes.set(event_id, mode);
+  }
+  on(event_id, listener) {
+    if (!this.#modes.has(event_id)) throw new Error(`\u4E8B\u4EF6 ${event_id} \u5C1A\u672A\u5B9A\u4E49`);
+    const hook = { hook_id: ++this.#next_id, listener };
+    const hooks = this.#hooks.get(event_id) ?? [];
+    hooks.push(hook);
+    this.#hooks.set(event_id, hooks);
+    return () => {
+      const current = this.#hooks.get(event_id) ?? [];
+      const next = current.filter((item) => item.hook_id !== hook.hook_id);
+      if (next.length) this.#hooks.set(event_id, next);
+      else this.#hooks.delete(event_id);
+    };
+  }
+  emit(event_id, ...args) {
+    this.#expect_mode(event_id, "emit");
+    const errors = [];
+    for (const hook of [...this.#hooks.get(event_id) ?? []]) {
+      try {
+        hook.listener(...args);
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    if (errors.length) throw new AggregateError(errors, `\u4E8B\u4EF6 ${event_id} \u5904\u7406\u5931\u8D25`);
+  }
+  async parallel(event_id, ...args) {
+    this.#expect_mode(event_id, "parallel");
+    const hooks = [...this.#hooks.get(event_id) ?? []];
+    const results = await Promise.allSettled(hooks.map((hook) => hook.listener(...args)));
+    const errors = results.flatMap((result) => result.status === "rejected" ? [result.reason] : []);
+    if (errors.length) throw new AggregateError(errors, `\u4E8B\u4EF6 ${event_id} \u5904\u7406\u5931\u8D25`);
+  }
+  async serial(event_id, ...args) {
+    this.#expect_mode(event_id, "serial");
+    for (const hook of [...this.#hooks.get(event_id) ?? []]) {
+      const result = await hook.listener(...args);
+      if (result !== void 0) return result;
+    }
+  }
+  bail(event_id, ...args) {
+    this.#expect_mode(event_id, "bail");
+    for (const hook of [...this.#hooks.get(event_id) ?? []]) {
+      const result = hook.listener(...args);
+      if (result !== void 0) return result;
+    }
+  }
+  async waterfall(event_id, initial_value) {
+    this.#expect_mode(event_id, "waterfall");
+    let current_value = initial_value;
+    for (const hook of [...this.#hooks.get(event_id) ?? []]) {
+      const next_value = await hook.listener(current_value);
+      if (next_value !== void 0) current_value = next_value;
+    }
+    return current_value;
+  }
+  listener_count(event_id) {
+    return this.#hooks.get(event_id)?.length ?? 0;
+  }
+  dispatch(event_id, ...args) {
+    const mode = this.#modes.get(event_id);
+    if (mode === "emit") return this.emit(event_id, ...args);
+    if (mode === "parallel") return this.parallel(event_id, ...args);
+    if (mode === "serial") return this.serial(event_id, ...args);
+    if (mode === "bail") return this.bail(event_id, ...args);
+    if (mode === "waterfall") return this.waterfall(event_id, args[0]);
+    throw new Error(`\u4E8B\u4EF6 ${event_id} \u5C1A\u672A\u5B9A\u4E49`);
+  }
+  #expect_mode(event_id, expected) {
+    const actual = this.#modes.get(event_id);
+    if (actual !== expected) throw new Error(`\u4E8B\u4EF6 ${event_id} \u4F7F\u7528 ${actual ?? "\u672A\u5B9A\u4E49"}\uFF0C\u4E0D\u80FD\u6309 ${expected} \u5206\u53D1`);
+  }
+};
+
+// pip-editor/pip-runtime/module-factory.ts
+async function instantiate_module_factory(source, shared_modules, importer = browser_factory_importer) {
+  const loaded = await importer(source);
+  if (typeof loaded.default !== "function") {
+    throw new Error("pip-module-factory/1 \u5FC5\u987B\u9ED8\u8BA4\u5BFC\u51FA create_module");
+  }
+  const module = loaded.default(Object.freeze({ ...shared_modules }));
+  if (!is_plugin_module(module)) throw new Error("factory \u672A\u8FD4\u56DE\u6709\u6548 PluginModule");
+  return module;
+}
+function is_plugin_module(value) {
+  if (!value || typeof value !== "object") return false;
+  const module = value;
+  return typeof module.name === "string" && Boolean(module.name) && typeof module.apply === "function" && (!module.inject || module.inject.every((item) => typeof item === "string")) && (!module.provides || module.provides.every((item) => typeof item === "string"));
+}
+async function browser_factory_importer(source) {
+  if (typeof URL === "undefined" || typeof Blob === "undefined") {
+    throw new Error("\u5F53\u524D\u5E73\u53F0\u6CA1\u6709\u6A21\u5757 factory importer");
+  }
+  const url = URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
+  try {
+    return await import(
+      /* webpackIgnore: true */
+      /* @vite-ignore */
+      url
+    );
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+// pip-editor/pip-runtime/resource-scope.ts
+var ResourceScope = class _ResourceScope {
+  #controller = new AbortController();
+  #effects = [];
+  #tasks = /* @__PURE__ */ new Set();
+  #closing = false;
+  #dispose_task;
+  constructor(scope_id) {
+    this.scope_id = scope_id;
+    this.signal = this.#controller.signal;
+  }
+  get active() {
+    return !this.#closing;
+  }
+  child(child_id) {
+    const child_scope = new _ResourceScope(`${this.scope_id}/${child_id}`);
+    this.effect(() => () => child_scope.dispose(), `child:${child_id}`);
+    return child_scope;
+  }
+  track(task) {
+    if (this.#closing) throw new Error(`Scope ${this.scope_id} \u5DF2\u5173\u95ED`);
+    this.#tasks.add(task);
+    void task.then(
+      () => this.#tasks.delete(task),
+      () => this.#tasks.delete(task)
+    );
+    return task;
+  }
+  effect(setup, label = "effect") {
+    if (this.#closing) throw new Error(`Scope ${this.scope_id} \u5DF2\u5173\u95ED`);
+    const owned = { label, setup: Promise.resolve() };
+    this.#effects.push(owned);
+    owned.setup = Promise.resolve().then(setup).then(async (dispose) => {
+      if (typeof dispose !== "function") return;
+      owned.dispose = dispose;
+      if (this.#closing) {
+        owned.dispose = void 0;
+        await dispose();
+      }
+    });
+    return async () => {
+      await owned.setup;
+      const dispose = owned.dispose;
+      owned.dispose = void 0;
+      await dispose?.();
+    };
+  }
+  async settle() {
+    await Promise.all(this.#effects.map((owned) => owned.setup));
+  }
+  dispose(reason = new Error("Scope \u5DF2\u5173\u95ED")) {
+    if (this.#dispose_task) return this.#dispose_task;
+    this.#closing = true;
+    this.#controller.abort(reason);
+    this.#dispose_task = this.#dispose_all();
+    return this.#dispose_task;
+  }
+  async #dispose_all() {
+    const errors = [];
+    for (const owned of [...this.#effects].reverse()) {
+      try {
+        await owned.setup;
+        const dispose = owned.dispose;
+        owned.dispose = void 0;
+        await dispose?.();
+      } catch (error) {
+        errors.push(new Error(`\u6E05\u7406 ${owned.label} \u5931\u8D25`, { cause: error }));
+      }
+    }
+    const task_results = await Promise.allSettled(this.#tasks);
+    for (const result of task_results) {
+      if (result.status === "rejected") errors.push(result.reason);
+    }
+    this.#effects.length = 0;
+    if (errors.length) throw new AggregateError(errors, `Scope ${this.scope_id} \u6E05\u7406\u5931\u8D25`);
+  }
+};
+
+// pip-editor/pip-runtime/services.ts
+var ServiceDomain = class _ServiceDomain {
+  #values = /* @__PURE__ */ new Map();
+  #listeners = /* @__PURE__ */ new Set();
+  #parent;
+  constructor(parent) {
+    this.#parent = parent;
+  }
+  child() {
+    return new _ServiceDomain(this);
+  }
+  get(service_id) {
+    return this.#values.get(service_id)?.value ?? this.#parent?.get(service_id);
+  }
+  has(service_id) {
+    return this.#values.has(service_id) || Boolean(this.#parent?.has(service_id));
+  }
+  snapshot(service_ids) {
+    return Object.freeze(Object.fromEntries(service_ids.map((service_id) => [
+      service_id,
+      this.get(service_id)
+    ])));
+  }
+  provide(service_id, value, owner_id, generation) {
+    if (this.#values.has(service_id)) {
+      throw new Error(`\u670D\u52A1 ${service_id} \u5DF2\u7531\u5176\u4ED6\u63D2\u4EF6\u63D0\u4F9B`);
+    }
+    const entry = { owner_id, generation, value };
+    this.#values.set(service_id, entry);
+    this.#notify();
+    return () => {
+      if (this.#values.get(service_id) !== entry) return;
+      this.#values.delete(service_id);
+      this.#notify();
+    };
+  }
+  subscribe(listener) {
+    this.#listeners.add(listener);
+    return () => this.#listeners.delete(listener);
+  }
+  #notify() {
+    for (const listener of this.#listeners) listener();
+  }
+};
+
+// pip-editor/pip-runtime/plugin-runtime.ts
+var PluginRuntime = class {
+  constructor() {
+    this.events = new RuntimeEvents();
+    this.services = new ServiceDomain();
+    this.#records = /* @__PURE__ */ new Map();
+    this.#queue = Promise.resolve();
+  }
+  #records;
+  #queue;
+  install(instance_id, module, raw_config = {}) {
+    if (this.#records.has(instance_id)) throw new Error(`\u63D2\u4EF6\u5B9E\u4F8B\u5DF2\u5B58\u5728: ${instance_id}`);
+    this.#records.set(instance_id, {
+      instance_id,
+      module,
+      raw_config,
+      enabled: true,
+      state: "pending",
+      generation: 0
+    });
+    return this.#reconcile();
+  }
+  async uninstall(instance_id) {
+    const record6 = this.#require_record(instance_id);
+    record6.enabled = false;
+    await this.#suspend_dependents(record6);
+    await this.#stop_record(record6);
+    this.#records.delete(instance_id);
+    await this.#reconcile();
+  }
+  async disable(instance_id) {
+    const record6 = this.#require_record(instance_id);
+    record6.enabled = false;
+    await this.#suspend_dependents(record6);
+    await this.#stop_record(record6);
+    await this.#reconcile();
+  }
+  async enable(instance_id) {
+    const record6 = this.#require_record(instance_id);
+    record6.enabled = true;
+    record6.state = "pending";
+    record6.diagnostic = void 0;
+    await this.#reconcile();
+  }
+  async update(instance_id, module, raw_config) {
+    const record6 = this.#require_record(instance_id);
+    resolve_config(module.config_schema, raw_config);
+    const previous_module = record6.module;
+    const previous_config = record6.raw_config;
+    await this.#suspend_dependents(record6);
+    await this.#stop_record(record6);
+    record6.module = module;
+    record6.raw_config = raw_config;
+    record6.state = "pending";
+    record6.diagnostic = void 0;
+    await this.#reconcile();
+    if (this.get_state(instance_id) === "failed") {
+      const candidate_error = this.get_diagnostic(instance_id)?.error ?? "\u5019\u9009\u63D2\u4EF6\u6FC0\u6D3B\u5931\u8D25";
+      record6.module = previous_module;
+      record6.raw_config = previous_config;
+      record6.state = "pending";
+      record6.diagnostic = void 0;
+      await this.#reconcile();
+      if (this.get_state(instance_id) !== "active") {
+        const restore_error = this.get_diagnostic(instance_id)?.error ?? "\u65E7\u63D2\u4EF6\u6062\u590D\u5931\u8D25";
+        throw new Error(`${candidate_error}\uFF1B\u6062\u590D\u5931\u8D25\uFF1A${restore_error}`);
+      }
+      throw new Error(`${candidate_error}\uFF1B\u5DF2\u6062\u590D\u65E7\u63D2\u4EF6`);
+    }
+  }
+  get_state(instance_id) {
+    return this.#require_record(instance_id).state;
+  }
+  get_generation(instance_id) {
+    return this.#require_record(instance_id).generation;
+  }
+  get_diagnostic(instance_id) {
+    return this.#require_record(instance_id).diagnostic;
+  }
+  /** 返回不含配置和服务对象的只读诊断快照，供管理界面观察运行时。 */
+  list_diagnostics() {
+    return [...this.#records.values()].map((record6) => ({
+      ...this.#diagnostic(record6, record6.diagnostic ?? {}),
+      missing_services: [...record6.diagnostic?.missing_services ?? []]
+    }));
+  }
+  #reconcile() {
+    this.#queue = this.#queue.then(
+      () => this.#reconcile_now(),
+      () => this.#reconcile_now()
+    );
+    return this.#queue;
+  }
+  async #reconcile_now() {
+    let activated = true;
+    while (activated) {
+      activated = false;
+      for (const record6 of this.#records.values()) {
+        if (!record6.enabled || record6.state === "active" || record6.state === "failed") continue;
+        const missing_services = (record6.module.inject ?? []).filter((service_id) => !this.services.has(service_id));
+        if (missing_services.length) {
+          record6.state = "pending";
+          record6.diagnostic = this.#diagnostic(record6, { missing_services });
+          continue;
+        }
+        activated ||= await this.#start_record(record6);
+      }
+    }
+    this.#mark_dependency_cycles();
+  }
+  async #start_record(record6) {
+    const generation = record6.generation + 1;
+    const scope = new ResourceScope(`${record6.instance_id}:${generation}`);
+    record6.activation_scope = scope;
+    const service_snapshot = this.services.snapshot(record6.module.inject ?? []);
+    const overlay = new ActivationOverlay(service_snapshot, record6.instance_id);
+    const staged_effects = [];
+    const staged_services = /* @__PURE__ */ new Map();
+    const allowed_services = new Set(record6.module.provides ?? []);
+    const context = {
+      instance_id: record6.instance_id,
+      scope_id: scope.scope_id,
+      generation,
+      signal: scope.signal,
+      services: overlay.services,
+      effect: (setup, label = "effect") => {
+        const effect = { setup, label, cancelled: false };
+        staged_effects.push(effect);
+        return () => {
+          effect.cancelled = true;
+        };
+      },
+      on: (event_id, listener) => {
+        const effect = {
+          setup: () => this.events.on(event_id, (...args) => {
+            const result = listener(...args);
+            return result instanceof Promise ? scope.track(result) : result;
+          }),
+          label: `event:${event_id}`,
+          cancelled: false
+        };
+        staged_effects.push(effect);
+        return () => {
+          effect.cancelled = true;
+        };
+      },
+      provide: (service_id, service) => {
+        if (!allowed_services.has(service_id)) throw new Error(`\u672A\u58F0\u660E provides: ${service_id}`);
+        if (staged_services.has(service_id)) throw new Error(`\u91CD\u590D\u63D0\u4F9B\u670D\u52A1: ${service_id}`);
+        staged_services.set(service_id, service);
+      }
+    };
+    record6.state = "activating";
+    try {
+      const config = resolve_config(record6.module.config_schema, record6.raw_config);
+      const returned = await record6.module.apply(context, config);
+      if (returned) staged_effects.push({
+        setup: () => returned,
+        label: "apply",
+        cancelled: false
+      });
+      for (const effect of staged_effects) {
+        if (!effect.cancelled) scope.effect(effect.setup, effect.label);
+      }
+      await scope.settle();
+      scope.effect(() => overlay.publish(), "activation-overlay");
+      await scope.settle();
+      for (const [service_id, service] of staged_services) {
+        scope.effect(() => this.services.provide(
+          service_id,
+          service,
+          record6.instance_id,
+          generation
+        ), `service:${service_id}`);
+      }
+      await scope.settle();
+      record6.scope = scope;
+      record6.activation_scope = void 0;
+      record6.generation = generation;
+      record6.state = "active";
+      record6.diagnostic = void 0;
+      return true;
+    } catch (error) {
+      await overlay.rollback();
+      let cleanup_error;
+      try {
+        await scope.dispose();
+      } catch (dispose_error) {
+        cleanup_error = dispose_error;
+      }
+      if (record6.activation_scope === scope) record6.activation_scope = void 0;
+      record6.state = record6.enabled ? "failed" : "disabled";
+      record6.diagnostic = record6.enabled ? this.#diagnostic(record6, {
+        generation,
+        error: [error, cleanup_error].filter(Boolean).map((item) => item instanceof Error ? item.message : String(item)).join("\uFF1B")
+      }) : void 0;
+      return false;
+    }
+  }
+  async #stop_record(record6) {
+    if (record6.activation_scope) {
+      record6.state = "stopping";
+      await record6.activation_scope.dispose();
+      record6.activation_scope = void 0;
+    }
+    if (record6.scope) {
+      record6.state = "stopping";
+      await record6.scope.dispose();
+      record6.scope = void 0;
+    }
+    record6.state = record6.enabled ? "pending" : "disabled";
+  }
+  async #suspend_dependents(provider) {
+    const removed_services = new Set(provider.module.provides ?? []);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const record6 of [...this.#records.values()].reverse()) {
+        if (record6 === provider || record6.state !== "active") continue;
+        if (!(record6.module.inject ?? []).some((item) => removed_services.has(item))) continue;
+        for (const provided of record6.module.provides ?? []) removed_services.add(provided);
+        await this.#stop_record(record6);
+        record6.diagnostic = this.#diagnostic(record6, {
+          missing_services: (record6.module.inject ?? []).filter((item) => removed_services.has(item))
+        });
+        changed = true;
+      }
+    }
+  }
+  #mark_dependency_cycles() {
+    const pending = [...this.#records.values()].filter((record6) => record6.enabled && record6.state === "pending");
+    const provider_for = (service_id) => pending.find((record6) => record6.module.provides?.includes(service_id));
+    const reaches = (origin, current, seen) => {
+      if (seen.has(current.instance_id)) return current === origin;
+      seen.add(current.instance_id);
+      return (current.module.inject ?? []).some((service_id) => {
+        const provider = provider_for(service_id);
+        return provider ? reaches(origin, provider, new Set(seen)) : false;
+      });
+    };
+    for (const record6 of pending) {
+      if (!reaches(record6, record6, /* @__PURE__ */ new Set())) continue;
+      record6.state = "failed";
+      record6.diagnostic = this.#diagnostic(record6, {
+        error: "\u68C0\u6D4B\u5230\u63D2\u4EF6\u670D\u52A1\u5FAA\u73AF\u4F9D\u8D56"
+      });
+    }
+  }
+  #diagnostic(record6, changes) {
+    return {
+      instance_id: record6.instance_id,
+      plugin_name: record6.module.name,
+      generation: record6.generation,
+      state: record6.state,
+      missing_services: [],
+      ...changes
+    };
+  }
+  #require_record(instance_id) {
+    const record6 = this.#records.get(instance_id);
+    if (!record6) throw new Error(`\u63D2\u4EF6\u5B9E\u4F8B\u4E0D\u5B58\u5728: ${instance_id}`);
+    return record6;
+  }
+};
+
+// pip-editor/pip-runtime/ui-slots.ts
+var UiSlotRegistry = class {
+  #slots = /* @__PURE__ */ new Map();
+  #modes = /* @__PURE__ */ new Map();
+  #listeners = /* @__PURE__ */ new Set();
+  #snapshots = /* @__PURE__ */ new Map();
+  #sequence = 0;
+  define(slot_id, mode) {
+    const current = this.#modes.get(slot_id);
+    if (current && current !== mode) throw new Error(`UI slot ${slot_id} \u5DF2\u5B9A\u4E49\u4E3A ${current}`);
+    this.#modes.set(slot_id, mode);
+  }
+  mode(slot_id) {
+    const mode = this.#modes.get(slot_id);
+    if (!mode) throw new Error(`UI slot ${slot_id} \u5C1A\u672A\u5B9A\u4E49`);
+    return mode;
+  }
+  register(contribution) {
+    const current = this.#slots.get(contribution.slot_id) ?? [];
+    this.#validate(contribution, current);
+    if (current.some((item) => item.contribution_id === contribution.contribution_id)) {
+      throw new Error(`UI contribution ${contribution.contribution_id} \u5DF2\u6CE8\u518C`);
+    }
+    const stored = {
+      ...contribution,
+      sequence: ++this.#sequence
+    };
+    this.#slots.set(contribution.slot_id, [...current, stored]);
+    this.#snapshots.delete(contribution.slot_id);
+    this.#notify();
+    return () => {
+      const values = this.#slots.get(contribution.slot_id) ?? [];
+      const next = values.filter((item) => item !== stored);
+      if (next.length) this.#slots.set(contribution.slot_id, next);
+      else this.#slots.delete(contribution.slot_id);
+      this.#snapshots.delete(contribution.slot_id);
+      this.#notify();
+    };
+  }
+  begin_activation(owner_id) {
+    const staged = [];
+    const service = {
+      register: (contribution) => {
+        this.#validate(contribution, [
+          ...this.#slots.get(contribution.slot_id) ?? [],
+          ...staged.filter((item) => item.slot_id === contribution.slot_id)
+        ]);
+        const duplicate = staged.some((item) => item.slot_id === contribution.slot_id && item.contribution_id === contribution.contribution_id);
+        if (duplicate) throw new Error(`UI contribution ${contribution.contribution_id} \u5DF2\u6682\u5B58`);
+        const stored = {
+          ...contribution,
+          sequence: ++this.#sequence
+        };
+        staged.push(stored);
+        return () => {
+          const index = staged.indexOf(stored);
+          if (index >= 0) staged.splice(index, 1);
+        };
+      }
+    };
+    return {
+      service,
+      prepare: () => {
+        for (const contribution of staged) {
+          const current = this.#slots.get(contribution.slot_id) ?? [];
+          if (current.some((item) => item.contribution_id === contribution.contribution_id)) {
+            throw new Error(
+              `UI contribution ${contribution.contribution_id} \u4E0E\u5DF2\u53D1\u5E03\u8D21\u732E\u51B2\u7A81 (${owner_id})`
+            );
+          }
+        }
+      },
+      publish: () => {
+        for (const contribution of staged) {
+          const current = this.#slots.get(contribution.slot_id) ?? [];
+          this.#slots.set(contribution.slot_id, [...current, contribution]);
+          this.#snapshots.delete(contribution.slot_id);
+        }
+        return () => {
+          for (const contribution of staged) {
+            const current = this.#slots.get(contribution.slot_id) ?? [];
+            const next = current.filter((item) => item !== contribution);
+            if (next.length) this.#slots.set(contribution.slot_id, next);
+            else this.#slots.delete(contribution.slot_id);
+            this.#snapshots.delete(contribution.slot_id);
+          }
+        };
+      },
+      notify: () => this.#notify(),
+      rollback: () => {
+        staged.splice(0);
+      }
+    };
+  }
+  list(slot_id) {
+    const cached = this.#snapshots.get(slot_id);
+    if (cached) return cached;
+    const snapshot2 = [...this.#slots.get(slot_id) ?? []].sort((left, right) => (left.order ?? 0) - (right.order ?? 0) || left.sequence - right.sequence);
+    this.#snapshots.set(slot_id, snapshot2);
+    return snapshot2;
+  }
+  single(slot_id) {
+    this.#expect_mode(slot_id, "single");
+    return this.list(slot_id)[0];
+  }
+  keyed(slot_id) {
+    this.#expect_mode(slot_id, "keyed");
+    return new Map(this.list(slot_id).map((item) => [item.key, item]));
+  }
+  chain(slot_id) {
+    this.#expect_mode(slot_id, "chain");
+    return this.list(slot_id);
+  }
+  subscribe(listener) {
+    this.#listeners.add(listener);
+    return () => this.#listeners.delete(listener);
+  }
+  #notify() {
+    for (const listener of this.#listeners) listener();
+  }
+  #validate(contribution, current) {
+    const mode = this.#modes.get(contribution.slot_id);
+    if (!mode) throw new Error(`UI slot ${contribution.slot_id} \u5C1A\u672A\u5B9A\u4E49`);
+    if (mode === "single" && current.length) {
+      throw new Error(`single UI slot ${contribution.slot_id} \u5DF2\u6709\u8D21\u732E`);
+    }
+    if (mode === "keyed" && !contribution.key) {
+      throw new Error(`keyed UI slot ${contribution.slot_id} \u8981\u6C42 key`);
+    }
+    if (mode === "keyed" && current.some((item) => item.key === contribution.key)) {
+      throw new Error(`keyed UI slot ${contribution.slot_id} \u7684 key ${contribution.key} \u5DF2\u5B58\u5728`);
+    }
+  }
+  #expect_mode(slot_id, expected) {
+    const actual = this.#modes.get(slot_id);
+    if (actual !== expected) throw new Error(`UI slot ${slot_id} \u662F ${actual ?? "\u672A\u5B9A\u4E49"}\uFF0C\u4E0D\u662F ${expected}`);
+  }
+};
+
+// pip-editor/pip-runtime/ui-slot-renderer.ts
+var import_react8 = __toESM(require_react(), 1);
+var SlotErrorBoundary = class extends import_react8.Component {
+  constructor() {
+    super(...arguments);
+    this.state = {};
+  }
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+  componentDidCatch() {
+  }
+  componentDidUpdate(previous) {
+    if (previous.contribution_id !== this.props.contribution_id && this.state.error) {
+      this.setState({ error: void 0 });
+    }
+  }
+  render() {
+    if (!this.state.error) return this.props.children;
+    return this.props.fallback?.(this.state.error) ?? (0, import_react8.createElement)(
+      "div",
+      { role: "alert", "data-slot-error": this.props.contribution_id },
+      "\u63D2\u4EF6\u754C\u9762\u6682\u65F6\u4E0D\u53EF\u7528"
+    );
+  }
+};
+function UiSlot({
+  registry,
+  slot_id,
+  component_props,
+  error_fallback
+}) {
+  const contributions = (0, import_react8.useSyncExternalStore)(
+    (listener) => registry.subscribe(listener),
+    () => registry.list(slot_id),
+    () => registry.list(slot_id)
+  );
+  if (registry.mode(slot_id) === "chain") {
+    return contributions.reduceRight((next, contribution) => render_contribution(contribution, { ...component_props, next }, error_fallback), null);
+  }
+  return (0, import_react8.createElement)(
+    import_react8.Fragment,
+    null,
+    ...contributions.map((contribution) => render_contribution(contribution, component_props, error_fallback))
+  );
+}
+function render_contribution(contribution, props, fallback) {
+  return (0, import_react8.createElement)(
+    SlotErrorBoundary,
+    {
+      key: contribution.contribution_id,
+      contribution_id: contribution.contribution_id,
+      fallback
+    },
+    (0, import_react8.createElement)(import_react8.Fragment, null, (0, import_react8.createElement)(contribution.component, props))
+  );
+}
+
+// pip-editor/pip-runtime/ui-styles.ts
+var UiStyleRegistry = class {
+  #package_files = /* @__PURE__ */ new Map();
+  #active = /* @__PURE__ */ new Map();
+  #listeners = /* @__PURE__ */ new Set();
+  register_package(owner_id, files) {
+    this.#package_files.set(owner_id, files);
+  }
+  remove_package(owner_id) {
+    if ([...this.#active.values()].some((value) => value.owner_id === owner_id)) {
+      throw new Error(`\u63D2\u4EF6 ${owner_id} \u7684\u6837\u5F0F\u4ECD\u5728\u4F7F\u7528`);
+    }
+    this.#package_files.delete(owner_id);
+  }
+  list() {
+    return [...this.#active.values()].map(({ style_id, resource_path }) => ({
+      style_id,
+      resource_path
+    }));
+  }
+  subscribe(listener) {
+    this.#listeners.add(listener);
+    return () => {
+      this.#listeners.delete(listener);
+    };
+  }
+  begin_activation(owner_id) {
+    const staged = /* @__PURE__ */ new Map();
+    const service = {
+      register: (style_id, resource_path) => {
+        if (staged.has(style_id)) throw new Error(`\u6837\u5F0F ${style_id} \u91CD\u590D\u6682\u5B58`);
+        const bytes = this.#package_files.get(owner_id)?.[resource_path];
+        if (!bytes) throw new Error(`\u63D2\u4EF6 ${owner_id} \u7F3A\u5C11\u6837\u5F0F\u8D44\u6E90 ${resource_path}`);
+        staged.set(style_id, {
+          style_id,
+          resource_path,
+          owner_id,
+          source: new TextDecoder("utf-8", { fatal: true }).decode(bytes)
+        });
+        return () => {
+          staged.delete(style_id);
+        };
+      }
+    };
+    return {
+      service,
+      prepare: () => {
+        for (const style_id of staged.keys()) {
+          if (this.#active.has(style_id)) throw new Error(`\u6837\u5F0F ${style_id} \u5DF2\u6CE8\u518C`);
+        }
+      },
+      publish: () => {
+        for (const style of staged.values()) {
+          if (typeof document !== "undefined") {
+            const element = document.createElement("style");
+            element.dataset.pipStyle = style.style_id;
+            element.textContent = style.source;
+            document.head.append(element);
+            style.element = element;
+          }
+          this.#active.set(style.style_id, style);
+        }
+        return () => {
+          for (const style of staged.values()) {
+            if (this.#active.get(style.style_id) !== style) continue;
+            style.element?.remove();
+            this.#active.delete(style.style_id);
+          }
+        };
+      },
+      notify: () => this.#notify(),
+      rollback: () => staged.clear()
+    };
+  }
+  #notify() {
+    for (const listener of this.#listeners) listener();
+  }
+};
+
+// pip-editor/pip-host/view/companion-visual.tsx
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+function CompanionVisual({
+  element_tag,
+  model,
+  on_action,
+  on_dismiss,
+  ui_slots
+}) {
+  const container_ref = (0, import_react9.useRef)(null);
+  (0, import_react9.useEffect)(() => {
+    const element = container_ref.current?.firstElementChild;
+    if (!element) return;
+    element.model = model;
+    const action = (event) => {
+      const detail = event.detail;
+      if (detail) on_action(detail.message_id, detail.action_id);
+    };
+    const dismiss = (event) => {
+      const detail = event.detail;
+      if (detail) on_dismiss(detail.message_id);
+    };
+    element.addEventListener(companion_action_event, action);
+    element.addEventListener(companion_dismiss_event, dismiss);
+    return () => {
+      element.removeEventListener(companion_action_event, action);
+      element.removeEventListener(companion_dismiss_event, dismiss);
+    };
+  }, [element_tag, model, on_action, on_dismiss]);
+  if (ui_slots?.list("guanguan.companion").length) {
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      UiSlot,
+      {
+        registry: ui_slots,
+        slot_id: "guanguan.companion",
+        component_props: {
+          data: model,
+          actions: Object.freeze({ action: on_action, dismiss: on_dismiss })
+        }
+      }
+    );
+  }
+  if (element_tag) {
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { ref: container_ref, className: companion_visual_default.companionElementHost, children: (0, import_react9.createElement)(element_tag, { className: companion_visual_default.companionElement }) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    "div",
+    {
+      className: companion_visual_default.fallbackVisual,
+      "data-collapsed": model.collapsed ? "" : void 0,
+      "data-avatar-horizontal": model.avatar_anchor.horizontal,
+      "data-avatar-vertical": model.avatar_anchor.vertical,
+      "data-message-horizontal": model.message_placement.horizontal,
+      "data-message-vertical": model.message_placement.vertical,
+      "data-facing": model.facing,
+      children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: companion_visual_default.fallbackAvatar, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: companion_visual_default.fallbackAvatarClip, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GuanguanLogo, { pose: model.pose === "curious" ? "open" : model.pose, size: 32 }) }),
+        model.message && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+          "section",
+          {
+            className: companion_visual_default.petMessage,
+            "data-tone": model.message.tone,
+            role: "status",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("strong", { children: model.message.title }),
+              model.message.detail && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: model.message.detail }),
+              model.message.shortcuts?.map((shortcut) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("small", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("kbd", { children: shortcut.key }),
+                " ",
+                shortcut.label
+              ] }, shortcut.key)),
+              model.message.actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                "button",
+                {
+                  onClick: () => on_action(model.message.id, action.id),
+                  children: action.label
+                },
+                action.id
+              )),
+              model.message.dismissible && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                "button",
+                {
+                  "aria-label": "\u5173\u95ED\u5173\u5173\u6D88\u606F",
+                  onClick: () => on_dismiss(model.message.id),
+                  children: "\xD7"
+                }
+              )
+            ]
+          }
+        )
+      ] })
+    }
+  );
+}
+
+// pip-editor/pip-host/view/space-navigator.module.css
+var space_navigator_default = {
+  navigator: "space_navigator_navigator",
+  map: "space_navigator_map",
+  left: "space_navigator_left",
+  right: "space_navigator_right",
+  above: "space_navigator_above",
+  below: "space_navigator_below",
+  compass: "space_navigator_compass",
+  expandedControls: "space_navigator_expandedControls",
+  toolsSection: "space_navigator_toolsSection",
+  toolsToggle: "space_navigator_toolsToggle",
+  toolsState: "space_navigator_toolsState",
+  toolsBody: "space_navigator_toolsBody",
+  historyControls: "space_navigator_historyControls",
+  create: "space_navigator_create",
+  agentSection: "space_navigator_agentSection",
+  agentReview: "space_navigator_agentReview"
+};
+
+// pip-editor/pip-host/view/space-navigator-shell.module.css
+var space_navigator_shell_default = {
+  map: "space_navigator_shell_map"
+};
+
+// pip-editor/pip-host/view/space-navigator-tools.tsx
+var import_react10 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/view/space-history-controls.tsx
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+function SpaceHistoryControls({ context, service }) {
+  const workspace = context.workspace;
+  const run_history = (direction) => {
+    if (workspace) service.history(workspace.id, direction);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: space_navigator_default.historyControls, "aria-label": "\u5DE5\u4F5C\u533A\u5386\u53F2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      "button",
+      {
+        type: "button",
+        disabled: !workspace?.can_undo,
+        "aria-label": "\u64A4\u9500\u4E0A\u4E00\u6B65",
+        title: "\u64A4\u9500\u4E0A\u4E00\u6B65",
+        onClick: () => run_history("undo"),
+        children: "\u21B6 \u64A4\u9500"
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      "button",
+      {
+        type: "button",
+        disabled: !workspace?.can_redo,
+        "aria-label": "\u91CD\u505A\u4E0A\u4E00\u6B65",
+        title: "\u91CD\u505A\u4E0A\u4E00\u6B65",
+        onClick: () => run_history("redo"),
+        children: "\u21B7 \u91CD\u505A"
+      }
+    )
+  ] });
+}
+
+// pip-editor/pip-host/view/space-navigator-tools.tsx
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+function SpaceNavigatorTools({
+  context,
+  service,
+  inspector_serial,
+  on_create
+}) {
+  const panel_id = (0, import_react10.useId)();
+  const [expanded, set_expanded] = (0, import_react10.useState)(inspector_serial === void 0);
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("section", { className: space_navigator_default.toolsSection, "aria-label": "\u753B\u5E03\u5DE5\u5177", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+      "button",
+      {
+        type: "button",
+        className: space_navigator_default.toolsToggle,
+        "aria-expanded": expanded,
+        "aria-controls": panel_id,
+        onClick: () => set_expanded((current) => !current),
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children: "\u753B\u5E03\u5DE5\u5177" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: space_navigator_default.toolsState, "aria-hidden": "true", children: expanded ? "\u6536\u8D77 \u2212" : "\u5C55\u5F00 \uFF0B" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { id: panel_id, className: space_navigator_default.toolsBody, hidden: !expanded, children: expanded && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: space_navigator_default.expandedControls, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(ScaleControlSlot, { space: context.focus_space }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(SpaceHistoryControls, { context, service }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", className: space_navigator_default.create, onClick: on_create, children: "\uFF0B \u521B\u5EFA" })
+    ] }) })
+  ] });
+}
+
+// pip-editor/pip-host/view/space-world-console.tsx
+var import_react14 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/creation/content-navigation.ts
+function attached_projections(parent, graph, scope) {
+  const observes = (node2) => {
+    const value = node2?.pips.find((pip) => pip.predicate_value?.predicate.node_id === "pip.projection.predicate.observes")?.predicate_value?.value;
+    return value?.kind === "ref" ? value.target.node_id : void 0;
+  };
+  return content_placements(graph, observes(parent) ?? "").filter((item) => item.kind === (scope === "self" ? "annotation" : "child")).flatMap((item) => {
+    const observed_id = observes(graphNodes(graph)[item.projection_id]);
+    return observed_id ? [{
+      projectionNodeId: item.projection_id,
+      observedNodeId: observed_id,
+      frame: { x: item.x, y: item.y, width: item.width, height: item.height, resizeMode: "simple" }
+    }] : [];
+  });
+}
+
+// pip-editor/pip-host/projection/projection-context.ts
+var validKinds = /* @__PURE__ */ new Set(["self-workspace", "children-workspace", "self-embedded"]);
+var legacyCapabilities = (contexts) => {
+  if (contexts.some((kind) => !validKinds.has(kind))) throw new Error("invalid context");
+  if (contexts.includes("children-workspace") && contexts.some((kind) => kind !== "children-workspace")) throw new Error("cannot combine children-workspace with a self context");
+  if (contexts.includes("self-embedded") && !contexts.includes("self-workspace")) throw new Error("must support self-workspace before self-embedded");
+  return contexts.includes("children-workspace") ? { scope: "children", surfaces: ["workspace"] } : { scope: "self", surfaces: contexts.includes("self-embedded") ? ["workspace", "embedded"] : ["workspace"] };
+};
+var contextsFor = (scope, surfaces) => scope === "children" ? ["children-workspace"] : ["self-workspace", ...surfaces.includes("embedded") ? ["self-embedded"] : []];
+function normalizeProjectionRegistration(projection) {
+  if (projection.zoomViewport && Object.values(projection.zoomViewport).some((value) => !Number.isFinite(value) || value < 0)) {
+    throw new Error(`Projection ${projection.id} has an invalid zoom viewport`);
+  }
+  if (!projection.definition && !projection.contexts?.length && !projection.scope && !projection.surfaces?.length) return projection;
+  let legacy;
+  try {
+    if (projection.contexts?.length) legacy = legacyCapabilities(projection.contexts);
+  } catch (error) {
+    throw new Error(`Projection ${projection.id} ${error instanceof Error ? error.message : "has invalid contexts"}`);
+  }
+  const scope = projection.scope ?? legacy?.scope;
+  const surfaces = projection.surfaces ?? legacy?.surfaces;
+  if (!scope || !["self", "children"].includes(scope)) throw new Error(`Projection ${projection.id} has an invalid observation scope`);
+  if (!surfaces?.length || surfaces.some((surface) => !["workspace", "embedded"].includes(surface))) throw new Error(`Projection ${projection.id} has invalid surfaces`);
+  const uniqueSurfaces = [...new Set(surfaces)];
+  if (scope === "children" && uniqueSurfaces.includes("embedded")) throw new Error(`Projection ${projection.id} cannot combine children scope with embedded surface`);
+  if (uniqueSurfaces.includes("embedded") && !uniqueSurfaces.includes("workspace")) throw new Error(`Projection ${projection.id} must support workspace before embedded`);
+  if (legacy && (legacy.scope !== scope || legacy.surfaces.length !== uniqueSurfaces.length || legacy.surfaces.some((surface) => !uniqueSurfaces.includes(surface)))) {
+    throw new Error(`Projection ${projection.id} has conflicting contexts and scope/surfaces`);
+  }
+  return { ...projection, scope, surfaces: uniqueSurfaces, contexts: contextsFor(scope, uniqueSurfaces) };
+}
+function normalizeProjectionContext(context) {
+  if (context.kind === "self-embedded") return { ...context, scope: "self", surface: "embedded", kind: context.kind };
+  if (context.kind === "children-workspace") return { scope: "children", surface: "workspace", kind: context.kind };
+  return { scope: "self", surface: "workspace", kind: context.kind };
+}
+function workspaceProjectionContext(scope) {
+  return scope === "children" ? { scope, surface: "workspace", kind: "children-workspace" } : { scope, surface: "workspace", kind: "self-workspace" };
+}
+function assertProjectionContext(projection, context) {
+  const normalized = normalizeProjectionRegistration(projection);
+  if (normalized.scope !== context.scope || !normalized.surfaces?.includes(context.surface)) {
+    throw new Error(`Projection ${projection.id} does not support ${context.kind}`);
+  }
+}
+
+// pip-editor/pip-host/projection/projection-instance.ts
+var PROJECTION = {
+  instanceType: "pip.projection.type.instance",
+  observes: "pip.projection.predicate.observes",
+  uses: "pip.projection.predicate.uses",
+  divesInto: "pip.projection.predicate.dives-into",
+  presents: "pip.projection.predicate.presents",
+  childPredicate: "pip.projection.predicate.child-predicate",
+  frame: "pip.projection.predicate.frame"
+};
+var refObject = (pip) => pip?.predicate_value?.value.kind === "ref" ? pip.predicate_value.value.target : void 0;
+var pipByPredicate = (node2, predicateNodeId) => node2?.pips.find((pip) => pip.predicate_value?.predicate.node_id === predicateNodeId);
+var pipsByPredicate = (node2, predicateNodeId) => node2?.pips.filter((pip) => pip.predicate_value?.predicate.node_id === predicateNodeId) ?? [];
+var targetByPredicate = (node2, predicateNodeId) => refObject(pipByPredicate(node2, predicateNodeId));
+var observedNode = (projection, graph) => graphNodes(graph)[targetByPredicate(projection, PROJECTION.observes)?.node_id ?? ""];
+var definitionRef = (projection) => targetByPredicate(projection, PROJECTION.uses);
+var projectionForInstance = (projection, registrations) => {
+  const definition = definitionRef(projection);
+  return definition && registrations.find((candidate) => candidate.definition?.node_id === definition.node_id && candidate.definition.pip_id === definition.pip_id);
+};
+var observationScope = (projection) => normalizeProjectionRegistration(projection).scope ?? "self";
+function presentedProjections(parent, graph) {
+  return pipsByPredicate(parent, PROJECTION.presents).flatMap((pip) => {
+    const target = refObject(pip), projection = target && graphNodes(graph)[target.node_id];
+    const observed = projection && targetByPredicate(projection, PROJECTION.observes);
+    const frame_pip = pip.pips.find((nested) => nested.predicate_value?.predicate.node_id === PROJECTION.frame);
+    const frame = frame_pip?.predicate_value?.value.kind === "const" ? frame_pip.predicate_value.value.value : void 0;
+    if (!projection || !observed || !frame || typeof frame !== "object" || Array.isArray(frame)) return [];
+    return [{ projectionNodeId: projection.id, observedNodeId: observed.node_id, frame }];
+  });
+}
+
+// pip-editor/pip-host/projection/projection-routes.ts
+function routeForProjection(projectionNodeId, graph, nodeTypes, enteredFrom) {
+  const node2 = graphNodes(graph)[projectionNodeId], observed = node2 && observedNode(node2, graph), definition = node2 && projectionForInstance(node2, nodeTypes.projections());
+  if (!node2 || !observed || !definition) return;
+  return { projectionNodeId, observedNodeId: observed.id, scope: observationScope(definition), enteredFrom };
+}
+function navigationForRoot(rootNodeId, graph, nodeTypes, current) {
+  if (current?.entries.length && current.index < current.entries.length) {
+    const nodes = graphNodes(graph);
+    let valid_index = current.index;
+    while (valid_index >= 0 && !nodes[current.entries[valid_index].projectionNodeId]) valid_index -= 1;
+    if (valid_index === current.index) return current;
+    if (valid_index >= 0) return {
+      entries: current.entries.slice(0, valid_index + 1),
+      index: valid_index,
+      semanticScale: 1
+    };
+  }
+  const route = routeForProjection(rootNodeId, graph, nodeTypes);
+  return route ? initialNavigation(route) : void 0;
+}
+function forwardRoute(state, graph, nodeTypes, focusedProjectionId, selectedNodeId) {
+  const route = currentRoute(state), node2 = graphNodes(graph)[route.projectionNodeId];
+  if (!node2) return;
+  const attached = attached_projections(node2, graph, route.scope).find((item2) => item2.projectionNodeId === focusedProjectionId || item2.observedNodeId === selectedNodeId);
+  if (attached) return routeForProjection(attached.projectionNodeId, graph, nodeTypes, {
+    parentInternalProjectionId: node2.id,
+    childProjectionId: attached.projectionNodeId
+  });
+  if (route.scope === "self") {
+    const chosen = state.semanticTargetProjectionId ? routeForProjection(state.semanticTargetProjectionId, graph, nodeTypes) : void 0;
+    if (chosen?.scope === "children" && chosen.observedNodeId === route.observedNodeId)
+      return chosen;
+    const target = targetByPredicate(node2, PROJECTION.divesInto)?.node_id;
+    const dive = target ? routeForProjection(target, graph, nodeTypes) : void 0;
+    return dive?.scope === "children" && dive.observedNodeId === route.observedNodeId ? dive : void 0;
+  }
+  const items = presentedProjections(node2, graph);
+  const item = items.find(({ projectionNodeId }) => projectionNodeId === focusedProjectionId) ?? items.find(({ observedNodeId }) => observedNodeId === selectedNodeId);
+  return item && routeForProjection(item.projectionNodeId, graph, nodeTypes, {
+    parentInternalProjectionId: node2.id,
+    childProjectionId: item.projectionNodeId
+  });
+}
+function projectionOptions(observedNodeId, graph, nodeTypes) {
+  return Object.values(graphNodes(graph)).flatMap((node2) => {
+    const observed = observedNode(node2, graph), projection = projectionForInstance(node2, nodeTypes.projections());
+    if (observed?.id !== observedNodeId || !projection) return [];
+    return projection.surfaces?.includes("workspace") ? [{ projectionNodeId: node2.id, scope: observationScope(projection), label: `${projection.icon ? `${projection.icon} ` : ""}${projection.name ?? projection.id}` }] : [];
+  });
+}
+
+// pip-editor/pip-host/view/space-world-tree.ts
+var path_id = (segments) => JSON.stringify(segments);
+var viewport_path_id = path_id(["viewport"]);
+var host_path_id = path_id(["host"]);
+function flatten_space_world(root2) {
+  return [root2, ...root2.children.flatMap(flatten_space_world)];
+}
+function ancestor_path_ids(root2, target_id) {
+  if (root2.path_id === target_id) return [root2.path_id];
+  for (const child of root2.children) {
+    const path = ancestor_path_ids(child, target_id);
+    if (path.length) return [root2.path_id, ...path];
+  }
+  return [];
+}
+function toggle_expanded_path(paths, path_id2) {
+  const next = new Set(paths);
+  if (next.has(path_id2)) next.delete(path_id2);
+  else next.add(path_id2);
+  return [...next];
+}
+function build_space_world_tree(workspaces, node_types) {
+  const workspace_nodes = workspaces.map((workspace) => {
+    const views = normalizeFreeLayout(workspace.views, workspace.rootNodeIds);
+    const roots = workspace.rootNodeIds.flatMap((root_id) => {
+      const root_route = routeForProjection(root_id, workspace.graph, node_types);
+      if (!root_route) return [];
+      const navigation2 = views.projections[root_id]?.navigation;
+      const active_id = navigation2?.entries[navigation2.index]?.projectionNodeId;
+      const active_route = active_id ? routeForProjection(active_id, workspace.graph, node_types) : void 0;
+      const route = active_route?.scope === root_route.scope && active_route.observedNodeId === root_route.observedNodeId ? active_route : root_route;
+      return [projection_node(
+        workspace,
+        node_types,
+        root_id,
+        [route],
+        ["host", workspace.id, root_id],
+        /* @__PURE__ */ new Set(),
+        navigation2?.entries.slice(0, navigation2.index + 1)
+      )];
+    });
+    return {
+      path_id: path_id(["host", workspace.id]),
+      label: workspace.source?.id === "host.new-tab" ? `\u65B0\u5DE5\u4F5C\u533A \xB7 ${workspace.id.slice(0, 6)}` : workspace.source?.id ?? workspace.id,
+      kind: "workspace",
+      depth: 2,
+      target: { kind: "workspace", workspace_id: workspace.id },
+      children: roots
+    };
+  });
+  const host = {
+    path_id: host_path_id,
+    label: "\u5BBF\u4E3B\u753B\u5E03",
+    kind: "host",
+    depth: 1,
+    target: { kind: "host" },
+    children: workspace_nodes
+  };
+  return {
+    path_id: viewport_path_id,
+    label: "\u5C4F\u5E55\u89C6\u53E3",
+    kind: "viewport",
+    depth: 0,
+    target: { kind: "viewport" },
+    children: [host]
+  };
+}
+function projection_node(workspace, node_types, root_window_id, route, segments, ancestors, active_entries) {
+  const current = route[route.length - 1];
+  const nodes = graphNodes(workspace.graph);
+  const projection = nodes[current.projectionNodeId];
+  const observed = nodes[current.observedNodeId];
+  const definition = projection && node_types.projections().find(
+    (item) => item.definition?.node_id === targetByPredicate(projection, PROJECTION.uses)?.node_id
+  );
+  const label = observed?.id ?? current.projectionNodeId;
+  const next_ancestors = new Set(ancestors);
+  next_ancestors.add(current.projectionNodeId);
+  const attached = projection ? attached_projections(projection, workspace.graph, current.scope) : [];
+  const presented = projection ? presentedProjections(projection, workspace.graph) : [];
+  const dives_into = projection ? targetByPredicate(projection, PROJECTION.divesInto)?.node_id : void 0;
+  const dive_route = dives_into ? routeForProjection(dives_into, workspace.graph, node_types) : void 0;
+  const active_next = active_entries?.[route.length - 1]?.projectionNodeId === current.projectionNodeId ? active_entries[route.length] : void 0;
+  const active_child = active_next?.scope === "children" && active_next.observedNodeId === current.observedNodeId ? active_next : void 0;
+  const dive_candidate = dives_into && current.scope === "self" && dive_route?.scope === "children" && dive_route.observedNodeId === current.observedNodeId ? {
+    projectionNodeId: active_child?.projectionNodeId ?? dives_into,
+    observedNodeId: current.observedNodeId,
+    path_segment_id: dives_into
+  } : void 0;
+  const candidates = [
+    ...attached,
+    ...presented,
+    // 同一对象的同级视图不构成子空间，即使旧图中保留 dives-into 边。
+    ...dive_candidate ? [dive_candidate] : []
+  ];
+  const unique = /* @__PURE__ */ new Set();
+  const children = candidates.flatMap((candidate) => {
+    const id = candidate.projectionNodeId;
+    if (unique.has(id) || next_ancestors.has(id)) return [];
+    unique.add(id);
+    const entry = routeForProjection(id, workspace.graph, node_types, {
+      parentInternalProjectionId: current.projectionNodeId,
+      childProjectionId: id
+    });
+    if (!entry || !node_types.projections().some((item) => item.definition?.node_id === targetByPredicate(nodes[id], PROJECTION.uses)?.node_id && item.surfaces?.includes("workspace"))) return [];
+    return [projection_node(
+      workspace,
+      node_types,
+      root_window_id,
+      [...route, entry],
+      [...segments, "path_segment_id" in candidate ? candidate.path_segment_id : id],
+      next_ancestors,
+      active_entries
+    )];
+  });
+  return {
+    path_id: path_id(segments),
+    label: definition?.name ? `${label} \xB7 ${definition.name}` : label,
+    kind: "projection",
+    depth: segments.length,
+    scope: current.scope,
+    target: {
+      kind: "projection",
+      workspace_id: workspace.id,
+      root_window_id,
+      projection_id: current.projectionNodeId,
+      route
+    },
+    children
+  };
+}
+
+// pip-editor/pip-host/view/space-world-navigation.ts
+function target_surface_id(target) {
+  if (target.kind === "viewport") return "viewport";
+  if (target.kind === "host") return "host";
+  if (target.kind === "workspace") return `workspace:${target.workspace_id}`;
+  return `projection:${target.workspace_id}:${target.root_window_id}:${target.projection_id}`;
+}
+function expanded_paths_for_focus(root2, surface_id, expanded) {
+  const node2 = flatten_space_world(root2).find(
+    (item) => item.kind !== "viewport" && target_surface_id(item.target) === surface_id
+  );
+  if (!node2) return void 0;
+  return [.../* @__PURE__ */ new Set([...expanded, ...ancestor_path_ids(root2, node2.path_id)])];
+}
+function valid_projection_route(target, graph, node_types) {
+  if (!target.route.length || target.route.at(-1)?.projectionNodeId !== target.projection_id) return false;
+  const root_route = routeForProjection(target.root_window_id, graph, node_types);
+  const first_route = routeForProjection(target.route[0].projectionNodeId, graph, node_types);
+  if (!root_route || !first_route || first_route.observedNodeId !== root_route.observedNodeId || first_route.scope !== root_route.scope) return false;
+  const nodes = graphNodes(graph);
+  for (const [index, entry] of target.route.entries()) {
+    const resolved = routeForProjection(entry.projectionNodeId, graph, node_types);
+    if (!resolved || resolved.observedNodeId !== entry.observedNodeId || resolved.scope !== entry.scope) return false;
+    if (index === 0) continue;
+    const parent = target.route[index - 1];
+    const parent_node = nodes[parent.projectionNodeId];
+    if (!parent_node) return false;
+    const dive_id = targetByPredicate(parent_node, PROJECTION.divesInto)?.node_id;
+    const dive_route = dive_id ? routeForProjection(dive_id, graph, node_types) : void 0;
+    const valid_dive = parent.scope === "self" && dive_route?.scope === "children" && dive_route.observedNodeId === parent.observedNodeId;
+    const valid_view = parent.scope === "self" && entry.scope === "children" && entry.observedNodeId === parent.observedNodeId;
+    const direct_ids = /* @__PURE__ */ new Set([
+      ...attached_projections(parent_node, graph, parent.scope).map((item) => item.projectionNodeId),
+      ...presentedProjections(parent_node, graph).map((item) => item.projectionNodeId),
+      ...valid_dive && dive_id ? [dive_id] : []
+    ]);
+    if (!direct_ids.has(entry.projectionNodeId) && !valid_view) return false;
+  }
+  return true;
+}
+function wait_for_surface(store, surface_id, timeout_ms = 5e3) {
+  const current = store.surface(surface_id);
+  if (current) return Promise.resolve(current);
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (surface) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      unsubscribe();
+      if (surface) resolve(surface);
+      else reject(new Error("\u76EE\u6807\u7A7A\u95F4\u5C1A\u672A\u6302\u8F7D"));
+    };
+    const unsubscribe = store.subscribe(() => {
+      const surface = store.surface(surface_id);
+      if (surface) finish(surface);
+    });
+    const timer = setTimeout(() => finish(), timeout_ms);
+    const registered = store.surface(surface_id);
+    if (registered) finish(registered);
+  });
+}
+async function activate_space_world_target(target, dependencies) {
+  if (target.kind === "viewport") {
+    return activate_space_world_target({ kind: "host" }, dependencies);
+  }
+  const { space_store, workspace_store, present_workspace, node_types } = dependencies;
+  const surface_id = target_surface_id(target);
+  if (target.kind !== "host") {
+    const workspace = workspace_store.list().find(
+      (item) => item.id === target.workspace_id
+    );
+    if (!workspace) throw new Error("\u5DE5\u4F5C\u533A\u5DF2\u5173\u95ED");
+    if (target.kind === "projection") {
+      const views = normalizeFreeLayout(workspace.views, workspace.rootNodeIds);
+      const frame = views.projections[target.root_window_id];
+      if (!frame) throw new Error("\u6839\u6295\u5F71\u7A97\u53E3\u5DF2\u5173\u95ED");
+      if (!valid_projection_route(target, workspace.graph, node_types)) {
+        throw new Error("\u6295\u5F71\u8DEF\u5F84\u5DF2\u5931\u6548");
+      }
+      if (!space_store.surface(`workspace:${workspace.id}`)) {
+        present_workspace(workspace.id);
+      }
+      workspace_store.setWindow(workspace.id, target.root_window_id, {
+        ...frame,
+        navigation: {
+          entries: [...target.route],
+          index: target.route.length - 1,
+          semanticScale: 1
+        }
+      });
+    } else if (!space_store.surface(`workspace:${workspace.id}`)) {
+      present_workspace(workspace.id);
+    }
+  }
+  const surface = await wait_for_surface(space_store, surface_id);
+  space_store.focus_surface(surface.id);
+  surface.element.scrollIntoView({
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    block: "nearest",
+    inline: "nearest"
+  });
+  return surface;
+}
+
+// pip-editor/pip-host/view/space-inspector-entry.ts
+var space_inspector_entry_event = "pip-open-space-inspector";
+function request_space_inspector(target) {
+  document.dispatchEvent(new CustomEvent(space_inspector_entry_event, {
+    detail: target
+  }));
+}
+function focus_space_inspector_target(store, target) {
+  return target.kind === "projection" ? store?.focus_surface(target_surface_id(target)) ?? false : false;
+}
+function find_space_inspector_node(root2, target) {
+  if (target.kind !== "projection") return void 0;
+  return flatten_space_world(root2).find((candidate) => {
+    if (candidate.target.kind !== "projection") return false;
+    const current = candidate.target;
+    return current.workspace_id === target.workspace_id && current.root_window_id === target.root_window_id && current.projection_id === target.projection_id && current.route.length === target.route.length && current.route.every((entry, index) => entry.projectionNodeId === target.route[index].projectionNodeId);
+  });
+}
+
+// pip-editor/pip-host/view/space-world-scroll.ts
+function scroll_space_row_to_top(container, row, reduced_motion) {
+  const container_rect = container.getBoundingClientRect();
+  const row_rect = row.getBoundingClientRect();
+  const padding_top = Number.parseFloat(getComputedStyle(container).paddingTop) || 0;
+  const next_top = Math.max(
+    0,
+    container.scrollTop + row_rect.top - container_rect.top - container.clientTop - padding_top
+  );
+  if (Math.abs(next_top - container.scrollTop) < 1) return;
+  container.scrollTo({
+    top: next_top,
+    behavior: reduced_motion ? "auto" : "smooth"
+  });
+}
+
+// pip-editor/pip-host/view/space-inspector.tsx
+var import_react13 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/view/space-inspector-element.tsx
+var import_react11 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/contracts/space-inspector.ts
+var inspector_command_event = "pip-inspector-command";
+
+// pip-editor/pip-host/view/space-inspector-element.tsx
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+function SpaceInspectorElement({
+  tag,
+  model,
+  on_command
+}) {
+  const host_ref = (0, import_react11.useRef)(null);
+  (0, import_react11.useEffect)(() => {
+    const element = host_ref.current?.firstElementChild;
+    if (!element) return;
+    element.model = model;
+    const receive = (event) => {
+      const detail = event.detail;
+      if (!detail || detail.path_id !== model.path_id || typeof detail.command_id !== "string" || !model.commands.some((item) => item.id === detail.command_id && item.enabled) || detail.revision !== model.revision || !detail.values || typeof detail.values !== "object" || Array.isArray(detail.values)) return;
+      on_command(
+        detail.command_id,
+        model.revision,
+        detail.values
+      );
+    };
+    element.addEventListener(inspector_command_event, receive);
+    return () => element.removeEventListener(inspector_command_event, receive);
+  }, [tag, model, on_command]);
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { ref: host_ref, children: (0, import_react11.createElement)(tag) });
+}
+
+// pip-editor/pip-host/view/space-inspector.module.css
+var space_inspector_default = {
+  inspector: "space_inspector_inspector",
+  primary: "space_inspector_primary",
+  actions: "space_inspector_actions",
+  command: "space_inspector_command",
+  confirm: "space_inspector_confirm"
+};
+
+// pip-editor/pip-host/view/runtime-inspector.ts
+var import_react12 = __toESM(require_react(), 1);
+function shared_slot(commands) {
+  const slots = new Set(commands.flatMap((item) => item.slot_id ? [item.slot_id] : []));
+  return slots.size === 1 ? [...slots][0] : void 0;
+}
+function RuntimeInspector({
+  registry,
+  target,
+  snapshot: snapshot2,
+  service,
+  on_message
+}) {
+  const slot_id = shared_slot(snapshot2.commands);
+  if (!slot_id || snapshot2.revision === void 0 || !snapshot2.observed_node_id) return null;
+  const request = async (value) => {
+    const command_id = value.kind === "command" && typeof value.commandId === "string" ? value.commandId : void 0;
+    const descriptor = snapshot2.commands.find((item) => item.command_id === command_id);
+    if (!descriptor) throw new Error("Inspector \u64CD\u4F5C\u672A\u83B7\u6388\u6743");
+    if (value.expected_revision !== void 0 && value.expected_revision !== snapshot2.revision) {
+      throw new Error("Inspector \u6570\u636E\u5DF2\u7ECF\u8FC7\u671F");
+    }
+    const input = value.input && typeof value.input === "object" && !Array.isArray(value.input) ? value.input : {};
+    const values = Object.fromEntries(descriptor.fields.map((field) => [field.id, input[field.id]]));
+    await service.execute(target, descriptor.id, snapshot2.revision, values);
+    on_message(`\u5DF2\u6267\u884C\uFF1A${descriptor.label}`);
+  };
+  return (0, import_react12.createElement)(UiSlot, {
+    registry,
+    slot_id,
+    component_props: {
+      data: {
+        ...snapshot2.properties,
+        node_id: snapshot2.observed_node_id,
+        revision: snapshot2.revision
+      },
+      disabled: false,
+      actions: Object.freeze({ request })
+    }
+  });
+}
+
+// pip-editor/pip-host/view/space-inspector.tsx
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+function SpaceInspector({
+  node: node2,
+  mode,
+  focused,
+  owned,
+  service,
+  on_locate,
+  on_assign,
+  on_view,
+  on_message,
+  compact = false,
+  inline = false,
+  ui_slots
+}) {
+  const snapshot2 = service.read(node2.target);
+  const [pending, set_pending] = (0, import_react13.useState)();
+  const [active_form, set_active_form] = (0, import_react13.useState)();
+  const [form_values, set_form_values] = (0, import_react13.useState)({});
+  const execute = async (descriptor_id, revision, values, confirmed = false) => {
+    const descriptor = snapshot2.commands.find((item) => item.id === descriptor_id);
+    if (!descriptor) return;
+    if (!confirmed && (descriptor.danger || descriptor.confirmation === "required")) {
+      set_pending({ descriptor, revision, values });
+      return;
+    }
+    try {
+      await service.execute(node2.target, descriptor_id, revision, values);
+      set_active_form(void 0);
+      set_pending(void 0);
+      on_message(`\u5DF2\u6267\u884C\uFF1A${descriptor.label}`);
+    } catch (error) {
+      on_message(error instanceof Error ? error.message : "\u64CD\u4F5C\u5931\u8D25");
+    }
+  };
+  const element_model = node2.target.kind === "projection" && snapshot2.revision !== void 0 && snapshot2.observed_node_id ? {
+    schema_version: 1,
+    path_id: node2.path_id,
+    workspace_id: node2.target.workspace_id,
+    projection_id: node2.target.projection_id,
+    observed_node_id: snapshot2.observed_node_id,
+    revision: snapshot2.revision,
+    properties: snapshot2.properties,
+    commands: snapshot2.commands.map((item) => ({
+      id: item.id,
+      label: item.label,
+      enabled: true
+    }))
+  } : void 0;
+  const render_command = (descriptor) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: space_inspector_default.command, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: () => {
+      if (descriptor.fields.length) {
+        set_active_form(descriptor.id);
+        set_form_values({
+          ...Object.fromEntries(descriptor.fields.map((field) => [
+            field.id,
+            snapshot2.properties[field.id] ?? (field.kind === "boolean" ? false : "")
+          ]))
+        });
+      } else {
+        void execute(descriptor.id, snapshot2.revision, {});
+      }
+    }, children: descriptor.label }),
+    active_form === descriptor.id && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("form", { onSubmit: (event) => {
+      event.preventDefault();
+      void execute(descriptor.id, snapshot2.revision, form_values);
+    }, children: [
+      descriptor.fields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { children: [
+        field.label,
+        field.kind === "boolean" ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          "input",
+          {
+            type: "checkbox",
+            checked: Boolean(form_values[field.id]),
+            onChange: (event) => set_form_values((current) => ({
+              ...current,
+              [field.id]: event.target.checked
+            }))
+          }
+        ) : field.kind === "enum" ? /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+          "select",
+          {
+            value: String(form_values[field.id] ?? ""),
+            onChange: (event) => set_form_values((current) => ({
+              ...current,
+              [field.id]: event.target.value
+            })),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: "", children: "\u8BF7\u9009\u62E9" }),
+              field.options?.map((option) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+                "option",
+                {
+                  value: option.value,
+                  children: option.label
+                },
+                option.value
+              ))
+            ]
+          }
+        ) : field.kind === "multiline" ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          "textarea",
+          {
+            value: String(form_values[field.id] ?? ""),
+            onChange: (event) => set_form_values((current) => ({
+              ...current,
+              [field.id]: event.target.value
+            }))
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          "input",
+          {
+            type: field.kind === "number" ? "number" : "text",
+            value: String(form_values[field.id] ?? ""),
+            onChange: (event) => set_form_values((current) => ({
+              ...current,
+              [field.id]: field.kind === "number" ? Number(event.target.value) : event.target.value
+            }))
+          }
+        )
+      ] }, field.id)),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "submit", children: "\u63D0\u4EA4" }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", onClick: () => set_active_form(void 0), children: "\u53D6\u6D88" })
+    ] })
+  ] }, descriptor.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("section", { className: space_inspector_default.inspector, "aria-label": "\u7A7A\u95F4\u5C5E\u6027", children: [
+    !inline && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { children: node2.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("dl", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u7C7B\u578B" }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: node2.kind }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u5C42\u7EA7" }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("dd", { children: [
+        "\u7B2C ",
+        node2.depth,
+        " \u5C42"
+      ] }),
+      node2.scope && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u89C6\u56FE\u8303\u56F4" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: node2.scope })
+      ] }),
+      !inline && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u753B\u5E03\u7126\u70B9" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: focused ? "\u5F53\u524D\u805A\u7126" : "\u672A\u805A\u7126" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u5173\u5173\u5F52\u5C5E" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: owned ? "\u5F53\u524D\u5F52\u5C5E" : "\u672A\u5F52\u5C5E" })
+      ] }),
+      snapshot2.revision !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u7248\u672C" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: snapshot2.revision })
+      ] }),
+      typeof snapshot2.properties.node_count === "number" && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dt", { children: "\u8282\u70B9\u6570" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("dd", { children: snapshot2.properties.node_count })
+      ] })
+    ] }),
+    !compact && !inline && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { className: space_inspector_default.primary, onClick: mode === "navigate" ? on_locate : on_assign, children: mode === "navigate" ? "\u5B9A\u4F4D\u5230\u6B64\u7A7A\u95F4" : "\u5C06\u5173\u5173\u5F52\u5C5E\u5230\u6B64\u7A7A\u95F4" }),
+    !compact && node2.target.kind === "projection" && snapshot2.views.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("label", { children: [
+      "\u5207\u6362\u89C6\u56FE",
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        "select",
+        {
+          value: node2.target.projection_id,
+          onChange: (event) => on_view(event.target.value),
+          children: ["self", "children"].map((scope) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("optgroup", { label: scope, children: snapshot2.views.filter((item) => item.scope === scope).map((item) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("option", { value: item.projection_id, children: item.label }, item.projection_id)) }, scope))
+        }
+      )
+    ] }),
+    element_model && snapshot2.element_tag && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      SpaceInspectorElement,
+      {
+        tag: snapshot2.element_tag,
+        model: element_model,
+        on_command: (id, revision, values) => void execute(id, revision, values)
+      }
+    ),
+    ui_slots && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      RuntimeInspector,
+      {
+        registry: ui_slots,
+        target: node2.target,
+        snapshot: snapshot2,
+        service,
+        on_message
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: space_inspector_default.actions, children: [
+      snapshot2.commands.filter((item) => item.group !== "more").map(render_command),
+      snapshot2.commands.some((item) => item.group === "more") && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("details", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("summary", { children: "\u66F4\u591A\u64CD\u4F5C" }),
+        snapshot2.commands.filter((item) => item.group === "more").map(render_command)
+      ] })
+    ] }),
+    pending && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+      "div",
+      {
+        className: space_inspector_default.confirm,
+        role: "alertdialog",
+        "aria-label": "\u786E\u8BA4\u7A7A\u95F4\u64CD\u4F5C",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("p", { children: [
+            "\u786E\u8BA4\u5BF9\u201C",
+            node2.label,
+            "\u201D\u6267\u884C\u201C",
+            pending.descriptor.label,
+            "\u201D\uFF1F"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: () => void execute(
+            pending.descriptor.id,
+            pending.revision,
+            pending.values,
+            true
+          ), children: "\u786E\u8BA4" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: () => set_pending(void 0), children: "\u53D6\u6D88" })
+        ]
+      }
+    )
+  ] });
+}
+
+// pip-editor/pip-host/view/space-world-tree.module.css
+var space_world_tree_default = {
+  tree: "space_world_tree_tree",
+  group: "space_world_tree_group",
+  item: "space_world_tree_item",
+  panel: "space_world_tree_panel",
+  row: "space_world_tree_row",
+  label: "space_world_tree_label",
+  owner: "space_world_tree_owner",
+  name: "space_world_tree_name",
+  navigation: "space_world_tree_navigation",
+  content: "space_world_tree_content"
+};
+
+// pip-editor/pip-host/view/space-world-tree.tsx
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+function SpaceWorldTree({
+  root: root2,
+  focus_surface_id,
+  owner,
+  expanded_path_ids,
+  inspector_service,
+  on_toggle,
+  on_navigate,
+  on_assign,
+  on_viewport,
+  on_view,
+  on_message
+}) {
+  const expanded = new Set(expanded_path_ids);
+  const render_node = (node2) => {
+    const is_open = expanded.has(node2.path_id);
+    const surface_id = target_surface_id(node2.target);
+    const focused = node2.kind !== "viewport" && focus_surface_id === surface_id;
+    const owned = node2.kind === "viewport" ? owner.kind === "viewport" : owner.kind === "surface" && owner.surface_id === surface_id;
+    const activate = () => {
+      on_toggle(node2.path_id);
+      on_navigate(node2.target);
+    };
+    const assign = () => {
+      if (node2.kind === "viewport") {
+        on_viewport();
+        on_navigate({ kind: "host" });
+      } else {
+        on_assign(node2.target);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      "li",
+      {
+        role: "treeitem",
+        "aria-level": node2.depth + 1,
+        "aria-selected": focused,
+        "aria-expanded": is_open,
+        className: space_world_tree_default.item,
+        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("section", { className: space_world_tree_default.panel, "data-expanded": is_open, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: space_world_tree_default.row, "data-focused": focused, "data-space-surface-id": surface_id, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+              "button",
+              {
+                type: "button",
+                className: space_world_tree_default.label,
+                "aria-label": `${is_open ? "\u6536\u8D77" : "\u5C55\u5F00"}${node2.label}\u5E76\u5B9A\u4F4D${node2.kind === "viewport" ? "\u5BBF\u4E3B\u753B\u5E03" : "\u8BE5\u7A7A\u95F4"}`,
+                "aria-expanded": is_open,
+                onClick: activate,
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: space_world_tree_default.name, children: node2.label }),
+                  node2.scope && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("small", { children: node2.scope })
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+              "span",
+              {
+                className: space_world_tree_default.navigation,
+                "data-active": focused,
+                role: "img",
+                "aria-label": focused ? "\u5F53\u524D\u5BFC\u822A\u7A7A\u95F4" : "\u975E\u5F53\u524D\u5BFC\u822A\u7A7A\u95F4",
+                children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("svg", { viewBox: "0 0 24 24", "aria-hidden": "true", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("path", { d: "M12 2.5 16.2 10 12 8.5 7.8 10 12 2.5Z" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("circle", { cx: "12", cy: "13", r: "7.5" })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+              "button",
+              {
+                type: "button",
+                className: space_world_tree_default.owner,
+                "aria-label": `\u5C06\u5173\u5173\u5F52\u5C5E\u5230${node2.label}${owned ? "\uFF0C\u5F53\u524D\u5F52\u5C5E" : ""}`,
+                "aria-pressed": owned,
+                title: `\u5C06\u5173\u5173\u5F52\u5C5E\u5230${node2.label}`,
+                onClick: assign,
+                children: "\u2302"
+              }
+            )
+          ] }),
+          is_open && (focused || node2.children.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: space_world_tree_default.content, children: [
+            focused && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+              SpaceInspector,
+              {
+                node: node2,
+                mode: "navigate",
+                focused,
+                owned,
+                service: inspector_service,
+                on_locate: () => on_navigate(node2.target),
+                on_assign: () => on_assign(node2.target),
+                on_view: (projection_id) => on_view(node2.target, projection_id),
+                on_message,
+                inline: true
+              },
+              node2.path_id
+            ),
+            node2.children.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("ul", { role: "group", className: space_world_tree_default.group, children: node2.children.map(render_node) })
+          ] })
+        ] })
+      },
+      node2.path_id
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("ul", { className: space_world_tree_default.tree, role: "tree", "aria-label": "\u7A7A\u95F4\u5BFC\u822A\u4E16\u754C\u6811", children: render_node(root2) });
+}
+
+// pip-editor/pip-host/view/space-world-console.module.css
+var space_world_console_default = {
+  console: "space_world_console_console"
+};
+
+// pip-editor/pip-host/view/space-world-console.tsx
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var default_expanded_path_ids = [viewport_path_id, host_path_id];
+function SpaceWorldConsole({
+  service,
+  inspector_service,
+  inspector_request,
+  focus_surface_id,
+  owner,
+  expanded_path_ids,
+  on_expanded_change,
+  on_navigate,
+  on_assign,
+  on_viewport,
+  on_view,
+  on_message
+}) {
+  const root2 = service.world_tree;
+  const expanded = expanded_path_ids ?? default_expanded_path_ids;
+  const console_ref = (0, import_react14.useRef)(null);
+  const previous_focus_id = (0, import_react14.useRef)(void 0);
+  const previous_request_serial = (0, import_react14.useRef)(void 0);
+  const pending_scroll_id = (0, import_react14.useRef)(void 0);
+  (0, import_react14.useLayoutEffect)(() => {
+    if (!focus_surface_id || previous_focus_id.current === focus_surface_id) return;
+    const next_paths = expanded_paths_for_focus(root2, focus_surface_id, expanded);
+    if (!next_paths) return;
+    previous_focus_id.current = focus_surface_id;
+    pending_scroll_id.current = focus_surface_id;
+    if (next_paths.length !== expanded.length) on_expanded_change(next_paths);
+  }, [focus_surface_id, root2, expanded, on_expanded_change]);
+  (0, import_react14.useLayoutEffect)(() => {
+    const serial = inspector_request?.serial;
+    if (serial === void 0 || serial === previous_request_serial.current || !focus_surface_id) return;
+    previous_request_serial.current = serial;
+    pending_scroll_id.current = focus_surface_id;
+  }, [inspector_request?.serial, focus_surface_id]);
+  (0, import_react14.useLayoutEffect)(() => {
+    if (!focus_surface_id || pending_scroll_id.current !== focus_surface_id) return;
+    const next_paths = expanded_paths_for_focus(root2, focus_surface_id, expanded);
+    if (!next_paths || next_paths.length !== expanded.length) return;
+    const container = console_ref.current;
+    const rows = container?.querySelectorAll("[data-focused='true']");
+    const row = [...rows ?? []].find(
+      (item) => item.dataset.spaceSurfaceId === focus_surface_id
+    );
+    if (!container || !row) return;
+    pending_scroll_id.current = void 0;
+    scroll_space_row_to_top(
+      container,
+      row,
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }, [focus_surface_id, root2, expanded]);
+  const toggle = (path_id2) => {
+    on_expanded_change(toggle_expanded_path(expanded, path_id2));
+  };
+  const change_view = (target, projection_id) => {
+    void on_view(target, projection_id).then((next_target) => {
+      if (!next_target || next_target.kind !== "projection") return;
+      const candidate = find_space_inspector_node(root2, next_target);
+      if (!candidate) return;
+      on_expanded_change([
+        .../* @__PURE__ */ new Set([...expanded, ...ancestor_path_ids(root2, candidate.path_id)])
+      ]);
+    });
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    "div",
+    {
+      ref: console_ref,
+      className: space_world_console_default.console,
+      "data-inspector-request": inspector_request?.serial,
+      children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        SpaceWorldTree,
+        {
+          root: root2,
+          focus_surface_id,
+          owner,
+          expanded_path_ids: expanded,
+          inspector_service,
+          on_toggle: toggle,
+          on_navigate,
+          on_assign,
+          on_viewport,
+          on_view: change_view,
+          on_message
+        }
+      )
+    }
+  );
+}
+
+// pip-editor/pip-host/view/guanguan-agent-panel.tsx
+var import_react15 = __toESM(require_react(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+function GuanguanAgentPanel({
+  controller,
+  instance_id,
+  workspace_id,
+  on_message
+}) {
+  const [prompt, set_prompt] = (0, import_react15.useState)("\u68C0\u67E5\u5F53\u524D\u4EFB\u52A1\u8282\u70B9\u5E76\u63D0\u51FA\u6539\u8FDB");
+  const [pending, set_pending] = (0, import_react15.useState)();
+  const [busy, set_busy] = (0, import_react15.useState)(false);
+  const available = controller.available();
+  const run = async () => {
+    if (!workspace_id || !prompt.trim() || busy) return;
+    set_busy(true);
+    set_pending(void 0);
+    try {
+      set_pending(await controller.run(instance_id, workspace_id, prompt.trim()));
+    } catch (error) {
+      on_message(error instanceof Error ? error.message : String(error));
+    } finally {
+      set_busy(false);
+    }
+  };
+  const commit = () => {
+    if (!pending) return;
+    try {
+      controller.commit(pending);
+      set_pending(void 0);
+      on_message("\u5173\u5173\u63D0\u6848\u5DF2\u63D0\u4EA4");
+    } catch (error) {
+      on_message(error instanceof Error ? error.message : String(error));
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("section", { className: space_navigator_default.agentSection, "aria-label": "\u5173\u5173 Agent", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("strong", { children: "Agent \u63D0\u6848" }),
+    !available && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { children: "\u5F85\u8FDE\u63A5 Agent \u670D\u52A1" }),
+    available && !workspace_id && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { children: "\u8BF7\u5148\u8FDB\u5165\u4E00\u4E2A\u5DE5\u4F5C\u533A" }),
+    available && workspace_id && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+        "textarea",
+        {
+          value: prompt,
+          disabled: busy,
+          "aria-label": "\u7ED9\u5173\u5173\u7684\u4EFB\u52A1",
+          onChange: (event) => set_prompt(event.currentTarget.value)
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", disabled: busy || !prompt.trim(), onClick: () => void run(), children: busy ? "\u68C0\u67E5\u4E2D\u2026" : "\u751F\u6210 PipTx \u63D0\u6848" })
+    ] }),
+    pending && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: space_navigator_default.agentReview, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("strong", { children: pending.review.proposal.summary }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { children: [
+        "\u5F71\u54CD ",
+        pending.review.affected_node_ids.length,
+        " \u4E2A\u8282\u70B9"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("ul", { children: pending.review.proposal.rationale.map((item) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("li", { children: item }, item)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", onClick: commit, children: "\u786E\u8BA4\u63D0\u4EA4" }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", onClick: () => set_pending(void 0), children: "\u653E\u5F03" })
+    ] })
+  ] });
+}
+
+// pip-editor/pip-host/view/space-navigator.tsx
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var as_space = (surface) => {
+  if (surface.kind === "host") return { kind: "host", id: "host" };
+  if (surface.kind === "workspace") {
+    return {
+      kind: "workspace",
+      id: surface.id,
+      workspace_id: surface.workspace_id
+    };
+  }
+  return {
+    kind: "projection",
+    id: surface.id,
+    workspace_id: surface.workspace_id,
+    window_id: surface.window_id,
+    projection_id: surface.projection_id
+  };
+};
+function SpaceNavigator({
+  collapsed,
+  dragging,
+  selected,
+  owner,
+  panel_placement,
+  message_placement,
+  service,
+  inspector_service,
+  inspector_request,
+  expanded_path_ids,
+  on_expanded_change,
+  on_navigate,
+  on_assign,
+  on_viewport,
+  on_view,
+  on_message,
+  show_creator_message,
+  instance_id,
+  companion_element_tag,
+  companion_message,
+  on_message_action,
+  on_message_dismiss,
+  consume_suppressed_click,
+  on_collapsed_change,
+  agent_controller
+}) {
+  const space = useActiveSpace();
+  const compass_ref = (0, import_react16.useRef)(null);
+  const open = !collapsed;
+  const owner_surface = owner.kind === "surface" ? space.snapshot?.surfaces.find((item) => item.id === owner.surface_id) : void 0;
+  const context_snapshot = owner_surface && space.snapshot ? { ...space.snapshot, focus: as_space(owner_surface) } : space.snapshot;
+  const context = build_guanguan_context(context_snapshot, service);
+  const focused = space.snapshot?.focus;
+  const focus_surface_id = focused?.kind === "projection" ? `projection:${focused.workspace_id}:${focused.window_id}:${focused.projection_id}` : focused?.id;
+  const pose = dragging ? "dragging" : companion_message || show_creator_message && context.creator_armed ? "curious" : open ? "open" : "folded";
+  const visual_model = {
+    schema_version: 1,
+    instance_id,
+    pose,
+    selected,
+    collapsed,
+    reduced_motion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+    avatar_anchor: {
+      horizontal: panel_placement.horizontal === "left" ? "right" : "left",
+      vertical: panel_placement.vertical === "above" ? "bottom" : "top"
+    },
+    message_placement,
+    // 展开态必须面向稳定的控制台；折叠态仍随可用空间动态转向。
+    facing: open ? panel_placement.horizontal : message_placement.horizontal,
+    message: companion_message
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+    "aside",
+    {
+      className: `${space_navigator_default.navigator} ${space_navigator_default[panel_placement.horizontal]} ${space_navigator_default[panel_placement.vertical]}`,
+      "data-system-presentation": "host.interaction-navigator",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+          CompanionVisual,
+          {
+            element_tag: companion_element_tag,
+            model: visual_model,
+            on_action: on_message_action,
+            on_dismiss: on_message_dismiss
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+          "div",
+          {
+            className: `${space_navigator_default.map} ${space_navigator_shell_default.map}`,
+            role: "dialog",
+            "aria-label": "\u7A7A\u95F4\u8DEF\u5F84\u5BFC\u822A",
+            hidden: !open,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                SpaceWorldConsole,
+                {
+                  service,
+                  inspector_service,
+                  inspector_request,
+                  focus_surface_id,
+                  owner,
+                  expanded_path_ids,
+                  on_expanded_change,
+                  on_navigate,
+                  on_assign,
+                  on_viewport,
+                  on_view,
+                  on_message
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                SpaceNavigatorTools,
+                {
+                  context,
+                  service,
+                  inspector_serial: inspector_request?.serial,
+                  on_create: () => {
+                    const focus_space = context.focus_space;
+                    const host = focus_space.kind === "host";
+                    document.dispatchEvent(new CustomEvent(
+                      host ? "pip-open-host-creator" : "pip-open-space-creator",
+                      { detail: host ? void 0 : focus_space.workspace_id }
+                    ));
+                    const compass_rect = compass_ref.current?.getBoundingClientRect();
+                    if (compass_rect) {
+                      on_collapsed_change(true, {
+                        x: compass_rect.left + compass_rect.width / 2,
+                        y: compass_rect.top + compass_rect.height / 2
+                      });
+                    }
+                  }
+                },
+                inspector_request?.serial ?? 0
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                GuanguanAgentPanel,
+                {
+                  controller: agent_controller,
+                  instance_id,
+                  workspace_id: context.workspace?.id,
+                  on_message
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+          "button",
+          {
+            ref: compass_ref,
+            className: space_navigator_default.compass,
+            "aria-label": open ? "\u5173\u95ED\u7A7A\u95F4\u5BFC\u822A" : "\u6253\u5F00\u7A7A\u95F4\u5BFC\u822A",
+            "aria-expanded": open,
+            "data-companion-drag": true,
+            onClick: (pointer_event) => {
+              if (consume_suppressed_click()) return;
+              const rect = pointer_event.currentTarget.getBoundingClientRect();
+              on_collapsed_change(open, {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+              });
+            }
+          }
+        )
+      ]
+    }
+  );
+}
+
+// pip-editor/pip-host-io/interaction-navigator/definition.tsx
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+function InteractionNavigator({ model }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SpaceNavigator, { ...model });
+}
+var interactionNavigatorSystemPlugin = {
+  id: "host.interaction-navigator",
+  typeNode: createSystemPluginTypeNode("pip.host.type.interaction-navigator"),
+  label: "\u7A7A\u95F4\u5BFC\u822A",
+  description: "\u663E\u793A\u753B\u5E03\u8DEF\u5F84\u5E76\u7BA1\u7406\u5F53\u524D\u4EA4\u4E92\u7126\u70B9",
+  category: "\u7CFB\u7EDF",
+  icon: "\u233E",
+  scope: "host",
+  surfaces: ["host", "workspace"],
+  instancePolicy: "multiple",
+  presentation: "window",
+  window: {
+    role: "companion",
+    coordinate_space: "viewport",
+    chrome: "companion",
+    creatable: true,
+    default_size: { width: 48, height: 48 },
+    companion_element: {
+      plugin_id: "official.guanguan-elements",
+      element_id: "companion"
+    }
+  },
+  buildModel: (snapshot2) => snapshot2.services.guanguan_window,
+  Component: InteractionNavigator
+};
+
 // pip-editor/pip-host-io/preferences/companion-normalization.ts
 var finite_size = (value) => {
   if (!value || typeof value !== "object") return void 0;
@@ -25170,6 +27678,13 @@ function normalize_companion_presentations(values) {
     instance_ids.add(item.instance_id);
     result.push({
       ...item,
+      // 展开路径只影响宿主 UI；旧记录缺失或损坏时安全回到默认路径。
+      // 只迁移旧版树；新版允许用户主动折叠视口根。
+      tree_layout_version: 2,
+      tree_expanded_path_ids: Array.isArray(item.tree_expanded_path_ids) ? [.../* @__PURE__ */ new Set([
+        ...item.tree_layout_version === 2 ? [] : [viewport_path_id],
+        ...item.tree_expanded_path_ids.filter((id) => typeof id === "string" && id.length <= 1024)
+      ])].slice(0, 256) : [viewport_path_id, host_path_id],
       compact_size: {
         width: Math.min(160, Math.max(44, compact_size.width)),
         height: Math.min(160, Math.max(44, compact_size.height))
@@ -25188,11 +27703,13 @@ var STORAGE_KEY = "intent-map.editor-preferences.v1";
 var defaultEditorPreferences = () => ({
   schemaVersion: 1,
   startup_plugins: {
+    "official.guanguan-elements": { auto_load: true, open_workspace: false },
     "official.thought-types": { auto_load: true, open_workspace: false }
   },
   workspaceOpenMode: "tab",
   auto_load_website: true,
   theme_mode: "dark",
+  projection_control_mode: "compact",
   companion: {
     default_owner: "viewport",
     initialized: false,
@@ -25223,6 +27740,7 @@ var EditorPreferenceStore = class {
             ...Object.fromEntries(Object.entries(parsed.startup_plugins ?? {}).filter(([, choice]) => choice && typeof choice.auto_load === "boolean" && typeof choice.open_workspace === "boolean"))
           },
           theme_mode: parsed.theme_mode === "light" ? "light" : "dark",
+          projection_control_mode: parsed.projection_control_mode === "legacy" ? "legacy" : "compact",
           auto_load_website: typeof parsed.auto_load_website === "boolean" ? parsed.auto_load_website : true,
           companion: {
             default_owner: parsed.companion?.default_owner === "focused-space" ? "focused-space" : "viewport",
@@ -25262,6 +27780,9 @@ var EditorPreferenceStore = class {
   set_theme_mode(theme_mode) {
     this.#save({ ...this.#value, theme_mode });
   }
+  set_projection_control_mode(mode) {
+    this.#save({ ...this.#value, projection_control_mode: mode });
+  }
   set_companion_default_owner(default_owner) {
     this.#save({
       ...this.#value,
@@ -25293,31 +27814,42 @@ var EditorPreferenceStore = class {
   }
 };
 
+// pip-editor/pip-host-io/system-plugin/use-system-plugin-runtime.ts
+var import_react17 = __toESM(require_react(), 1);
+function useSystemPluginRuntime(runtime) {
+  return (0, import_react17.useSyncExternalStore)(
+    (listener) => runtime.subscribe(listener),
+    () => runtime.revision(),
+    () => runtime.revision()
+  );
+}
+
 // pip-editor/pip-host-io/system-plugin/renderer.tsx
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 function SystemPluginRenderer({
   instanceId,
   registry,
   runtime,
   snapshot: snapshot2
 }) {
+  useSystemPluginRuntime(runtime);
   const instance = runtime.get(instanceId);
   if (!instance) {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u672A\u627E\u5230\u7CFB\u7EDF\u63D2\u4EF6\u5B9E\u4F8B\uFF1A",
       instanceId
     ] });
   }
   const definition = registry.get(instance.pluginId);
   if (!definition) {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u672A\u6CE8\u518C\u7CFB\u7EDF\u63D2\u4EF6\uFF1A",
       instance.pluginId
     ] });
   }
-  const Component = definition.Component;
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-    Component,
+  const Component2 = definition.Component;
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    Component2,
     {
       graph: runtime.snapshot().graph,
       instance,
@@ -25328,16 +27860,17 @@ function SystemPluginRenderer({
 }
 
 // pip-editor/pip-host-io/system-plugin/companion-presentations.tsx
-var import_react10 = __toESM(require_react(), 1);
-var import_react_dom = __toESM(require_react_dom(), 1);
+var import_react23 = __toESM(require_react(), 1);
+var import_react_dom2 = __toESM(require_react_dom(), 1);
 
 // pip-editor/pip-host/view/use-companion-frame.ts
-var import_react9 = __toESM(require_react(), 1);
+var import_react18 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/companion-presentation.ts
 var GUANGUAN_PLUGIN_ID = "host.interaction-navigator";
 var compact_limits = { min: 44, max: 160 };
 var panel_limits = { min_width: 280, min_height: 240 };
+var expanded_avatar_offset = 32;
 function viewport_companion_bounds(width, height, insets) {
   return {
     x: insets.left + 12,
@@ -25356,9 +27889,11 @@ function create_companion_presentation(instance_id, point, owner = { kind: "view
     chrome: "companion",
     collapsed: true,
     compact_size: { width: 48, height: 48 },
-    panel_size: { width: 340, height: 320 },
+    panel_size: { width: 640, height: 420 },
     position: point,
-    panel_placement: { horizontal: "left", vertical: "above" }
+    panel_placement: { horizontal: "left", vertical: "above" },
+    tree_layout_version: 2,
+    tree_expanded_path_ids: [viewport_path_id, host_path_id]
   };
 }
 function toggle_companion_presentation(presentation, collapsed, anchor, bounds) {
@@ -25376,11 +27911,17 @@ function toggle_companion_presentation(presentation, collapsed, anchor, bounds) 
   const below_space = bounds.y + bounds.height - anchor.y;
   const horizontal = anchor.x - bounds.x >= right_space ? "left" : "right";
   const vertical = anchor.y - bounds.y >= below_space ? "above" : "below";
-  const compass_offset_x = horizontal === "left" ? presentation.panel_size.width - 36 : 36;
-  const compass_offset_y = vertical === "above" ? presentation.panel_size.height - 34 : 34;
+  const panel_width = Math.min(
+    presentation.panel_size.width,
+    Math.max(1, horizontal === "left" ? anchor.x - bounds.x - expanded_avatar_offset : bounds.x + bounds.width - anchor.x - expanded_avatar_offset)
+  );
+  const panel_height = Math.min(presentation.panel_size.height, bounds.height);
+  const compass_offset_x = horizontal === "left" ? panel_width + expanded_avatar_offset : -expanded_avatar_offset;
+  const compass_offset_y = vertical === "above" ? panel_height - 34 : 34;
   return {
     ...presentation,
     collapsed: false,
+    panel_size: { width: panel_width, height: panel_height },
     panel_placement: { horizontal, vertical },
     position: {
       x: anchor.x - compass_offset_x,
@@ -25423,7 +27964,7 @@ function clamp_presentation(presentation, bounds) {
   const panel_size = {
     width: Math.min(
       Math.max(panel_limits.min_width, presentation.panel_size.width),
-      bounds.width
+      Math.max(1, bounds.width - expanded_avatar_offset * 2)
     ),
     height: Math.min(
       Math.max(panel_limits.min_height, presentation.panel_size.height),
@@ -25433,14 +27974,16 @@ function clamp_presentation(presentation, bounds) {
   const size = presentation.collapsed ? compact_size : panel_size;
   const bounds_x = bounds.x ?? 0;
   const bounds_y = bounds.y ?? 0;
+  const panel_x = presentation.collapsed || presentation.panel_placement?.horizontal === "left" ? bounds_x : bounds_x + expanded_avatar_offset * 2;
+  const available_width = presentation.collapsed ? bounds.width : Math.max(1, bounds.width - expanded_avatar_offset * 2);
   return {
     ...presentation,
     compact_size,
     panel_size,
     position: {
       x: Math.min(
-        Math.max(bounds_x, presentation.position.x),
-        Math.max(bounds_x, bounds_x + bounds.width - size.width)
+        Math.max(panel_x, presentation.position.x),
+        Math.max(panel_x, panel_x + available_width - size.width)
       ),
       y: Math.min(
         Math.max(bounds_y, presentation.position.y),
@@ -25489,15 +28032,53 @@ function resize_companion_presentation(presentation, direction, delta, bounds) {
 }
 
 // pip-editor/pip-host/view/use-companion-frame.ts
-function useCompanionFrame(presentation, update, screen_to_local, visible_bounds) {
-  const gesture_ref = (0, import_react9.useRef)();
-  const suppress_click_ref = (0, import_react9.useRef)(false);
-  const [dragging, set_dragging] = (0, import_react9.useState)(false);
+function useCompanionFrame(presentation, update, screen_to_local, visible_bounds2) {
+  const gesture_ref = (0, import_react18.useRef)(void 0);
+  const suppress_click_ref = (0, import_react18.useRef)(false);
+  const [dragging, set_dragging] = (0, import_react18.useState)(false);
+  const finish_gesture = (0, import_react18.useCallback)((pointer_id) => {
+    const gesture = gesture_ref.current;
+    if (!gesture || pointer_id !== void 0 && gesture.pointer_id !== pointer_id) return;
+    gesture_ref.current = void 0;
+    suppress_click_ref.current = gesture.moved;
+    set_dragging(false);
+    if (gesture.capture_element.hasPointerCapture(gesture.pointer_id)) {
+      gesture.capture_element.releasePointerCapture(gesture.pointer_id);
+    }
+  }, []);
+  (0, import_react18.useEffect)(() => {
+    const end_pointer = (event) => finish_gesture(event.pointerId);
+    const end_all = () => finish_gesture();
+    const on_visibility = () => {
+      if (document.hidden) end_all();
+    };
+    window.addEventListener("pointerup", end_pointer, true);
+    window.addEventListener("pointercancel", end_pointer, true);
+    window.addEventListener("blur", end_all);
+    document.addEventListener("visibilitychange", on_visibility);
+    return () => {
+      window.removeEventListener("pointerup", end_pointer, true);
+      window.removeEventListener("pointercancel", end_pointer, true);
+      window.removeEventListener("blur", end_all);
+      document.removeEventListener("visibilitychange", on_visibility);
+      const gesture = gesture_ref.current;
+      gesture_ref.current = void 0;
+      if (gesture?.capture_element.hasPointerCapture(gesture.pointer_id)) {
+        gesture.capture_element.releasePointerCapture(gesture.pointer_id);
+      }
+    };
+  }, [finish_gesture]);
   const on_pointer_down = (event) => {
     const target = event.target;
     const resize = target.closest("[data-companion-resize]")?.dataset.companionResize;
     if (!resize && !target.closest("[data-companion-drag]")) return;
     if (!event.isPrimary || event.button !== 0) return;
+    if (gesture_ref.current) return;
+    const capture_on_down = Boolean(resize) || event.pointerType !== "mouse";
+    if (capture_on_down) {
+      event.preventDefault();
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
     const local_point2 = screen_to_local({ x: event.clientX, y: event.clientY });
     gesture_ref.current = {
       pointer_id: event.pointerId,
@@ -25507,13 +28088,17 @@ function useCompanionFrame(presentation, update, screen_to_local, visible_bounds
       screen_start_y: event.clientY,
       initial: presentation,
       resize,
-      moved: false
+      moved: false,
+      capture_element: event.currentTarget
     };
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
   const on_pointer_move = (event) => {
     const gesture = gesture_ref.current;
     if (!gesture || gesture.pointer_id !== event.pointerId) return;
+    if (event.pointerType === "mouse" && event.buttons === 0) {
+      finish_gesture(event.pointerId);
+      return;
+    }
     const local_point2 = screen_to_local({ x: event.clientX, y: event.clientY });
     const delta = local_pointer_delta(
       { x: gesture.start_x, y: gesture.start_y },
@@ -25523,9 +28108,12 @@ function useCompanionFrame(presentation, update, screen_to_local, visible_bounds
       event.clientX - gesture.screen_start_x,
       event.clientY - gesture.screen_start_y
     );
-    if (screen_distance > 4) {
+    if (screen_distance > 4 && !gesture.moved) {
       gesture.moved = true;
       set_dragging(true);
+      if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }
     }
     if (!gesture.moved) return;
     event.preventDefault();
@@ -25543,18 +28131,11 @@ function useCompanionFrame(presentation, update, screen_to_local, visible_bounds
       gesture.initial,
       gesture.resize,
       delta,
-      visible_bounds()
+      visible_bounds2()
     ));
   };
   const on_pointer_end = (event) => {
-    const gesture = gesture_ref.current;
-    if (!gesture || gesture.pointer_id !== event.pointerId) return;
-    suppress_click_ref.current = gesture.moved;
-    gesture_ref.current = void 0;
-    set_dragging(false);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    finish_gesture(event.pointerId);
   };
   const consume_suppressed_click = () => {
     const value = suppress_click_ref.current;
@@ -25566,7 +28147,8 @@ function useCompanionFrame(presentation, update, screen_to_local, visible_bounds
     dragging,
     on_pointer_down,
     on_pointer_move,
-    on_pointer_end
+    on_pointer_end,
+    on_lost_pointer_capture: on_pointer_end
   };
 }
 
@@ -25587,7 +28169,7 @@ var companion_window_default = {
 };
 
 // pip-editor/pip-host/view/companion-window.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 var resize_directions = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 var compact_resize_directions = ["nw", "ne", "se", "sw"];
 function CompanionWindow({
@@ -25599,21 +28181,22 @@ function CompanionWindow({
   on_select,
   on_update,
   screen_to_local,
-  visible_bounds
+  visible_bounds: visible_bounds2
 }) {
   const frame = useCompanionFrame(
     presentation,
     on_update,
     screen_to_local,
-    visible_bounds
+    visible_bounds2
   );
   const size = presentation.collapsed ? presentation.compact_size : presentation.panel_size;
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
     "section",
     {
       className: `${companion_window_default.window} ${viewport ? companion_window_default.viewport : ""} ${selected ? companion_window_default.selected : ""}`,
       "data-companion-window": presentation.id,
       "data-companion-collapsed": presentation.collapsed ? "" : void 0,
+      "data-companion-gesturing": frame.dragging ? "" : void 0,
       style: {
         left: presentation.position.x,
         top: presentation.position.y,
@@ -25628,10 +28211,11 @@ function CompanionWindow({
       onPointerMove: frame.on_pointer_move,
       onPointerUp: frame.on_pointer_end,
       onPointerCancel: frame.on_pointer_end,
+      onLostPointerCapture: frame.on_lost_pointer_capture,
       children: [
         children(frame),
-        selected && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-          !presentation.collapsed && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        selected && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+          !presentation.collapsed && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             "button",
             {
               className: companion_window_default.close,
@@ -25640,7 +28224,7 @@ function CompanionWindow({
               children: "\xD7"
             }
           ),
-          (presentation.collapsed ? compact_resize_directions : resize_directions).map((direction) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          (presentation.collapsed ? compact_resize_directions : resize_directions).map((direction) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             "i",
             {
               className: companion_window_default[`resize_${direction}`],
@@ -25655,10 +28239,15 @@ function CompanionWindow({
   );
 }
 
-// pip-editor/pip-host-io/system-plugin/companion-presentations.tsx
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-var default_instance_id = "system.instance.host.interaction-navigator.default";
-var viewport_bounds = () => {
+// pip-editor/pip-host-io/system-plugin/companion-element.ts
+function resolve_companion_element(registry, elements, system_plugin_id) {
+  const reference = registry.get(system_plugin_id)?.window.companion_element;
+  return reference ? elements.resolve(reference.plugin_id, reference.element_id)?.tag : void 0;
+}
+
+// pip-editor/pip-host-io/system-plugin/use-viewport-companions.ts
+var import_react19 = __toESM(require_react(), 1);
+var companion_viewport_bounds = () => {
   const shell = document.querySelector("main");
   const style = shell ? getComputedStyle(shell) : void 0;
   const inset = (value) => Number.parseFloat(value ?? "0") || 0;
@@ -25669,39 +28258,379 @@ var viewport_bounds = () => {
     left: inset(style?.paddingLeft)
   });
 };
+function useViewportCompanions(preferences, viewport_bounds) {
+  const [bounds, set_bounds] = (0, import_react19.useState)(viewport_bounds);
+  (0, import_react19.useEffect)(() => {
+    const constrain_viewport_presentations = () => {
+      const current = preferences.snapshot().companion.presentations;
+      const next_bounds = viewport_bounds();
+      set_bounds((previous) => JSON.stringify(previous) === JSON.stringify(next_bounds) ? previous : next_bounds);
+      const next = current.map((item) => item.owner.kind === "viewport" ? clamp_presentation(item, next_bounds) : item);
+      if (JSON.stringify(next) !== JSON.stringify(current)) {
+        preferences.set_companion_presentations(next);
+      }
+    };
+    constrain_viewport_presentations();
+    window.addEventListener("resize", constrain_viewport_presentations);
+    window.visualViewport?.addEventListener("resize", constrain_viewport_presentations);
+    return () => {
+      window.removeEventListener("resize", constrain_viewport_presentations);
+      window.visualViewport?.removeEventListener("resize", constrain_viewport_presentations);
+    };
+  }, [preferences, viewport_bounds]);
+  return bounds;
+}
+
+// pip-editor/pip-host/view/companion-message-placement.ts
+var message_height = 160;
+function companion_message_placement(position, size, bounds, local_to_screen = (point) => point) {
+  const start = local_to_screen(position);
+  const end = local_to_screen({
+    x: position.x + size.width,
+    y: position.y + size.height
+  });
+  const bounds_start = local_to_screen({ x: bounds.x, y: bounds.y });
+  const bounds_end = local_to_screen({
+    x: bounds.x + bounds.width,
+    y: bounds.y + bounds.height
+  });
+  const left_space = Math.min(start.x, end.x) - Math.min(bounds_start.x, bounds_end.x);
+  const right_space = Math.max(bounds_start.x, bounds_end.x) - Math.max(start.x, end.x);
+  const above_space = Math.min(start.y, end.y) - Math.min(bounds_start.y, bounds_end.y);
+  const below_space = Math.max(bounds_start.y, bounds_end.y) - Math.max(start.y, end.y);
+  return {
+    // 朝空间更充足的一侧，不能因左侧刚好容得下移动端气泡就在 PC 宽屏固定向左。
+    horizontal: left_space >= right_space ? "left" : "right",
+    vertical: above_space >= message_height || above_space >= below_space ? "above" : "below"
+  };
+}
+
+// pip-editor/pip-host/projection/projection-view-choice.ts
+function choose_projection(state, projection_id, graph, node_types) {
+  const current = currentRoute(state);
+  const next = routeForProjection(projection_id, graph, node_types, current.enteredFrom);
+  if (!next || next.observedNodeId !== current.observedNodeId) return state;
+  if (next.scope === current.scope) return replaceCurrentProjection(state, next);
+  if (current.scope === "self") {
+    return navigateProjection(state, next);
+  }
+  const previous = state.entries[state.index - 1];
+  if (previous?.scope === "self" && previous.observedNodeId === next.observedNodeId)
+    return replaceCurrentProjection({ ...state, index: state.index - 1 }, next);
+  return state;
+}
+
+// pip-editor/pip-host-io/system-plugin/space-world-actions.ts
+var pending_sequences = /* @__PURE__ */ new Map();
+function create_space_world_actions(dependencies) {
+  const {
+    presentation,
+    preferences,
+    space_store,
+    workspace_store,
+    node_types,
+    present_workspace,
+    viewport_bounds,
+    on_message
+  } = dependencies;
+  const navigation2 = { space_store, workspace_store, present_workspace, node_types };
+  const update = (change) => {
+    preferences.update_companion_presentations((current) => current.map(
+      (item) => item.id === presentation.id ? change(item) : item
+    ));
+  };
+  const navigate = async (target) => {
+    try {
+      await activate_space_world_target(target, navigation2);
+      return true;
+    } catch (error) {
+      on_message?.(error instanceof Error ? error.message : "\u7A7A\u95F4\u5B9A\u4F4D\u5931\u8D25");
+      return false;
+    }
+  };
+  const viewport = (cancel_pending = true) => {
+    if (cancel_pending) {
+      pending_sequences.set(presentation.id, (pending_sequences.get(presentation.id) ?? 0) + 1);
+    }
+    const old_surface = presentation.owner.kind === "surface" ? space_store.surface(presentation.owner.surface_id) : void 0;
+    update((item) => clamp_presentation(
+      move_presentation_owner(item, { kind: "viewport" }, old_surface),
+      viewport_bounds()
+    ));
+  };
+  const assign = async (target) => {
+    const sequence = (pending_sequences.get(presentation.id) ?? 0) + 1;
+    pending_sequences.set(presentation.id, sequence);
+    const old_surface = presentation.owner.kind === "surface" ? space_store.surface(presentation.owner.surface_id) : void 0;
+    const center = presentation_screen_center(presentation, old_surface);
+    viewport(false);
+    try {
+      const surface = await activate_space_world_target(target, navigation2);
+      if (pending_sequences.get(presentation.id) !== sequence) return;
+      update((item) => {
+        const centered = {
+          ...item,
+          position: {
+            x: center.x - item.panel_size.width / 2,
+            y: center.y - item.panel_size.height / 2
+          }
+        };
+        return clamp_presentation(move_presentation_owner(
+          centered,
+          { kind: "surface", surface_id: surface.id },
+          void 0,
+          surface
+        ), surface.visible_local_bounds());
+      });
+      on_message?.("\u5173\u5173\u5DF2\u5F52\u5C5E\u5230\u76EE\u6807\u7A7A\u95F4");
+    } catch (error) {
+      on_message?.(error instanceof Error ? error.message : "\u7A7A\u95F4\u5F52\u5C5E\u5931\u8D25");
+    }
+  };
+  const change_view = async (target, projection_id) => {
+    if (target.kind !== "projection") return void 0;
+    const workspace = workspace_store.list().find(
+      (item) => item.id === target.workspace_id
+    );
+    if (!workspace) return void 0;
+    const current = {
+      entries: [...target.route],
+      index: target.route.length - 1,
+      semanticScale: 1
+    };
+    const next = choose_projection(
+      current,
+      projection_id,
+      workspace.graph,
+      node_types
+    );
+    if (next === current) return void 0;
+    const next_target = {
+      ...target,
+      projection_id: next.entries[next.index].projectionNodeId,
+      route: next.entries.slice(0, next.index + 1)
+    };
+    return await navigate(next_target) ? next_target : void 0;
+  };
+  return {
+    navigate,
+    assign,
+    viewport,
+    change_view,
+    expand: (path_ids) => update((item) => ({
+      ...item,
+      tree_layout_version: 2,
+      tree_expanded_path_ids: path_ids
+    }))
+  };
+}
+
+// pip-editor/pip-host-io/system-plugin/companion-presentation-mutations.ts
+function save_companion_presentation(next, preferences, space_store) {
+  const surface = next.owner.kind === "surface" ? space_store?.surface(next.owner.surface_id) : void 0;
+  const bounds = surface?.visible_local_bounds() ?? companion_viewport_bounds();
+  const clamped = clamp_presentation(next, bounds);
+  preferences.update_companion_presentations((current) => current.map(
+    (item) => item.id === next.id ? clamped : item
+  ));
+}
+function close_companion_presentation(presentation, preferences, runtime, messages) {
+  preferences.update_companion_presentations((current) => current.filter(
+    (item) => item.id !== presentation.id
+  ));
+  runtime.releasePresentation(presentation.instance_id);
+  messages.cancel_target(presentation.instance_id);
+}
+
+// pip-editor/pip-host-io/system-plugin/use-companion-inspector-entry.tsx
+var import_react20 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host-io/system-plugin/companion-inspector-selection.ts
+function select_inspector_companion(presentations, recent_selected_id, surface_visible) {
+  const visible = presentations.filter((item) => item.owner.kind === "viewport" || surface_visible(item.owner.surface_id));
+  return visible.find((item) => item.id === recent_selected_id) ?? visible.find((item) => item.owner.kind === "viewport") ?? visible[0];
+}
+
+// pip-editor/pip-host-io/system-plugin/use-companion-inspector-entry.tsx
+function useCompanionInspectorEntry(service, presentations, recent_selected_id, preferences, space_store) {
+  const [request, set_request] = (0, import_react20.useState)();
+  const [fallback_node, set_fallback_node] = (0, import_react20.useState)();
+  (0, import_react20.useEffect)(() => {
+    const open = (event) => {
+      const target = event.detail;
+      if (target?.kind !== "projection") return;
+      const node2 = find_space_inspector_node(service.world_tree, target);
+      if (!node2) return;
+      focus_space_inspector_target(space_store, node2.target);
+      const companion = select_inspector_companion(
+        presentations,
+        recent_selected_id,
+        (surface_id) => Boolean(space_store?.surface(surface_id))
+      );
+      if (!companion) {
+        set_fallback_node(node2);
+        return;
+      }
+      set_fallback_node(void 0);
+      const ancestors = ancestor_path_ids(service.world_tree, node2.path_id);
+      preferences.update_companion_presentations((current) => current.map((item) => {
+        if (item.id !== companion.id) return item;
+        const expanded = {
+          ...item,
+          tree_layout_version: 2,
+          // 窗口菜单是定向入口，只保留目标祖先链，避免多次查看后展开分支累积。
+          tree_expanded_path_ids: ancestors
+        };
+        if (!expanded.collapsed) return expanded;
+        const surface = expanded.owner.kind === "surface" ? space_store?.surface(expanded.owner.surface_id) : void 0;
+        const anchor = {
+          x: expanded.position.x + expanded.compact_size.width / 2,
+          y: expanded.position.y + expanded.compact_size.height / 2
+        };
+        return toggle_companion_presentation(
+          expanded,
+          false,
+          anchor,
+          surface?.visible_local_bounds() ?? companion_viewport_bounds()
+        );
+      }));
+      set_request((current) => ({
+        presentation_id: companion.id,
+        path_id: node2.path_id,
+        serial: (current?.serial ?? 0) + 1
+      }));
+    };
+    document.addEventListener(space_inspector_entry_event, open);
+    return () => document.removeEventListener(space_inspector_entry_event, open);
+  }, [service, presentations, recent_selected_id, preferences, space_store]);
+  return { request, fallback_node, close_fallback: () => set_fallback_node(void 0) };
+}
+
+// pip-editor/pip-host-io/system-plugin/companion-inspector-fallback.tsx
+var import_react_dom = __toESM(require_react_dom(), 1);
+
+// pip-editor/pip-host-io/system-plugin/companion-inspector-fallback.module.css
+var companion_inspector_fallback_default = {
+  backdrop: "companion_inspector_fallback_backdrop",
+  panel: "companion_inspector_fallback_panel",
+  close: "companion_inspector_fallback_close"
+};
+
+// pip-editor/pip-host-io/system-plugin/companion-inspector-fallback.tsx
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+function CompanionInspectorFallback({
+  node: node2,
+  service,
+  on_close,
+  on_message
+}) {
+  return (0, import_react_dom.createPortal)(/* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: companion_inspector_fallback_default.backdrop, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("section", { className: companion_inspector_fallback_default.panel, role: "dialog", "aria-modal": "true", "aria-label": "\u7A7A\u95F4\u5C5E\u6027\u4E0E\u64CD\u4F5C", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: companion_inspector_fallback_default.close, onClick: on_close, "aria-label": "\u5173\u95ED\u5C5E\u6027\u4E0E\u64CD\u4F5C", children: "\xD7" }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+      SpaceInspector,
+      {
+        node: node2,
+        mode: "navigate",
+        focused: false,
+        owned: false,
+        service,
+        compact: true,
+        on_locate: on_close,
+        on_assign: on_close,
+        on_view: () => void 0,
+        on_message
+      }
+    )
+  ] }) }), document.body);
+}
+
+// pip-editor/pip-host-io/system-plugin/use-default-companion.ts
+var import_react21 = __toESM(require_react(), 1);
+var default_instance_id = "system.instance.host.interaction-navigator.default";
+function useDefaultCompanion(preferences, initialized) {
+  (0, import_react21.useEffect)(() => {
+    if (initialized) return;
+    const point = {
+      x: Math.max(12, innerWidth - 60),
+      y: Math.max(12, innerHeight - 60)
+    };
+    preferences.update_companion_presentations((current) => current.length ? current : [create_companion_presentation(default_instance_id, point)]);
+  }, [preferences, initialized]);
+}
+
+// pip-editor/pip-host-io/system-plugin/use-companion-runtime.ts
+var import_react22 = __toESM(require_react(), 1);
+function useCompanionRuntime(registry, runtime, preferences, presentations, on_message) {
+  const companion_definition = registry.get(GUANGUAN_PLUGIN_ID);
+  const runtime_ready = runtime.has_definition(GUANGUAN_PLUGIN_ID);
+  (0, import_react22.useEffect)(() => {
+    if (!companion_definition || !runtime_ready) return;
+    const invalid = preferences.snapshot().companion.presentations.filter((item) => {
+      const definition = registry.get(item.plugin_id);
+      return !definition || definition.window.role !== "companion" || definition.instancePolicy !== "multiple";
+    });
+    if (!invalid.length) return;
+    const invalid_ids = new Set(invalid.map((item) => item.id));
+    preferences.update_companion_presentations((current) => current.filter((item) => !invalid_ids.has(item.id)));
+    on_message?.(`\u5DF2\u5FFD\u7565 ${invalid.length} \u4E2A\u635F\u574F\u7684\u7A7A\u95F4\u4F34\u4FA3\u8BB0\u5F55`);
+  }, [companion_definition, on_message, preferences, presentations, registry, runtime_ready]);
+  (0, import_react22.useEffect)(() => {
+    if (!companion_definition || !runtime_ready) return;
+    for (const presentation of presentations) {
+      if (!runtime.get(presentation.instance_id)) {
+        runtime.ensure(presentation.plugin_id, void 0, presentation.instance_id);
+      }
+    }
+    const active_ids = new Set(presentations.map((item) => item.instance_id));
+    for (const instance of runtime.snapshot().instances) {
+      if (instance.pluginId === GUANGUAN_PLUGIN_ID && !active_ids.has(instance.id)) {
+        runtime.releasePresentation(instance.id);
+      }
+    }
+  }, [companion_definition, presentations, runtime, runtime_ready]);
+}
+
+// pip-editor/pip-host-io/system-plugin/companion-presentations.tsx
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 function CompanionPresentations({
   registry,
   runtime,
   services
 }) {
   const host_services = services;
+  useSystemPluginRuntime(runtime);
   const space = useActiveSpace();
-  const [selected_id, set_selected_id] = (0, import_react10.useState)();
+  const [selected_id, set_selected_id] = (0, import_react23.useState)();
+  const [recent_selected_id, set_recent_selected_id] = (0, import_react23.useState)();
   const preferences = host_services.preferences.snapshot().companion;
   const presentations = preferences.presentations.filter(
     (item) => item.plugin_id === GUANGUAN_PLUGIN_ID
   );
-  (0, import_react10.useEffect)(() => {
-    const invalid = preferences.presentations.filter((item) => {
-      const definition = registry.get(item.plugin_id);
-      return !definition || definition.window.role !== "companion" || definition.instancePolicy !== "multiple";
-    });
-    if (!invalid.length) return;
-    const invalid_ids = new Set(invalid.map((item) => item.id));
-    host_services.preferences.update_companion_presentations(
-      (current) => current.filter((item) => !invalid_ids.has(item.id))
-    );
-    host_services.onMessage?.(`\u5DF2\u5FFD\u7565 ${invalid.length} \u4E2A\u635F\u574F\u7684\u7A7A\u95F4\u4F34\u4FA3\u8BB0\u5F55`);
-  }, [host_services, preferences.presentations, registry]);
-  (0, import_react10.useEffect)(() => {
-    if (preferences.initialized) return;
-    const point = {
-      x: Math.max(12, innerWidth - 60),
-      y: Math.max(12, innerHeight - 60)
-    };
-    host_services.preferences.update_companion_presentations((current) => current.length ? current : [create_companion_presentation(default_instance_id, point)]);
-  }, [host_services.preferences, preferences.initialized]);
-  (0, import_react10.useEffect)(() => {
+  const visible_presentations = presentations.filter((item) => item.owner.kind === "viewport" || Boolean(space.store?.surface(item.owner.surface_id)));
+  const inspector_entry = useCompanionInspectorEntry(
+    host_services.guanguan,
+    presentations,
+    recent_selected_id,
+    host_services.preferences,
+    space.store
+  );
+  useDefaultCompanion(host_services.preferences, preferences.initialized);
+  useCompanionRuntime(
+    registry,
+    runtime,
+    host_services.preferences,
+    presentations,
+    host_services.onMessage
+  );
+  const message_presentation_id = visible_presentations.some((item) => item.id === selected_id) ? selected_id : visible_presentations[0]?.id;
+  const viewport_bounds = useViewportCompanions(
+    host_services.preferences,
+    companion_viewport_bounds
+  );
+  (0, import_react23.useEffect)(() => {
+    void host_services.guanguan_runtime.sync(presentations);
+  }, [host_services.guanguan_runtime, presentations]);
+  (0, import_react23.useEffect)(() => {
     const create = (event) => {
       const detail = event.detail;
       if (detail.plugin_id !== GUANGUAN_PLUGIN_ID) return;
@@ -25727,24 +28656,7 @@ function CompanionPresentations({
     space.snapshot?.focus?.id,
     space.store
   ]);
-  (0, import_react10.useEffect)(() => {
-    for (const presentation of presentations) {
-      if (!runtime.get(presentation.instance_id)) {
-        runtime.ensure(
-          presentation.plugin_id,
-          void 0,
-          presentation.instance_id
-        );
-      }
-    }
-    const active_ids = new Set(presentations.map((item) => item.instance_id));
-    for (const instance of runtime.snapshot().instances) {
-      if (instance.pluginId === GUANGUAN_PLUGIN_ID && !active_ids.has(instance.id)) {
-        runtime.releasePresentation(instance.id);
-      }
-    }
-  }, [presentations, runtime]);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react23.useEffect)(() => {
     if (!space.snapshot?.surfaces_ready) return;
     const invalid = presentations.filter(
       (item) => item.owner.kind === "surface" && !space.store?.surface(item.owner.surface_id)
@@ -25762,94 +28674,148 @@ function CompanionPresentations({
         );
       })
     );
-  }, [host_services.preferences, presentations, space.snapshot?.surfaces, space.store]);
-  (0, import_react10.useEffect)(() => {
+  }, [
+    host_services.preferences,
+    presentations,
+    space.snapshot?.surfaces,
+    space.snapshot?.surfaces_ready,
+    space.store
+  ]);
+  (0, import_react23.useEffect)(() => {
     const clear_selection = () => set_selected_id(void 0);
     document.addEventListener("pointerdown", clear_selection);
     return () => document.removeEventListener("pointerdown", clear_selection);
   }, []);
-  const save = (next) => {
-    const surface = next.owner.kind === "surface" ? space.store?.surface(next.owner.surface_id) : void 0;
-    const bounds = surface?.visible_local_bounds() ?? viewport_bounds();
-    const clamped = clamp_presentation(next, bounds);
-    host_services.preferences.update_companion_presentations(
-      (current) => current.map((item) => item.id === next.id ? clamped : item)
-    );
-  };
+  const save = (next) => save_companion_presentation(next, host_services.preferences, space.store);
   const close = (presentation) => {
-    host_services.preferences.update_companion_presentations(
-      (current) => current.filter((item) => item.id !== presentation.id)
+    close_companion_presentation(
+      presentation,
+      host_services.preferences,
+      runtime,
+      host_services.companion_messages
     );
-    runtime.releasePresentation(presentation.instance_id);
+    void host_services.guanguan_runtime.close_instance(presentation.instance_id);
     set_selected_id(void 0);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_jsx_runtime17.Fragment, { children: presentations.map((presentation) => {
-    const surface = presentation.owner.kind === "surface" ? space.store?.surface(presentation.owner.surface_id) : void 0;
-    const content = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-      CompanionWindow,
-      {
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
+    presentations.map((presentation) => {
+      const actions = space.store && create_space_world_actions({
         presentation,
-        selected: selected_id === presentation.id,
-        viewport: presentation.owner.kind === "viewport",
-        on_close: () => close(presentation),
-        on_select: () => set_selected_id(presentation.id),
-        on_update: save,
-        screen_to_local: surface?.screen_to_local ?? ((point) => point),
-        visible_bounds: surface?.visible_local_bounds ?? viewport_bounds,
-        children: (frame) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-          SystemPluginRenderer,
-          {
-            instanceId: presentation.instance_id,
-            registry,
-            runtime,
-            snapshot: {
-              surface: "host",
-              services: {
-                ...host_services,
-                guanguan_window: {
-                  collapsed: presentation.collapsed,
-                  dragging: frame.dragging,
-                  owner: presentation.owner,
-                  panel_placement: presentation.panel_placement ?? {
-                    horizontal: "left",
-                    vertical: "above"
-                  },
-                  service: host_services.guanguan,
-                  consume_suppressed_click: frame.consume_suppressed_click,
-                  on_collapsed_change: (collapsed, screen_anchor) => {
-                    const anchor = surface ? surface.screen_to_local(screen_anchor) : screen_anchor;
-                    const bounds = surface?.visible_local_bounds() ?? viewport_bounds();
-                    save(toggle_companion_presentation(
-                      presentation,
-                      collapsed,
-                      anchor,
-                      bounds
-                    ));
-                  },
-                  on_owner_change: (owner) => {
-                    const old_surface = presentation.owner.kind === "surface" ? space.store?.surface(presentation.owner.surface_id) : void 0;
-                    const new_surface = owner.kind === "surface" ? space.store?.surface(owner.surface_id) : void 0;
-                    save(move_presentation_owner(
-                      presentation,
-                      owner,
-                      old_surface,
-                      new_surface
-                    ));
+        preferences: host_services.preferences,
+        space_store: space.store,
+        workspace_store: host_services.workspace_store,
+        node_types: host_services.catalog.nodeTypes,
+        present_workspace: host_services.present_workspace,
+        viewport_bounds: () => viewport_bounds,
+        on_message: host_services.onMessage
+      });
+      const companion_element_tag = resolve_companion_element(
+        registry,
+        host_services.catalog.elements,
+        presentation.plugin_id
+      );
+      const surface = presentation.owner.kind === "surface" ? space.store?.surface(presentation.owner.surface_id) : void 0;
+      const presentation_size = presentation.collapsed ? presentation.compact_size : presentation.panel_size;
+      const instance_ready = Boolean(runtime.get(presentation.instance_id));
+      const message_placement = companion_message_placement(
+        presentation.position,
+        presentation_size,
+        surface?.visible_local_bounds() ?? viewport_bounds,
+        surface?.local_to_screen
+      );
+      const content = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+        CompanionWindow,
+        {
+          presentation,
+          selected: selected_id === presentation.id,
+          viewport: presentation.owner.kind === "viewport",
+          on_close: () => close(presentation),
+          on_select: () => {
+            set_recent_selected_id(presentation.id);
+            set_selected_id(presentation.id);
+          },
+          on_update: save,
+          screen_to_local: surface?.screen_to_local ?? ((point) => point),
+          visible_bounds: surface?.visible_local_bounds ?? (() => viewport_bounds),
+          children: (frame) => instance_ready ? /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            SystemPluginRenderer,
+            {
+              instanceId: presentation.instance_id,
+              registry,
+              runtime,
+              snapshot: {
+                surface: "host",
+                services: {
+                  ...host_services,
+                  guanguan_window: {
+                    collapsed: presentation.collapsed,
+                    dragging: frame.dragging,
+                    selected: selected_id === presentation.id,
+                    owner: presentation.owner,
+                    panel_placement: presentation.panel_placement ?? {
+                      horizontal: "left",
+                      vertical: "above"
+                    },
+                    message_placement,
+                    service: host_services.guanguan,
+                    inspector_service: host_services.inspector_service,
+                    inspector_request: inspector_entry.request?.presentation_id === presentation.id ? inspector_entry.request : void 0,
+                    expanded_path_ids: presentation.tree_expanded_path_ids,
+                    on_expanded_change: actions?.expand ?? (() => void 0),
+                    on_navigate: actions?.navigate ?? (() => void 0),
+                    on_assign: actions?.assign ?? (() => void 0),
+                    on_viewport: actions?.viewport ?? (() => void 0),
+                    on_view: actions?.change_view ?? (async () => void 0),
+                    on_message: host_services.onMessage ?? (() => void 0),
+                    show_creator_message: presentation.id === message_presentation_id,
+                    instance_id: presentation.instance_id,
+                    agent_controller: host_services.guanguan_agent,
+                    companion_element_tag,
+                    companion_message: host_services.companion_messages.current(
+                      presentation.instance_id,
+                      presentations.find((item) => item.id === message_presentation_id)?.instance_id
+                    ),
+                    on_message_action: (message_id, action_id) => {
+                      void host_services.companion_messages.action(message_id, action_id);
+                    },
+                    on_message_dismiss: (message_id) => {
+                      host_services.companion_messages.dismiss(message_id);
+                    },
+                    consume_suppressed_click: frame.consume_suppressed_click,
+                    on_collapsed_change: (collapsed, screen_anchor) => {
+                      const anchor = surface ? surface.screen_to_local(screen_anchor) : screen_anchor;
+                      const bounds = surface?.visible_local_bounds() ?? viewport_bounds;
+                      save(toggle_companion_presentation(
+                        presentation,
+                        collapsed,
+                        anchor,
+                        bounds
+                      ));
+                    }
                   }
                 }
               }
             }
-          }
-        )
-      },
-      presentation.id
-    );
-    return surface ? (0, import_react_dom.createPortal)(content, surface.presentation_root, presentation.id) : (0, import_react_dom.createPortal)(content, document.body, presentation.id);
-  }) });
+          ) : null
+        },
+        presentation.id
+      );
+      return surface ? (0, import_react_dom2.createPortal)(content, surface.presentation_root, presentation.id) : (0, import_react_dom2.createPortal)(content, document.body, presentation.id);
+    }),
+    inspector_entry.fallback_node && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+      CompanionInspectorFallback,
+      {
+        node: inspector_entry.fallback_node,
+        service: host_services.inspector_service,
+        on_close: inspector_entry.close_fallback,
+        on_message: host_services.onMessage ?? (() => void 0)
+      }
+    )
+  ] });
 }
 
 // pip-editor/pip-host-io/system-plugin/canvas-bridge.tsx
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
 function createSystemPluginCanvasBridge(registry, runtime) {
   function Renderer({
     services,
@@ -25857,7 +28823,7 @@ function createSystemPluginCanvasBridge(registry, runtime) {
     window: window2,
     workspace
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       SystemPluginRenderer,
       {
         instanceId: window2.instanceId,
@@ -25872,7 +28838,7 @@ function createSystemPluginCanvasBridge(registry, runtime) {
     );
   }
   function Presentations({ services }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       CompanionPresentations,
       {
         registry,
@@ -25897,13 +28863,6 @@ function createSystemPluginCanvasBridge(registry, runtime) {
     Presentations
   };
 }
-
-// pip-editor/pip-host-io/index.ts
-var createBuiltinSystemPluginRegistry = () => new SystemPluginRegistry([
-  pluginManagerSystemPlugin,
-  preferencesSystemPlugin,
-  interactionNavigatorSystemPlugin
-]);
 
 // pip-editor/pip-host/execution/binding.ts
 var valueKey = (nodeId, pip_id) => `${nodeId}\0${pip_id}`;
@@ -26190,151 +29149,7015 @@ var ExecutionSessionManager = class {
   }
 };
 
-// pip-editor/pip-host/creation/content-navigation.ts
-function attached_projections(parent, graph, scope) {
-  const observes = (node2) => {
-    const value = node2?.pips.find((pip) => pip.predicate_value?.predicate.node_id === "pip.projection.predicate.observes")?.predicate_value?.value;
-    return value?.kind === "ref" ? value.target.node_id : void 0;
-  };
-  return content_placements(graph, observes(parent) ?? "").filter((item) => item.kind === (scope === "self" ? "annotation" : "child")).flatMap((item) => {
-    const observed_id = observes(graphNodes(graph)[item.projection_id]);
-    return observed_id ? [{
-      projectionNodeId: item.projection_id,
-      observedNodeId: observed_id,
-      frame: { x: item.x, y: item.y, width: item.width, height: item.height, resizeMode: "simple" }
-    }] : [];
-  });
-}
-
-// pip-editor/pip-host/projection/projection-context.ts
-var validKinds = /* @__PURE__ */ new Set(["self-workspace", "children-workspace", "self-embedded"]);
-var legacyCapabilities = (contexts) => {
-  if (contexts.some((kind) => !validKinds.has(kind))) throw new Error("invalid context");
-  if (contexts.includes("children-workspace") && contexts.some((kind) => kind !== "children-workspace")) throw new Error("cannot combine children-workspace with a self context");
-  if (contexts.includes("self-embedded") && !contexts.includes("self-workspace")) throw new Error("must support self-workspace before self-embedded");
-  return contexts.includes("children-workspace") ? { scope: "children", surfaces: ["workspace"] } : { scope: "self", surfaces: contexts.includes("self-embedded") ? ["workspace", "embedded"] : ["workspace"] };
-};
-var contextsFor = (scope, surfaces) => scope === "children" ? ["children-workspace"] : ["self-workspace", ...surfaces.includes("embedded") ? ["self-embedded"] : []];
-function normalizeProjectionRegistration(projection) {
-  if (projection.zoomViewport && Object.values(projection.zoomViewport).some((value) => !Number.isFinite(value) || value < 0)) {
-    throw new Error(`Projection ${projection.id} has an invalid zoom viewport`);
+// pip-editor/pip-host/runtime-services/contribution-registry.ts
+var RuntimeContributionRegistry = class {
+  #key_of;
+  #values = /* @__PURE__ */ new Map();
+  #listeners = /* @__PURE__ */ new Set();
+  constructor(key_of) {
+    this.#key_of = key_of;
   }
-  if (!projection.definition && !projection.contexts?.length && !projection.scope && !projection.surfaces?.length) return projection;
-  let legacy;
-  try {
-    if (projection.contexts?.length) legacy = legacyCapabilities(projection.contexts);
-  } catch (error) {
-    throw new Error(`Projection ${projection.id} ${error instanceof Error ? error.message : "has invalid contexts"}`);
+  list() {
+    return [...this.#values.values()].map(({ value }) => value);
   }
-  const scope = projection.scope ?? legacy?.scope;
-  const surfaces = projection.surfaces ?? legacy?.surfaces;
-  if (!scope || !["self", "children"].includes(scope)) throw new Error(`Projection ${projection.id} has an invalid observation scope`);
-  if (!surfaces?.length || surfaces.some((surface) => !["workspace", "embedded"].includes(surface))) throw new Error(`Projection ${projection.id} has invalid surfaces`);
-  const uniqueSurfaces = [...new Set(surfaces)];
-  if (scope === "children" && uniqueSurfaces.includes("embedded")) throw new Error(`Projection ${projection.id} cannot combine children scope with embedded surface`);
-  if (uniqueSurfaces.includes("embedded") && !uniqueSurfaces.includes("workspace")) throw new Error(`Projection ${projection.id} must support workspace before embedded`);
-  if (legacy && (legacy.scope !== scope || legacy.surfaces.length !== uniqueSurfaces.length || legacy.surfaces.some((surface) => !uniqueSurfaces.includes(surface)))) {
-    throw new Error(`Projection ${projection.id} has conflicting contexts and scope/surfaces`);
+  get(key) {
+    return this.#values.get(key)?.value;
   }
-  return { ...projection, scope, surfaces: uniqueSurfaces, contexts: contextsFor(scope, uniqueSurfaces) };
-}
-function normalizeProjectionContext(context) {
-  if (context.kind === "self-embedded") return { ...context, scope: "self", surface: "embedded", kind: context.kind };
-  if (context.kind === "children-workspace") return { scope: "children", surface: "workspace", kind: context.kind };
-  return { scope: "self", surface: "workspace", kind: context.kind };
-}
-function workspaceProjectionContext(scope) {
-  return scope === "children" ? { scope, surface: "workspace", kind: "children-workspace" } : { scope, surface: "workspace", kind: "self-workspace" };
-}
-function assertProjectionContext(projection, context) {
-  const normalized = normalizeProjectionRegistration(projection);
-  if (normalized.scope !== context.scope || !normalized.surfaces?.includes(context.surface)) {
-    throw new Error(`Projection ${projection.id} does not support ${context.kind}`);
-  }
-}
-
-// pip-editor/pip-host/projection/projection-instance.ts
-var PROJECTION = {
-  instanceType: "pip.projection.type.instance",
-  observes: "pip.projection.predicate.observes",
-  uses: "pip.projection.predicate.uses",
-  divesInto: "pip.projection.predicate.dives-into",
-  presents: "pip.projection.predicate.presents",
-  childPredicate: "pip.projection.predicate.child-predicate",
-  frame: "pip.projection.predicate.frame"
-};
-var refObject = (pip) => pip?.predicate_value?.value.kind === "ref" ? pip.predicate_value.value.target : void 0;
-var pipByPredicate = (node2, predicateNodeId) => node2?.pips.find((pip) => pip.predicate_value?.predicate.node_id === predicateNodeId);
-var pipsByPredicate = (node2, predicateNodeId) => node2?.pips.filter((pip) => pip.predicate_value?.predicate.node_id === predicateNodeId) ?? [];
-var targetByPredicate = (node2, predicateNodeId) => refObject(pipByPredicate(node2, predicateNodeId));
-var observedNode = (projection, graph) => graphNodes(graph)[targetByPredicate(projection, PROJECTION.observes)?.node_id ?? ""];
-var definitionRef = (projection) => targetByPredicate(projection, PROJECTION.uses);
-var projectionForInstance = (projection, registrations) => {
-  const definition = definitionRef(projection);
-  return definition && registrations.find((candidate) => candidate.definition?.node_id === definition.node_id && candidate.definition.pip_id === definition.pip_id);
-};
-var observationScope = (projection) => normalizeProjectionRegistration(projection).scope ?? "self";
-function presentedProjections(parent, graph) {
-  return pipsByPredicate(parent, PROJECTION.presents).flatMap((pip) => {
-    const target = refObject(pip), projection = target && graphNodes(graph)[target.node_id];
-    const observed = projection && targetByPredicate(projection, PROJECTION.observes);
-    const frame_pip = pip.pips.find((nested) => nested.predicate_value?.predicate.node_id === PROJECTION.frame);
-    const frame = frame_pip?.predicate_value?.value.kind === "const" ? frame_pip.predicate_value.value.value : void 0;
-    if (!projection || !observed || !frame || typeof frame !== "object" || Array.isArray(frame)) return [];
-    return [{ projectionNodeId: projection.id, observedNodeId: observed.node_id, frame }];
-  });
-}
-
-// pip-editor/pip-host/projection/projection-routes.ts
-function routeForProjection(projectionNodeId, graph, nodeTypes, enteredFrom) {
-  const node2 = graphNodes(graph)[projectionNodeId], observed = node2 && observedNode(node2, graph), definition = node2 && projectionForInstance(node2, nodeTypes.projections());
-  if (!node2 || !observed || !definition) return;
-  return { projectionNodeId, observedNodeId: observed.id, scope: observationScope(definition), enteredFrom };
-}
-function navigationForRoot(rootNodeId, graph, nodeTypes, current) {
-  if (current?.entries.length && current.index < current.entries.length) {
-    const nodes = graphNodes(graph);
-    let valid_index = current.index;
-    while (valid_index >= 0 && !nodes[current.entries[valid_index].projectionNodeId]) valid_index -= 1;
-    if (valid_index === current.index) return current;
-    if (valid_index >= 0) return {
-      entries: current.entries.slice(0, valid_index + 1),
-      index: valid_index,
-      semanticScale: 1
+  subscribe(listener) {
+    this.#listeners.add(listener);
+    return () => {
+      this.#listeners.delete(listener);
     };
   }
-  const route = routeForProjection(rootNodeId, graph, nodeTypes);
-  return route ? initialNavigation(route) : void 0;
-}
-function forwardRoute(state, graph, nodeTypes, focusedProjectionId, selectedNodeId) {
-  const route = currentRoute(state), node2 = graphNodes(graph)[route.projectionNodeId];
-  if (!node2) return;
-  const attached = attached_projections(node2, graph, route.scope).find((item2) => item2.projectionNodeId === focusedProjectionId || item2.observedNodeId === selectedNodeId);
-  if (attached) return routeForProjection(attached.projectionNodeId, graph, nodeTypes, {
-    parentInternalProjectionId: node2.id,
-    childProjectionId: attached.projectionNodeId
-  });
-  if (route.scope === "self") {
-    const chosen = state.semanticTargetProjectionId ? routeForProjection(state.semanticTargetProjectionId, graph, nodeTypes) : void 0;
-    if (chosen?.scope === "children" && chosen.observedNodeId === route.observedNodeId)
-      return chosen;
-    const target = targetByPredicate(node2, PROJECTION.divesInto)?.node_id;
-    return target ? routeForProjection(target, graph, nodeTypes) : void 0;
+  begin_activation(owner_id) {
+    const staged = /* @__PURE__ */ new Map();
+    const service = {
+      register: (value) => {
+        const key = this.#key_of(value);
+        if (staged.has(key)) throw new Error(`\u63D2\u4EF6 ${owner_id} \u91CD\u590D\u6682\u5B58\u8D21\u732E ${String(key)}`);
+        staged.set(key, value);
+        return () => {
+          staged.delete(key);
+        };
+      }
+    };
+    return {
+      service,
+      prepare: () => {
+        for (const key of staged.keys()) {
+          if (this.#values.has(key)) throw new Error(`\u8D21\u732E ${String(key)} \u5DF2\u88AB\u6CE8\u518C`);
+        }
+      },
+      publish: () => {
+        for (const [key, value] of staged) this.#values.set(key, { owner_id, value });
+        return () => {
+          for (const key of staged.keys()) {
+            if (this.#values.get(key)?.owner_id === owner_id) this.#values.delete(key);
+          }
+        };
+      },
+      notify: () => this.#notify(),
+      rollback: () => staged.clear()
+    };
   }
-  const items = presentedProjections(node2, graph);
-  const item = items.find(({ projectionNodeId }) => projectionNodeId === focusedProjectionId) ?? items.find(({ observedNodeId }) => observedNodeId === selectedNodeId);
-  return item && routeForProjection(item.projectionNodeId, graph, nodeTypes, {
-    parentInternalProjectionId: node2.id,
-    childProjectionId: item.projectionNodeId
+  #notify() {
+    for (const listener of this.#listeners) listener();
+  }
+};
+function composite_transaction(transactions, service) {
+  return {
+    service,
+    prepare: async () => {
+      for (const transaction of transactions) await transaction.prepare();
+    },
+    publish: async () => {
+      const disposers = [];
+      try {
+        for (const transaction of transactions) disposers.push(await transaction.publish());
+      } catch (error) {
+        for (const dispose of disposers.reverse()) await dispose();
+        throw error;
+      }
+      return async () => {
+        for (const dispose of disposers.reverse()) await dispose();
+      };
+    },
+    notify: () => transactions.forEach((transaction) => transaction.notify()),
+    rollback: async () => {
+      for (const transaction of [...transactions].reverse()) await transaction.rollback();
+    }
+  };
+}
+
+// pip-editor/pip-host/runtime-services/a2-services.ts
+var type_key = (value) => `${value.type.node_id}\0${value.type.pip_id}`;
+var A2RuntimeServices = class {
+  constructor() {
+    this.types = new RuntimeContributionRegistry(type_key);
+    this.validators = new RuntimeContributionRegistry(
+      (validator) => validator
+    );
+    this.creators = new RuntimeContributionRegistry((value) => value.id);
+    this.projections = new RuntimeContributionRegistry((value) => value.id);
+    this.languages = new RuntimeContributionRegistry((value) => value.id);
+    this.commands = new RuntimeContributionRegistry((value) => value.id);
+    this.inspector_commands = new RuntimeContributionRegistry(
+      (value) => value.id
+    );
+    this.execution_planners = new RuntimeContributionRegistry(
+      (value) => value.id
+    );
+    this.node_runtimes = new RuntimeContributionRegistry(
+      (value) => value.id
+    );
+    this.operators = new RuntimeContributionRegistry((value) => value.id);
+    this.triggers = new RuntimeContributionRegistry((value) => value.id);
+    this.effects = new RuntimeContributionRegistry((value) => value.type);
+    this.command_service = this.#command_service();
+  }
+  #command_service() {
+    return {
+      begin_activation: (owner_id) => {
+        const commands = this.commands.begin_activation(owner_id);
+        const inspectors = this.inspector_commands.begin_activation(owner_id);
+        const command_service = commands.service;
+        const inspector_service = inspectors.service;
+        return composite_transaction([commands, inspectors], {
+          register: (command_id, handler) => command_service.register({ id: command_id, handler }),
+          register_inspector: (descriptor) => inspector_service.register(descriptor)
+        });
+      }
+    };
+  }
+  execution_registry() {
+    return {
+      executionPlanners: () => this.execution_planners.list(),
+      nodeRuntimes: () => this.node_runtimes.list(),
+      pipOperators: () => new Map(this.operators.list().map((value) => [value.id, value])),
+      triggerProviders: () => this.triggers.list(),
+      effectHandlers: () => new Map(this.effects.list().map((value) => [value.type, value]))
+    };
+  }
+  /** 候选 A2 的读取视图，避免 React renderer 依赖 legacy registry 实例。 */
+  presentation_registry() {
+    return {
+      types: () => this.types.list(),
+      projections: () => this.projections.list()
+    };
+  }
+  inspector_registry() {
+    return {
+      ...this.presentation_registry(),
+      inspector_commands: () => this.inspector_commands.list(),
+      commands: () => new Map(this.commands.list().map((value) => [value.id, value.handler])),
+      validators: () => this.validators.list()
+    };
+  }
+};
+var WorkspaceTransactionService = class {
+  #workspaces;
+  #services;
+  #execution;
+  #gate;
+  constructor(workspaces, services, execution, gate) {
+    this.#workspaces = workspaces;
+    this.#services = services;
+    this.#execution = execution;
+    this.#gate = gate;
+  }
+  async execute(workspace_id, command_id, input) {
+    const operation = async () => {
+      const workspace = this.#workspaces.list().find((item) => item.id === workspace_id);
+      if (!workspace) throw new Error(`\u672A\u77E5\u5DE5\u4F5C\u533A: ${workspace_id}`);
+      const command = this.#services.commands.get(command_id);
+      if (!command) throw new Error(`\u672A\u77E5\u547D\u4EE4: ${command_id}`);
+      const patch = await command.handler(input, workspace.graph);
+      this.#workspaces.commitPatch(workspace_id, patch, this.#services.validators.list());
+      const committed = this.#workspaces.list().find((item) => item.id === workspace_id);
+      this.#execution?.mark_workspace_stale(workspace_id, graphRevision(committed.graph));
+      return committed;
+    };
+    return this.#gate ? this.#gate.run(operation) : operation();
+  }
+};
+var WorkspaceHistoryService = class {
+  #workspaces;
+  #services;
+  #execution;
+  constructor(workspaces, services, execution) {
+    this.#workspaces = workspaces;
+    this.#services = services;
+    this.#execution = execution;
+  }
+  undo(workspace_id) {
+    this.#workspaces.history(workspace_id, "undo", this.#services.validators.list());
+    this.#mark_stale(workspace_id);
+  }
+  redo(workspace_id) {
+    this.#workspaces.history(workspace_id, "redo", this.#services.validators.list());
+    this.#mark_stale(workspace_id);
+  }
+  #mark_stale(workspace_id) {
+    const workspace = this.#workspaces.list().find((item) => item.id === workspace_id);
+    if (workspace) {
+      this.#execution?.mark_workspace_stale(workspace_id, graphRevision(workspace.graph));
+    }
+  }
+};
+var WorkspaceSelectionService = class {
+  #workspaces;
+  constructor(workspaces) {
+    this.#workspaces = workspaces;
+  }
+  select(workspace_id, node_ids, scope_id) {
+    this.#workspaces.select(workspace_id, node_ids, scope_id);
+  }
+};
+var WorkspaceNavigationService = class {
+  #workspaces;
+  constructor(workspaces) {
+    this.#workspaces = workspaces;
+  }
+  update_views(workspace_id, views) {
+    this.#workspaces.updateViews(workspace_id, views);
+  }
+  activate_window(workspace_id, window_id) {
+    this.#workspaces.activateWindow(workspace_id, window_id);
+  }
+  close_projection(workspace_id, node_id) {
+    this.#workspaces.closeProjectionRoot(workspace_id, node_id);
+  }
+};
+var WorkspaceExecutionService = class {
+  #workspaces;
+  #services;
+  #manager;
+  constructor(workspaces, services) {
+    this.#workspaces = workspaces;
+    this.#services = services;
+    this.#manager = new ExecutionSessionManager(
+      services.execution_registry(),
+      () => void 0
+    );
+  }
+  snapshot(workspace_id) {
+    return this.#manager.snapshot(workspace_id);
+  }
+  start(workspace_id, target_node_id, value) {
+    const workspace = this.#workspace(workspace_id);
+    return this.#manager.start({
+      workspaceId: workspace_id,
+      graph: workspace.graph,
+      targetNodeId: target_node_id,
+      value
+    });
+  }
+  cancel(session_id) {
+    this.#manager.cancel(session_id);
+  }
+  persist(workspace_id, session_id) {
+    const workspace = this.#workspace(workspace_id);
+    const patch = this.#manager.persistencePatch(
+      session_id,
+      graphRevision(workspace.graph)
+    );
+    this.#workspaces.commitPatch(workspace_id, patch, this.#services.validators.list());
+  }
+  mark_workspace_stale(workspace_id, revision) {
+    this.#manager.markWorkspaceStale(workspace_id, revision);
+  }
+  #workspace(workspace_id) {
+    const workspace = this.#workspaces.list().find((item) => item.id === workspace_id);
+    if (!workspace) throw new Error(`\u672A\u77E5\u5DE5\u4F5C\u533A: ${workspace_id}`);
+    return workspace;
+  }
+};
+function create_a2_service_module(services, workspaces, gate) {
+  const execution = new WorkspaceExecutionService(workspaces, services);
+  const provided = {
+    pip_types: services.types,
+    pip_validators: services.validators,
+    pip_commands: services.command_service,
+    pip_creators: services.creators,
+    pip_projections: services.projections,
+    pip_languages: services.languages,
+    pip_inspector_commands: services.inspector_commands,
+    pip_transactions: new WorkspaceTransactionService(workspaces, services, execution, gate),
+    pip_history: new WorkspaceHistoryService(workspaces, services, execution),
+    pip_selection: new WorkspaceSelectionService(workspaces),
+    pip_navigation: new WorkspaceNavigationService(workspaces),
+    pip_execution_planners: services.execution_planners,
+    pip_node_runtimes: services.node_runtimes,
+    pip_operators: services.operators,
+    pip_triggers: services.triggers,
+    pip_effects: services.effects,
+    pip_execution: execution,
+    pip_workspace_sessions: workspaces,
+    pip_presentation_registry: services.presentation_registry(),
+    pip_inspector_registry: services.inspector_registry(),
+    pip_creator_catalog: Object.freeze({ list: () => services.creators.list() })
+  };
+  return {
+    name: "pip.a2-services",
+    provides: Object.keys(provided),
+    apply(ctx) {
+      for (const [service_id, service] of Object.entries(provided)) {
+        ctx.provide(service_id, service);
+      }
+    }
+  };
+}
+
+// pip-editor/pip-host/runtime-services/package-service.ts
+function create_package_service_module(packages) {
+  return {
+    name: "pip.package-service",
+    provides: ["pip_packages"],
+    apply(ctx) {
+      ctx.provide("pip_packages", packages);
+    }
+  };
+}
+
+// pip-editor/pip-host/runtime-services/request-gate.ts
+var RuntimeRequestGate = class {
+  #active = /* @__PURE__ */ new Set();
+  #paused = false;
+  pause() {
+    this.#paused = true;
+  }
+  resume() {
+    this.#paused = false;
+  }
+  assert_open() {
+    if (this.#paused) throw new Error("\u63D2\u4EF6 profile \u6B63\u5728\u66F4\u65B0\uFF0C\u8BF7\u6C42\u5DF2\u6682\u505C");
+  }
+  async run(operation) {
+    this.assert_open();
+    const task = Promise.resolve().then(operation);
+    this.#active.add(task);
+    try {
+      return await task;
+    } finally {
+      this.#active.delete(task);
+    }
+  }
+  async drain_or_cancel() {
+    await Promise.allSettled([...this.#active]);
+  }
+  snapshot() {
+    return { paused: this.#paused, active_requests: this.#active.size };
+  }
+};
+
+// node_modules/yaml/browser/dist/nodes/identity.js
+var ALIAS = /* @__PURE__ */ Symbol.for("yaml.alias");
+var DOC = /* @__PURE__ */ Symbol.for("yaml.document");
+var MAP = /* @__PURE__ */ Symbol.for("yaml.map");
+var PAIR = /* @__PURE__ */ Symbol.for("yaml.pair");
+var SCALAR = /* @__PURE__ */ Symbol.for("yaml.scalar");
+var SEQ = /* @__PURE__ */ Symbol.for("yaml.seq");
+var NODE_TYPE = /* @__PURE__ */ Symbol.for("yaml.node.type");
+var isAlias = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === ALIAS;
+var isDocument = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === DOC;
+var isMap = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === MAP;
+var isPair = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === PAIR;
+var isScalar = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SCALAR;
+var isSeq = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SEQ;
+function isCollection(node2) {
+  if (node2 && typeof node2 === "object")
+    switch (node2[NODE_TYPE]) {
+      case MAP:
+      case SEQ:
+        return true;
+    }
+  return false;
+}
+function isNode(node2) {
+  if (node2 && typeof node2 === "object")
+    switch (node2[NODE_TYPE]) {
+      case ALIAS:
+      case MAP:
+      case SCALAR:
+      case SEQ:
+        return true;
+    }
+  return false;
+}
+var hasAnchor = (node2) => (isScalar(node2) || isCollection(node2)) && !!node2.anchor;
+
+// node_modules/yaml/browser/dist/visit.js
+var BREAK = /* @__PURE__ */ Symbol("break visit");
+var SKIP = /* @__PURE__ */ Symbol("skip children");
+var REMOVE = /* @__PURE__ */ Symbol("remove node");
+function visit(node2, visitor) {
+  const visitor_ = initVisitor(visitor);
+  if (isDocument(node2)) {
+    const cd = visit_(null, node2.contents, visitor_, Object.freeze([node2]));
+    if (cd === REMOVE)
+      node2.contents = null;
+  } else
+    visit_(null, node2, visitor_, Object.freeze([]));
+}
+visit.BREAK = BREAK;
+visit.SKIP = SKIP;
+visit.REMOVE = REMOVE;
+function visit_(key, node2, visitor, path) {
+  const ctrl = callVisitor(key, node2, visitor, path);
+  if (isNode(ctrl) || isPair(ctrl)) {
+    replaceNode(key, path, ctrl);
+    return visit_(key, ctrl, visitor, path);
+  }
+  if (typeof ctrl !== "symbol") {
+    if (isCollection(node2)) {
+      path = Object.freeze(path.concat(node2));
+      for (let i2 = 0; i2 < node2.items.length; ++i2) {
+        const ci = visit_(i2, node2.items[i2], visitor, path);
+        if (typeof ci === "number")
+          i2 = ci - 1;
+        else if (ci === BREAK)
+          return BREAK;
+        else if (ci === REMOVE) {
+          node2.items.splice(i2, 1);
+          i2 -= 1;
+        }
+      }
+    } else if (isPair(node2)) {
+      path = Object.freeze(path.concat(node2));
+      const ck = visit_("key", node2.key, visitor, path);
+      if (ck === BREAK)
+        return BREAK;
+      else if (ck === REMOVE)
+        node2.key = null;
+      const cv = visit_("value", node2.value, visitor, path);
+      if (cv === BREAK)
+        return BREAK;
+      else if (cv === REMOVE)
+        node2.value = null;
+    }
+  }
+  return ctrl;
+}
+async function visitAsync(node2, visitor) {
+  const visitor_ = initVisitor(visitor);
+  if (isDocument(node2)) {
+    const cd = await visitAsync_(null, node2.contents, visitor_, Object.freeze([node2]));
+    if (cd === REMOVE)
+      node2.contents = null;
+  } else
+    await visitAsync_(null, node2, visitor_, Object.freeze([]));
+}
+visitAsync.BREAK = BREAK;
+visitAsync.SKIP = SKIP;
+visitAsync.REMOVE = REMOVE;
+async function visitAsync_(key, node2, visitor, path) {
+  const ctrl = await callVisitor(key, node2, visitor, path);
+  if (isNode(ctrl) || isPair(ctrl)) {
+    replaceNode(key, path, ctrl);
+    return visitAsync_(key, ctrl, visitor, path);
+  }
+  if (typeof ctrl !== "symbol") {
+    if (isCollection(node2)) {
+      path = Object.freeze(path.concat(node2));
+      for (let i2 = 0; i2 < node2.items.length; ++i2) {
+        const ci = await visitAsync_(i2, node2.items[i2], visitor, path);
+        if (typeof ci === "number")
+          i2 = ci - 1;
+        else if (ci === BREAK)
+          return BREAK;
+        else if (ci === REMOVE) {
+          node2.items.splice(i2, 1);
+          i2 -= 1;
+        }
+      }
+    } else if (isPair(node2)) {
+      path = Object.freeze(path.concat(node2));
+      const ck = await visitAsync_("key", node2.key, visitor, path);
+      if (ck === BREAK)
+        return BREAK;
+      else if (ck === REMOVE)
+        node2.key = null;
+      const cv = await visitAsync_("value", node2.value, visitor, path);
+      if (cv === BREAK)
+        return BREAK;
+      else if (cv === REMOVE)
+        node2.value = null;
+    }
+  }
+  return ctrl;
+}
+function initVisitor(visitor) {
+  if (typeof visitor === "object" && (visitor.Collection || visitor.Node || visitor.Value)) {
+    return Object.assign({
+      Alias: visitor.Node,
+      Map: visitor.Node,
+      Scalar: visitor.Node,
+      Seq: visitor.Node
+    }, visitor.Value && {
+      Map: visitor.Value,
+      Scalar: visitor.Value,
+      Seq: visitor.Value
+    }, visitor.Collection && {
+      Map: visitor.Collection,
+      Seq: visitor.Collection
+    }, visitor);
+  }
+  return visitor;
+}
+function callVisitor(key, node2, visitor, path) {
+  if (typeof visitor === "function")
+    return visitor(key, node2, path);
+  if (isMap(node2))
+    return visitor.Map?.(key, node2, path);
+  if (isSeq(node2))
+    return visitor.Seq?.(key, node2, path);
+  if (isPair(node2))
+    return visitor.Pair?.(key, node2, path);
+  if (isScalar(node2))
+    return visitor.Scalar?.(key, node2, path);
+  if (isAlias(node2))
+    return visitor.Alias?.(key, node2, path);
+  return void 0;
+}
+function replaceNode(key, path, node2) {
+  const parent = path[path.length - 1];
+  if (isCollection(parent)) {
+    parent.items[key] = node2;
+  } else if (isPair(parent)) {
+    if (key === "key")
+      parent.key = node2;
+    else
+      parent.value = node2;
+  } else if (isDocument(parent)) {
+    parent.contents = node2;
+  } else {
+    const pt = isAlias(parent) ? "alias" : "scalar";
+    throw new Error(`Cannot replace node with ${pt} parent`);
+  }
+}
+
+// node_modules/yaml/browser/dist/doc/directives.js
+var escapeChars = {
+  "!": "%21",
+  ",": "%2C",
+  "[": "%5B",
+  "]": "%5D",
+  "{": "%7B",
+  "}": "%7D"
+};
+var escapeTagName = (tn) => tn.replace(/[!,[\]{}]/g, (ch) => escapeChars[ch]);
+var Directives = class _Directives {
+  constructor(yaml, tags) {
+    this.docStart = null;
+    this.docEnd = false;
+    this.yaml = Object.assign({}, _Directives.defaultYaml, yaml);
+    this.tags = Object.assign({}, _Directives.defaultTags, tags);
+  }
+  clone() {
+    const copy = new _Directives(this.yaml, this.tags);
+    copy.docStart = this.docStart;
+    return copy;
+  }
+  /**
+   * During parsing, get a Directives instance for the current document and
+   * update the stream state according to the current version's spec.
+   */
+  atDocument() {
+    const res = new _Directives(this.yaml, this.tags);
+    switch (this.yaml.version) {
+      case "1.1":
+        this.atNextDocument = true;
+        break;
+      case "1.2":
+        this.atNextDocument = false;
+        this.yaml = {
+          explicit: _Directives.defaultYaml.explicit,
+          version: "1.2"
+        };
+        this.tags = Object.assign({}, _Directives.defaultTags);
+        break;
+    }
+    return res;
+  }
+  /**
+   * @param onError - May be called even if the action was successful
+   * @returns `true` on success
+   */
+  add(line, onError) {
+    if (this.atNextDocument) {
+      this.yaml = { explicit: _Directives.defaultYaml.explicit, version: "1.1" };
+      this.tags = Object.assign({}, _Directives.defaultTags);
+      this.atNextDocument = false;
+    }
+    const parts = line.trim().split(/[ \t]+/);
+    const name = parts.shift();
+    switch (name) {
+      case "%TAG": {
+        if (parts.length !== 2) {
+          onError(0, "%TAG directive should contain exactly two parts");
+          if (parts.length < 2)
+            return false;
+        }
+        const [handle, prefix] = parts;
+        this.tags[handle] = prefix;
+        return true;
+      }
+      case "%YAML": {
+        this.yaml.explicit = true;
+        if (parts.length !== 1) {
+          onError(0, "%YAML directive should contain exactly one part");
+          return false;
+        }
+        const [version] = parts;
+        if (version === "1.1" || version === "1.2") {
+          this.yaml.version = version;
+          return true;
+        } else {
+          const isValid = /^\d+\.\d+$/.test(version);
+          onError(6, `Unsupported YAML version ${version}`, isValid);
+          return false;
+        }
+      }
+      default:
+        onError(0, `Unknown directive ${name}`, true);
+        return false;
+    }
+  }
+  /**
+   * Resolves a tag, matching handles to those defined in %TAG directives.
+   *
+   * @returns Resolved tag, which may also be the non-specific tag `'!'` or a
+   *   `'!local'` tag, or `null` if unresolvable.
+   */
+  tagName(source, onError) {
+    if (source === "!")
+      return "!";
+    if (source[0] !== "!") {
+      onError(`Not a valid tag: ${source}`);
+      return null;
+    }
+    if (source[1] === "<") {
+      const verbatim = source.slice(2, -1);
+      if (verbatim === "!" || verbatim === "!!") {
+        onError(`Verbatim tags aren't resolved, so ${source} is invalid.`);
+        return null;
+      }
+      if (source[source.length - 1] !== ">")
+        onError("Verbatim tags must end with a >");
+      return verbatim;
+    }
+    const [, handle, suffix] = source.match(/^(.*!)([^!]*)$/s);
+    if (!suffix)
+      onError(`The ${source} tag has no suffix`);
+    const prefix = this.tags[handle];
+    if (prefix) {
+      try {
+        return prefix + decodeURIComponent(suffix);
+      } catch (error) {
+        onError(String(error));
+        return null;
+      }
+    }
+    if (handle === "!")
+      return source;
+    onError(`Could not resolve tag: ${source}`);
+    return null;
+  }
+  /**
+   * Given a fully resolved tag, returns its printable string form,
+   * taking into account current tag prefixes and defaults.
+   */
+  tagString(tag) {
+    for (const [handle, prefix] of Object.entries(this.tags)) {
+      if (tag.startsWith(prefix))
+        return handle + escapeTagName(tag.substring(prefix.length));
+    }
+    return tag[0] === "!" ? tag : `!<${tag}>`;
+  }
+  toString(doc) {
+    const lines = this.yaml.explicit ? [`%YAML ${this.yaml.version || "1.2"}`] : [];
+    const tagEntries = Object.entries(this.tags);
+    let tagNames;
+    if (doc && tagEntries.length > 0 && isNode(doc.contents)) {
+      const tags = {};
+      visit(doc.contents, (_key, node2) => {
+        if (isNode(node2) && node2.tag)
+          tags[node2.tag] = true;
+      });
+      tagNames = Object.keys(tags);
+    } else
+      tagNames = [];
+    for (const [handle, prefix] of tagEntries) {
+      if (handle === "!!" && prefix === "tag:yaml.org,2002:")
+        continue;
+      if (!doc || tagNames.some((tn) => tn.startsWith(prefix)))
+        lines.push(`%TAG ${handle} ${prefix}`);
+    }
+    return lines.join("\n");
+  }
+};
+Directives.defaultYaml = { explicit: false, version: "1.2" };
+Directives.defaultTags = { "!!": "tag:yaml.org,2002:" };
+
+// node_modules/yaml/browser/dist/doc/anchors.js
+function anchorIsValid(anchor) {
+  if (/[\x00-\x19\s,[\]{}]/.test(anchor)) {
+    const sa = JSON.stringify(anchor);
+    const msg = `Anchor must not contain whitespace or control characters: ${sa}`;
+    throw new Error(msg);
+  }
+  return true;
+}
+function anchorNames(root2) {
+  const anchors = /* @__PURE__ */ new Set();
+  visit(root2, {
+    Value(_key, node2) {
+      if (node2.anchor)
+        anchors.add(node2.anchor);
+    }
+  });
+  return anchors;
+}
+function findNewAnchor(prefix, exclude) {
+  for (let i2 = 1; true; ++i2) {
+    const name = `${prefix}${i2}`;
+    if (!exclude.has(name))
+      return name;
+  }
+}
+function createNodeAnchors(doc, prefix) {
+  const aliasObjects = [];
+  const sourceObjects = /* @__PURE__ */ new Map();
+  let prevAnchors = null;
+  return {
+    onAnchor: (source) => {
+      aliasObjects.push(source);
+      prevAnchors ?? (prevAnchors = anchorNames(doc));
+      const anchor = findNewAnchor(prefix, prevAnchors);
+      prevAnchors.add(anchor);
+      return anchor;
+    },
+    /**
+     * With circular references, the source node is only resolved after all
+     * of its child nodes are. This is why anchors are set only after all of
+     * the nodes have been created.
+     */
+    setAnchors: () => {
+      for (const source of aliasObjects) {
+        const ref = sourceObjects.get(source);
+        if (typeof ref === "object" && ref.anchor && (isScalar(ref.node) || isCollection(ref.node))) {
+          ref.node.anchor = ref.anchor;
+        } else {
+          const error = new Error("Failed to resolve repeated object (this should not happen)");
+          error.source = source;
+          throw error;
+        }
+      }
+    },
+    sourceObjects
+  };
+}
+
+// node_modules/yaml/browser/dist/doc/applyReviver.js
+function applyReviver(reviver, obj, key, val) {
+  if (val && typeof val === "object") {
+    if (Array.isArray(val)) {
+      for (let i2 = 0, len = val.length; i2 < len; ++i2) {
+        const v0 = val[i2];
+        const v1 = applyReviver(reviver, val, String(i2), v0);
+        if (v1 === void 0)
+          delete val[i2];
+        else if (v1 !== v0)
+          val[i2] = v1;
+      }
+    } else if (val instanceof Map) {
+      for (const k2 of Array.from(val.keys())) {
+        const v0 = val.get(k2);
+        const v1 = applyReviver(reviver, val, k2, v0);
+        if (v1 === void 0)
+          val.delete(k2);
+        else if (v1 !== v0)
+          val.set(k2, v1);
+      }
+    } else if (val instanceof Set) {
+      for (const v0 of Array.from(val)) {
+        const v1 = applyReviver(reviver, val, v0, v0);
+        if (v1 === void 0)
+          val.delete(v0);
+        else if (v1 !== v0) {
+          val.delete(v0);
+          val.add(v1);
+        }
+      }
+    } else {
+      for (const [k2, v0] of Object.entries(val)) {
+        const v1 = applyReviver(reviver, val, k2, v0);
+        if (v1 === void 0)
+          delete val[k2];
+        else if (v1 !== v0)
+          val[k2] = v1;
+      }
+    }
+  }
+  return reviver.call(obj, key, val);
+}
+
+// node_modules/yaml/browser/dist/nodes/toJS.js
+function toJS(value, arg, ctx) {
+  if (Array.isArray(value))
+    return value.map((v, i2) => toJS(v, String(i2), ctx));
+  if (value && typeof value.toJSON === "function") {
+    if (!ctx || !hasAnchor(value))
+      return value.toJSON(arg, ctx);
+    const data = { aliasCount: 0, count: 1, res: void 0 };
+    ctx.anchors.set(value, data);
+    ctx.onCreate = (res2) => {
+      data.res = res2;
+      delete ctx.onCreate;
+    };
+    const res = value.toJSON(arg, ctx);
+    if (ctx.onCreate)
+      ctx.onCreate(res);
+    return res;
+  }
+  if (typeof value === "bigint" && !ctx?.keep)
+    return Number(value);
+  return value;
+}
+
+// node_modules/yaml/browser/dist/nodes/Node.js
+var NodeBase = class {
+  constructor(type) {
+    Object.defineProperty(this, NODE_TYPE, { value: type });
+  }
+  /** Create a copy of this node.  */
+  clone() {
+    const copy = Object.create(Object.getPrototypeOf(this), Object.getOwnPropertyDescriptors(this));
+    if (this.range)
+      copy.range = this.range.slice();
+    return copy;
+  }
+  /** A plain JavaScript representation of this node. */
+  toJS(doc, { mapAsMap, maxAliasCount, onAnchor, reviver } = {}) {
+    if (!isDocument(doc))
+      throw new TypeError("A document argument is required");
+    const ctx = {
+      anchors: /* @__PURE__ */ new Map(),
+      doc,
+      keep: true,
+      mapAsMap: mapAsMap === true,
+      mapKeyWarned: false,
+      maxAliasCount: typeof maxAliasCount === "number" ? maxAliasCount : 100
+    };
+    const res = toJS(this, "", ctx);
+    if (typeof onAnchor === "function")
+      for (const { count, res: res2 } of ctx.anchors.values())
+        onAnchor(res2, count);
+    return typeof reviver === "function" ? applyReviver(reviver, { "": res }, "", res) : res;
+  }
+};
+
+// node_modules/yaml/browser/dist/nodes/Alias.js
+var Alias = class extends NodeBase {
+  constructor(source) {
+    super(ALIAS);
+    this.source = source;
+    Object.defineProperty(this, "tag", {
+      set() {
+        throw new Error("Alias nodes cannot have tags");
+      }
+    });
+  }
+  /**
+   * Resolve the value of this alias within `doc`, finding the last
+   * instance of the `source` anchor before this node.
+   */
+  resolve(doc, ctx) {
+    if (ctx?.maxAliasCount === 0)
+      throw new ReferenceError("Alias resolution is disabled");
+    let nodes;
+    if (ctx?.aliasResolveCache) {
+      nodes = ctx.aliasResolveCache;
+    } else {
+      nodes = [];
+      visit(doc, {
+        Node: (_key, node2) => {
+          if (isAlias(node2) || hasAnchor(node2))
+            nodes.push(node2);
+        }
+      });
+      if (ctx)
+        ctx.aliasResolveCache = nodes;
+    }
+    let found = void 0;
+    for (const node2 of nodes) {
+      if (node2 === this)
+        break;
+      if (node2.anchor === this.source)
+        found = node2;
+    }
+    if (found && ctx) {
+      const { anchors, doc: doc2, maxAliasCount } = ctx;
+      let data = anchors.get(found);
+      if (!data) {
+        toJS(found, null, ctx);
+        data = anchors.get(found);
+      }
+      if (data?.res === void 0) {
+        const msg = "This should not happen: Alias anchor was not resolved?";
+        throw new ReferenceError(msg);
+      }
+      if (maxAliasCount >= 0) {
+        data.count += 1;
+        if (data.aliasCount === 0)
+          data.aliasCount = getAliasCount(doc2, found, anchors);
+        if (data.count * data.aliasCount > maxAliasCount) {
+          const msg = "Excessive alias count indicates a resource exhaustion attack";
+          throw new ReferenceError(msg);
+        }
+      }
+    }
+    return found;
+  }
+  toJSON(_arg, ctx) {
+    if (!ctx)
+      return { source: this.source };
+    const source = this.resolve(ctx.doc, ctx);
+    if (!source) {
+      const msg = `Unresolved alias (the anchor must be set before the alias): ${this.source}`;
+      throw new ReferenceError(msg);
+    }
+    return ctx.anchors.get(source).res;
+  }
+  toString(ctx, _onComment, _onChompKeep) {
+    const src = `*${this.source}`;
+    if (ctx) {
+      anchorIsValid(this.source);
+      if (ctx.options.verifyAliasOrder && !ctx.anchors.has(this.source)) {
+        const msg = `Unresolved alias (the anchor must be set before the alias): ${this.source}`;
+        throw new Error(msg);
+      }
+      if (ctx.implicitKey)
+        return `${src} `;
+    }
+    return src;
+  }
+};
+function getAliasCount(doc, node2, anchors) {
+  if (isAlias(node2)) {
+    const source = node2.resolve(doc);
+    const anchor = anchors && source && anchors.get(source);
+    return anchor ? anchor.count * anchor.aliasCount : 0;
+  } else if (isCollection(node2)) {
+    let count = 0;
+    for (const item of node2.items) {
+      const c2 = getAliasCount(doc, item, anchors);
+      if (c2 > count)
+        count = c2;
+    }
+    return count;
+  } else if (isPair(node2)) {
+    const kc = getAliasCount(doc, node2.key, anchors);
+    const vc = getAliasCount(doc, node2.value, anchors);
+    return Math.max(kc, vc);
+  }
+  return 1;
+}
+
+// node_modules/yaml/browser/dist/nodes/Scalar.js
+var isScalarValue = (value) => !value || typeof value !== "function" && typeof value !== "object";
+var Scalar = class extends NodeBase {
+  constructor(value) {
+    super(SCALAR);
+    this.value = value;
+  }
+  toJSON(arg, ctx) {
+    return ctx?.keep ? this.value : toJS(this.value, arg, ctx);
+  }
+  toString() {
+    return String(this.value);
+  }
+};
+Scalar.BLOCK_FOLDED = "BLOCK_FOLDED";
+Scalar.BLOCK_LITERAL = "BLOCK_LITERAL";
+Scalar.PLAIN = "PLAIN";
+Scalar.QUOTE_DOUBLE = "QUOTE_DOUBLE";
+Scalar.QUOTE_SINGLE = "QUOTE_SINGLE";
+
+// node_modules/yaml/browser/dist/doc/createNode.js
+var defaultTagPrefix = "tag:yaml.org,2002:";
+function findTagObject(value, tagName, tags) {
+  if (tagName) {
+    const match = tags.filter((t2) => t2.tag === tagName);
+    const tagObj = match.find((t2) => !t2.format) ?? match[0];
+    if (!tagObj)
+      throw new Error(`Tag ${tagName} not found`);
+    return tagObj;
+  }
+  return tags.find((t2) => t2.identify?.(value) && !t2.format);
+}
+function createNode(value, tagName, ctx) {
+  if (isDocument(value))
+    value = value.contents;
+  if (isNode(value))
+    return value;
+  if (isPair(value)) {
+    const map2 = ctx.schema[MAP].createNode?.(ctx.schema, null, ctx);
+    map2.items.push(value);
+    return map2;
+  }
+  if (value instanceof String || value instanceof Number || value instanceof Boolean || typeof BigInt !== "undefined" && value instanceof BigInt) {
+    value = value.valueOf();
+  }
+  const { aliasDuplicateObjects, onAnchor, onTagObj, schema: schema4, sourceObjects } = ctx;
+  let ref = void 0;
+  if (aliasDuplicateObjects && value && typeof value === "object") {
+    ref = sourceObjects.get(value);
+    if (ref) {
+      ref.anchor ?? (ref.anchor = onAnchor(value));
+      return new Alias(ref.anchor);
+    } else {
+      ref = { anchor: null, node: null };
+      sourceObjects.set(value, ref);
+    }
+  }
+  if (tagName?.startsWith("!!"))
+    tagName = defaultTagPrefix + tagName.slice(2);
+  let tagObj = findTagObject(value, tagName, schema4.tags);
+  if (!tagObj) {
+    if (value && typeof value.toJSON === "function") {
+      value = value.toJSON();
+    }
+    if (!value || typeof value !== "object") {
+      const node3 = new Scalar(value);
+      if (ref)
+        ref.node = node3;
+      return node3;
+    }
+    tagObj = value instanceof Map ? schema4[MAP] : Symbol.iterator in Object(value) ? schema4[SEQ] : schema4[MAP];
+  }
+  if (onTagObj) {
+    onTagObj(tagObj);
+    delete ctx.onTagObj;
+  }
+  const node2 = tagObj?.createNode ? tagObj.createNode(ctx.schema, value, ctx) : typeof tagObj?.nodeClass?.from === "function" ? tagObj.nodeClass.from(ctx.schema, value, ctx) : new Scalar(value);
+  if (tagName)
+    node2.tag = tagName;
+  else if (!tagObj.default)
+    node2.tag = tagObj.tag;
+  if (ref)
+    ref.node = node2;
+  return node2;
+}
+
+// node_modules/yaml/browser/dist/nodes/Collection.js
+function collectionFromPath(schema4, path, value) {
+  let v = value;
+  for (let i2 = path.length - 1; i2 >= 0; --i2) {
+    const k2 = path[i2];
+    if (typeof k2 === "number" && Number.isInteger(k2) && k2 >= 0) {
+      const a2 = [];
+      a2[k2] = v;
+      v = a2;
+    } else {
+      v = /* @__PURE__ */ new Map([[k2, v]]);
+    }
+  }
+  return createNode(v, void 0, {
+    aliasDuplicateObjects: false,
+    keepUndefined: false,
+    onAnchor: () => {
+      throw new Error("This should not happen, please report a bug.");
+    },
+    schema: schema4,
+    sourceObjects: /* @__PURE__ */ new Map()
   });
 }
-function projectionOptions(observedNodeId, graph, nodeTypes) {
-  return Object.values(graphNodes(graph)).flatMap((node2) => {
-    const observed = observedNode(node2, graph), projection = projectionForInstance(node2, nodeTypes.projections());
-    if (observed?.id !== observedNodeId || !projection) return [];
-    return projection.surfaces?.includes("workspace") ? [{ projectionNodeId: node2.id, scope: observationScope(projection), label: `${projection.icon ? `${projection.icon} ` : ""}${projection.name ?? projection.id}` }] : [];
-  });
+var isEmptyPath = (path) => path == null || typeof path === "object" && !!path[Symbol.iterator]().next().done;
+var Collection = class extends NodeBase {
+  constructor(type, schema4) {
+    super(type);
+    Object.defineProperty(this, "schema", {
+      value: schema4,
+      configurable: true,
+      enumerable: false,
+      writable: true
+    });
+  }
+  /**
+   * Create a copy of this collection.
+   *
+   * @param schema - If defined, overwrites the original's schema
+   */
+  clone(schema4) {
+    const copy = Object.create(Object.getPrototypeOf(this), Object.getOwnPropertyDescriptors(this));
+    if (schema4)
+      copy.schema = schema4;
+    copy.items = copy.items.map((it) => isNode(it) || isPair(it) ? it.clone(schema4) : it);
+    if (this.range)
+      copy.range = this.range.slice();
+    return copy;
+  }
+  /**
+   * Adds a value to the collection. For `!!map` and `!!omap` the value must
+   * be a Pair instance or a `{ key, value }` object, which may not have a key
+   * that already exists in the map.
+   */
+  addIn(path, value) {
+    if (isEmptyPath(path))
+      this.add(value);
+    else {
+      const [key, ...rest] = path;
+      const node2 = this.get(key, true);
+      if (isCollection(node2))
+        node2.addIn(rest, value);
+      else if (node2 === void 0 && this.schema)
+        this.set(key, collectionFromPath(this.schema, rest, value));
+      else
+        throw new Error(`Expected YAML collection at ${key}. Remaining path: ${rest}`);
+    }
+  }
+  /**
+   * Removes a value from the collection.
+   * @returns `true` if the item was found and removed.
+   */
+  deleteIn(path) {
+    const [key, ...rest] = path;
+    if (rest.length === 0)
+      return this.delete(key);
+    const node2 = this.get(key, true);
+    if (isCollection(node2))
+      return node2.deleteIn(rest);
+    else
+      throw new Error(`Expected YAML collection at ${key}. Remaining path: ${rest}`);
+  }
+  /**
+   * Returns item at `key`, or `undefined` if not found. By default unwraps
+   * scalar values from their surrounding node; to disable set `keepScalar` to
+   * `true` (collections are always returned intact).
+   */
+  getIn(path, keepScalar) {
+    const [key, ...rest] = path;
+    const node2 = this.get(key, true);
+    if (rest.length === 0)
+      return !keepScalar && isScalar(node2) ? node2.value : node2;
+    else
+      return isCollection(node2) ? node2.getIn(rest, keepScalar) : void 0;
+  }
+  hasAllNullValues(allowScalar) {
+    return this.items.every((node2) => {
+      if (!isPair(node2))
+        return false;
+      const n2 = node2.value;
+      return n2 == null || allowScalar && isScalar(n2) && n2.value == null && !n2.commentBefore && !n2.comment && !n2.tag;
+    });
+  }
+  /**
+   * Checks if the collection includes a value with the key `key`.
+   */
+  hasIn(path) {
+    const [key, ...rest] = path;
+    if (rest.length === 0)
+      return this.has(key);
+    const node2 = this.get(key, true);
+    return isCollection(node2) ? node2.hasIn(rest) : false;
+  }
+  /**
+   * Sets a value in this collection. For `!!set`, `value` needs to be a
+   * boolean to add/remove the item from the set.
+   */
+  setIn(path, value) {
+    const [key, ...rest] = path;
+    if (rest.length === 0) {
+      this.set(key, value);
+    } else {
+      const node2 = this.get(key, true);
+      if (isCollection(node2))
+        node2.setIn(rest, value);
+      else if (node2 === void 0 && this.schema)
+        this.set(key, collectionFromPath(this.schema, rest, value));
+      else
+        throw new Error(`Expected YAML collection at ${key}. Remaining path: ${rest}`);
+    }
+  }
+};
+
+// node_modules/yaml/browser/dist/stringify/stringifyComment.js
+var stringifyComment = (str) => str.replace(/^(?!$)(?: $)?/gm, "#");
+function indentComment(comment, indent) {
+  if (/^\n+$/.test(comment))
+    return comment.substring(1);
+  return indent ? comment.replace(/^(?! *$)/gm, indent) : comment;
 }
+var lineComment = (str, indent, comment) => str.endsWith("\n") ? indentComment(comment, indent) : comment.includes("\n") ? "\n" + indentComment(comment, indent) : (str.endsWith(" ") ? "" : " ") + comment;
+
+// node_modules/yaml/browser/dist/stringify/foldFlowLines.js
+var FOLD_FLOW = "flow";
+var FOLD_BLOCK = "block";
+var FOLD_QUOTED = "quoted";
+function foldFlowLines(text, indent, mode = "flow", { indentAtStart, lineWidth = 80, minContentWidth = 20, onFold, onOverflow } = {}) {
+  if (!lineWidth || lineWidth < 0)
+    return text;
+  if (lineWidth < minContentWidth)
+    minContentWidth = 0;
+  const endStep = Math.max(1 + minContentWidth, 1 + lineWidth - indent.length);
+  if (text.length <= endStep)
+    return text;
+  const folds = [];
+  const escapedFolds = {};
+  let end = lineWidth - indent.length;
+  if (typeof indentAtStart === "number") {
+    if (indentAtStart > lineWidth - Math.max(2, minContentWidth))
+      folds.push(0);
+    else
+      end = lineWidth - indentAtStart;
+  }
+  let split = void 0;
+  let prev = void 0;
+  let overflow = false;
+  let i2 = -1;
+  let escStart = -1;
+  let escEnd = -1;
+  if (mode === FOLD_BLOCK) {
+    i2 = consumeMoreIndentedLines(text, i2, indent.length);
+    if (i2 !== -1)
+      end = i2 + endStep;
+  }
+  for (let ch; ch = text[i2 += 1]; ) {
+    if (mode === FOLD_QUOTED && ch === "\\") {
+      escStart = i2;
+      switch (text[i2 + 1]) {
+        case "x":
+          i2 += 3;
+          break;
+        case "u":
+          i2 += 5;
+          break;
+        case "U":
+          i2 += 9;
+          break;
+        default:
+          i2 += 1;
+      }
+      escEnd = i2;
+    }
+    if (ch === "\n") {
+      if (mode === FOLD_BLOCK)
+        i2 = consumeMoreIndentedLines(text, i2, indent.length);
+      end = i2 + indent.length + endStep;
+      split = void 0;
+    } else {
+      if (ch === " " && prev && prev !== " " && prev !== "\n" && prev !== "	") {
+        const next = text[i2 + 1];
+        if (next && next !== " " && next !== "\n" && next !== "	")
+          split = i2;
+      }
+      if (i2 >= end) {
+        if (split) {
+          folds.push(split);
+          end = split + endStep;
+          split = void 0;
+        } else if (mode === FOLD_QUOTED) {
+          while (prev === " " || prev === "	") {
+            prev = ch;
+            ch = text[i2 += 1];
+            overflow = true;
+          }
+          const j = i2 > escEnd + 1 ? i2 - 2 : escStart - 1;
+          if (escapedFolds[j])
+            return text;
+          folds.push(j);
+          escapedFolds[j] = true;
+          end = j + endStep;
+          split = void 0;
+        } else {
+          overflow = true;
+        }
+      }
+    }
+    prev = ch;
+  }
+  if (overflow && onOverflow)
+    onOverflow();
+  if (folds.length === 0)
+    return text;
+  if (onFold)
+    onFold();
+  let res = text.slice(0, folds[0]);
+  for (let i3 = 0; i3 < folds.length; ++i3) {
+    const fold = folds[i3];
+    const end2 = folds[i3 + 1] || text.length;
+    if (fold === 0)
+      res = `
+${indent}${text.slice(0, end2)}`;
+    else {
+      if (mode === FOLD_QUOTED && escapedFolds[fold])
+        res += `${text[fold]}\\`;
+      res += `
+${indent}${text.slice(fold + 1, end2)}`;
+    }
+  }
+  return res;
+}
+function consumeMoreIndentedLines(text, i2, indent) {
+  let end = i2;
+  let start = i2 + 1;
+  let ch = text[start];
+  while (ch === " " || ch === "	") {
+    if (i2 < start + indent) {
+      ch = text[++i2];
+    } else {
+      do {
+        ch = text[++i2];
+      } while (ch && ch !== "\n");
+      end = i2;
+      start = i2 + 1;
+      ch = text[start];
+    }
+  }
+  return end;
+}
+
+// node_modules/yaml/browser/dist/stringify/stringifyString.js
+var getFoldOptions = (ctx, isBlock2) => ({
+  indentAtStart: isBlock2 ? ctx.indent.length : ctx.indentAtStart,
+  lineWidth: ctx.options.lineWidth,
+  minContentWidth: ctx.options.minContentWidth
+});
+var containsDocumentMarker = (str) => /^(%|---|\.\.\.)/m.test(str);
+function lineLengthOverLimit(str, lineWidth, indentLength) {
+  if (!lineWidth || lineWidth < 0)
+    return false;
+  const limit = lineWidth - indentLength;
+  const strLen = str.length;
+  if (strLen <= limit)
+    return false;
+  for (let i2 = 0, start = 0; i2 < strLen; ++i2) {
+    if (str[i2] === "\n") {
+      if (i2 - start > limit)
+        return true;
+      start = i2 + 1;
+      if (strLen - start <= limit)
+        return false;
+    }
+  }
+  return true;
+}
+function doubleQuotedString(value, ctx) {
+  const json = JSON.stringify(value);
+  if (ctx.options.doubleQuotedAsJSON)
+    return json;
+  const { implicitKey } = ctx;
+  const minMultiLineLength = ctx.options.doubleQuotedMinMultiLineLength;
+  const indent = ctx.indent || (containsDocumentMarker(value) ? "  " : "");
+  let str = "";
+  let start = 0;
+  for (let i2 = 0, ch = json[i2]; ch; ch = json[++i2]) {
+    if (ch === " " && json[i2 + 1] === "\\" && json[i2 + 2] === "n") {
+      str += json.slice(start, i2) + "\\ ";
+      i2 += 1;
+      start = i2;
+      ch = "\\";
+    }
+    if (ch === "\\")
+      switch (json[i2 + 1]) {
+        case "u":
+          {
+            str += json.slice(start, i2);
+            const code = json.substr(i2 + 2, 4);
+            switch (code) {
+              case "0000":
+                str += "\\0";
+                break;
+              case "0007":
+                str += "\\a";
+                break;
+              case "000b":
+                str += "\\v";
+                break;
+              case "001b":
+                str += "\\e";
+                break;
+              case "0085":
+                str += "\\N";
+                break;
+              case "00a0":
+                str += "\\_";
+                break;
+              case "2028":
+                str += "\\L";
+                break;
+              case "2029":
+                str += "\\P";
+                break;
+              default:
+                if (code.substr(0, 2) === "00")
+                  str += "\\x" + code.substr(2);
+                else
+                  str += json.substr(i2, 6);
+            }
+            i2 += 5;
+            start = i2 + 1;
+          }
+          break;
+        case "n":
+          if (implicitKey || json[i2 + 2] === '"' || json.length < minMultiLineLength) {
+            i2 += 1;
+          } else {
+            str += json.slice(start, i2) + "\n\n";
+            while (json[i2 + 2] === "\\" && json[i2 + 3] === "n" && json[i2 + 4] !== '"') {
+              str += "\n";
+              i2 += 2;
+            }
+            str += indent;
+            if (json[i2 + 2] === " ")
+              str += "\\";
+            i2 += 1;
+            start = i2 + 1;
+          }
+          break;
+        default:
+          i2 += 1;
+      }
+  }
+  str = start ? str + json.slice(start) : json;
+  return implicitKey ? str : foldFlowLines(str, indent, FOLD_QUOTED, getFoldOptions(ctx, false));
+}
+function singleQuotedString(value, ctx) {
+  if (ctx.options.singleQuote === false || ctx.implicitKey && value.includes("\n") || /[ \t]\n|\n[ \t]/.test(value))
+    return doubleQuotedString(value, ctx);
+  const indent = ctx.indent || (containsDocumentMarker(value) ? "  " : "");
+  const res = "'" + value.replace(/'/g, "''").replace(/\n+/g, `$&
+${indent}`) + "'";
+  return ctx.implicitKey ? res : foldFlowLines(res, indent, FOLD_FLOW, getFoldOptions(ctx, false));
+}
+function quotedString(value, ctx) {
+  const { singleQuote } = ctx.options;
+  let qs;
+  if (singleQuote === false)
+    qs = doubleQuotedString;
+  else {
+    const hasDouble = value.includes('"');
+    const hasSingle = value.includes("'");
+    if (hasDouble && !hasSingle)
+      qs = singleQuotedString;
+    else if (hasSingle && !hasDouble)
+      qs = doubleQuotedString;
+    else
+      qs = singleQuote ? singleQuotedString : doubleQuotedString;
+  }
+  return qs(value, ctx);
+}
+var blockEndNewlines;
+try {
+  blockEndNewlines = new RegExp("(^|(?<!\n))\n+(?!\n|$)", "g");
+} catch {
+  blockEndNewlines = /\n+(?!\n|$)/g;
+}
+function blockString({ comment, type, value }, ctx, onComment, onChompKeep) {
+  const { blockQuote, commentString, lineWidth } = ctx.options;
+  if (!blockQuote || /\n[\t ]+$/.test(value)) {
+    return quotedString(value, ctx);
+  }
+  const indent = ctx.indent || (ctx.forceBlockIndent || containsDocumentMarker(value) ? "  " : "");
+  const literal = blockQuote === "literal" ? true : blockQuote === "folded" || type === Scalar.BLOCK_FOLDED ? false : type === Scalar.BLOCK_LITERAL ? true : !lineLengthOverLimit(value, lineWidth, indent.length);
+  if (!value)
+    return literal ? "|\n" : ">\n";
+  let chomp;
+  let endStart;
+  for (endStart = value.length; endStart > 0; --endStart) {
+    const ch = value[endStart - 1];
+    if (ch !== "\n" && ch !== "	" && ch !== " ")
+      break;
+  }
+  let end = value.substring(endStart);
+  const endNlPos = end.indexOf("\n");
+  if (endNlPos === -1) {
+    chomp = "-";
+  } else if (value === end || endNlPos !== end.length - 1) {
+    chomp = "+";
+    if (onChompKeep)
+      onChompKeep();
+  } else {
+    chomp = "";
+  }
+  if (end) {
+    value = value.slice(0, -end.length);
+    if (end[end.length - 1] === "\n")
+      end = end.slice(0, -1);
+    end = end.replace(blockEndNewlines, `$&${indent}`);
+  }
+  let startWithSpace = false;
+  let startEnd;
+  let startNlPos = -1;
+  for (startEnd = 0; startEnd < value.length; ++startEnd) {
+    const ch = value[startEnd];
+    if (ch === " ")
+      startWithSpace = true;
+    else if (ch === "\n")
+      startNlPos = startEnd;
+    else
+      break;
+  }
+  let start = value.substring(0, startNlPos < startEnd ? startNlPos + 1 : startEnd);
+  if (start) {
+    value = value.substring(start.length);
+    start = start.replace(/\n+/g, `$&${indent}`);
+  }
+  const indentSize = indent ? "2" : "1";
+  let header = (startWithSpace ? indentSize : "") + chomp;
+  if (comment) {
+    header += " " + commentString(comment.replace(/ ?[\r\n]+/g, " "));
+    if (onComment)
+      onComment();
+  }
+  if (!literal) {
+    const foldedValue = value.replace(/\n+/g, "\n$&").replace(/(?:^|\n)([\t ].*)(?:([\n\t ]*)\n(?![\n\t ]))?/g, "$1$2").replace(/\n+/g, `$&${indent}`);
+    let literalFallback = false;
+    const foldOptions = getFoldOptions(ctx, true);
+    if (blockQuote !== "folded" && type !== Scalar.BLOCK_FOLDED) {
+      foldOptions.onOverflow = () => {
+        literalFallback = true;
+      };
+    }
+    const body = foldFlowLines(`${start}${foldedValue}${end}`, indent, FOLD_BLOCK, foldOptions);
+    if (!literalFallback)
+      return `>${header}
+${indent}${body}`;
+  }
+  value = value.replace(/\n+/g, `$&${indent}`);
+  return `|${header}
+${indent}${start}${value}${end}`;
+}
+function plainString(item, ctx, onComment, onChompKeep) {
+  const { type, value } = item;
+  const { actualString, implicitKey, indent, indentStep, inFlow } = ctx;
+  if (implicitKey && value.includes("\n") || inFlow && /[[\]{},]/.test(value)) {
+    return quotedString(value, ctx);
+  }
+  if (/^[\n\t ,[\]{}#&*!|>'"%@`]|^[?-]$|^[?-][ \t]|[\n:][ \t]|[ \t]\n|[\n\t ]#|[\n\t :]$/.test(value)) {
+    return implicitKey || inFlow || !value.includes("\n") ? quotedString(value, ctx) : blockString(item, ctx, onComment, onChompKeep);
+  }
+  if (!implicitKey && !inFlow && type !== Scalar.PLAIN && value.includes("\n")) {
+    return blockString(item, ctx, onComment, onChompKeep);
+  }
+  if (containsDocumentMarker(value)) {
+    if (indent === "") {
+      ctx.forceBlockIndent = true;
+      return blockString(item, ctx, onComment, onChompKeep);
+    } else if (implicitKey && indent === indentStep) {
+      return quotedString(value, ctx);
+    }
+  }
+  const str = value.replace(/\n+/g, `$&
+${indent}`);
+  if (actualString) {
+    const test = (tag) => tag.default && tag.tag !== "tag:yaml.org,2002:str" && tag.test?.test(str);
+    const { compat, tags } = ctx.doc.schema;
+    if (tags.some(test) || compat?.some(test))
+      return quotedString(value, ctx);
+  }
+  return implicitKey ? str : foldFlowLines(str, indent, FOLD_FLOW, getFoldOptions(ctx, false));
+}
+function stringifyString(item, ctx, onComment, onChompKeep) {
+  const { implicitKey, inFlow } = ctx;
+  const ss = typeof item.value === "string" ? item : Object.assign({}, item, { value: String(item.value) });
+  let { type } = item;
+  if (type !== Scalar.QUOTE_DOUBLE) {
+    if (/[\x00-\x08\x0b-\x1f\x7f-\x9f\u{D800}-\u{DFFF}]/u.test(ss.value))
+      type = Scalar.QUOTE_DOUBLE;
+  }
+  const _stringify = (_type) => {
+    switch (_type) {
+      case Scalar.BLOCK_FOLDED:
+      case Scalar.BLOCK_LITERAL:
+        return implicitKey || inFlow ? quotedString(ss.value, ctx) : blockString(ss, ctx, onComment, onChompKeep);
+      case Scalar.QUOTE_DOUBLE:
+        return doubleQuotedString(ss.value, ctx);
+      case Scalar.QUOTE_SINGLE:
+        return singleQuotedString(ss.value, ctx);
+      case Scalar.PLAIN:
+        return plainString(ss, ctx, onComment, onChompKeep);
+      default:
+        return null;
+    }
+  };
+  let res = _stringify(type);
+  if (res === null) {
+    const { defaultKeyType, defaultStringType } = ctx.options;
+    const t2 = implicitKey && defaultKeyType || defaultStringType;
+    res = _stringify(t2);
+    if (res === null)
+      throw new Error(`Unsupported default string type ${t2}`);
+  }
+  return res;
+}
+
+// node_modules/yaml/browser/dist/stringify/stringify.js
+function createStringifyContext(doc, options) {
+  const opt = Object.assign({
+    blockQuote: true,
+    commentString: stringifyComment,
+    defaultKeyType: null,
+    defaultStringType: "PLAIN",
+    directives: null,
+    doubleQuotedAsJSON: false,
+    doubleQuotedMinMultiLineLength: 40,
+    falseStr: "false",
+    flowCollectionPadding: true,
+    indentSeq: true,
+    lineWidth: 80,
+    minContentWidth: 20,
+    nullStr: "null",
+    simpleKeys: false,
+    singleQuote: null,
+    trailingComma: false,
+    trueStr: "true",
+    verifyAliasOrder: true
+  }, doc.schema.toStringOptions, options);
+  let inFlow;
+  switch (opt.collectionStyle) {
+    case "block":
+      inFlow = false;
+      break;
+    case "flow":
+      inFlow = true;
+      break;
+    default:
+      inFlow = null;
+  }
+  return {
+    anchors: /* @__PURE__ */ new Set(),
+    doc,
+    flowCollectionPadding: opt.flowCollectionPadding ? " " : "",
+    indent: "",
+    indentStep: typeof opt.indent === "number" ? " ".repeat(opt.indent) : "  ",
+    inFlow,
+    options: opt
+  };
+}
+function getTagObject(tags, item) {
+  if (item.tag) {
+    const match = tags.filter((t2) => t2.tag === item.tag);
+    if (match.length > 0)
+      return match.find((t2) => t2.format === item.format) ?? match[0];
+  }
+  let tagObj = void 0;
+  let obj;
+  if (isScalar(item)) {
+    obj = item.value;
+    let match = tags.filter((t2) => t2.identify?.(obj));
+    if (match.length > 1) {
+      const testMatch = match.filter((t2) => t2.test);
+      if (testMatch.length > 0)
+        match = testMatch;
+    }
+    tagObj = match.find((t2) => t2.format === item.format) ?? match.find((t2) => !t2.format);
+  } else {
+    obj = item;
+    tagObj = tags.find((t2) => t2.nodeClass && obj instanceof t2.nodeClass);
+  }
+  if (!tagObj) {
+    const name = obj?.constructor?.name ?? (obj === null ? "null" : typeof obj);
+    throw new Error(`Tag not resolved for ${name} value`);
+  }
+  return tagObj;
+}
+function stringifyProps(node2, tagObj, { anchors, doc }) {
+  if (!doc.directives)
+    return "";
+  const props = [];
+  const anchor = (isScalar(node2) || isCollection(node2)) && node2.anchor;
+  if (anchor && anchorIsValid(anchor)) {
+    anchors.add(anchor);
+    props.push(`&${anchor}`);
+  }
+  const tag = node2.tag ?? (tagObj.default ? null : tagObj.tag);
+  if (tag)
+    props.push(doc.directives.tagString(tag));
+  return props.join(" ");
+}
+function stringify(item, ctx, onComment, onChompKeep) {
+  if (isPair(item))
+    return item.toString(ctx, onComment, onChompKeep);
+  if (isAlias(item)) {
+    if (ctx.doc.directives)
+      return item.toString(ctx);
+    if (ctx.resolvedAliases?.has(item)) {
+      throw new TypeError(`Cannot stringify circular structure without alias nodes`);
+    } else {
+      if (ctx.resolvedAliases)
+        ctx.resolvedAliases.add(item);
+      else
+        ctx.resolvedAliases = /* @__PURE__ */ new Set([item]);
+      item = item.resolve(ctx.doc);
+    }
+  }
+  let tagObj = void 0;
+  const node2 = isNode(item) ? item : ctx.doc.createNode(item, { onTagObj: (o2) => tagObj = o2 });
+  tagObj ?? (tagObj = getTagObject(ctx.doc.schema.tags, node2));
+  const props = stringifyProps(node2, tagObj, ctx);
+  if (props.length > 0)
+    ctx.indentAtStart = (ctx.indentAtStart ?? 0) + props.length + 1;
+  const str = typeof tagObj.stringify === "function" ? tagObj.stringify(node2, ctx, onComment, onChompKeep) : isScalar(node2) ? stringifyString(node2, ctx, onComment, onChompKeep) : node2.toString(ctx, onComment, onChompKeep);
+  if (!props)
+    return str;
+  return isScalar(node2) || str[0] === "{" || str[0] === "[" ? `${props} ${str}` : `${props}
+${ctx.indent}${str}`;
+}
+
+// node_modules/yaml/browser/dist/stringify/stringifyPair.js
+function stringifyPair({ key, value }, ctx, onComment, onChompKeep) {
+  const { allNullValues, doc, indent, indentStep, options: { commentString, indentSeq, simpleKeys } } = ctx;
+  let keyComment = isNode(key) && key.comment || null;
+  if (simpleKeys) {
+    if (keyComment) {
+      throw new Error("With simple keys, key nodes cannot have comments");
+    }
+    if (isCollection(key) || !isNode(key) && typeof key === "object") {
+      const msg = "With simple keys, collection cannot be used as a key value";
+      throw new Error(msg);
+    }
+  }
+  let explicitKey = !simpleKeys && (!key || keyComment && value == null && !ctx.inFlow || isCollection(key) || (isScalar(key) ? key.type === Scalar.BLOCK_FOLDED || key.type === Scalar.BLOCK_LITERAL : typeof key === "object"));
+  ctx = Object.assign({}, ctx, {
+    allNullValues: false,
+    implicitKey: !explicitKey && (simpleKeys || !allNullValues),
+    indent: indent + indentStep
+  });
+  let keyCommentDone = false;
+  let chompKeep = false;
+  let str = stringify(key, ctx, () => keyCommentDone = true, () => chompKeep = true);
+  if (!explicitKey && !ctx.inFlow && str.length > 1024) {
+    if (simpleKeys)
+      throw new Error("With simple keys, single line scalar must not span more than 1024 characters");
+    explicitKey = true;
+  }
+  if (ctx.inFlow) {
+    if (allNullValues || value == null) {
+      if (keyCommentDone && onComment)
+        onComment();
+      return str === "" ? "?" : explicitKey ? `? ${str}` : str;
+    }
+  } else if (allNullValues && !simpleKeys || value == null && explicitKey) {
+    str = `? ${str}`;
+    if (keyComment && !keyCommentDone) {
+      str += lineComment(str, ctx.indent, commentString(keyComment));
+    } else if (chompKeep && onChompKeep)
+      onChompKeep();
+    return str;
+  }
+  if (keyCommentDone)
+    keyComment = null;
+  if (explicitKey) {
+    if (keyComment)
+      str += lineComment(str, ctx.indent, commentString(keyComment));
+    str = `? ${str}
+${indent}:`;
+  } else {
+    str = `${str}:`;
+    if (keyComment)
+      str += lineComment(str, ctx.indent, commentString(keyComment));
+  }
+  let vsb, vcb, valueComment;
+  if (isNode(value)) {
+    vsb = !!value.spaceBefore;
+    vcb = value.commentBefore;
+    valueComment = value.comment;
+  } else {
+    vsb = false;
+    vcb = null;
+    valueComment = null;
+    if (value && typeof value === "object")
+      value = doc.createNode(value);
+  }
+  ctx.implicitKey = false;
+  if (!explicitKey && !keyComment && isScalar(value))
+    ctx.indentAtStart = str.length + 1;
+  chompKeep = false;
+  if (!indentSeq && indentStep.length >= 2 && !ctx.inFlow && !explicitKey && isSeq(value) && !value.flow && !value.tag && !value.anchor) {
+    ctx.indent = ctx.indent.substring(2);
+  }
+  let valueCommentDone = false;
+  const valueStr = stringify(value, ctx, () => valueCommentDone = true, () => chompKeep = true);
+  let ws = " ";
+  if (keyComment || vsb || vcb) {
+    ws = vsb ? "\n" : "";
+    if (vcb) {
+      const cs = commentString(vcb);
+      ws += `
+${indentComment(cs, ctx.indent)}`;
+    }
+    if (valueStr === "" && !ctx.inFlow) {
+      if (ws === "\n" && valueComment)
+        ws = "\n\n";
+    } else {
+      ws += `
+${ctx.indent}`;
+    }
+  } else if (!explicitKey && isCollection(value)) {
+    const vs0 = valueStr[0];
+    const nl0 = valueStr.indexOf("\n");
+    const hasNewline = nl0 !== -1;
+    const flow = ctx.inFlow ?? value.flow ?? value.items.length === 0;
+    if (hasNewline || !flow) {
+      let hasPropsLine = false;
+      if (hasNewline && (vs0 === "&" || vs0 === "!")) {
+        let sp0 = valueStr.indexOf(" ");
+        if (vs0 === "&" && sp0 !== -1 && sp0 < nl0 && valueStr[sp0 + 1] === "!") {
+          sp0 = valueStr.indexOf(" ", sp0 + 1);
+        }
+        if (sp0 === -1 || nl0 < sp0)
+          hasPropsLine = true;
+      }
+      if (!hasPropsLine)
+        ws = `
+${ctx.indent}`;
+    }
+  } else if (valueStr === "" || valueStr[0] === "\n") {
+    ws = "";
+  }
+  str += ws + valueStr;
+  if (ctx.inFlow) {
+    if (valueCommentDone && onComment)
+      onComment();
+  } else if (valueComment && !valueCommentDone) {
+    str += lineComment(str, ctx.indent, commentString(valueComment));
+  } else if (chompKeep && onChompKeep) {
+    onChompKeep();
+  }
+  return str;
+}
+
+// node_modules/yaml/browser/dist/log.js
+function warn(logLevel, warning) {
+  if (logLevel === "debug" || logLevel === "warn") {
+    console.warn(warning);
+  }
+}
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/merge.js
+var MERGE_KEY = "<<";
+var merge = {
+  identify: (value) => value === MERGE_KEY || typeof value === "symbol" && value.description === MERGE_KEY,
+  default: "key",
+  tag: "tag:yaml.org,2002:merge",
+  test: /^<<$/,
+  resolve: () => Object.assign(new Scalar(Symbol(MERGE_KEY)), {
+    addToJSMap: addMergeToJSMap
+  }),
+  stringify: () => MERGE_KEY
+};
+var isMergeKey = (ctx, key) => (merge.identify(key) || isScalar(key) && (!key.type || key.type === Scalar.PLAIN) && merge.identify(key.value)) && ctx?.doc.schema.tags.some((tag) => tag.tag === merge.tag && tag.default);
+function addMergeToJSMap(ctx, map2, value) {
+  const source = resolveAliasValue(ctx, value);
+  if (isSeq(source))
+    for (const it of source.items)
+      mergeValue(ctx, map2, it);
+  else if (Array.isArray(source))
+    for (const it of source)
+      mergeValue(ctx, map2, it);
+  else
+    mergeValue(ctx, map2, source);
+}
+function mergeValue(ctx, map2, value) {
+  const source = resolveAliasValue(ctx, value);
+  if (!isMap(source))
+    throw new Error("Merge sources must be maps or map aliases");
+  const srcMap = source.toJSON(null, ctx, Map);
+  for (const [key, value2] of srcMap) {
+    if (map2 instanceof Map) {
+      if (!map2.has(key))
+        map2.set(key, value2);
+    } else if (map2 instanceof Set) {
+      map2.add(key);
+    } else if (!Object.prototype.hasOwnProperty.call(map2, key)) {
+      Object.defineProperty(map2, key, {
+        value: value2,
+        writable: true,
+        enumerable: true,
+        configurable: true
+      });
+    }
+  }
+  return map2;
+}
+function resolveAliasValue(ctx, value) {
+  return ctx && isAlias(value) ? value.resolve(ctx.doc, ctx) : value;
+}
+
+// node_modules/yaml/browser/dist/nodes/addPairToJSMap.js
+function addPairToJSMap(ctx, map2, { key, value }) {
+  if (isNode(key) && key.addToJSMap)
+    key.addToJSMap(ctx, map2, value);
+  else if (isMergeKey(ctx, key))
+    addMergeToJSMap(ctx, map2, value);
+  else {
+    const jsKey = toJS(key, "", ctx);
+    if (map2 instanceof Map) {
+      map2.set(jsKey, toJS(value, jsKey, ctx));
+    } else if (map2 instanceof Set) {
+      map2.add(jsKey);
+    } else {
+      const stringKey = stringifyKey(key, jsKey, ctx);
+      const jsValue = toJS(value, stringKey, ctx);
+      if (stringKey in map2)
+        Object.defineProperty(map2, stringKey, {
+          value: jsValue,
+          writable: true,
+          enumerable: true,
+          configurable: true
+        });
+      else
+        map2[stringKey] = jsValue;
+    }
+  }
+  return map2;
+}
+function stringifyKey(key, jsKey, ctx) {
+  if (jsKey === null)
+    return "";
+  if (typeof jsKey !== "object")
+    return String(jsKey);
+  if (isNode(key) && ctx?.doc) {
+    const strCtx = createStringifyContext(ctx.doc, {});
+    strCtx.anchors = /* @__PURE__ */ new Set();
+    for (const node2 of ctx.anchors.keys())
+      strCtx.anchors.add(node2.anchor);
+    strCtx.inFlow = true;
+    strCtx.inStringifyKey = true;
+    const strKey = key.toString(strCtx);
+    if (!ctx.mapKeyWarned) {
+      let jsonStr = JSON.stringify(strKey);
+      if (jsonStr.length > 40)
+        jsonStr = jsonStr.substring(0, 36) + '..."';
+      warn(ctx.doc.options.logLevel, `Keys with collection values will be stringified due to JS Object restrictions: ${jsonStr}. Set mapAsMap: true to use object keys.`);
+      ctx.mapKeyWarned = true;
+    }
+    return strKey;
+  }
+  return JSON.stringify(jsKey);
+}
+
+// node_modules/yaml/browser/dist/nodes/Pair.js
+function createPair(key, value, ctx) {
+  const k2 = createNode(key, void 0, ctx);
+  const v = createNode(value, void 0, ctx);
+  return new Pair(k2, v);
+}
+var Pair = class _Pair {
+  constructor(key, value = null) {
+    Object.defineProperty(this, NODE_TYPE, { value: PAIR });
+    this.key = key;
+    this.value = value;
+  }
+  clone(schema4) {
+    let { key, value } = this;
+    if (isNode(key))
+      key = key.clone(schema4);
+    if (isNode(value))
+      value = value.clone(schema4);
+    return new _Pair(key, value);
+  }
+  toJSON(_, ctx) {
+    const pair = ctx?.mapAsMap ? /* @__PURE__ */ new Map() : {};
+    return addPairToJSMap(ctx, pair, this);
+  }
+  toString(ctx, onComment, onChompKeep) {
+    return ctx?.doc ? stringifyPair(this, ctx, onComment, onChompKeep) : JSON.stringify(this);
+  }
+};
+
+// node_modules/yaml/browser/dist/stringify/stringifyCollection.js
+function stringifyCollection(collection, ctx, options) {
+  const flow = ctx.inFlow ?? collection.flow;
+  const stringify4 = flow ? stringifyFlowCollection : stringifyBlockCollection;
+  return stringify4(collection, ctx, options);
+}
+function stringifyBlockCollection({ comment, items }, ctx, { blockItemPrefix, flowChars, itemIndent, onChompKeep, onComment }) {
+  const { indent, options: { commentString } } = ctx;
+  const itemCtx = Object.assign({}, ctx, { indent: itemIndent, type: null });
+  let chompKeep = false;
+  const lines = [];
+  for (let i2 = 0; i2 < items.length; ++i2) {
+    const item = items[i2];
+    let comment2 = null;
+    if (isNode(item)) {
+      if (!chompKeep && item.spaceBefore)
+        lines.push("");
+      addCommentBefore(ctx, lines, item.commentBefore, chompKeep);
+      if (item.comment)
+        comment2 = item.comment;
+    } else if (isPair(item)) {
+      const ik = isNode(item.key) ? item.key : null;
+      if (ik) {
+        if (!chompKeep && ik.spaceBefore)
+          lines.push("");
+        addCommentBefore(ctx, lines, ik.commentBefore, chompKeep);
+      }
+    }
+    chompKeep = false;
+    let str2 = stringify(item, itemCtx, () => comment2 = null, () => chompKeep = true);
+    if (comment2)
+      str2 += lineComment(str2, itemIndent, commentString(comment2));
+    if (chompKeep && comment2)
+      chompKeep = false;
+    lines.push(blockItemPrefix + str2);
+  }
+  let str;
+  if (lines.length === 0) {
+    str = flowChars.start + flowChars.end;
+  } else {
+    str = lines[0];
+    for (let i2 = 1; i2 < lines.length; ++i2) {
+      const line = lines[i2];
+      str += line ? `
+${indent}${line}` : "\n";
+    }
+  }
+  if (comment) {
+    str += "\n" + indentComment(commentString(comment), indent);
+    if (onComment)
+      onComment();
+  } else if (chompKeep && onChompKeep)
+    onChompKeep();
+  return str;
+}
+function stringifyFlowCollection({ items }, ctx, { flowChars, itemIndent }) {
+  const { indent, indentStep, flowCollectionPadding: fcPadding, options: { commentString } } = ctx;
+  itemIndent += indentStep;
+  const itemCtx = Object.assign({}, ctx, {
+    indent: itemIndent,
+    inFlow: true,
+    type: null
+  });
+  let reqNewline = false;
+  let linesAtValue = 0;
+  const lines = [];
+  for (let i2 = 0; i2 < items.length; ++i2) {
+    const item = items[i2];
+    let comment = null;
+    if (isNode(item)) {
+      if (item.spaceBefore)
+        lines.push("");
+      addCommentBefore(ctx, lines, item.commentBefore, false);
+      if (item.comment)
+        comment = item.comment;
+    } else if (isPair(item)) {
+      const ik = isNode(item.key) ? item.key : null;
+      if (ik) {
+        if (ik.spaceBefore)
+          lines.push("");
+        addCommentBefore(ctx, lines, ik.commentBefore, false);
+        if (ik.comment)
+          reqNewline = true;
+      }
+      const iv = isNode(item.value) ? item.value : null;
+      if (iv) {
+        if (iv.comment)
+          comment = iv.comment;
+        if (iv.commentBefore)
+          reqNewline = true;
+      } else if (item.value == null && ik?.comment) {
+        comment = ik.comment;
+      }
+    }
+    if (comment)
+      reqNewline = true;
+    let str = stringify(item, itemCtx, () => comment = null);
+    reqNewline || (reqNewline = lines.length > linesAtValue || str.includes("\n"));
+    if (i2 < items.length - 1) {
+      str += ",";
+    } else if (ctx.options.trailingComma) {
+      if (ctx.options.lineWidth > 0) {
+        reqNewline || (reqNewline = lines.reduce((sum, line) => sum + line.length + 2, 2) + (str.length + 2) > ctx.options.lineWidth);
+      }
+      if (reqNewline) {
+        str += ",";
+      }
+    }
+    if (comment)
+      str += lineComment(str, itemIndent, commentString(comment));
+    lines.push(str);
+    linesAtValue = lines.length;
+  }
+  const { start, end } = flowChars;
+  if (lines.length === 0) {
+    return start + end;
+  } else {
+    if (!reqNewline) {
+      const len = lines.reduce((sum, line) => sum + line.length + 2, 2);
+      reqNewline = ctx.options.lineWidth > 0 && len > ctx.options.lineWidth;
+    }
+    if (reqNewline) {
+      let str = start;
+      for (const line of lines)
+        str += line ? `
+${indentStep}${indent}${line}` : "\n";
+      return `${str}
+${indent}${end}`;
+    } else {
+      return `${start}${fcPadding}${lines.join(" ")}${fcPadding}${end}`;
+    }
+  }
+}
+function addCommentBefore({ indent, options: { commentString } }, lines, comment, chompKeep) {
+  if (comment && chompKeep)
+    comment = comment.replace(/^\n+/, "");
+  if (comment) {
+    const ic = indentComment(commentString(comment), indent);
+    lines.push(ic.trimStart());
+  }
+}
+
+// node_modules/yaml/browser/dist/nodes/YAMLMap.js
+function findPair(items, key) {
+  const k2 = isScalar(key) ? key.value : key;
+  for (const it of items) {
+    if (isPair(it)) {
+      if (it.key === key || it.key === k2)
+        return it;
+      if (isScalar(it.key) && it.key.value === k2)
+        return it;
+    }
+  }
+  return void 0;
+}
+var YAMLMap = class extends Collection {
+  static get tagName() {
+    return "tag:yaml.org,2002:map";
+  }
+  constructor(schema4) {
+    super(MAP, schema4);
+    this.items = [];
+  }
+  /**
+   * A generic collection parsing method that can be extended
+   * to other node classes that inherit from YAMLMap
+   */
+  static from(schema4, obj, ctx) {
+    const { keepUndefined, replacer } = ctx;
+    const map2 = new this(schema4);
+    const add = (key, value) => {
+      if (typeof replacer === "function")
+        value = replacer.call(obj, key, value);
+      else if (Array.isArray(replacer) && !replacer.includes(key))
+        return;
+      if (value !== void 0 || keepUndefined)
+        map2.items.push(createPair(key, value, ctx));
+    };
+    if (obj instanceof Map) {
+      for (const [key, value] of obj)
+        add(key, value);
+    } else if (obj && typeof obj === "object") {
+      for (const key of Object.keys(obj))
+        add(key, obj[key]);
+    }
+    if (typeof schema4.sortMapEntries === "function") {
+      map2.items.sort(schema4.sortMapEntries);
+    }
+    return map2;
+  }
+  /**
+   * Adds a value to the collection.
+   *
+   * @param overwrite - If not set `true`, using a key that is already in the
+   *   collection will throw. Otherwise, overwrites the previous value.
+   */
+  add(pair, overwrite) {
+    let _pair;
+    if (isPair(pair))
+      _pair = pair;
+    else if (!pair || typeof pair !== "object" || !("key" in pair)) {
+      _pair = new Pair(pair, pair?.value);
+    } else
+      _pair = new Pair(pair.key, pair.value);
+    const prev = findPair(this.items, _pair.key);
+    const sortEntries = this.schema?.sortMapEntries;
+    if (prev) {
+      if (!overwrite)
+        throw new Error(`Key ${_pair.key} already set`);
+      if (isScalar(prev.value) && isScalarValue(_pair.value))
+        prev.value.value = _pair.value;
+      else
+        prev.value = _pair.value;
+    } else if (sortEntries) {
+      const i2 = this.items.findIndex((item) => sortEntries(_pair, item) < 0);
+      if (i2 === -1)
+        this.items.push(_pair);
+      else
+        this.items.splice(i2, 0, _pair);
+    } else {
+      this.items.push(_pair);
+    }
+  }
+  delete(key) {
+    const it = findPair(this.items, key);
+    if (!it)
+      return false;
+    const del = this.items.splice(this.items.indexOf(it), 1);
+    return del.length > 0;
+  }
+  get(key, keepScalar) {
+    const it = findPair(this.items, key);
+    const node2 = it?.value;
+    return (!keepScalar && isScalar(node2) ? node2.value : node2) ?? void 0;
+  }
+  has(key) {
+    return !!findPair(this.items, key);
+  }
+  set(key, value) {
+    this.add(new Pair(key, value), true);
+  }
+  /**
+   * @param ctx - Conversion context, originally set in Document#toJS()
+   * @param {Class} Type - If set, forces the returned collection type
+   * @returns Instance of Type, Map, or Object
+   */
+  toJSON(_, ctx, Type) {
+    const map2 = Type ? new Type() : ctx?.mapAsMap ? /* @__PURE__ */ new Map() : {};
+    if (ctx?.onCreate)
+      ctx.onCreate(map2);
+    for (const item of this.items)
+      addPairToJSMap(ctx, map2, item);
+    return map2;
+  }
+  toString(ctx, onComment, onChompKeep) {
+    if (!ctx)
+      return JSON.stringify(this);
+    for (const item of this.items) {
+      if (!isPair(item))
+        throw new Error(`Map items must all be pairs; found ${JSON.stringify(item)} instead`);
+    }
+    if (!ctx.allNullValues && this.hasAllNullValues(false))
+      ctx = Object.assign({}, ctx, { allNullValues: true });
+    return stringifyCollection(this, ctx, {
+      blockItemPrefix: "",
+      flowChars: { start: "{", end: "}" },
+      itemIndent: ctx.indent || "",
+      onChompKeep,
+      onComment
+    });
+  }
+};
+
+// node_modules/yaml/browser/dist/schema/common/map.js
+var map = {
+  collection: "map",
+  default: true,
+  nodeClass: YAMLMap,
+  tag: "tag:yaml.org,2002:map",
+  resolve(map2, onError) {
+    if (!isMap(map2))
+      onError("Expected a mapping for this tag");
+    return map2;
+  },
+  createNode: (schema4, obj, ctx) => YAMLMap.from(schema4, obj, ctx)
+};
+
+// node_modules/yaml/browser/dist/nodes/YAMLSeq.js
+var YAMLSeq = class extends Collection {
+  static get tagName() {
+    return "tag:yaml.org,2002:seq";
+  }
+  constructor(schema4) {
+    super(SEQ, schema4);
+    this.items = [];
+  }
+  add(value) {
+    this.items.push(value);
+  }
+  /**
+   * Removes a value from the collection.
+   *
+   * `key` must contain a representation of an integer for this to succeed.
+   * It may be wrapped in a `Scalar`.
+   *
+   * @returns `true` if the item was found and removed.
+   */
+  delete(key) {
+    const idx = asItemIndex(key);
+    if (typeof idx !== "number")
+      return false;
+    const del = this.items.splice(idx, 1);
+    return del.length > 0;
+  }
+  get(key, keepScalar) {
+    const idx = asItemIndex(key);
+    if (typeof idx !== "number")
+      return void 0;
+    const it = this.items[idx];
+    return !keepScalar && isScalar(it) ? it.value : it;
+  }
+  /**
+   * Checks if the collection includes a value with the key `key`.
+   *
+   * `key` must contain a representation of an integer for this to succeed.
+   * It may be wrapped in a `Scalar`.
+   */
+  has(key) {
+    const idx = asItemIndex(key);
+    return typeof idx === "number" && idx < this.items.length;
+  }
+  /**
+   * Sets a value in this collection. For `!!set`, `value` needs to be a
+   * boolean to add/remove the item from the set.
+   *
+   * If `key` does not contain a representation of an integer, this will throw.
+   * It may be wrapped in a `Scalar`.
+   */
+  set(key, value) {
+    const idx = asItemIndex(key);
+    if (typeof idx !== "number")
+      throw new Error(`Expected a valid index, not ${key}.`);
+    const prev = this.items[idx];
+    if (isScalar(prev) && isScalarValue(value))
+      prev.value = value;
+    else
+      this.items[idx] = value;
+  }
+  toJSON(_, ctx) {
+    const seq2 = [];
+    if (ctx?.onCreate)
+      ctx.onCreate(seq2);
+    let i2 = 0;
+    for (const item of this.items)
+      seq2.push(toJS(item, String(i2++), ctx));
+    return seq2;
+  }
+  toString(ctx, onComment, onChompKeep) {
+    if (!ctx)
+      return JSON.stringify(this);
+    return stringifyCollection(this, ctx, {
+      blockItemPrefix: "- ",
+      flowChars: { start: "[", end: "]" },
+      itemIndent: (ctx.indent || "") + "  ",
+      onChompKeep,
+      onComment
+    });
+  }
+  static from(schema4, obj, ctx) {
+    const { replacer } = ctx;
+    const seq2 = new this(schema4);
+    if (obj && Symbol.iterator in Object(obj)) {
+      let i2 = 0;
+      for (let it of obj) {
+        if (typeof replacer === "function") {
+          const key = obj instanceof Set ? it : String(i2++);
+          it = replacer.call(obj, key, it);
+        }
+        seq2.items.push(createNode(it, void 0, ctx));
+      }
+    }
+    return seq2;
+  }
+};
+function asItemIndex(key) {
+  let idx = isScalar(key) ? key.value : key;
+  if (idx && typeof idx === "string")
+    idx = Number(idx);
+  return typeof idx === "number" && Number.isInteger(idx) && idx >= 0 ? idx : null;
+}
+
+// node_modules/yaml/browser/dist/schema/common/seq.js
+var seq = {
+  collection: "seq",
+  default: true,
+  nodeClass: YAMLSeq,
+  tag: "tag:yaml.org,2002:seq",
+  resolve(seq2, onError) {
+    if (!isSeq(seq2))
+      onError("Expected a sequence for this tag");
+    return seq2;
+  },
+  createNode: (schema4, obj, ctx) => YAMLSeq.from(schema4, obj, ctx)
+};
+
+// node_modules/yaml/browser/dist/schema/common/string.js
+var string = {
+  identify: (value) => typeof value === "string",
+  default: true,
+  tag: "tag:yaml.org,2002:str",
+  resolve: (str) => str,
+  stringify(item, ctx, onComment, onChompKeep) {
+    ctx = Object.assign({ actualString: true }, ctx);
+    return stringifyString(item, ctx, onComment, onChompKeep);
+  }
+};
+
+// node_modules/yaml/browser/dist/schema/common/null.js
+var nullTag = {
+  identify: (value) => value == null,
+  createNode: () => new Scalar(null),
+  default: true,
+  tag: "tag:yaml.org,2002:null",
+  test: /^(?:~|[Nn]ull|NULL)?$/,
+  resolve: () => new Scalar(null),
+  stringify: ({ source }, ctx) => typeof source === "string" && nullTag.test.test(source) ? source : ctx.options.nullStr
+};
+
+// node_modules/yaml/browser/dist/schema/core/bool.js
+var boolTag = {
+  identify: (value) => typeof value === "boolean",
+  default: true,
+  tag: "tag:yaml.org,2002:bool",
+  test: /^(?:[Tt]rue|TRUE|[Ff]alse|FALSE)$/,
+  resolve: (str) => new Scalar(str[0] === "t" || str[0] === "T"),
+  stringify({ source, value }, ctx) {
+    if (source && boolTag.test.test(source)) {
+      const sv = source[0] === "t" || source[0] === "T";
+      if (value === sv)
+        return source;
+    }
+    return value ? ctx.options.trueStr : ctx.options.falseStr;
+  }
+};
+
+// node_modules/yaml/browser/dist/stringify/stringifyNumber.js
+function stringifyNumber({ format, minFractionDigits, tag, value }) {
+  if (typeof value === "bigint")
+    return String(value);
+  const num = typeof value === "number" ? value : Number(value);
+  if (!isFinite(num))
+    return isNaN(num) ? ".nan" : num < 0 ? "-.inf" : ".inf";
+  let n2 = Object.is(value, -0) ? "-0" : JSON.stringify(value);
+  if (!format && minFractionDigits && (!tag || tag === "tag:yaml.org,2002:float") && /^-?\d/.test(n2) && !n2.includes("e")) {
+    let i2 = n2.indexOf(".");
+    if (i2 < 0) {
+      i2 = n2.length;
+      n2 += ".";
+    }
+    let d = minFractionDigits - (n2.length - i2 - 1);
+    while (d-- > 0)
+      n2 += "0";
+  }
+  return n2;
+}
+
+// node_modules/yaml/browser/dist/schema/core/float.js
+var floatNaN = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  test: /^(?:[-+]?\.(?:inf|Inf|INF)|\.nan|\.NaN|\.NAN)$/,
+  resolve: (str) => str.slice(-3).toLowerCase() === "nan" ? NaN : str[0] === "-" ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY,
+  stringify: stringifyNumber
+};
+var floatExp = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  format: "EXP",
+  test: /^[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)[eE][-+]?[0-9]+$/,
+  resolve: (str) => parseFloat(str),
+  stringify(node2) {
+    const num = Number(node2.value);
+    return isFinite(num) ? num.toExponential() : stringifyNumber(node2);
+  }
+};
+var float = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  test: /^[-+]?(?:\.[0-9]+|[0-9]+\.[0-9]*)$/,
+  resolve(str) {
+    const node2 = new Scalar(parseFloat(str));
+    const dot = str.indexOf(".");
+    if (dot !== -1 && str[str.length - 1] === "0")
+      node2.minFractionDigits = str.length - dot - 1;
+    return node2;
+  },
+  stringify: stringifyNumber
+};
+
+// node_modules/yaml/browser/dist/schema/core/int.js
+var intIdentify = (value) => typeof value === "bigint" || Number.isInteger(value);
+var intResolve = (str, offset, radix, { intAsBigInt }) => intAsBigInt ? BigInt(str) : parseInt(str.substring(offset), radix);
+function intStringify(node2, radix, prefix) {
+  const { value } = node2;
+  if (intIdentify(value) && value >= 0)
+    return prefix + value.toString(radix);
+  return stringifyNumber(node2);
+}
+var intOct = {
+  identify: (value) => intIdentify(value) && value >= 0,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "OCT",
+  test: /^0o[0-7]+$/,
+  resolve: (str, _onError, opt) => intResolve(str, 2, 8, opt),
+  stringify: (node2) => intStringify(node2, 8, "0o")
+};
+var int = {
+  identify: intIdentify,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  test: /^[-+]?[0-9]+$/,
+  resolve: (str, _onError, opt) => intResolve(str, 0, 10, opt),
+  stringify: stringifyNumber
+};
+var intHex = {
+  identify: (value) => intIdentify(value) && value >= 0,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "HEX",
+  test: /^0x[0-9a-fA-F]+$/,
+  resolve: (str, _onError, opt) => intResolve(str, 2, 16, opt),
+  stringify: (node2) => intStringify(node2, 16, "0x")
+};
+
+// node_modules/yaml/browser/dist/schema/core/schema.js
+var schema = [
+  map,
+  seq,
+  string,
+  nullTag,
+  boolTag,
+  intOct,
+  int,
+  intHex,
+  floatNaN,
+  floatExp,
+  float
+];
+
+// node_modules/yaml/browser/dist/schema/json/schema.js
+function intIdentify2(value) {
+  return typeof value === "bigint" || Number.isInteger(value);
+}
+var stringifyJSON = ({ value }) => JSON.stringify(value);
+var jsonScalars = [
+  {
+    identify: (value) => typeof value === "string",
+    default: true,
+    tag: "tag:yaml.org,2002:str",
+    resolve: (str) => str,
+    stringify: stringifyJSON
+  },
+  {
+    identify: (value) => value == null,
+    createNode: () => new Scalar(null),
+    default: true,
+    tag: "tag:yaml.org,2002:null",
+    test: /^null$/,
+    resolve: () => null,
+    stringify: stringifyJSON
+  },
+  {
+    identify: (value) => typeof value === "boolean",
+    default: true,
+    tag: "tag:yaml.org,2002:bool",
+    test: /^true$|^false$/,
+    resolve: (str) => str === "true",
+    stringify: stringifyJSON
+  },
+  {
+    identify: intIdentify2,
+    default: true,
+    tag: "tag:yaml.org,2002:int",
+    test: /^-?(?:0|[1-9][0-9]*)$/,
+    resolve: (str, _onError, { intAsBigInt }) => intAsBigInt ? BigInt(str) : parseInt(str, 10),
+    stringify: ({ value }) => intIdentify2(value) ? value.toString() : JSON.stringify(value)
+  },
+  {
+    identify: (value) => typeof value === "number",
+    default: true,
+    tag: "tag:yaml.org,2002:float",
+    test: /^-?(?:0|[1-9][0-9]*)(?:\.[0-9]*)?(?:[eE][-+]?[0-9]+)?$/,
+    resolve: (str) => parseFloat(str),
+    stringify: stringifyJSON
+  }
+];
+var jsonError = {
+  default: true,
+  tag: "",
+  test: /^/,
+  resolve(str, onError) {
+    onError(`Unresolved plain scalar ${JSON.stringify(str)}`);
+    return str;
+  }
+};
+var schema2 = [map, seq].concat(jsonScalars, jsonError);
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/binary.js
+var binary = {
+  identify: (value) => value instanceof Uint8Array,
+  // Buffer inherits from Uint8Array
+  default: false,
+  tag: "tag:yaml.org,2002:binary",
+  /**
+   * Returns a Buffer in node and an Uint8Array in browsers
+   *
+   * To use the resulting buffer as an image, you'll want to do something like:
+   *
+   *   const blob = new Blob([buffer], { type: 'image/jpeg' })
+   *   document.querySelector('#photo').src = URL.createObjectURL(blob)
+   */
+  resolve(src, onError) {
+    if (typeof atob === "function") {
+      const str = atob(src.replace(/[\n\r]/g, ""));
+      const buffer = new Uint8Array(str.length);
+      for (let i2 = 0; i2 < str.length; ++i2)
+        buffer[i2] = str.charCodeAt(i2);
+      return buffer;
+    } else {
+      onError("This environment does not support reading binary tags; either Buffer or atob is required");
+      return src;
+    }
+  },
+  stringify({ comment, type, value }, ctx, onComment, onChompKeep) {
+    if (!value)
+      return "";
+    const buf = value;
+    let str;
+    if (typeof btoa === "function") {
+      let s2 = "";
+      for (let i2 = 0; i2 < buf.length; ++i2)
+        s2 += String.fromCharCode(buf[i2]);
+      str = btoa(s2);
+    } else {
+      throw new Error("This environment does not support writing binary tags; either Buffer or btoa is required");
+    }
+    type ?? (type = Scalar.BLOCK_LITERAL);
+    if (type !== Scalar.QUOTE_DOUBLE) {
+      const lineWidth = Math.max(ctx.options.lineWidth - ctx.indent.length, ctx.options.minContentWidth);
+      const n2 = Math.ceil(str.length / lineWidth);
+      const lines = new Array(n2);
+      for (let i2 = 0, o2 = 0; i2 < n2; ++i2, o2 += lineWidth) {
+        lines[i2] = str.substr(o2, lineWidth);
+      }
+      str = lines.join(type === Scalar.BLOCK_LITERAL ? "\n" : " ");
+    }
+    return stringifyString({ comment, type, value: str }, ctx, onComment, onChompKeep);
+  }
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/pairs.js
+function resolvePairs(seq2, onError) {
+  if (isSeq(seq2)) {
+    for (let i2 = 0; i2 < seq2.items.length; ++i2) {
+      let item = seq2.items[i2];
+      if (isPair(item))
+        continue;
+      else if (isMap(item)) {
+        if (item.items.length > 1)
+          onError("Each pair must have its own sequence indicator");
+        const pair = item.items[0] || new Pair(new Scalar(null));
+        if (item.commentBefore)
+          pair.key.commentBefore = pair.key.commentBefore ? `${item.commentBefore}
+${pair.key.commentBefore}` : item.commentBefore;
+        if (item.comment) {
+          const cn = pair.value ?? pair.key;
+          cn.comment = cn.comment ? `${item.comment}
+${cn.comment}` : item.comment;
+        }
+        item = pair;
+      }
+      seq2.items[i2] = isPair(item) ? item : new Pair(item);
+    }
+  } else
+    onError("Expected a sequence for this tag");
+  return seq2;
+}
+function createPairs(schema4, iterable, ctx) {
+  const { replacer } = ctx;
+  const pairs2 = new YAMLSeq(schema4);
+  pairs2.tag = "tag:yaml.org,2002:pairs";
+  let i2 = 0;
+  if (iterable && Symbol.iterator in Object(iterable))
+    for (let it of iterable) {
+      if (typeof replacer === "function")
+        it = replacer.call(iterable, String(i2++), it);
+      let key, value;
+      if (Array.isArray(it)) {
+        if (it.length === 2) {
+          key = it[0];
+          value = it[1];
+        } else
+          throw new TypeError(`Expected [key, value] tuple: ${it}`);
+      } else if (it && it instanceof Object) {
+        const keys = Object.keys(it);
+        if (keys.length === 1) {
+          key = keys[0];
+          value = it[key];
+        } else {
+          throw new TypeError(`Expected tuple with one key, not ${keys.length} keys`);
+        }
+      } else {
+        key = it;
+      }
+      pairs2.items.push(createPair(key, value, ctx));
+    }
+  return pairs2;
+}
+var pairs = {
+  collection: "seq",
+  default: false,
+  tag: "tag:yaml.org,2002:pairs",
+  resolve: resolvePairs,
+  createNode: createPairs
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/omap.js
+var YAMLOMap = class _YAMLOMap extends YAMLSeq {
+  constructor() {
+    super();
+    this.add = YAMLMap.prototype.add.bind(this);
+    this.delete = YAMLMap.prototype.delete.bind(this);
+    this.get = YAMLMap.prototype.get.bind(this);
+    this.has = YAMLMap.prototype.has.bind(this);
+    this.set = YAMLMap.prototype.set.bind(this);
+    this.tag = _YAMLOMap.tag;
+  }
+  /**
+   * If `ctx` is given, the return type is actually `Map<unknown, unknown>`,
+   * but TypeScript won't allow widening the signature of a child method.
+   */
+  toJSON(_, ctx) {
+    if (!ctx)
+      return super.toJSON(_);
+    const map2 = /* @__PURE__ */ new Map();
+    if (ctx?.onCreate)
+      ctx.onCreate(map2);
+    for (const pair of this.items) {
+      let key, value;
+      if (isPair(pair)) {
+        key = toJS(pair.key, "", ctx);
+        value = toJS(pair.value, key, ctx);
+      } else {
+        key = toJS(pair, "", ctx);
+      }
+      if (map2.has(key))
+        throw new Error("Ordered maps must not include duplicate keys");
+      map2.set(key, value);
+    }
+    return map2;
+  }
+  static from(schema4, iterable, ctx) {
+    const pairs2 = createPairs(schema4, iterable, ctx);
+    const omap2 = new this();
+    omap2.items = pairs2.items;
+    return omap2;
+  }
+};
+YAMLOMap.tag = "tag:yaml.org,2002:omap";
+var omap = {
+  collection: "seq",
+  identify: (value) => value instanceof Map,
+  nodeClass: YAMLOMap,
+  default: false,
+  tag: "tag:yaml.org,2002:omap",
+  resolve(seq2, onError) {
+    const pairs2 = resolvePairs(seq2, onError);
+    const seenKeys = [];
+    for (const { key } of pairs2.items) {
+      if (isScalar(key)) {
+        if (seenKeys.includes(key.value)) {
+          onError(`Ordered maps must not include duplicate keys: ${key.value}`);
+        } else {
+          seenKeys.push(key.value);
+        }
+      }
+    }
+    return Object.assign(new YAMLOMap(), pairs2);
+  },
+  createNode: (schema4, iterable, ctx) => YAMLOMap.from(schema4, iterable, ctx)
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/bool.js
+function boolStringify({ value, source }, ctx) {
+  const boolObj = value ? trueTag : falseTag;
+  if (source && boolObj.test.test(source))
+    return source;
+  return value ? ctx.options.trueStr : ctx.options.falseStr;
+}
+var trueTag = {
+  identify: (value) => value === true,
+  default: true,
+  tag: "tag:yaml.org,2002:bool",
+  test: /^(?:Y|y|[Yy]es|YES|[Tt]rue|TRUE|[Oo]n|ON)$/,
+  resolve: () => new Scalar(true),
+  stringify: boolStringify
+};
+var falseTag = {
+  identify: (value) => value === false,
+  default: true,
+  tag: "tag:yaml.org,2002:bool",
+  test: /^(?:N|n|[Nn]o|NO|[Ff]alse|FALSE|[Oo]ff|OFF)$/,
+  resolve: () => new Scalar(false),
+  stringify: boolStringify
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/float.js
+var floatNaN2 = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  test: /^(?:[-+]?\.(?:inf|Inf|INF)|\.nan|\.NaN|\.NAN)$/,
+  resolve: (str) => str.slice(-3).toLowerCase() === "nan" ? NaN : str[0] === "-" ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY,
+  stringify: stringifyNumber
+};
+var floatExp2 = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  format: "EXP",
+  test: /^[-+]?(?:[0-9][0-9_]*)?(?:\.[0-9_]*)?[eE][-+]?[0-9]+$/,
+  resolve: (str) => parseFloat(str.replace(/_/g, "")),
+  stringify(node2) {
+    const num = Number(node2.value);
+    return isFinite(num) ? num.toExponential() : stringifyNumber(node2);
+  }
+};
+var float2 = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  test: /^[-+]?(?:[0-9][0-9_]*)?\.[0-9_]*$/,
+  resolve(str) {
+    const node2 = new Scalar(parseFloat(str.replace(/_/g, "")));
+    const dot = str.indexOf(".");
+    if (dot !== -1) {
+      const f2 = str.substring(dot + 1).replace(/_/g, "");
+      if (f2[f2.length - 1] === "0")
+        node2.minFractionDigits = f2.length;
+    }
+    return node2;
+  },
+  stringify: stringifyNumber
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/int.js
+var intIdentify3 = (value) => typeof value === "bigint" || Number.isInteger(value);
+function intResolve2(str, offset, radix, { intAsBigInt }) {
+  const sign = str[0];
+  if (sign === "-" || sign === "+")
+    offset += 1;
+  str = str.substring(offset).replace(/_/g, "");
+  if (intAsBigInt) {
+    switch (radix) {
+      case 2:
+        str = `0b${str}`;
+        break;
+      case 8:
+        str = `0o${str}`;
+        break;
+      case 16:
+        str = `0x${str}`;
+        break;
+    }
+    const n3 = BigInt(str);
+    return sign === "-" ? BigInt(-1) * n3 : n3;
+  }
+  const n2 = parseInt(str, radix);
+  return sign === "-" ? -1 * n2 : n2;
+}
+function intStringify2(node2, radix, prefix) {
+  const { value } = node2;
+  if (intIdentify3(value)) {
+    const str = value.toString(radix);
+    return value < 0 ? "-" + prefix + str.substr(1) : prefix + str;
+  }
+  return stringifyNumber(node2);
+}
+var intBin = {
+  identify: intIdentify3,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "BIN",
+  test: /^[-+]?0b[0-1_]+$/,
+  resolve: (str, _onError, opt) => intResolve2(str, 2, 2, opt),
+  stringify: (node2) => intStringify2(node2, 2, "0b")
+};
+var intOct2 = {
+  identify: intIdentify3,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "OCT",
+  test: /^[-+]?0[0-7_]+$/,
+  resolve: (str, _onError, opt) => intResolve2(str, 1, 8, opt),
+  stringify: (node2) => intStringify2(node2, 8, "0")
+};
+var int2 = {
+  identify: intIdentify3,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  test: /^[-+]?[0-9][0-9_]*$/,
+  resolve: (str, _onError, opt) => intResolve2(str, 0, 10, opt),
+  stringify: stringifyNumber
+};
+var intHex2 = {
+  identify: intIdentify3,
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "HEX",
+  test: /^[-+]?0x[0-9a-fA-F_]+$/,
+  resolve: (str, _onError, opt) => intResolve2(str, 2, 16, opt),
+  stringify: (node2) => intStringify2(node2, 16, "0x")
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/set.js
+var YAMLSet = class _YAMLSet extends YAMLMap {
+  constructor(schema4) {
+    super(schema4);
+    this.tag = _YAMLSet.tag;
+  }
+  add(key) {
+    let pair;
+    if (isPair(key))
+      pair = key;
+    else if (key && typeof key === "object" && "key" in key && "value" in key && key.value === null)
+      pair = new Pair(key.key, null);
+    else
+      pair = new Pair(key, null);
+    const prev = findPair(this.items, pair.key);
+    if (!prev)
+      this.items.push(pair);
+  }
+  /**
+   * If `keepPair` is `true`, returns the Pair matching `key`.
+   * Otherwise, returns the value of that Pair's key.
+   */
+  get(key, keepPair) {
+    const pair = findPair(this.items, key);
+    return !keepPair && isPair(pair) ? isScalar(pair.key) ? pair.key.value : pair.key : pair;
+  }
+  set(key, value) {
+    if (typeof value !== "boolean")
+      throw new Error(`Expected boolean value for set(key, value) in a YAML set, not ${typeof value}`);
+    const prev = findPair(this.items, key);
+    if (prev && !value) {
+      this.items.splice(this.items.indexOf(prev), 1);
+    } else if (!prev && value) {
+      this.items.push(new Pair(key));
+    }
+  }
+  toJSON(_, ctx) {
+    return super.toJSON(_, ctx, Set);
+  }
+  toString(ctx, onComment, onChompKeep) {
+    if (!ctx)
+      return JSON.stringify(this);
+    if (this.hasAllNullValues(true))
+      return super.toString(Object.assign({}, ctx, { allNullValues: true }), onComment, onChompKeep);
+    else
+      throw new Error("Set items must all have null values");
+  }
+  static from(schema4, iterable, ctx) {
+    const { replacer } = ctx;
+    const set2 = new this(schema4);
+    if (iterable && Symbol.iterator in Object(iterable))
+      for (let value of iterable) {
+        if (typeof replacer === "function")
+          value = replacer.call(iterable, value, value);
+        set2.items.push(createPair(value, null, ctx));
+      }
+    return set2;
+  }
+};
+YAMLSet.tag = "tag:yaml.org,2002:set";
+var set = {
+  collection: "map",
+  identify: (value) => value instanceof Set,
+  nodeClass: YAMLSet,
+  default: false,
+  tag: "tag:yaml.org,2002:set",
+  createNode: (schema4, iterable, ctx) => YAMLSet.from(schema4, iterable, ctx),
+  resolve(map2, onError) {
+    if (isMap(map2)) {
+      if (map2.hasAllNullValues(true))
+        return Object.assign(new YAMLSet(), map2);
+      else
+        onError("Set items must all have null values");
+    } else
+      onError("Expected a mapping for this tag");
+    return map2;
+  }
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/timestamp.js
+function parseSexagesimal(str, asBigInt) {
+  const sign = str[0];
+  const parts = sign === "-" || sign === "+" ? str.substring(1) : str;
+  const num = (n2) => asBigInt ? BigInt(n2) : Number(n2);
+  const res = parts.replace(/_/g, "").split(":").reduce((res2, p) => res2 * num(60) + num(p), num(0));
+  return sign === "-" ? num(-1) * res : res;
+}
+function stringifySexagesimal(node2) {
+  let { value } = node2;
+  let num = (n2) => n2;
+  if (typeof value === "bigint")
+    num = (n2) => BigInt(n2);
+  else if (isNaN(value) || !isFinite(value))
+    return stringifyNumber(node2);
+  let sign = "";
+  if (value < 0) {
+    sign = "-";
+    value *= num(-1);
+  }
+  const _60 = num(60);
+  const parts = [value % _60];
+  if (value < 60) {
+    parts.unshift(0);
+  } else {
+    value = (value - parts[0]) / _60;
+    parts.unshift(value % _60);
+    if (value >= 60) {
+      value = (value - parts[0]) / _60;
+      parts.unshift(value);
+    }
+  }
+  return sign + parts.map((n2) => String(n2).padStart(2, "0")).join(":").replace(/000000\d*$/, "");
+}
+var intTime = {
+  identify: (value) => typeof value === "bigint" || Number.isInteger(value),
+  default: true,
+  tag: "tag:yaml.org,2002:int",
+  format: "TIME",
+  test: /^[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+$/,
+  resolve: (str, _onError, { intAsBigInt }) => parseSexagesimal(str, intAsBigInt),
+  stringify: stringifySexagesimal
+};
+var floatTime = {
+  identify: (value) => typeof value === "number",
+  default: true,
+  tag: "tag:yaml.org,2002:float",
+  format: "TIME",
+  test: /^[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*$/,
+  resolve: (str) => parseSexagesimal(str, false),
+  stringify: stringifySexagesimal
+};
+var timestamp = {
+  identify: (value) => value instanceof Date,
+  default: true,
+  tag: "tag:yaml.org,2002:timestamp",
+  // If the time zone is omitted, the timestamp is assumed to be specified in UTC. The time part
+  // may be omitted altogether, resulting in a date format. In such a case, the time part is
+  // assumed to be 00:00:00Z (start of day, UTC).
+  test: RegExp("^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})(?:(?:t|T|[ \\t]+)([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}(\\.[0-9]+)?)(?:[ \\t]*(Z|[-+][012]?[0-9](?::[0-9]{2})?))?)?$"),
+  resolve(str) {
+    const match = str.match(timestamp.test);
+    if (!match)
+      throw new Error("!!timestamp expects a date, starting with yyyy-mm-dd");
+    const [, year, month, day, hour, minute, second] = match.map(Number);
+    const millisec = match[7] ? Number((match[7] + "00").substr(1, 3)) : 0;
+    let date = Date.UTC(year, month - 1, day, hour || 0, minute || 0, second || 0, millisec);
+    const tz = match[8];
+    if (tz && tz !== "Z") {
+      let d = parseSexagesimal(tz, false);
+      if (Math.abs(d) < 30)
+        d *= 60;
+      date -= 6e4 * d;
+    }
+    return new Date(date);
+  },
+  stringify: ({ value }) => value?.toISOString().replace(/(T00:00:00)?\.000Z$/, "") ?? ""
+};
+
+// node_modules/yaml/browser/dist/schema/yaml-1.1/schema.js
+var schema3 = [
+  map,
+  seq,
+  string,
+  nullTag,
+  trueTag,
+  falseTag,
+  intBin,
+  intOct2,
+  int2,
+  intHex2,
+  floatNaN2,
+  floatExp2,
+  float2,
+  binary,
+  merge,
+  omap,
+  pairs,
+  set,
+  intTime,
+  floatTime,
+  timestamp
+];
+
+// node_modules/yaml/browser/dist/schema/tags.js
+var schemas = /* @__PURE__ */ new Map([
+  ["core", schema],
+  ["failsafe", [map, seq, string]],
+  ["json", schema2],
+  ["yaml11", schema3],
+  ["yaml-1.1", schema3]
+]);
+var tagsByName = {
+  binary,
+  bool: boolTag,
+  float,
+  floatExp,
+  floatNaN,
+  floatTime,
+  int,
+  intHex,
+  intOct,
+  intTime,
+  map,
+  merge,
+  null: nullTag,
+  omap,
+  pairs,
+  seq,
+  set,
+  timestamp
+};
+var coreKnownTags = {
+  "tag:yaml.org,2002:binary": binary,
+  "tag:yaml.org,2002:merge": merge,
+  "tag:yaml.org,2002:omap": omap,
+  "tag:yaml.org,2002:pairs": pairs,
+  "tag:yaml.org,2002:set": set,
+  "tag:yaml.org,2002:timestamp": timestamp
+};
+function getTags(customTags, schemaName, addMergeTag) {
+  const schemaTags = schemas.get(schemaName);
+  if (schemaTags && !customTags) {
+    return addMergeTag && !schemaTags.includes(merge) ? schemaTags.concat(merge) : schemaTags.slice();
+  }
+  let tags = schemaTags;
+  if (!tags) {
+    if (Array.isArray(customTags))
+      tags = [];
+    else {
+      const keys = Array.from(schemas.keys()).filter((key) => key !== "yaml11").map((key) => JSON.stringify(key)).join(", ");
+      throw new Error(`Unknown schema "${schemaName}"; use one of ${keys} or define customTags array`);
+    }
+  }
+  if (Array.isArray(customTags)) {
+    for (const tag of customTags)
+      tags = tags.concat(tag);
+  } else if (typeof customTags === "function") {
+    tags = customTags(tags.slice());
+  }
+  if (addMergeTag)
+    tags = tags.concat(merge);
+  return tags.reduce((tags2, tag) => {
+    const tagObj = typeof tag === "string" ? tagsByName[tag] : tag;
+    if (!tagObj) {
+      const tagName = JSON.stringify(tag);
+      const keys = Object.keys(tagsByName).map((key) => JSON.stringify(key)).join(", ");
+      throw new Error(`Unknown custom tag ${tagName}; use one of ${keys}`);
+    }
+    if (!tags2.includes(tagObj))
+      tags2.push(tagObj);
+    return tags2;
+  }, []);
+}
+
+// node_modules/yaml/browser/dist/schema/Schema.js
+var sortMapEntriesByKey = (a2, b2) => a2.key < b2.key ? -1 : a2.key > b2.key ? 1 : 0;
+var Schema = class _Schema {
+  constructor({ compat, customTags, merge: merge2, resolveKnownTags, schema: schema4, sortMapEntries, toStringDefaults }) {
+    this.compat = Array.isArray(compat) ? getTags(compat, "compat") : compat ? getTags(null, compat) : null;
+    this.name = typeof schema4 === "string" && schema4 || "core";
+    this.knownTags = resolveKnownTags ? coreKnownTags : {};
+    this.tags = getTags(customTags, this.name, merge2);
+    this.toStringOptions = toStringDefaults ?? null;
+    Object.defineProperty(this, MAP, { value: map });
+    Object.defineProperty(this, SCALAR, { value: string });
+    Object.defineProperty(this, SEQ, { value: seq });
+    this.sortMapEntries = typeof sortMapEntries === "function" ? sortMapEntries : sortMapEntries === true ? sortMapEntriesByKey : null;
+  }
+  clone() {
+    const copy = Object.create(_Schema.prototype, Object.getOwnPropertyDescriptors(this));
+    copy.tags = this.tags.slice();
+    return copy;
+  }
+};
+
+// node_modules/yaml/browser/dist/stringify/stringifyDocument.js
+function stringifyDocument(doc, options) {
+  const lines = [];
+  let hasDirectives = options.directives === true;
+  if (options.directives !== false && doc.directives) {
+    const dir = doc.directives.toString(doc);
+    if (dir) {
+      lines.push(dir);
+      hasDirectives = true;
+    } else if (doc.directives.docStart)
+      hasDirectives = true;
+  }
+  if (hasDirectives)
+    lines.push("---");
+  const ctx = createStringifyContext(doc, options);
+  const { commentString } = ctx.options;
+  if (doc.commentBefore) {
+    if (lines.length !== 1)
+      lines.unshift("");
+    const cs = commentString(doc.commentBefore);
+    lines.unshift(indentComment(cs, ""));
+  }
+  let chompKeep = false;
+  let contentComment = null;
+  if (doc.contents) {
+    if (isNode(doc.contents)) {
+      if (doc.contents.spaceBefore && hasDirectives)
+        lines.push("");
+      if (doc.contents.commentBefore) {
+        const cs = commentString(doc.contents.commentBefore);
+        lines.push(indentComment(cs, ""));
+      }
+      ctx.forceBlockIndent = !!doc.comment;
+      contentComment = doc.contents.comment;
+    }
+    const onChompKeep = contentComment ? void 0 : () => chompKeep = true;
+    let body = stringify(doc.contents, ctx, () => contentComment = null, onChompKeep);
+    if (contentComment)
+      body += lineComment(body, "", commentString(contentComment));
+    if ((body[0] === "|" || body[0] === ">") && lines[lines.length - 1] === "---") {
+      lines[lines.length - 1] = `--- ${body}`;
+    } else
+      lines.push(body);
+  } else {
+    lines.push(stringify(doc.contents, ctx));
+  }
+  if (doc.directives?.docEnd) {
+    if (doc.comment) {
+      const cs = commentString(doc.comment);
+      if (cs.includes("\n")) {
+        lines.push("...");
+        lines.push(indentComment(cs, ""));
+      } else {
+        lines.push(`... ${cs}`);
+      }
+    } else {
+      lines.push("...");
+    }
+  } else {
+    let dc = doc.comment;
+    if (dc && chompKeep)
+      dc = dc.replace(/^\n+/, "");
+    if (dc) {
+      if ((!chompKeep || contentComment) && lines[lines.length - 1] !== "")
+        lines.push("");
+      lines.push(indentComment(commentString(dc), ""));
+    }
+  }
+  return lines.join("\n") + "\n";
+}
+
+// node_modules/yaml/browser/dist/doc/Document.js
+var Document = class _Document {
+  constructor(value, replacer, options) {
+    this.commentBefore = null;
+    this.comment = null;
+    this.errors = [];
+    this.warnings = [];
+    Object.defineProperty(this, NODE_TYPE, { value: DOC });
+    let _replacer = null;
+    if (typeof replacer === "function" || Array.isArray(replacer)) {
+      _replacer = replacer;
+    } else if (options === void 0 && replacer) {
+      options = replacer;
+      replacer = void 0;
+    }
+    const opt = Object.assign({
+      intAsBigInt: false,
+      keepSourceTokens: false,
+      logLevel: "warn",
+      prettyErrors: true,
+      strict: true,
+      stringKeys: false,
+      uniqueKeys: true,
+      version: "1.2"
+    }, options);
+    this.options = opt;
+    let { version } = opt;
+    if (options?._directives) {
+      this.directives = options._directives.atDocument();
+      if (this.directives.yaml.explicit)
+        version = this.directives.yaml.version;
+    } else
+      this.directives = new Directives({ version });
+    this.setSchema(version, options);
+    this.contents = value === void 0 ? null : this.createNode(value, _replacer, options);
+  }
+  /**
+   * Create a deep copy of this Document and its contents.
+   *
+   * Custom Node values that inherit from `Object` still refer to their original instances.
+   */
+  clone() {
+    const copy = Object.create(_Document.prototype, {
+      [NODE_TYPE]: { value: DOC }
+    });
+    copy.commentBefore = this.commentBefore;
+    copy.comment = this.comment;
+    copy.errors = this.errors.slice();
+    copy.warnings = this.warnings.slice();
+    copy.options = Object.assign({}, this.options);
+    if (this.directives)
+      copy.directives = this.directives.clone();
+    copy.schema = this.schema.clone();
+    copy.contents = isNode(this.contents) ? this.contents.clone(copy.schema) : this.contents;
+    if (this.range)
+      copy.range = this.range.slice();
+    return copy;
+  }
+  /** Adds a value to the document. */
+  add(value) {
+    if (assertCollection(this.contents))
+      this.contents.add(value);
+  }
+  /** Adds a value to the document. */
+  addIn(path, value) {
+    if (assertCollection(this.contents))
+      this.contents.addIn(path, value);
+  }
+  /**
+   * Create a new `Alias` node, ensuring that the target `node` has the required anchor.
+   *
+   * If `node` already has an anchor, `name` is ignored.
+   * Otherwise, the `node.anchor` value will be set to `name`,
+   * or if an anchor with that name is already present in the document,
+   * `name` will be used as a prefix for a new unique anchor.
+   * If `name` is undefined, the generated anchor will use 'a' as a prefix.
+   */
+  createAlias(node2, name) {
+    if (!node2.anchor) {
+      const prev = anchorNames(this);
+      node2.anchor = // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      !name || prev.has(name) ? findNewAnchor(name || "a", prev) : name;
+    }
+    return new Alias(node2.anchor);
+  }
+  createNode(value, replacer, options) {
+    let _replacer = void 0;
+    if (typeof replacer === "function") {
+      value = replacer.call({ "": value }, "", value);
+      _replacer = replacer;
+    } else if (Array.isArray(replacer)) {
+      const keyToStr = (v) => typeof v === "number" || v instanceof String || v instanceof Number;
+      const asStr = replacer.filter(keyToStr).map(String);
+      if (asStr.length > 0)
+        replacer = replacer.concat(asStr);
+      _replacer = replacer;
+    } else if (options === void 0 && replacer) {
+      options = replacer;
+      replacer = void 0;
+    }
+    const { aliasDuplicateObjects, anchorPrefix, flow, keepUndefined, onTagObj, tag } = options ?? {};
+    const { onAnchor, setAnchors, sourceObjects } = createNodeAnchors(
+      this,
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      anchorPrefix || "a"
+    );
+    const ctx = {
+      aliasDuplicateObjects: aliasDuplicateObjects ?? true,
+      keepUndefined: keepUndefined ?? false,
+      onAnchor,
+      onTagObj,
+      replacer: _replacer,
+      schema: this.schema,
+      sourceObjects
+    };
+    const node2 = createNode(value, tag, ctx);
+    if (flow && isCollection(node2))
+      node2.flow = true;
+    setAnchors();
+    return node2;
+  }
+  /**
+   * Convert a key and a value into a `Pair` using the current schema,
+   * recursively wrapping all values as `Scalar` or `Collection` nodes.
+   */
+  createPair(key, value, options = {}) {
+    const k2 = this.createNode(key, null, options);
+    const v = this.createNode(value, null, options);
+    return new Pair(k2, v);
+  }
+  /**
+   * Removes a value from the document.
+   * @returns `true` if the item was found and removed.
+   */
+  delete(key) {
+    return assertCollection(this.contents) ? this.contents.delete(key) : false;
+  }
+  /**
+   * Removes a value from the document.
+   * @returns `true` if the item was found and removed.
+   */
+  deleteIn(path) {
+    if (isEmptyPath(path)) {
+      if (this.contents == null)
+        return false;
+      this.contents = null;
+      return true;
+    }
+    return assertCollection(this.contents) ? this.contents.deleteIn(path) : false;
+  }
+  /**
+   * Returns item at `key`, or `undefined` if not found. By default unwraps
+   * scalar values from their surrounding node; to disable set `keepScalar` to
+   * `true` (collections are always returned intact).
+   */
+  get(key, keepScalar) {
+    return isCollection(this.contents) ? this.contents.get(key, keepScalar) : void 0;
+  }
+  /**
+   * Returns item at `path`, or `undefined` if not found. By default unwraps
+   * scalar values from their surrounding node; to disable set `keepScalar` to
+   * `true` (collections are always returned intact).
+   */
+  getIn(path, keepScalar) {
+    if (isEmptyPath(path))
+      return !keepScalar && isScalar(this.contents) ? this.contents.value : this.contents;
+    return isCollection(this.contents) ? this.contents.getIn(path, keepScalar) : void 0;
+  }
+  /**
+   * Checks if the document includes a value with the key `key`.
+   */
+  has(key) {
+    return isCollection(this.contents) ? this.contents.has(key) : false;
+  }
+  /**
+   * Checks if the document includes a value at `path`.
+   */
+  hasIn(path) {
+    if (isEmptyPath(path))
+      return this.contents !== void 0;
+    return isCollection(this.contents) ? this.contents.hasIn(path) : false;
+  }
+  /**
+   * Sets a value in this document. For `!!set`, `value` needs to be a
+   * boolean to add/remove the item from the set.
+   */
+  set(key, value) {
+    if (this.contents == null) {
+      this.contents = collectionFromPath(this.schema, [key], value);
+    } else if (assertCollection(this.contents)) {
+      this.contents.set(key, value);
+    }
+  }
+  /**
+   * Sets a value in this document. For `!!set`, `value` needs to be a
+   * boolean to add/remove the item from the set.
+   */
+  setIn(path, value) {
+    if (isEmptyPath(path)) {
+      this.contents = value;
+    } else if (this.contents == null) {
+      this.contents = collectionFromPath(this.schema, Array.from(path), value);
+    } else if (assertCollection(this.contents)) {
+      this.contents.setIn(path, value);
+    }
+  }
+  /**
+   * Change the YAML version and schema used by the document.
+   * A `null` version disables support for directives, explicit tags, anchors, and aliases.
+   * It also requires the `schema` option to be given as a `Schema` instance value.
+   *
+   * Overrides all previously set schema options.
+   */
+  setSchema(version, options = {}) {
+    if (typeof version === "number")
+      version = String(version);
+    let opt;
+    switch (version) {
+      case "1.1":
+        if (this.directives)
+          this.directives.yaml.version = "1.1";
+        else
+          this.directives = new Directives({ version: "1.1" });
+        opt = { resolveKnownTags: false, schema: "yaml-1.1" };
+        break;
+      case "1.2":
+      case "next":
+        if (this.directives)
+          this.directives.yaml.version = version;
+        else
+          this.directives = new Directives({ version });
+        opt = { resolveKnownTags: true, schema: "core" };
+        break;
+      case null:
+        if (this.directives)
+          delete this.directives;
+        opt = null;
+        break;
+      default: {
+        const sv = JSON.stringify(version);
+        throw new Error(`Expected '1.1', '1.2' or null as first argument, but found: ${sv}`);
+      }
+    }
+    if (options.schema instanceof Object)
+      this.schema = options.schema;
+    else if (opt)
+      this.schema = new Schema(Object.assign(opt, options));
+    else
+      throw new Error(`With a null YAML version, the { schema: Schema } option is required`);
+  }
+  // json & jsonArg are only used from toJSON()
+  toJS({ json, jsonArg, mapAsMap, maxAliasCount, onAnchor, reviver } = {}) {
+    const ctx = {
+      anchors: /* @__PURE__ */ new Map(),
+      doc: this,
+      keep: !json,
+      mapAsMap: mapAsMap === true,
+      mapKeyWarned: false,
+      maxAliasCount: typeof maxAliasCount === "number" ? maxAliasCount : 100
+    };
+    const res = toJS(this.contents, jsonArg ?? "", ctx);
+    if (typeof onAnchor === "function")
+      for (const { count, res: res2 } of ctx.anchors.values())
+        onAnchor(res2, count);
+    return typeof reviver === "function" ? applyReviver(reviver, { "": res }, "", res) : res;
+  }
+  /**
+   * A JSON representation of the document `contents`.
+   *
+   * @param jsonArg Used by `JSON.stringify` to indicate the array index or
+   *   property name.
+   */
+  toJSON(jsonArg, onAnchor) {
+    return this.toJS({ json: true, jsonArg, mapAsMap: false, onAnchor });
+  }
+  /** A YAML representation of the document. */
+  toString(options = {}) {
+    if (this.errors.length > 0)
+      throw new Error("Document with errors cannot be stringified");
+    if ("indent" in options && (!Number.isInteger(options.indent) || Number(options.indent) <= 0)) {
+      const s2 = JSON.stringify(options.indent);
+      throw new Error(`"indent" option must be a positive integer, not ${s2}`);
+    }
+    return stringifyDocument(this, options);
+  }
+};
+function assertCollection(contents) {
+  if (isCollection(contents))
+    return true;
+  throw new Error("Expected a YAML collection as document contents");
+}
+
+// node_modules/yaml/browser/dist/errors.js
+var YAMLError = class extends Error {
+  constructor(name, pos, code, message) {
+    super();
+    this.name = name;
+    this.code = code;
+    this.message = message;
+    this.pos = pos;
+  }
+};
+var YAMLParseError = class extends YAMLError {
+  constructor(pos, code, message) {
+    super("YAMLParseError", pos, code, message);
+  }
+};
+var YAMLWarning = class extends YAMLError {
+  constructor(pos, code, message) {
+    super("YAMLWarning", pos, code, message);
+  }
+};
+var prettifyError = (src, lc) => (error) => {
+  if (error.pos[0] === -1)
+    return;
+  error.linePos = error.pos.map((pos) => lc.linePos(pos));
+  const { line, col } = error.linePos[0];
+  error.message += ` at line ${line}, column ${col}`;
+  let ci = col - 1;
+  let lineStr = src.substring(lc.lineStarts[line - 1], lc.lineStarts[line]).replace(/[\n\r]+$/, "");
+  if (ci >= 60 && lineStr.length > 80) {
+    const trimStart = Math.min(ci - 39, lineStr.length - 79);
+    lineStr = "\u2026" + lineStr.substring(trimStart);
+    ci -= trimStart - 1;
+  }
+  if (lineStr.length > 80)
+    lineStr = lineStr.substring(0, 79) + "\u2026";
+  if (line > 1 && /^ *$/.test(lineStr.substring(0, ci))) {
+    let prev = src.substring(lc.lineStarts[line - 2], lc.lineStarts[line - 1]);
+    if (prev.length > 80)
+      prev = prev.substring(0, 79) + "\u2026\n";
+    lineStr = prev + lineStr;
+  }
+  if (/[^ ]/.test(lineStr)) {
+    let count = 1;
+    const end = error.linePos[1];
+    if (end?.line === line && end.col > col) {
+      count = Math.max(1, Math.min(end.col - col, 80 - ci));
+    }
+    const pointer = " ".repeat(ci) + "^".repeat(count);
+    error.message += `:
+
+${lineStr}
+${pointer}
+`;
+  }
+};
+
+// node_modules/yaml/browser/dist/compose/resolve-props.js
+function resolveProps(tokens, { flow, indicator, next, offset, onError, parentIndent, startOnNewline }) {
+  let spaceBefore = false;
+  let atNewline = startOnNewline;
+  let hasSpace = startOnNewline;
+  let comment = "";
+  let commentSep = "";
+  let hasNewline = false;
+  let reqSpace = false;
+  let tab = null;
+  let anchor = null;
+  let tag = null;
+  let newlineAfterProp = null;
+  let comma = null;
+  let found = null;
+  let start = null;
+  for (const token of tokens) {
+    if (reqSpace) {
+      if (token.type !== "space" && token.type !== "newline" && token.type !== "comma")
+        onError(token.offset, "MISSING_CHAR", "Tags and anchors must be separated from the next token by white space");
+      reqSpace = false;
+    }
+    if (tab) {
+      if (atNewline && token.type !== "comment" && token.type !== "newline") {
+        onError(tab, "TAB_AS_INDENT", "Tabs are not allowed as indentation");
+      }
+      tab = null;
+    }
+    switch (token.type) {
+      case "space":
+        if (!flow && (indicator !== "doc-start" || next?.type !== "flow-collection") && token.source.includes("	")) {
+          tab = token;
+        }
+        hasSpace = true;
+        break;
+      case "comment": {
+        if (!hasSpace)
+          onError(token, "MISSING_CHAR", "Comments must be separated from other tokens by white space characters");
+        const cb = token.source.substring(1) || " ";
+        if (!comment)
+          comment = cb;
+        else
+          comment += commentSep + cb;
+        commentSep = "";
+        atNewline = false;
+        break;
+      }
+      case "newline":
+        if (atNewline) {
+          if (comment)
+            comment += token.source;
+          else if (!found || indicator !== "seq-item-ind")
+            spaceBefore = true;
+        } else
+          commentSep += token.source;
+        atNewline = true;
+        hasNewline = true;
+        if (anchor || tag)
+          newlineAfterProp = token;
+        hasSpace = true;
+        break;
+      case "anchor":
+        if (anchor)
+          onError(token, "MULTIPLE_ANCHORS", "A node can have at most one anchor");
+        if (token.source.endsWith(":"))
+          onError(token.offset + token.source.length - 1, "BAD_ALIAS", "Anchor ending in : is ambiguous", true);
+        anchor = token;
+        start ?? (start = token.offset);
+        atNewline = false;
+        hasSpace = false;
+        reqSpace = true;
+        break;
+      case "tag": {
+        if (tag)
+          onError(token, "MULTIPLE_TAGS", "A node can have at most one tag");
+        tag = token;
+        start ?? (start = token.offset);
+        atNewline = false;
+        hasSpace = false;
+        reqSpace = true;
+        break;
+      }
+      case indicator:
+        if (anchor || tag)
+          onError(token, "BAD_PROP_ORDER", `Anchors and tags must be after the ${token.source} indicator`);
+        if (found)
+          onError(token, "UNEXPECTED_TOKEN", `Unexpected ${token.source} in ${flow ?? "collection"}`);
+        found = token;
+        atNewline = indicator === "seq-item-ind" || indicator === "explicit-key-ind";
+        hasSpace = false;
+        break;
+      case "comma":
+        if (flow) {
+          if (comma)
+            onError(token, "UNEXPECTED_TOKEN", `Unexpected , in ${flow}`);
+          comma = token;
+          atNewline = false;
+          hasSpace = false;
+          break;
+        }
+      // else fallthrough
+      default:
+        onError(token, "UNEXPECTED_TOKEN", `Unexpected ${token.type} token`);
+        atNewline = false;
+        hasSpace = false;
+    }
+  }
+  const last = tokens[tokens.length - 1];
+  const end = last ? last.offset + last.source.length : offset;
+  if (reqSpace && next && next.type !== "space" && next.type !== "newline" && next.type !== "comma" && (next.type !== "scalar" || next.source !== "")) {
+    onError(next.offset, "MISSING_CHAR", "Tags and anchors must be separated from the next token by white space");
+  }
+  if (tab && (atNewline && tab.indent <= parentIndent || next?.type === "block-map" || next?.type === "block-seq"))
+    onError(tab, "TAB_AS_INDENT", "Tabs are not allowed as indentation");
+  return {
+    comma,
+    found,
+    spaceBefore,
+    comment,
+    hasNewline,
+    anchor,
+    tag,
+    newlineAfterProp,
+    end,
+    start: start ?? end
+  };
+}
+
+// node_modules/yaml/browser/dist/compose/util-contains-newline.js
+function containsNewline(key) {
+  if (!key)
+    return null;
+  switch (key.type) {
+    case "alias":
+    case "scalar":
+    case "double-quoted-scalar":
+    case "single-quoted-scalar":
+      if (key.source.includes("\n"))
+        return true;
+      if (key.end) {
+        for (const st of key.end)
+          if (st.type === "newline")
+            return true;
+      }
+      return false;
+    case "flow-collection":
+      for (const it of key.items) {
+        for (const st of it.start)
+          if (st.type === "newline")
+            return true;
+        if (it.sep) {
+          for (const st of it.sep)
+            if (st.type === "newline")
+              return true;
+        }
+        if (containsNewline(it.key) || containsNewline(it.value))
+          return true;
+      }
+      return false;
+    default:
+      return true;
+  }
+}
+
+// node_modules/yaml/browser/dist/compose/util-flow-indent-check.js
+function flowIndentCheck(indent, fc, onError) {
+  if (fc?.type === "flow-collection") {
+    const end = fc.end[0];
+    if (end.indent === indent && (end.source === "]" || end.source === "}") && containsNewline(fc)) {
+      const msg = "Flow end indicator should be more indented than parent";
+      onError(end, "BAD_INDENT", msg, true);
+    }
+  }
+}
+
+// node_modules/yaml/browser/dist/compose/util-map-includes.js
+function mapIncludes(ctx, items, search) {
+  const { uniqueKeys } = ctx.options;
+  if (uniqueKeys === false)
+    return false;
+  const isEqual = typeof uniqueKeys === "function" ? uniqueKeys : (a2, b2) => a2 === b2 || isScalar(a2) && isScalar(b2) && a2.value === b2.value;
+  return items.some((pair) => isEqual(pair.key, search));
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-block-map.js
+var startColMsg = "All mapping items must start at the same column";
+function resolveBlockMap({ composeNode: composeNode2, composeEmptyNode: composeEmptyNode2 }, ctx, bm, onError, tag) {
+  const NodeClass = tag?.nodeClass ?? YAMLMap;
+  const map2 = new NodeClass(ctx.schema);
+  if (ctx.atRoot)
+    ctx.atRoot = false;
+  let offset = bm.offset;
+  let commentEnd = null;
+  for (const collItem of bm.items) {
+    const { start, key, sep, value } = collItem;
+    const keyProps = resolveProps(start, {
+      indicator: "explicit-key-ind",
+      next: key ?? sep?.[0],
+      offset,
+      onError,
+      parentIndent: bm.indent,
+      startOnNewline: true
+    });
+    const implicitKey = !keyProps.found;
+    if (implicitKey) {
+      if (key) {
+        if (key.type === "block-seq")
+          onError(offset, "BLOCK_AS_IMPLICIT_KEY", "A block sequence may not be used as an implicit map key");
+        else if ("indent" in key && key.indent !== bm.indent)
+          onError(offset, "BAD_INDENT", startColMsg);
+      }
+      if (!keyProps.anchor && !keyProps.tag && !sep) {
+        commentEnd = keyProps.end;
+        if (keyProps.comment) {
+          if (map2.comment)
+            map2.comment += "\n" + keyProps.comment;
+          else
+            map2.comment = keyProps.comment;
+        }
+        continue;
+      }
+      if (keyProps.newlineAfterProp || containsNewline(key)) {
+        onError(key ?? start[start.length - 1], "MULTILINE_IMPLICIT_KEY", "Implicit keys need to be on a single line");
+      }
+    } else if (keyProps.found?.indent !== bm.indent) {
+      onError(offset, "BAD_INDENT", startColMsg);
+    }
+    ctx.atKey = true;
+    const keyStart = keyProps.end;
+    const keyNode = key ? composeNode2(ctx, key, keyProps, onError) : composeEmptyNode2(ctx, keyStart, start, null, keyProps, onError);
+    if (ctx.schema.compat)
+      flowIndentCheck(bm.indent, key, onError);
+    ctx.atKey = false;
+    if (mapIncludes(ctx, map2.items, keyNode))
+      onError(keyStart, "DUPLICATE_KEY", "Map keys must be unique");
+    const valueProps = resolveProps(sep ?? [], {
+      indicator: "map-value-ind",
+      next: value,
+      offset: keyNode.range[2],
+      onError,
+      parentIndent: bm.indent,
+      startOnNewline: !key || key.type === "block-scalar"
+    });
+    offset = valueProps.end;
+    if (valueProps.found) {
+      if (implicitKey) {
+        if (value?.type === "block-map" && !valueProps.hasNewline)
+          onError(offset, "BLOCK_AS_IMPLICIT_KEY", "Nested mappings are not allowed in compact mappings");
+        if (ctx.options.strict && keyProps.start < valueProps.found.offset - 1024)
+          onError(keyNode.range, "KEY_OVER_1024_CHARS", "The : indicator must be at most 1024 chars after the start of an implicit block mapping key");
+      }
+      const valueNode = value ? composeNode2(ctx, value, valueProps, onError) : composeEmptyNode2(ctx, offset, sep, null, valueProps, onError);
+      if (ctx.schema.compat)
+        flowIndentCheck(bm.indent, value, onError);
+      offset = valueNode.range[2];
+      const pair = new Pair(keyNode, valueNode);
+      if (ctx.options.keepSourceTokens)
+        pair.srcToken = collItem;
+      map2.items.push(pair);
+    } else {
+      if (implicitKey)
+        onError(keyNode.range, "MISSING_CHAR", "Implicit map keys need to be followed by map values");
+      if (valueProps.comment) {
+        if (keyNode.comment)
+          keyNode.comment += "\n" + valueProps.comment;
+        else
+          keyNode.comment = valueProps.comment;
+      }
+      const pair = new Pair(keyNode);
+      if (ctx.options.keepSourceTokens)
+        pair.srcToken = collItem;
+      map2.items.push(pair);
+    }
+  }
+  if (commentEnd && commentEnd < offset)
+    onError(commentEnd, "IMPOSSIBLE", "Map comment with trailing content");
+  map2.range = [bm.offset, offset, commentEnd ?? offset];
+  return map2;
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-block-seq.js
+function resolveBlockSeq({ composeNode: composeNode2, composeEmptyNode: composeEmptyNode2 }, ctx, bs, onError, tag) {
+  const NodeClass = tag?.nodeClass ?? YAMLSeq;
+  const seq2 = new NodeClass(ctx.schema);
+  if (ctx.atRoot)
+    ctx.atRoot = false;
+  if (ctx.atKey)
+    ctx.atKey = false;
+  let offset = bs.offset;
+  let commentEnd = null;
+  for (const { start, value } of bs.items) {
+    const props = resolveProps(start, {
+      indicator: "seq-item-ind",
+      next: value,
+      offset,
+      onError,
+      parentIndent: bs.indent,
+      startOnNewline: true
+    });
+    if (!props.found) {
+      if (props.anchor || props.tag || value) {
+        if (value?.type === "block-seq")
+          onError(props.end, "BAD_INDENT", "All sequence items must start at the same column");
+        else
+          onError(offset, "MISSING_CHAR", "Sequence item without - indicator");
+      } else {
+        commentEnd = props.end;
+        if (props.comment)
+          seq2.comment = props.comment;
+        continue;
+      }
+    }
+    const node2 = value ? composeNode2(ctx, value, props, onError) : composeEmptyNode2(ctx, props.end, start, null, props, onError);
+    if (ctx.schema.compat)
+      flowIndentCheck(bs.indent, value, onError);
+    offset = node2.range[2];
+    seq2.items.push(node2);
+  }
+  seq2.range = [bs.offset, offset, commentEnd ?? offset];
+  return seq2;
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-end.js
+function resolveEnd(end, offset, reqSpace, onError) {
+  let comment = "";
+  if (end) {
+    let hasSpace = false;
+    let sep = "";
+    for (const token of end) {
+      const { source, type } = token;
+      switch (type) {
+        case "space":
+          hasSpace = true;
+          break;
+        case "comment": {
+          if (reqSpace && !hasSpace)
+            onError(token, "MISSING_CHAR", "Comments must be separated from other tokens by white space characters");
+          const cb = source.substring(1) || " ";
+          if (!comment)
+            comment = cb;
+          else
+            comment += sep + cb;
+          sep = "";
+          break;
+        }
+        case "newline":
+          if (comment)
+            sep += source;
+          hasSpace = true;
+          break;
+        default:
+          onError(token, "UNEXPECTED_TOKEN", `Unexpected ${type} at node end`);
+      }
+      offset += source.length;
+    }
+  }
+  return { comment, offset };
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-flow-collection.js
+var blockMsg = "Block collections are not allowed within flow collections";
+var isBlock = (token) => token && (token.type === "block-map" || token.type === "block-seq");
+function resolveFlowCollection({ composeNode: composeNode2, composeEmptyNode: composeEmptyNode2 }, ctx, fc, onError, tag) {
+  const isMap2 = fc.start.source === "{";
+  const fcName = isMap2 ? "flow map" : "flow sequence";
+  const NodeClass = tag?.nodeClass ?? (isMap2 ? YAMLMap : YAMLSeq);
+  const coll = new NodeClass(ctx.schema);
+  coll.flow = true;
+  const atRoot = ctx.atRoot;
+  if (atRoot)
+    ctx.atRoot = false;
+  if (ctx.atKey)
+    ctx.atKey = false;
+  let offset = fc.offset + fc.start.source.length;
+  for (let i2 = 0; i2 < fc.items.length; ++i2) {
+    const collItem = fc.items[i2];
+    const { start, key, sep, value } = collItem;
+    const props = resolveProps(start, {
+      flow: fcName,
+      indicator: "explicit-key-ind",
+      next: key ?? sep?.[0],
+      offset,
+      onError,
+      parentIndent: fc.indent,
+      startOnNewline: false
+    });
+    if (!props.found) {
+      if (!props.anchor && !props.tag && !sep && !value) {
+        if (i2 === 0 && props.comma)
+          onError(props.comma, "UNEXPECTED_TOKEN", `Unexpected , in ${fcName}`);
+        else if (i2 < fc.items.length - 1)
+          onError(props.start, "UNEXPECTED_TOKEN", `Unexpected empty item in ${fcName}`);
+        if (props.comment) {
+          if (coll.comment)
+            coll.comment += "\n" + props.comment;
+          else
+            coll.comment = props.comment;
+        }
+        offset = props.end;
+        continue;
+      }
+      if (!isMap2 && ctx.options.strict && containsNewline(key))
+        onError(
+          key,
+          // checked by containsNewline()
+          "MULTILINE_IMPLICIT_KEY",
+          "Implicit keys of flow sequence pairs need to be on a single line"
+        );
+    }
+    if (i2 === 0) {
+      if (props.comma)
+        onError(props.comma, "UNEXPECTED_TOKEN", `Unexpected , in ${fcName}`);
+    } else {
+      if (!props.comma)
+        onError(props.start, "MISSING_CHAR", `Missing , between ${fcName} items`);
+      if (props.comment) {
+        let prevItemComment = "";
+        loop: for (const st of start) {
+          switch (st.type) {
+            case "comma":
+            case "space":
+              break;
+            case "comment":
+              prevItemComment = st.source.substring(1);
+              break loop;
+            default:
+              break loop;
+          }
+        }
+        if (prevItemComment) {
+          let prev = coll.items[coll.items.length - 1];
+          if (isPair(prev))
+            prev = prev.value ?? prev.key;
+          if (prev.comment)
+            prev.comment += "\n" + prevItemComment;
+          else
+            prev.comment = prevItemComment;
+          props.comment = props.comment.substring(prevItemComment.length + 1);
+        }
+      }
+    }
+    if (!isMap2 && !sep && !props.found) {
+      const valueNode = value ? composeNode2(ctx, value, props, onError) : composeEmptyNode2(ctx, props.end, sep, null, props, onError);
+      coll.items.push(valueNode);
+      offset = valueNode.range[2];
+      if (isBlock(value))
+        onError(valueNode.range, "BLOCK_IN_FLOW", blockMsg);
+    } else {
+      ctx.atKey = true;
+      const keyStart = props.end;
+      const keyNode = key ? composeNode2(ctx, key, props, onError) : composeEmptyNode2(ctx, keyStart, start, null, props, onError);
+      if (isBlock(key))
+        onError(keyNode.range, "BLOCK_IN_FLOW", blockMsg);
+      ctx.atKey = false;
+      const valueProps = resolveProps(sep ?? [], {
+        flow: fcName,
+        indicator: "map-value-ind",
+        next: value,
+        offset: keyNode.range[2],
+        onError,
+        parentIndent: fc.indent,
+        startOnNewline: false
+      });
+      if (valueProps.found) {
+        if (!isMap2 && !props.found && ctx.options.strict) {
+          if (sep)
+            for (const st of sep) {
+              if (st === valueProps.found)
+                break;
+              if (st.type === "newline") {
+                onError(st, "MULTILINE_IMPLICIT_KEY", "Implicit keys of flow sequence pairs need to be on a single line");
+                break;
+              }
+            }
+          if (props.start < valueProps.found.offset - 1024)
+            onError(valueProps.found, "KEY_OVER_1024_CHARS", "The : indicator must be at most 1024 chars after the start of an implicit flow sequence key");
+        }
+      } else if (value) {
+        if ("source" in value && value.source?.[0] === ":")
+          onError(value, "MISSING_CHAR", `Missing space after : in ${fcName}`);
+        else
+          onError(valueProps.start, "MISSING_CHAR", `Missing , or : between ${fcName} items`);
+      }
+      const valueNode = value ? composeNode2(ctx, value, valueProps, onError) : valueProps.found ? composeEmptyNode2(ctx, valueProps.end, sep, null, valueProps, onError) : null;
+      if (valueNode) {
+        if (isBlock(value))
+          onError(valueNode.range, "BLOCK_IN_FLOW", blockMsg);
+      } else if (valueProps.comment) {
+        if (keyNode.comment)
+          keyNode.comment += "\n" + valueProps.comment;
+        else
+          keyNode.comment = valueProps.comment;
+      }
+      const pair = new Pair(keyNode, valueNode);
+      if (ctx.options.keepSourceTokens)
+        pair.srcToken = collItem;
+      if (isMap2) {
+        const map2 = coll;
+        if (mapIncludes(ctx, map2.items, keyNode))
+          onError(keyStart, "DUPLICATE_KEY", "Map keys must be unique");
+        map2.items.push(pair);
+      } else {
+        const map2 = new YAMLMap(ctx.schema);
+        map2.flow = true;
+        map2.items.push(pair);
+        const endRange = (valueNode ?? keyNode).range;
+        map2.range = [keyNode.range[0], endRange[1], endRange[2]];
+        coll.items.push(map2);
+      }
+      offset = valueNode ? valueNode.range[2] : valueProps.end;
+    }
+  }
+  const expectedEnd = isMap2 ? "}" : "]";
+  const [ce, ...ee] = fc.end;
+  let cePos = offset;
+  if (ce?.source === expectedEnd)
+    cePos = ce.offset + ce.source.length;
+  else {
+    const name = fcName[0].toUpperCase() + fcName.substring(1);
+    const msg = atRoot ? `${name} must end with a ${expectedEnd}` : `${name} in block collection must be sufficiently indented and end with a ${expectedEnd}`;
+    onError(offset, atRoot ? "MISSING_CHAR" : "BAD_INDENT", msg);
+    if (ce && ce.source.length !== 1)
+      ee.unshift(ce);
+  }
+  if (ee.length > 0) {
+    const end = resolveEnd(ee, cePos, ctx.options.strict, onError);
+    if (end.comment) {
+      if (coll.comment)
+        coll.comment += "\n" + end.comment;
+      else
+        coll.comment = end.comment;
+    }
+    coll.range = [fc.offset, cePos, end.offset];
+  } else {
+    coll.range = [fc.offset, cePos, cePos];
+  }
+  return coll;
+}
+
+// node_modules/yaml/browser/dist/compose/compose-collection.js
+function resolveCollection(CN2, ctx, token, onError, tagName, tag) {
+  const coll = token.type === "block-map" ? resolveBlockMap(CN2, ctx, token, onError, tag) : token.type === "block-seq" ? resolveBlockSeq(CN2, ctx, token, onError, tag) : resolveFlowCollection(CN2, ctx, token, onError, tag);
+  const Coll = coll.constructor;
+  if (tagName === "!" || tagName === Coll.tagName) {
+    coll.tag = Coll.tagName;
+    return coll;
+  }
+  if (tagName)
+    coll.tag = tagName;
+  return coll;
+}
+function composeCollection(CN2, ctx, token, props, onError) {
+  const tagToken = props.tag;
+  const tagName = !tagToken ? null : ctx.directives.tagName(tagToken.source, (msg) => onError(tagToken, "TAG_RESOLVE_FAILED", msg));
+  if (token.type === "block-seq") {
+    const { anchor, newlineAfterProp: nl } = props;
+    const lastProp = anchor && tagToken ? anchor.offset > tagToken.offset ? anchor : tagToken : anchor ?? tagToken;
+    if (lastProp && (!nl || nl.offset < lastProp.offset)) {
+      const message = "Missing newline after block sequence props";
+      onError(lastProp, "MISSING_CHAR", message);
+    }
+  }
+  const expType = token.type === "block-map" ? "map" : token.type === "block-seq" ? "seq" : token.start.source === "{" ? "map" : "seq";
+  if (!tagToken || !tagName || tagName === "!" || tagName === YAMLMap.tagName && expType === "map" || tagName === YAMLSeq.tagName && expType === "seq") {
+    return resolveCollection(CN2, ctx, token, onError, tagName);
+  }
+  let tag = ctx.schema.tags.find((t2) => t2.tag === tagName && t2.collection === expType);
+  if (!tag) {
+    const kt = ctx.schema.knownTags[tagName];
+    if (kt?.collection === expType) {
+      ctx.schema.tags.push(Object.assign({}, kt, { default: false }));
+      tag = kt;
+    } else {
+      if (kt) {
+        onError(tagToken, "BAD_COLLECTION_TYPE", `${kt.tag} used for ${expType} collection, but expects ${kt.collection ?? "scalar"}`, true);
+      } else {
+        onError(tagToken, "TAG_RESOLVE_FAILED", `Unresolved tag: ${tagName}`, true);
+      }
+      return resolveCollection(CN2, ctx, token, onError, tagName);
+    }
+  }
+  const coll = resolveCollection(CN2, ctx, token, onError, tagName, tag);
+  const res = tag.resolve?.(coll, (msg) => onError(tagToken, "TAG_RESOLVE_FAILED", msg), ctx.options) ?? coll;
+  const node2 = isNode(res) ? res : new Scalar(res);
+  node2.range = coll.range;
+  node2.tag = tagName;
+  if (tag?.format)
+    node2.format = tag.format;
+  return node2;
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-block-scalar.js
+function resolveBlockScalar(ctx, scalar, onError) {
+  const start = scalar.offset;
+  const header = parseBlockScalarHeader(scalar, ctx.options.strict, onError);
+  if (!header)
+    return { value: "", type: null, comment: "", range: [start, start, start] };
+  const type = header.mode === ">" ? Scalar.BLOCK_FOLDED : Scalar.BLOCK_LITERAL;
+  const lines = scalar.source ? splitLines(scalar.source) : [];
+  let chompStart = lines.length;
+  for (let i2 = lines.length - 1; i2 >= 0; --i2) {
+    const content = lines[i2][1];
+    if (content === "" || content === "\r")
+      chompStart = i2;
+    else
+      break;
+  }
+  if (chompStart === 0) {
+    const value2 = header.chomp === "+" && lines.length > 0 ? "\n".repeat(Math.max(1, lines.length - 1)) : "";
+    let end2 = start + header.length;
+    if (scalar.source)
+      end2 += scalar.source.length;
+    return { value: value2, type, comment: header.comment, range: [start, end2, end2] };
+  }
+  let trimIndent = scalar.indent + header.indent;
+  let offset = scalar.offset + header.length;
+  let contentStart = 0;
+  for (let i2 = 0; i2 < chompStart; ++i2) {
+    const [indent, content] = lines[i2];
+    if (content === "" || content === "\r") {
+      if (header.indent === 0 && indent.length > trimIndent)
+        trimIndent = indent.length;
+    } else {
+      if (indent.length < trimIndent) {
+        const message = "Block scalars with more-indented leading empty lines must use an explicit indentation indicator";
+        onError(offset + indent.length, "MISSING_CHAR", message);
+      }
+      if (header.indent === 0)
+        trimIndent = indent.length;
+      contentStart = i2;
+      if (trimIndent === 0 && !ctx.atRoot) {
+        const message = "Block scalar values in collections must be indented";
+        onError(offset, "BAD_INDENT", message);
+      }
+      break;
+    }
+    offset += indent.length + content.length + 1;
+  }
+  for (let i2 = lines.length - 1; i2 >= chompStart; --i2) {
+    if (lines[i2][0].length > trimIndent)
+      chompStart = i2 + 1;
+  }
+  let value = "";
+  let sep = "";
+  let prevMoreIndented = false;
+  for (let i2 = 0; i2 < contentStart; ++i2)
+    value += lines[i2][0].slice(trimIndent) + "\n";
+  for (let i2 = contentStart; i2 < chompStart; ++i2) {
+    let [indent, content] = lines[i2];
+    offset += indent.length + content.length + 1;
+    const crlf = content[content.length - 1] === "\r";
+    if (crlf)
+      content = content.slice(0, -1);
+    if (content && indent.length < trimIndent) {
+      const src = header.indent ? "explicit indentation indicator" : "first line";
+      const message = `Block scalar lines must not be less indented than their ${src}`;
+      onError(offset - content.length - (crlf ? 2 : 1), "BAD_INDENT", message);
+      indent = "";
+    }
+    if (type === Scalar.BLOCK_LITERAL) {
+      value += sep + indent.slice(trimIndent) + content;
+      sep = "\n";
+    } else if (indent.length > trimIndent || content[0] === "	") {
+      if (sep === " ")
+        sep = "\n";
+      else if (!prevMoreIndented && sep === "\n")
+        sep = "\n\n";
+      value += sep + indent.slice(trimIndent) + content;
+      sep = "\n";
+      prevMoreIndented = true;
+    } else if (content === "") {
+      if (sep === "\n")
+        value += "\n";
+      else
+        sep = "\n";
+    } else {
+      value += sep + content;
+      sep = " ";
+      prevMoreIndented = false;
+    }
+  }
+  switch (header.chomp) {
+    case "-":
+      break;
+    case "+":
+      for (let i2 = chompStart; i2 < lines.length; ++i2)
+        value += "\n" + lines[i2][0].slice(trimIndent);
+      if (value[value.length - 1] !== "\n")
+        value += "\n";
+      break;
+    default:
+      value += "\n";
+  }
+  const end = start + header.length + scalar.source.length;
+  return { value, type, comment: header.comment, range: [start, end, end] };
+}
+function parseBlockScalarHeader({ offset, props }, strict, onError) {
+  if (props[0].type !== "block-scalar-header") {
+    onError(props[0], "IMPOSSIBLE", "Block scalar header not found");
+    return null;
+  }
+  const { source } = props[0];
+  const mode = source[0];
+  let indent = 0;
+  let chomp = "";
+  let error = -1;
+  for (let i2 = 1; i2 < source.length; ++i2) {
+    const ch = source[i2];
+    if (!chomp && (ch === "-" || ch === "+"))
+      chomp = ch;
+    else {
+      const n2 = Number(ch);
+      if (!indent && n2)
+        indent = n2;
+      else if (error === -1)
+        error = offset + i2;
+    }
+  }
+  if (error !== -1)
+    onError(error, "UNEXPECTED_TOKEN", `Block scalar header includes extra characters: ${source}`);
+  let hasSpace = false;
+  let comment = "";
+  let length = source.length;
+  for (let i2 = 1; i2 < props.length; ++i2) {
+    const token = props[i2];
+    switch (token.type) {
+      case "space":
+        hasSpace = true;
+      // fallthrough
+      case "newline":
+        length += token.source.length;
+        break;
+      case "comment":
+        if (strict && !hasSpace) {
+          const message = "Comments must be separated from other tokens by white space characters";
+          onError(token, "MISSING_CHAR", message);
+        }
+        length += token.source.length;
+        comment = token.source.substring(1);
+        break;
+      case "error":
+        onError(token, "UNEXPECTED_TOKEN", token.message);
+        length += token.source.length;
+        break;
+      /* istanbul ignore next should not happen */
+      default: {
+        const message = `Unexpected token in block scalar header: ${token.type}`;
+        onError(token, "UNEXPECTED_TOKEN", message);
+        const ts = token.source;
+        if (ts && typeof ts === "string")
+          length += ts.length;
+      }
+    }
+  }
+  return { mode, indent, chomp, comment, length };
+}
+function splitLines(source) {
+  const split = source.split(/\n( *)/);
+  const first = split[0];
+  const m = first.match(/^( *)/);
+  const line0 = m?.[1] ? [m[1], first.slice(m[1].length)] : ["", first];
+  const lines = [line0];
+  for (let i2 = 1; i2 < split.length; i2 += 2)
+    lines.push([split[i2], split[i2 + 1]]);
+  return lines;
+}
+
+// node_modules/yaml/browser/dist/compose/resolve-flow-scalar.js
+function resolveFlowScalar(scalar, strict, onError) {
+  const { offset, type, source, end } = scalar;
+  let _type;
+  let value;
+  const _onError = (rel, code, msg) => onError(offset + rel, code, msg);
+  switch (type) {
+    case "scalar":
+      _type = Scalar.PLAIN;
+      value = plainValue(source, _onError);
+      break;
+    case "single-quoted-scalar":
+      _type = Scalar.QUOTE_SINGLE;
+      value = singleQuotedValue(source, _onError);
+      break;
+    case "double-quoted-scalar":
+      _type = Scalar.QUOTE_DOUBLE;
+      value = doubleQuotedValue(source, _onError);
+      break;
+    /* istanbul ignore next should not happen */
+    default:
+      onError(scalar, "UNEXPECTED_TOKEN", `Expected a flow scalar value, but found: ${type}`);
+      return {
+        value: "",
+        type: null,
+        comment: "",
+        range: [offset, offset + source.length, offset + source.length]
+      };
+  }
+  const valueEnd = offset + source.length;
+  const re = resolveEnd(end, valueEnd, strict, onError);
+  return {
+    value,
+    type: _type,
+    comment: re.comment,
+    range: [offset, valueEnd, re.offset]
+  };
+}
+function plainValue(source, onError) {
+  let badChar = "";
+  switch (source[0]) {
+    /* istanbul ignore next should not happen */
+    case "	":
+      badChar = "a tab character";
+      break;
+    case ",":
+      badChar = "flow indicator character ,";
+      break;
+    case "%":
+      badChar = "directive indicator character %";
+      break;
+    case "|":
+    case ">": {
+      badChar = `block scalar indicator ${source[0]}`;
+      break;
+    }
+    case "@":
+    case "`": {
+      badChar = `reserved character ${source[0]}`;
+      break;
+    }
+  }
+  if (badChar)
+    onError(0, "BAD_SCALAR_START", `Plain value cannot start with ${badChar}`);
+  return unfoldLines(source);
+}
+function singleQuotedValue(source, onError) {
+  if (source[source.length - 1] !== "'" || source.length === 1)
+    onError(source.length, "MISSING_CHAR", "Missing closing 'quote");
+  return unfoldLines(source.slice(1, -1)).replace(/''/g, "'");
+}
+function unfoldLines(source) {
+  const line = /(.*?)\r?\n/sy;
+  let match = line.exec(source);
+  if (!match)
+    return source;
+  let trimEnd, trimBoth;
+  try {
+    trimEnd = new RegExp("(?<![ 	])[ 	]+$");
+    trimBoth = new RegExp("^[ 	]+|(?<![ 	])[ 	]+$", "g");
+  } catch {
+    trimEnd = /[ \t]+$/;
+    trimBoth = /^[ \t]+|[ \t]+$/g;
+  }
+  let res = match[1].replace(trimEnd, "");
+  let sep = " ";
+  let pos = line.lastIndex;
+  while (match = line.exec(source)) {
+    const lm = match[1].replace(trimBoth, "");
+    if (lm === "") {
+      if (sep === "\n")
+        res += sep;
+      else
+        sep = "\n";
+    } else {
+      res += sep + lm;
+      sep = " ";
+    }
+    pos = line.lastIndex;
+  }
+  const last = /[ \t]*(.*)/sy;
+  last.lastIndex = pos;
+  match = last.exec(source);
+  return res + sep + (match?.[1] ?? "");
+}
+function doubleQuotedValue(source, onError) {
+  let res = "";
+  for (let i2 = 1; i2 < source.length - 1; ++i2) {
+    const ch = source[i2];
+    if (ch === "\r" && source[i2 + 1] === "\n")
+      continue;
+    if (ch === "\n") {
+      const { fold, offset } = foldNewline(source, i2);
+      res += fold;
+      i2 = offset;
+    } else if (ch === "\\") {
+      let next = source[++i2];
+      const cc = escapeCodes[next];
+      if (cc)
+        res += cc;
+      else if (next === "\n") {
+        next = source[i2 + 1];
+        while (next === " " || next === "	")
+          next = source[++i2 + 1];
+      } else if (next === "\r" && source[i2 + 1] === "\n") {
+        next = source[++i2 + 1];
+        while (next === " " || next === "	")
+          next = source[++i2 + 1];
+      } else if (next === "x" || next === "u" || next === "U") {
+        const length = next === "x" ? 2 : next === "u" ? 4 : 8;
+        res += parseCharCode(source, i2 + 1, length, onError);
+        i2 += length;
+      } else {
+        const raw = source.substr(i2 - 1, 2);
+        onError(i2 - 1, "BAD_DQ_ESCAPE", `Invalid escape sequence ${raw}`);
+        res += raw;
+      }
+    } else if (ch === " " || ch === "	") {
+      const wsStart = i2;
+      let next = source[i2 + 1];
+      while (next === " " || next === "	")
+        next = source[++i2 + 1];
+      if (next !== "\n" && !(next === "\r" && source[i2 + 2] === "\n"))
+        res += i2 > wsStart ? source.slice(wsStart, i2 + 1) : ch;
+    } else {
+      res += ch;
+    }
+  }
+  if (source[source.length - 1] !== '"' || source.length === 1)
+    onError(source.length, "MISSING_CHAR", 'Missing closing "quote');
+  return res;
+}
+function foldNewline(source, offset) {
+  let fold = "";
+  let ch = source[offset + 1];
+  while (ch === " " || ch === "	" || ch === "\n" || ch === "\r") {
+    if (ch === "\r" && source[offset + 2] !== "\n")
+      break;
+    if (ch === "\n")
+      fold += "\n";
+    offset += 1;
+    ch = source[offset + 1];
+  }
+  if (!fold)
+    fold = " ";
+  return { fold, offset };
+}
+var escapeCodes = {
+  "0": "\0",
+  // null character
+  a: "\x07",
+  // bell character
+  b: "\b",
+  // backspace
+  e: "\x1B",
+  // escape character
+  f: "\f",
+  // form feed
+  n: "\n",
+  // line feed
+  r: "\r",
+  // carriage return
+  t: "	",
+  // horizontal tab
+  v: "\v",
+  // vertical tab
+  N: "\x85",
+  // Unicode next line
+  _: "\xA0",
+  // Unicode non-breaking space
+  L: "\u2028",
+  // Unicode line separator
+  P: "\u2029",
+  // Unicode paragraph separator
+  " ": " ",
+  '"': '"',
+  "/": "/",
+  "\\": "\\",
+  "	": "	"
+};
+function parseCharCode(source, offset, length, onError) {
+  const cc = source.substr(offset, length);
+  const ok = cc.length === length && /^[0-9a-fA-F]+$/.test(cc);
+  const code = ok ? parseInt(cc, 16) : NaN;
+  try {
+    return String.fromCodePoint(code);
+  } catch {
+    const raw = source.substr(offset - 2, length + 2);
+    onError(offset - 2, "BAD_DQ_ESCAPE", `Invalid escape sequence ${raw}`);
+    return raw;
+  }
+}
+
+// node_modules/yaml/browser/dist/compose/compose-scalar.js
+function composeScalar(ctx, token, tagToken, onError) {
+  const { value, type, comment, range } = token.type === "block-scalar" ? resolveBlockScalar(ctx, token, onError) : resolveFlowScalar(token, ctx.options.strict, onError);
+  const tagName = tagToken ? ctx.directives.tagName(tagToken.source, (msg) => onError(tagToken, "TAG_RESOLVE_FAILED", msg)) : null;
+  let tag;
+  if (ctx.options.stringKeys && ctx.atKey) {
+    tag = ctx.schema[SCALAR];
+  } else if (tagName)
+    tag = findScalarTagByName(ctx.schema, value, tagName, tagToken, onError);
+  else if (token.type === "scalar")
+    tag = findScalarTagByTest(ctx, value, token, onError);
+  else
+    tag = ctx.schema[SCALAR];
+  let scalar;
+  try {
+    const res = tag.resolve(value, (msg) => onError(tagToken ?? token, "TAG_RESOLVE_FAILED", msg), ctx.options);
+    scalar = isScalar(res) ? res : new Scalar(res);
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error);
+    onError(tagToken ?? token, "TAG_RESOLVE_FAILED", msg);
+    scalar = new Scalar(value);
+  }
+  scalar.range = range;
+  scalar.source = value;
+  if (type)
+    scalar.type = type;
+  if (tagName)
+    scalar.tag = tagName;
+  if (tag.format)
+    scalar.format = tag.format;
+  if (comment)
+    scalar.comment = comment;
+  return scalar;
+}
+function findScalarTagByName(schema4, value, tagName, tagToken, onError) {
+  if (tagName === "!")
+    return schema4[SCALAR];
+  const matchWithTest = [];
+  for (const tag of schema4.tags) {
+    if (!tag.collection && tag.tag === tagName) {
+      if (tag.default && tag.test)
+        matchWithTest.push(tag);
+      else
+        return tag;
+    }
+  }
+  for (const tag of matchWithTest)
+    if (tag.test?.test(value))
+      return tag;
+  const kt = schema4.knownTags[tagName];
+  if (kt && !kt.collection) {
+    schema4.tags.push(Object.assign({}, kt, { default: false, test: void 0 }));
+    return kt;
+  }
+  onError(tagToken, "TAG_RESOLVE_FAILED", `Unresolved tag: ${tagName}`, tagName !== "tag:yaml.org,2002:str");
+  return schema4[SCALAR];
+}
+function findScalarTagByTest({ atKey, directives, schema: schema4 }, value, token, onError) {
+  const tag = schema4.tags.find((tag2) => (tag2.default === true || atKey && tag2.default === "key") && tag2.test?.test(value)) || schema4[SCALAR];
+  if (schema4.compat) {
+    const compat = schema4.compat.find((tag2) => tag2.default && tag2.test?.test(value)) ?? schema4[SCALAR];
+    if (tag.tag !== compat.tag) {
+      const ts = directives.tagString(tag.tag);
+      const cs = directives.tagString(compat.tag);
+      const msg = `Value may be parsed as either ${ts} or ${cs}`;
+      onError(token, "TAG_RESOLVE_FAILED", msg, true);
+    }
+  }
+  return tag;
+}
+
+// node_modules/yaml/browser/dist/compose/util-empty-scalar-position.js
+function emptyScalarPosition(offset, before, pos) {
+  if (before) {
+    pos ?? (pos = before.length);
+    for (let i2 = pos - 1; i2 >= 0; --i2) {
+      let st = before[i2];
+      switch (st.type) {
+        case "space":
+        case "comment":
+        case "newline":
+          offset -= st.source.length;
+          continue;
+      }
+      st = before[++i2];
+      while (st?.type === "space") {
+        offset += st.source.length;
+        st = before[++i2];
+      }
+      break;
+    }
+  }
+  return offset;
+}
+
+// node_modules/yaml/browser/dist/compose/compose-node.js
+var CN = { composeNode, composeEmptyNode };
+function composeNode(ctx, token, props, onError) {
+  const atKey = ctx.atKey;
+  const { spaceBefore, comment, anchor, tag } = props;
+  let node2;
+  let isSrcToken = true;
+  switch (token.type) {
+    case "alias":
+      node2 = composeAlias(ctx, token, onError);
+      if (anchor || tag)
+        onError(token, "ALIAS_PROPS", "An alias node must not specify any properties");
+      break;
+    case "scalar":
+    case "single-quoted-scalar":
+    case "double-quoted-scalar":
+    case "block-scalar":
+      node2 = composeScalar(ctx, token, tag, onError);
+      if (anchor)
+        node2.anchor = anchor.source.substring(1);
+      break;
+    case "block-map":
+    case "block-seq":
+    case "flow-collection":
+      try {
+        node2 = composeCollection(CN, ctx, token, props, onError);
+        if (anchor)
+          node2.anchor = anchor.source.substring(1);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        onError(token, "RESOURCE_EXHAUSTION", message);
+      }
+      break;
+    default: {
+      const message = token.type === "error" ? token.message : `Unsupported token (type: ${token.type})`;
+      onError(token, "UNEXPECTED_TOKEN", message);
+      isSrcToken = false;
+    }
+  }
+  node2 ?? (node2 = composeEmptyNode(ctx, token.offset, void 0, null, props, onError));
+  if (anchor && node2.anchor === "")
+    onError(anchor, "BAD_ALIAS", "Anchor cannot be an empty string");
+  if (atKey && ctx.options.stringKeys && (!isScalar(node2) || typeof node2.value !== "string" || node2.tag && node2.tag !== "tag:yaml.org,2002:str")) {
+    const msg = "With stringKeys, all keys must be strings";
+    onError(tag ?? token, "NON_STRING_KEY", msg);
+  }
+  if (spaceBefore)
+    node2.spaceBefore = true;
+  if (comment) {
+    if (token.type === "scalar" && token.source === "")
+      node2.comment = comment;
+    else
+      node2.commentBefore = comment;
+  }
+  if (ctx.options.keepSourceTokens && isSrcToken)
+    node2.srcToken = token;
+  return node2;
+}
+function composeEmptyNode(ctx, offset, before, pos, { spaceBefore, comment, anchor, tag, end }, onError) {
+  const token = {
+    type: "scalar",
+    offset: emptyScalarPosition(offset, before, pos),
+    indent: -1,
+    source: ""
+  };
+  const node2 = composeScalar(ctx, token, tag, onError);
+  if (anchor) {
+    node2.anchor = anchor.source.substring(1);
+    if (node2.anchor === "")
+      onError(anchor, "BAD_ALIAS", "Anchor cannot be an empty string");
+  }
+  if (spaceBefore)
+    node2.spaceBefore = true;
+  if (comment) {
+    node2.comment = comment;
+    node2.range[2] = end;
+  }
+  return node2;
+}
+function composeAlias({ options }, { offset, source, end }, onError) {
+  const alias = new Alias(source.substring(1));
+  if (alias.source === "")
+    onError(offset, "BAD_ALIAS", "Alias cannot be an empty string");
+  if (alias.source.endsWith(":"))
+    onError(offset + source.length - 1, "BAD_ALIAS", "Alias ending in : is ambiguous", true);
+  const valueEnd = offset + source.length;
+  const re = resolveEnd(end, valueEnd, options.strict, onError);
+  alias.range = [offset, valueEnd, re.offset];
+  if (re.comment)
+    alias.comment = re.comment;
+  return alias;
+}
+
+// node_modules/yaml/browser/dist/compose/compose-doc.js
+function composeDoc(options, directives, { offset, start, value, end }, onError) {
+  const opts = Object.assign({ _directives: directives }, options);
+  const doc = new Document(void 0, opts);
+  const ctx = {
+    atKey: false,
+    atRoot: true,
+    directives: doc.directives,
+    options: doc.options,
+    schema: doc.schema
+  };
+  const props = resolveProps(start, {
+    indicator: "doc-start",
+    next: value ?? end?.[0],
+    offset,
+    onError,
+    parentIndent: 0,
+    startOnNewline: true
+  });
+  if (props.found) {
+    doc.directives.docStart = true;
+    if (value && (value.type === "block-map" || value.type === "block-seq") && !props.hasNewline)
+      onError(props.end, "MISSING_CHAR", "Block collection cannot start on same line with directives-end marker");
+  }
+  doc.contents = value ? composeNode(ctx, value, props, onError) : composeEmptyNode(ctx, props.end, start, null, props, onError);
+  const contentEnd = doc.contents.range[2];
+  const re = resolveEnd(end, contentEnd, false, onError);
+  if (re.comment)
+    doc.comment = re.comment;
+  doc.range = [offset, contentEnd, re.offset];
+  return doc;
+}
+
+// node_modules/yaml/browser/dist/compose/composer.js
+function getErrorPos(src) {
+  if (typeof src === "number")
+    return [src, src + 1];
+  if (Array.isArray(src))
+    return src.length === 2 ? src : [src[0], src[1]];
+  const { offset, source } = src;
+  return [offset, offset + (typeof source === "string" ? source.length : 1)];
+}
+function parsePrelude(prelude) {
+  let comment = "";
+  let atComment = false;
+  let afterEmptyLine = false;
+  for (let i2 = 0; i2 < prelude.length; ++i2) {
+    const source = prelude[i2];
+    switch (source[0]) {
+      case "#":
+        comment += (comment === "" ? "" : afterEmptyLine ? "\n\n" : "\n") + (source.substring(1) || " ");
+        atComment = true;
+        afterEmptyLine = false;
+        break;
+      case "%":
+        if (prelude[i2 + 1]?.[0] !== "#")
+          i2 += 1;
+        atComment = false;
+        break;
+      default:
+        if (!atComment)
+          afterEmptyLine = true;
+        atComment = false;
+    }
+  }
+  return { comment, afterEmptyLine };
+}
+var Composer = class {
+  constructor(options = {}) {
+    this.doc = null;
+    this.atDirectives = false;
+    this.prelude = [];
+    this.errors = [];
+    this.warnings = [];
+    this.onError = (source, code, message, warning) => {
+      const pos = getErrorPos(source);
+      if (warning)
+        this.warnings.push(new YAMLWarning(pos, code, message));
+      else
+        this.errors.push(new YAMLParseError(pos, code, message));
+    };
+    this.directives = new Directives({ version: options.version || "1.2" });
+    this.options = options;
+  }
+  decorate(doc, afterDoc) {
+    const { comment, afterEmptyLine } = parsePrelude(this.prelude);
+    if (comment) {
+      const dc = doc.contents;
+      if (afterDoc) {
+        doc.comment = doc.comment ? `${doc.comment}
+${comment}` : comment;
+      } else if (afterEmptyLine || doc.directives.docStart || !dc) {
+        doc.commentBefore = comment;
+      } else if (isCollection(dc) && !dc.flow && dc.items.length > 0) {
+        let it = dc.items[0];
+        if (isPair(it))
+          it = it.key;
+        const cb = it.commentBefore;
+        it.commentBefore = cb ? `${comment}
+${cb}` : comment;
+      } else {
+        const cb = dc.commentBefore;
+        dc.commentBefore = cb ? `${comment}
+${cb}` : comment;
+      }
+    }
+    if (afterDoc) {
+      for (let i2 = 0; i2 < this.errors.length; ++i2)
+        doc.errors.push(this.errors[i2]);
+      for (let i2 = 0; i2 < this.warnings.length; ++i2)
+        doc.warnings.push(this.warnings[i2]);
+    } else {
+      doc.errors = this.errors;
+      doc.warnings = this.warnings;
+    }
+    this.prelude = [];
+    this.errors = [];
+    this.warnings = [];
+  }
+  /**
+   * Current stream status information.
+   *
+   * Mostly useful at the end of input for an empty stream.
+   */
+  streamInfo() {
+    return {
+      comment: parsePrelude(this.prelude).comment,
+      directives: this.directives,
+      errors: this.errors,
+      warnings: this.warnings
+    };
+  }
+  /**
+   * Compose tokens into documents.
+   *
+   * @param forceDoc - If the stream contains no document, still emit a final document including any comments and directives that would be applied to a subsequent document.
+   * @param endOffset - Should be set if `forceDoc` is also set, to set the document range end and to indicate errors correctly.
+   */
+  *compose(tokens, forceDoc = false, endOffset = -1) {
+    for (const token of tokens)
+      yield* this.next(token);
+    yield* this.end(forceDoc, endOffset);
+  }
+  /** Advance the composer by one CST token. */
+  *next(token) {
+    switch (token.type) {
+      case "directive":
+        this.directives.add(token.source, (offset, message, warning) => {
+          const pos = getErrorPos(token);
+          pos[0] += offset;
+          this.onError(pos, "BAD_DIRECTIVE", message, warning);
+        });
+        this.prelude.push(token.source);
+        this.atDirectives = true;
+        break;
+      case "document": {
+        const doc = composeDoc(this.options, this.directives, token, this.onError);
+        if (this.atDirectives && !doc.directives.docStart)
+          this.onError(token, "MISSING_CHAR", "Missing directives-end/doc-start indicator line");
+        this.decorate(doc, false);
+        if (this.doc)
+          yield this.doc;
+        this.doc = doc;
+        this.atDirectives = false;
+        break;
+      }
+      case "byte-order-mark":
+      case "space":
+        break;
+      case "comment":
+      case "newline":
+        this.prelude.push(token.source);
+        break;
+      case "error": {
+        const msg = token.source ? `${token.message}: ${JSON.stringify(token.source)}` : token.message;
+        const error = new YAMLParseError(getErrorPos(token), "UNEXPECTED_TOKEN", msg);
+        if (this.atDirectives || !this.doc)
+          this.errors.push(error);
+        else
+          this.doc.errors.push(error);
+        break;
+      }
+      case "doc-end": {
+        if (!this.doc) {
+          const msg = "Unexpected doc-end without preceding document";
+          this.errors.push(new YAMLParseError(getErrorPos(token), "UNEXPECTED_TOKEN", msg));
+          break;
+        }
+        this.doc.directives.docEnd = true;
+        const end = resolveEnd(token.end, token.offset + token.source.length, this.doc.options.strict, this.onError);
+        this.decorate(this.doc, true);
+        if (end.comment) {
+          const dc = this.doc.comment;
+          this.doc.comment = dc ? `${dc}
+${end.comment}` : end.comment;
+        }
+        this.doc.range[2] = end.offset;
+        break;
+      }
+      default:
+        this.errors.push(new YAMLParseError(getErrorPos(token), "UNEXPECTED_TOKEN", `Unsupported token ${token.type}`));
+    }
+  }
+  /**
+   * Call at end of input to yield any remaining document.
+   *
+   * @param forceDoc - If the stream contains no document, still emit a final document including any comments and directives that would be applied to a subsequent document.
+   * @param endOffset - Should be set if `forceDoc` is also set, to set the document range end and to indicate errors correctly.
+   */
+  *end(forceDoc = false, endOffset = -1) {
+    if (this.doc) {
+      this.decorate(this.doc, true);
+      yield this.doc;
+      this.doc = null;
+    } else if (forceDoc) {
+      const opts = Object.assign({ _directives: this.directives }, this.options);
+      const doc = new Document(void 0, opts);
+      if (this.atDirectives)
+        this.onError(endOffset, "MISSING_CHAR", "Missing directives-end indicator line");
+      doc.range = [0, endOffset, endOffset];
+      this.decorate(doc, false);
+      yield doc;
+    }
+  }
+};
+
+// node_modules/yaml/browser/dist/parse/cst-visit.js
+var BREAK2 = /* @__PURE__ */ Symbol("break visit");
+var SKIP2 = /* @__PURE__ */ Symbol("skip children");
+var REMOVE2 = /* @__PURE__ */ Symbol("remove item");
+function visit2(cst, visitor) {
+  if ("type" in cst && cst.type === "document")
+    cst = { start: cst.start, value: cst.value };
+  _visit(Object.freeze([]), cst, visitor);
+}
+visit2.BREAK = BREAK2;
+visit2.SKIP = SKIP2;
+visit2.REMOVE = REMOVE2;
+visit2.itemAtPath = (cst, path) => {
+  let item = cst;
+  for (const [field, index] of path) {
+    const tok = item?.[field];
+    if (tok && "items" in tok) {
+      item = tok.items[index];
+    } else
+      return void 0;
+  }
+  return item;
+};
+visit2.parentCollection = (cst, path) => {
+  const parent = visit2.itemAtPath(cst, path.slice(0, -1));
+  const field = path[path.length - 1][0];
+  const coll = parent?.[field];
+  if (coll && "items" in coll)
+    return coll;
+  throw new Error("Parent collection not found");
+};
+function _visit(path, item, visitor) {
+  let ctrl = visitor(item, path);
+  if (typeof ctrl === "symbol")
+    return ctrl;
+  for (const field of ["key", "value"]) {
+    const token = item[field];
+    if (token && "items" in token) {
+      for (let i2 = 0; i2 < token.items.length; ++i2) {
+        const ci = _visit(Object.freeze(path.concat([[field, i2]])), token.items[i2], visitor);
+        if (typeof ci === "number")
+          i2 = ci - 1;
+        else if (ci === BREAK2)
+          return BREAK2;
+        else if (ci === REMOVE2) {
+          token.items.splice(i2, 1);
+          i2 -= 1;
+        }
+      }
+      if (typeof ctrl === "function" && field === "key")
+        ctrl = ctrl(item, path);
+    }
+  }
+  return typeof ctrl === "function" ? ctrl(item, path) : ctrl;
+}
+
+// node_modules/yaml/browser/dist/parse/cst.js
+var BOM = "\uFEFF";
+var DOCUMENT = "";
+var FLOW_END = "";
+var SCALAR2 = "";
+function tokenType(source) {
+  switch (source) {
+    case BOM:
+      return "byte-order-mark";
+    case DOCUMENT:
+      return "doc-mode";
+    case FLOW_END:
+      return "flow-error-end";
+    case SCALAR2:
+      return "scalar";
+    case "---":
+      return "doc-start";
+    case "...":
+      return "doc-end";
+    case "":
+    case "\n":
+    case "\r\n":
+      return "newline";
+    case "-":
+      return "seq-item-ind";
+    case "?":
+      return "explicit-key-ind";
+    case ":":
+      return "map-value-ind";
+    case "{":
+      return "flow-map-start";
+    case "}":
+      return "flow-map-end";
+    case "[":
+      return "flow-seq-start";
+    case "]":
+      return "flow-seq-end";
+    case ",":
+      return "comma";
+  }
+  switch (source[0]) {
+    case " ":
+    case "	":
+      return "space";
+    case "#":
+      return "comment";
+    case "%":
+      return "directive-line";
+    case "*":
+      return "alias";
+    case "&":
+      return "anchor";
+    case "!":
+      return "tag";
+    case "'":
+      return "single-quoted-scalar";
+    case '"':
+      return "double-quoted-scalar";
+    case "|":
+    case ">":
+      return "block-scalar-header";
+  }
+  return null;
+}
+
+// node_modules/yaml/browser/dist/parse/lexer.js
+function isEmpty(ch) {
+  switch (ch) {
+    case void 0:
+    case " ":
+    case "\n":
+    case "\r":
+    case "	":
+      return true;
+    default:
+      return false;
+  }
+}
+var hexDigits = new Set("0123456789ABCDEFabcdef");
+var tagChars = new Set("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-#;/?:@&=+$_.!~*'()");
+var flowIndicatorChars = new Set(",[]{}");
+var invalidAnchorChars = new Set(" ,[]{}\n\r	");
+var isNotAnchorChar = (ch) => !ch || invalidAnchorChars.has(ch);
+var Lexer = class {
+  constructor() {
+    this.atEnd = false;
+    this.blockScalarIndent = -1;
+    this.blockScalarKeep = false;
+    this.buffer = "";
+    this.flowKey = false;
+    this.flowLevel = 0;
+    this.indentNext = 0;
+    this.indentValue = 0;
+    this.lineEndPos = null;
+    this.next = null;
+    this.pos = 0;
+  }
+  /**
+   * Generate YAML tokens from the `source` string. If `incomplete`,
+   * a part of the last line may be left as a buffer for the next call.
+   *
+   * @returns A generator of lexical tokens
+   */
+  *lex(source, incomplete = false) {
+    if (source) {
+      if (typeof source !== "string")
+        throw TypeError("source is not a string");
+      this.buffer = this.buffer ? this.buffer + source : source;
+      this.lineEndPos = null;
+    }
+    this.atEnd = !incomplete;
+    let next = this.next ?? "stream";
+    while (next && (incomplete || this.hasChars(1)))
+      next = yield* this.parseNext(next);
+  }
+  atLineEnd() {
+    let i2 = this.pos;
+    let ch = this.buffer[i2];
+    while (ch === " " || ch === "	")
+      ch = this.buffer[++i2];
+    if (!ch || ch === "#" || ch === "\n")
+      return true;
+    if (ch === "\r")
+      return this.buffer[i2 + 1] === "\n";
+    return false;
+  }
+  charAt(n2) {
+    return this.buffer[this.pos + n2];
+  }
+  continueScalar(offset) {
+    let ch = this.buffer[offset];
+    if (this.indentNext > 0) {
+      let indent = 0;
+      while (ch === " ")
+        ch = this.buffer[++indent + offset];
+      if (ch === "\r") {
+        const next = this.buffer[indent + offset + 1];
+        if (next === "\n" || !next && !this.atEnd)
+          return offset + indent + 1;
+      }
+      return ch === "\n" || indent >= this.indentNext || !ch && !this.atEnd ? offset + indent : -1;
+    }
+    if (ch === "-" || ch === ".") {
+      const dt = this.buffer.substr(offset, 3);
+      if ((dt === "---" || dt === "...") && isEmpty(this.buffer[offset + 3]))
+        return -1;
+    }
+    return offset;
+  }
+  getLine() {
+    let end = this.lineEndPos;
+    if (typeof end !== "number" || end !== -1 && end < this.pos) {
+      end = this.buffer.indexOf("\n", this.pos);
+      this.lineEndPos = end;
+    }
+    if (end === -1)
+      return this.atEnd ? this.buffer.substring(this.pos) : null;
+    if (this.buffer[end - 1] === "\r")
+      end -= 1;
+    return this.buffer.substring(this.pos, end);
+  }
+  hasChars(n2) {
+    return this.pos + n2 <= this.buffer.length;
+  }
+  setNext(state) {
+    this.buffer = this.buffer.substring(this.pos);
+    this.pos = 0;
+    this.lineEndPos = null;
+    this.next = state;
+    return null;
+  }
+  peek(n2) {
+    return this.buffer.substr(this.pos, n2);
+  }
+  *parseNext(next) {
+    switch (next) {
+      case "stream":
+        return yield* this.parseStream();
+      case "line-start":
+        return yield* this.parseLineStart();
+      case "block-start":
+        return yield* this.parseBlockStart();
+      case "doc":
+        return yield* this.parseDocument();
+      case "flow":
+        return yield* this.parseFlowCollection();
+      case "quoted-scalar":
+        return yield* this.parseQuotedScalar();
+      case "block-scalar":
+        return yield* this.parseBlockScalar();
+      case "plain-scalar":
+        return yield* this.parsePlainScalar();
+    }
+  }
+  *parseStream() {
+    let line = this.getLine();
+    if (line === null)
+      return this.setNext("stream");
+    if (line[0] === BOM) {
+      yield* this.pushCount(1);
+      line = line.substring(1);
+    }
+    if (line[0] === "%") {
+      let dirEnd = line.length;
+      let cs = line.indexOf("#");
+      while (cs !== -1) {
+        const ch = line[cs - 1];
+        if (ch === " " || ch === "	") {
+          dirEnd = cs - 1;
+          break;
+        } else {
+          cs = line.indexOf("#", cs + 1);
+        }
+      }
+      while (true) {
+        const ch = line[dirEnd - 1];
+        if (ch === " " || ch === "	")
+          dirEnd -= 1;
+        else
+          break;
+      }
+      const n2 = (yield* this.pushCount(dirEnd)) + (yield* this.pushSpaces(true));
+      yield* this.pushCount(line.length - n2);
+      this.pushNewline();
+      return "stream";
+    }
+    if (this.atLineEnd()) {
+      const sp = yield* this.pushSpaces(true);
+      yield* this.pushCount(line.length - sp);
+      yield* this.pushNewline();
+      return "stream";
+    }
+    yield DOCUMENT;
+    return yield* this.parseLineStart();
+  }
+  *parseLineStart() {
+    const ch = this.charAt(0);
+    if (!ch && !this.atEnd)
+      return this.setNext("line-start");
+    if (ch === "-" || ch === ".") {
+      if (!this.atEnd && !this.hasChars(4))
+        return this.setNext("line-start");
+      const s2 = this.peek(3);
+      if ((s2 === "---" || s2 === "...") && isEmpty(this.charAt(3))) {
+        yield* this.pushCount(3);
+        this.indentValue = 0;
+        this.indentNext = 0;
+        return s2 === "---" ? "doc" : "stream";
+      }
+    }
+    this.indentValue = yield* this.pushSpaces(false);
+    if (this.indentNext > this.indentValue && !isEmpty(this.charAt(1)))
+      this.indentNext = this.indentValue;
+    return yield* this.parseBlockStart();
+  }
+  *parseBlockStart() {
+    const [ch0, ch1] = this.peek(2);
+    if (!ch1 && !this.atEnd)
+      return this.setNext("block-start");
+    if ((ch0 === "-" || ch0 === "?" || ch0 === ":") && isEmpty(ch1)) {
+      const n2 = (yield* this.pushCount(1)) + (yield* this.pushSpaces(true));
+      this.indentNext = this.indentValue + 1;
+      this.indentValue += n2;
+      return "block-start";
+    }
+    return "doc";
+  }
+  *parseDocument() {
+    yield* this.pushSpaces(true);
+    const line = this.getLine();
+    if (line === null)
+      return this.setNext("doc");
+    let n2 = yield* this.pushIndicators();
+    switch (line[n2]) {
+      case "#":
+        yield* this.pushCount(line.length - n2);
+      // fallthrough
+      case void 0:
+        yield* this.pushNewline();
+        return yield* this.parseLineStart();
+      case "{":
+      case "[":
+        yield* this.pushCount(1);
+        this.flowKey = false;
+        this.flowLevel = 1;
+        return "flow";
+      case "}":
+      case "]":
+        yield* this.pushCount(1);
+        return "doc";
+      case "*":
+        yield* this.pushUntil(isNotAnchorChar);
+        return "doc";
+      case '"':
+      case "'":
+        return yield* this.parseQuotedScalar();
+      case "|":
+      case ">":
+        n2 += yield* this.parseBlockScalarHeader();
+        n2 += yield* this.pushSpaces(true);
+        yield* this.pushCount(line.length - n2);
+        yield* this.pushNewline();
+        return yield* this.parseBlockScalar();
+      default:
+        return yield* this.parsePlainScalar();
+    }
+  }
+  *parseFlowCollection() {
+    let nl, sp;
+    let indent = -1;
+    do {
+      nl = yield* this.pushNewline();
+      if (nl > 0) {
+        sp = yield* this.pushSpaces(false);
+        this.indentValue = indent = sp;
+      } else {
+        sp = 0;
+      }
+      sp += yield* this.pushSpaces(true);
+    } while (nl + sp > 0);
+    const line = this.getLine();
+    if (line === null)
+      return this.setNext("flow");
+    if (indent !== -1 && indent < this.indentNext && line[0] !== "#" || indent === 0 && (line.startsWith("---") || line.startsWith("...")) && isEmpty(line[3])) {
+      const atFlowEndMarker = indent === this.indentNext - 1 && this.flowLevel === 1 && (line[0] === "]" || line[0] === "}");
+      if (!atFlowEndMarker) {
+        this.flowLevel = 0;
+        yield FLOW_END;
+        return yield* this.parseLineStart();
+      }
+    }
+    let n2 = 0;
+    while (line[n2] === ",") {
+      n2 += yield* this.pushCount(1);
+      n2 += yield* this.pushSpaces(true);
+      this.flowKey = false;
+    }
+    n2 += yield* this.pushIndicators();
+    switch (line[n2]) {
+      case void 0:
+        return "flow";
+      case "#":
+        yield* this.pushCount(line.length - n2);
+        return "flow";
+      case "{":
+      case "[":
+        yield* this.pushCount(1);
+        this.flowKey = false;
+        this.flowLevel += 1;
+        return "flow";
+      case "}":
+      case "]":
+        yield* this.pushCount(1);
+        this.flowKey = true;
+        this.flowLevel -= 1;
+        return this.flowLevel ? "flow" : "doc";
+      case "*":
+        yield* this.pushUntil(isNotAnchorChar);
+        return "flow";
+      case '"':
+      case "'":
+        this.flowKey = true;
+        return yield* this.parseQuotedScalar();
+      case ":": {
+        const next = this.charAt(1);
+        if (this.flowKey || isEmpty(next) || next === ",") {
+          this.flowKey = false;
+          yield* this.pushCount(1);
+          yield* this.pushSpaces(true);
+          return "flow";
+        }
+      }
+      // fallthrough
+      default:
+        this.flowKey = false;
+        return yield* this.parsePlainScalar();
+    }
+  }
+  *parseQuotedScalar() {
+    const quote = this.charAt(0);
+    let end = this.buffer.indexOf(quote, this.pos + 1);
+    if (quote === "'") {
+      while (end !== -1 && this.buffer[end + 1] === "'")
+        end = this.buffer.indexOf("'", end + 2);
+    } else {
+      while (end !== -1) {
+        let n2 = 0;
+        while (this.buffer[end - 1 - n2] === "\\")
+          n2 += 1;
+        if (n2 % 2 === 0)
+          break;
+        end = this.buffer.indexOf('"', end + 1);
+      }
+    }
+    const qb = this.buffer.substring(0, end);
+    let nl = qb.indexOf("\n", this.pos);
+    if (nl !== -1) {
+      while (nl !== -1) {
+        const cs = this.continueScalar(nl + 1);
+        if (cs === -1)
+          break;
+        nl = qb.indexOf("\n", cs);
+      }
+      if (nl !== -1) {
+        end = nl - (qb[nl - 1] === "\r" ? 2 : 1);
+      }
+    }
+    if (end === -1) {
+      if (!this.atEnd)
+        return this.setNext("quoted-scalar");
+      end = this.buffer.length;
+    }
+    yield* this.pushToIndex(end + 1, false);
+    return this.flowLevel ? "flow" : "doc";
+  }
+  *parseBlockScalarHeader() {
+    this.blockScalarIndent = -1;
+    this.blockScalarKeep = false;
+    let i2 = this.pos;
+    while (true) {
+      const ch = this.buffer[++i2];
+      if (ch === "+")
+        this.blockScalarKeep = true;
+      else if (ch > "0" && ch <= "9")
+        this.blockScalarIndent = Number(ch) - 1;
+      else if (ch !== "-")
+        break;
+    }
+    return yield* this.pushUntil((ch) => isEmpty(ch) || ch === "#");
+  }
+  *parseBlockScalar() {
+    let nl = this.pos - 1;
+    let indent = 0;
+    let ch;
+    loop: for (let i3 = this.pos; ch = this.buffer[i3]; ++i3) {
+      switch (ch) {
+        case " ":
+          indent += 1;
+          break;
+        case "\n":
+          nl = i3;
+          indent = 0;
+          break;
+        case "\r": {
+          const next = this.buffer[i3 + 1];
+          if (!next && !this.atEnd)
+            return this.setNext("block-scalar");
+          if (next === "\n")
+            break;
+        }
+        // fallthrough
+        default:
+          break loop;
+      }
+    }
+    if (!ch && !this.atEnd)
+      return this.setNext("block-scalar");
+    if (indent >= this.indentNext) {
+      if (this.blockScalarIndent === -1)
+        this.indentNext = indent;
+      else {
+        this.indentNext = this.blockScalarIndent + (this.indentNext === 0 ? 1 : this.indentNext);
+      }
+      do {
+        const cs = this.continueScalar(nl + 1);
+        if (cs === -1)
+          break;
+        nl = this.buffer.indexOf("\n", cs);
+      } while (nl !== -1);
+      if (nl === -1) {
+        if (!this.atEnd)
+          return this.setNext("block-scalar");
+        nl = this.buffer.length;
+      }
+    }
+    let i2 = nl + 1;
+    ch = this.buffer[i2];
+    while (ch === " ")
+      ch = this.buffer[++i2];
+    if (ch === "	") {
+      while (ch === "	" || ch === " " || ch === "\r" || ch === "\n")
+        ch = this.buffer[++i2];
+      nl = i2 - 1;
+    } else if (!this.blockScalarKeep) {
+      do {
+        let i3 = nl - 1;
+        let ch2 = this.buffer[i3];
+        if (ch2 === "\r")
+          ch2 = this.buffer[--i3];
+        const lastChar = i3;
+        while (ch2 === " ")
+          ch2 = this.buffer[--i3];
+        if (ch2 === "\n" && i3 >= this.pos && i3 + 1 + indent > lastChar)
+          nl = i3;
+        else
+          break;
+      } while (true);
+    }
+    yield SCALAR2;
+    yield* this.pushToIndex(nl + 1, true);
+    return yield* this.parseLineStart();
+  }
+  *parsePlainScalar() {
+    const inFlow = this.flowLevel > 0;
+    let end = this.pos - 1;
+    let i2 = this.pos - 1;
+    let ch;
+    while (ch = this.buffer[++i2]) {
+      if (ch === ":") {
+        const next = this.buffer[i2 + 1];
+        if (isEmpty(next) || inFlow && flowIndicatorChars.has(next))
+          break;
+        end = i2;
+      } else if (isEmpty(ch)) {
+        let next = this.buffer[i2 + 1];
+        if (ch === "\r") {
+          if (next === "\n") {
+            i2 += 1;
+            ch = "\n";
+            next = this.buffer[i2 + 1];
+          } else
+            end = i2;
+        }
+        if (next === "#" || inFlow && flowIndicatorChars.has(next))
+          break;
+        if (ch === "\n") {
+          const cs = this.continueScalar(i2 + 1);
+          if (cs === -1)
+            break;
+          i2 = Math.max(i2, cs - 2);
+        }
+      } else {
+        if (inFlow && flowIndicatorChars.has(ch))
+          break;
+        end = i2;
+      }
+    }
+    if (!ch && !this.atEnd)
+      return this.setNext("plain-scalar");
+    yield SCALAR2;
+    yield* this.pushToIndex(end + 1, true);
+    return inFlow ? "flow" : "doc";
+  }
+  *pushCount(n2) {
+    if (n2 > 0) {
+      yield this.buffer.substr(this.pos, n2);
+      this.pos += n2;
+      return n2;
+    }
+    return 0;
+  }
+  *pushToIndex(i2, allowEmpty) {
+    const s2 = this.buffer.slice(this.pos, i2);
+    if (s2) {
+      yield s2;
+      this.pos += s2.length;
+      return s2.length;
+    } else if (allowEmpty)
+      yield "";
+    return 0;
+  }
+  *pushIndicators() {
+    let n2 = 0;
+    loop: while (true) {
+      switch (this.charAt(0)) {
+        case "!":
+          n2 += yield* this.pushTag();
+          n2 += yield* this.pushSpaces(true);
+          continue loop;
+        case "&":
+          n2 += yield* this.pushUntil(isNotAnchorChar);
+          n2 += yield* this.pushSpaces(true);
+          continue loop;
+        case "-":
+        // this is an error
+        case "?":
+        // this is an error outside flow collections
+        case ":": {
+          const inFlow = this.flowLevel > 0;
+          const ch1 = this.charAt(1);
+          if (isEmpty(ch1) || inFlow && flowIndicatorChars.has(ch1)) {
+            if (!inFlow)
+              this.indentNext = this.indentValue + 1;
+            else if (this.flowKey)
+              this.flowKey = false;
+            n2 += yield* this.pushCount(1);
+            n2 += yield* this.pushSpaces(true);
+            continue loop;
+          }
+        }
+      }
+      break loop;
+    }
+    return n2;
+  }
+  *pushTag() {
+    if (this.charAt(1) === "<") {
+      let i2 = this.pos + 2;
+      let ch = this.buffer[i2];
+      while (!isEmpty(ch) && ch !== ">")
+        ch = this.buffer[++i2];
+      return yield* this.pushToIndex(ch === ">" ? i2 + 1 : i2, false);
+    } else {
+      let i2 = this.pos + 1;
+      let ch = this.buffer[i2];
+      while (ch) {
+        if (tagChars.has(ch))
+          ch = this.buffer[++i2];
+        else if (ch === "%" && hexDigits.has(this.buffer[i2 + 1]) && hexDigits.has(this.buffer[i2 + 2])) {
+          ch = this.buffer[i2 += 3];
+        } else
+          break;
+      }
+      return yield* this.pushToIndex(i2, false);
+    }
+  }
+  *pushNewline() {
+    const ch = this.buffer[this.pos];
+    if (ch === "\n")
+      return yield* this.pushCount(1);
+    else if (ch === "\r" && this.charAt(1) === "\n")
+      return yield* this.pushCount(2);
+    else
+      return 0;
+  }
+  *pushSpaces(allowTabs) {
+    let i2 = this.pos - 1;
+    let ch;
+    do {
+      ch = this.buffer[++i2];
+    } while (ch === " " || allowTabs && ch === "	");
+    const n2 = i2 - this.pos;
+    if (n2 > 0) {
+      yield this.buffer.substr(this.pos, n2);
+      this.pos = i2;
+    }
+    return n2;
+  }
+  *pushUntil(test) {
+    let i2 = this.pos;
+    let ch = this.buffer[i2];
+    while (!test(ch))
+      ch = this.buffer[++i2];
+    return yield* this.pushToIndex(i2, false);
+  }
+};
+
+// node_modules/yaml/browser/dist/parse/line-counter.js
+var LineCounter = class {
+  constructor() {
+    this.lineStarts = [];
+    this.addNewLine = (offset) => this.lineStarts.push(offset);
+    this.linePos = (offset) => {
+      let low = 0;
+      let high = this.lineStarts.length;
+      while (low < high) {
+        const mid = low + high >> 1;
+        if (this.lineStarts[mid] < offset)
+          low = mid + 1;
+        else
+          high = mid;
+      }
+      if (this.lineStarts[low] === offset)
+        return { line: low + 1, col: 1 };
+      if (low === 0)
+        return { line: 0, col: offset };
+      const start = this.lineStarts[low - 1];
+      return { line: low, col: offset - start + 1 };
+    };
+  }
+};
+
+// node_modules/yaml/browser/dist/parse/parser.js
+function includesToken(list, type) {
+  for (let i2 = 0; i2 < list.length; ++i2)
+    if (list[i2].type === type)
+      return true;
+  return false;
+}
+function findNonEmptyIndex(list) {
+  for (let i2 = 0; i2 < list.length; ++i2) {
+    switch (list[i2].type) {
+      case "space":
+      case "comment":
+      case "newline":
+        break;
+      default:
+        return i2;
+    }
+  }
+  return -1;
+}
+function isFlowToken(token) {
+  switch (token?.type) {
+    case "alias":
+    case "scalar":
+    case "single-quoted-scalar":
+    case "double-quoted-scalar":
+    case "flow-collection":
+      return true;
+    default:
+      return false;
+  }
+}
+function getPrevProps(parent) {
+  switch (parent.type) {
+    case "document":
+      return parent.start;
+    case "block-map": {
+      const it = parent.items[parent.items.length - 1];
+      return it.sep ?? it.start;
+    }
+    case "block-seq":
+      return parent.items[parent.items.length - 1].start;
+    /* istanbul ignore next should not happen */
+    default:
+      return [];
+  }
+}
+function getFirstKeyStartProps(prev) {
+  if (prev.length === 0)
+    return [];
+  let i2 = prev.length;
+  loop: while (--i2 >= 0) {
+    switch (prev[i2].type) {
+      case "doc-start":
+      case "explicit-key-ind":
+      case "map-value-ind":
+      case "seq-item-ind":
+      case "newline":
+        break loop;
+    }
+  }
+  while (prev[++i2]?.type === "space") {
+  }
+  return prev.splice(i2, prev.length);
+}
+function arrayPushArray(target, source) {
+  if (source.length < 1e5)
+    Array.prototype.push.apply(target, source);
+  else
+    for (let i2 = 0; i2 < source.length; ++i2)
+      target.push(source[i2]);
+}
+function fixFlowSeqItems(fc) {
+  if (fc.start.type === "flow-seq-start") {
+    for (const it of fc.items) {
+      if (it.sep && !it.value && !includesToken(it.start, "explicit-key-ind") && !includesToken(it.sep, "map-value-ind")) {
+        if (it.key)
+          it.value = it.key;
+        delete it.key;
+        if (isFlowToken(it.value)) {
+          if (it.value.end)
+            arrayPushArray(it.value.end, it.sep);
+          else
+            it.value.end = it.sep;
+        } else
+          arrayPushArray(it.start, it.sep);
+        delete it.sep;
+      }
+    }
+  }
+}
+var Parser = class {
+  /**
+   * @param onNewLine - If defined, called separately with the start position of
+   *   each new line (in `parse()`, including the start of input).
+   */
+  constructor(onNewLine) {
+    this.atNewLine = true;
+    this.atScalar = false;
+    this.indent = 0;
+    this.offset = 0;
+    this.onKeyLine = false;
+    this.stack = [];
+    this.source = "";
+    this.type = "";
+    this.lexer = new Lexer();
+    this.onNewLine = onNewLine;
+  }
+  /**
+   * Parse `source` as a YAML stream.
+   * If `incomplete`, a part of the last line may be left as a buffer for the next call.
+   *
+   * Errors are not thrown, but yielded as `{ type: 'error', message }` tokens.
+   *
+   * @returns A generator of tokens representing each directive, document, and other structure.
+   */
+  *parse(source, incomplete = false) {
+    if (this.onNewLine && this.offset === 0)
+      this.onNewLine(0);
+    for (const lexeme of this.lexer.lex(source, incomplete))
+      yield* this.next(lexeme);
+    if (!incomplete)
+      yield* this.end();
+  }
+  /**
+   * Advance the parser by the `source` of one lexical token.
+   */
+  *next(source) {
+    this.source = source;
+    if (this.atScalar) {
+      this.atScalar = false;
+      yield* this.step();
+      this.offset += source.length;
+      return;
+    }
+    const type = tokenType(source);
+    if (!type) {
+      const message = `Not a YAML token: ${source}`;
+      yield* this.pop({ type: "error", offset: this.offset, message, source });
+      this.offset += source.length;
+    } else if (type === "scalar") {
+      this.atNewLine = false;
+      this.atScalar = true;
+      this.type = "scalar";
+    } else {
+      this.type = type;
+      yield* this.step();
+      switch (type) {
+        case "newline":
+          this.atNewLine = true;
+          this.indent = 0;
+          if (this.onNewLine)
+            this.onNewLine(this.offset + source.length);
+          break;
+        case "space":
+          if (this.atNewLine && source[0] === " ")
+            this.indent += source.length;
+          break;
+        case "explicit-key-ind":
+        case "map-value-ind":
+        case "seq-item-ind":
+          if (this.atNewLine)
+            this.indent += source.length;
+          break;
+        case "doc-mode":
+        case "flow-error-end":
+          return;
+        default:
+          this.atNewLine = false;
+      }
+      this.offset += source.length;
+    }
+  }
+  /** Call at end of input to push out any remaining constructions */
+  *end() {
+    while (this.stack.length > 0)
+      yield* this.pop();
+  }
+  get sourceToken() {
+    const st = {
+      type: this.type,
+      offset: this.offset,
+      indent: this.indent,
+      source: this.source
+    };
+    return st;
+  }
+  *step() {
+    const top = this.peek(1);
+    if (this.type === "doc-end" && top?.type !== "doc-end") {
+      while (this.stack.length > 0)
+        yield* this.pop();
+      this.stack.push({
+        type: "doc-end",
+        offset: this.offset,
+        source: this.source
+      });
+      return;
+    }
+    if (!top)
+      return yield* this.stream();
+    switch (top.type) {
+      case "document":
+        return yield* this.document(top);
+      case "alias":
+      case "scalar":
+      case "single-quoted-scalar":
+      case "double-quoted-scalar":
+        return yield* this.scalar(top);
+      case "block-scalar":
+        return yield* this.blockScalar(top);
+      case "block-map":
+        return yield* this.blockMap(top);
+      case "block-seq":
+        return yield* this.blockSequence(top);
+      case "flow-collection":
+        return yield* this.flowCollection(top);
+      case "doc-end":
+        return yield* this.documentEnd(top);
+    }
+    yield* this.pop();
+  }
+  peek(n2) {
+    return this.stack[this.stack.length - n2];
+  }
+  *pop(error) {
+    const token = error ?? this.stack.pop();
+    if (!token) {
+      const message = "Tried to pop an empty stack";
+      yield { type: "error", offset: this.offset, source: "", message };
+    } else if (this.stack.length === 0) {
+      yield token;
+    } else {
+      const top = this.peek(1);
+      if (token.type === "block-scalar") {
+        token.indent = "indent" in top ? top.indent : 0;
+      } else if (token.type === "flow-collection" && top.type === "document") {
+        token.indent = 0;
+      }
+      if (token.type === "flow-collection")
+        fixFlowSeqItems(token);
+      switch (top.type) {
+        case "document":
+          top.value = token;
+          break;
+        case "block-scalar":
+          top.props.push(token);
+          break;
+        case "block-map": {
+          const it = top.items[top.items.length - 1];
+          if (it.value) {
+            top.items.push({ start: [], key: token, sep: [] });
+            this.onKeyLine = true;
+            return;
+          } else if (it.sep) {
+            it.value = token;
+          } else {
+            Object.assign(it, { key: token, sep: [] });
+            this.onKeyLine = !it.explicitKey;
+            return;
+          }
+          break;
+        }
+        case "block-seq": {
+          const it = top.items[top.items.length - 1];
+          if (it.value)
+            top.items.push({ start: [], value: token });
+          else
+            it.value = token;
+          break;
+        }
+        case "flow-collection": {
+          const it = top.items[top.items.length - 1];
+          if (!it || it.value)
+            top.items.push({ start: [], key: token, sep: [] });
+          else if (it.sep)
+            it.value = token;
+          else
+            Object.assign(it, { key: token, sep: [] });
+          return;
+        }
+        /* istanbul ignore next should not happen */
+        default:
+          yield* this.pop();
+          yield* this.pop(token);
+      }
+      if ((top.type === "document" || top.type === "block-map" || top.type === "block-seq") && (token.type === "block-map" || token.type === "block-seq")) {
+        const last = token.items[token.items.length - 1];
+        if (last && !last.sep && !last.value && last.start.length > 0 && findNonEmptyIndex(last.start) === -1 && (token.indent === 0 || last.start.every((st) => st.type !== "comment" || st.indent < token.indent))) {
+          if (top.type === "document")
+            top.end = last.start;
+          else
+            top.items.push({ start: last.start });
+          token.items.splice(-1, 1);
+        }
+      }
+    }
+  }
+  *stream() {
+    switch (this.type) {
+      case "directive-line":
+        yield { type: "directive", offset: this.offset, source: this.source };
+        return;
+      case "byte-order-mark":
+      case "space":
+      case "comment":
+      case "newline":
+        yield this.sourceToken;
+        return;
+      case "doc-mode":
+      case "doc-start": {
+        const doc = {
+          type: "document",
+          offset: this.offset,
+          start: []
+        };
+        if (this.type === "doc-start")
+          doc.start.push(this.sourceToken);
+        this.stack.push(doc);
+        return;
+      }
+    }
+    yield {
+      type: "error",
+      offset: this.offset,
+      message: `Unexpected ${this.type} token in YAML stream`,
+      source: this.source
+    };
+  }
+  *document(doc) {
+    if (doc.value)
+      return yield* this.lineEnd(doc);
+    switch (this.type) {
+      case "doc-start": {
+        if (findNonEmptyIndex(doc.start) !== -1) {
+          yield* this.pop();
+          yield* this.step();
+        } else
+          doc.start.push(this.sourceToken);
+        return;
+      }
+      case "anchor":
+      case "tag":
+      case "space":
+      case "comment":
+      case "newline":
+        doc.start.push(this.sourceToken);
+        return;
+    }
+    const bv = this.startBlockValue(doc);
+    if (bv)
+      this.stack.push(bv);
+    else {
+      yield {
+        type: "error",
+        offset: this.offset,
+        message: `Unexpected ${this.type} token in YAML document`,
+        source: this.source
+      };
+    }
+  }
+  *scalar(scalar) {
+    if (this.type === "map-value-ind") {
+      const prev = getPrevProps(this.peek(2));
+      const start = getFirstKeyStartProps(prev);
+      let sep;
+      if (scalar.end) {
+        sep = scalar.end;
+        sep.push(this.sourceToken);
+        delete scalar.end;
+      } else
+        sep = [this.sourceToken];
+      const map2 = {
+        type: "block-map",
+        offset: scalar.offset,
+        indent: scalar.indent,
+        items: [{ start, key: scalar, sep }]
+      };
+      this.onKeyLine = true;
+      this.stack[this.stack.length - 1] = map2;
+    } else
+      yield* this.lineEnd(scalar);
+  }
+  *blockScalar(scalar) {
+    switch (this.type) {
+      case "space":
+      case "comment":
+      case "newline":
+        scalar.props.push(this.sourceToken);
+        return;
+      case "scalar":
+        scalar.source = this.source;
+        this.atNewLine = true;
+        this.indent = 0;
+        if (this.onNewLine) {
+          let nl = this.source.indexOf("\n") + 1;
+          while (nl !== 0) {
+            this.onNewLine(this.offset + nl);
+            nl = this.source.indexOf("\n", nl) + 1;
+          }
+        }
+        yield* this.pop();
+        break;
+      /* istanbul ignore next should not happen */
+      default:
+        yield* this.pop();
+        yield* this.step();
+    }
+  }
+  *blockMap(map2) {
+    const it = map2.items[map2.items.length - 1];
+    switch (this.type) {
+      case "newline":
+        this.onKeyLine = false;
+        if (it.value) {
+          const end = "end" in it.value ? it.value.end : void 0;
+          const last = Array.isArray(end) ? end[end.length - 1] : void 0;
+          if (last?.type === "comment")
+            end?.push(this.sourceToken);
+          else
+            map2.items.push({ start: [this.sourceToken] });
+        } else if (it.sep) {
+          it.sep.push(this.sourceToken);
+        } else {
+          it.start.push(this.sourceToken);
+        }
+        return;
+      case "space":
+      case "comment":
+        if (it.value) {
+          map2.items.push({ start: [this.sourceToken] });
+        } else if (it.sep) {
+          it.sep.push(this.sourceToken);
+        } else {
+          if (this.atIndentedComment(it.start, map2.indent)) {
+            const prev = map2.items[map2.items.length - 2];
+            const end = prev?.value?.end;
+            if (Array.isArray(end)) {
+              arrayPushArray(end, it.start);
+              end.push(this.sourceToken);
+              map2.items.pop();
+              return;
+            }
+          }
+          it.start.push(this.sourceToken);
+        }
+        return;
+    }
+    if (this.indent >= map2.indent) {
+      const atMapIndent = !this.onKeyLine && this.indent === map2.indent;
+      const atNextItem = atMapIndent && (it.sep || it.explicitKey) && this.type !== "seq-item-ind";
+      let start = [];
+      if (atNextItem && it.sep && !it.value) {
+        const nl = [];
+        for (let i2 = 0; i2 < it.sep.length; ++i2) {
+          const st = it.sep[i2];
+          switch (st.type) {
+            case "newline":
+              nl.push(i2);
+              break;
+            case "space":
+              break;
+            case "comment":
+              if (st.indent > map2.indent)
+                nl.length = 0;
+              break;
+            default:
+              nl.length = 0;
+          }
+        }
+        if (nl.length >= 2)
+          start = it.sep.splice(nl[1]);
+      }
+      switch (this.type) {
+        case "anchor":
+        case "tag":
+          if (atNextItem || it.value) {
+            start.push(this.sourceToken);
+            map2.items.push({ start });
+            this.onKeyLine = true;
+          } else if (it.sep) {
+            it.sep.push(this.sourceToken);
+          } else {
+            it.start.push(this.sourceToken);
+          }
+          return;
+        case "explicit-key-ind":
+          if (!it.sep && !it.explicitKey) {
+            it.start.push(this.sourceToken);
+            it.explicitKey = true;
+          } else if (atNextItem || it.value) {
+            start.push(this.sourceToken);
+            map2.items.push({ start, explicitKey: true });
+          } else {
+            this.stack.push({
+              type: "block-map",
+              offset: this.offset,
+              indent: this.indent,
+              items: [{ start: [this.sourceToken], explicitKey: true }]
+            });
+          }
+          this.onKeyLine = true;
+          return;
+        case "map-value-ind":
+          if (it.explicitKey) {
+            if (!it.sep) {
+              if (includesToken(it.start, "newline")) {
+                Object.assign(it, { key: null, sep: [this.sourceToken] });
+              } else {
+                const start2 = getFirstKeyStartProps(it.start);
+                this.stack.push({
+                  type: "block-map",
+                  offset: this.offset,
+                  indent: this.indent,
+                  items: [{ start: start2, key: null, sep: [this.sourceToken] }]
+                });
+              }
+            } else if (it.value) {
+              map2.items.push({ start: [], key: null, sep: [this.sourceToken] });
+            } else if (includesToken(it.sep, "map-value-ind")) {
+              this.stack.push({
+                type: "block-map",
+                offset: this.offset,
+                indent: this.indent,
+                items: [{ start, key: null, sep: [this.sourceToken] }]
+              });
+            } else if (isFlowToken(it.key) && !includesToken(it.sep, "newline")) {
+              const start2 = getFirstKeyStartProps(it.start);
+              const key = it.key;
+              const sep = it.sep;
+              sep.push(this.sourceToken);
+              delete it.key;
+              delete it.sep;
+              this.stack.push({
+                type: "block-map",
+                offset: this.offset,
+                indent: this.indent,
+                items: [{ start: start2, key, sep }]
+              });
+            } else if (start.length > 0) {
+              it.sep = it.sep.concat(start, this.sourceToken);
+            } else {
+              it.sep.push(this.sourceToken);
+            }
+          } else {
+            if (!it.sep) {
+              Object.assign(it, { key: null, sep: [this.sourceToken] });
+            } else if (it.value || atNextItem) {
+              map2.items.push({ start, key: null, sep: [this.sourceToken] });
+            } else if (includesToken(it.sep, "map-value-ind")) {
+              this.stack.push({
+                type: "block-map",
+                offset: this.offset,
+                indent: this.indent,
+                items: [{ start: [], key: null, sep: [this.sourceToken] }]
+              });
+            } else {
+              it.sep.push(this.sourceToken);
+            }
+          }
+          this.onKeyLine = true;
+          return;
+        case "alias":
+        case "scalar":
+        case "single-quoted-scalar":
+        case "double-quoted-scalar": {
+          const fs = this.flowScalar(this.type);
+          if (atNextItem || it.value) {
+            map2.items.push({ start, key: fs, sep: [] });
+            this.onKeyLine = true;
+          } else if (it.sep) {
+            this.stack.push(fs);
+          } else {
+            Object.assign(it, { key: fs, sep: [] });
+            this.onKeyLine = true;
+          }
+          return;
+        }
+        default: {
+          const bv = this.startBlockValue(map2);
+          if (bv) {
+            if (bv.type === "block-seq") {
+              if (!it.explicitKey && it.sep && !includesToken(it.sep, "newline")) {
+                yield* this.pop({
+                  type: "error",
+                  offset: this.offset,
+                  message: "Unexpected block-seq-ind on same line with key",
+                  source: this.source
+                });
+                return;
+              }
+            } else if (atMapIndent) {
+              map2.items.push({ start });
+            }
+            this.stack.push(bv);
+            return;
+          }
+        }
+      }
+    }
+    yield* this.pop();
+    yield* this.step();
+  }
+  *blockSequence(seq2) {
+    const it = seq2.items[seq2.items.length - 1];
+    switch (this.type) {
+      case "newline":
+        if (it.value) {
+          const end = "end" in it.value ? it.value.end : void 0;
+          const last = Array.isArray(end) ? end[end.length - 1] : void 0;
+          if (last?.type === "comment")
+            end?.push(this.sourceToken);
+          else
+            seq2.items.push({ start: [this.sourceToken] });
+        } else
+          it.start.push(this.sourceToken);
+        return;
+      case "space":
+      case "comment":
+        if (it.value)
+          seq2.items.push({ start: [this.sourceToken] });
+        else {
+          if (this.atIndentedComment(it.start, seq2.indent)) {
+            const prev = seq2.items[seq2.items.length - 2];
+            const end = prev?.value?.end;
+            if (Array.isArray(end)) {
+              arrayPushArray(end, it.start);
+              end.push(this.sourceToken);
+              seq2.items.pop();
+              return;
+            }
+          }
+          it.start.push(this.sourceToken);
+        }
+        return;
+      case "anchor":
+      case "tag":
+        if (it.value || this.indent <= seq2.indent)
+          break;
+        it.start.push(this.sourceToken);
+        return;
+      case "seq-item-ind":
+        if (this.indent !== seq2.indent)
+          break;
+        if (it.value || includesToken(it.start, "seq-item-ind"))
+          seq2.items.push({ start: [this.sourceToken] });
+        else
+          it.start.push(this.sourceToken);
+        return;
+    }
+    if (this.indent > seq2.indent) {
+      const bv = this.startBlockValue(seq2);
+      if (bv) {
+        this.stack.push(bv);
+        return;
+      }
+    }
+    yield* this.pop();
+    yield* this.step();
+  }
+  *flowCollection(fc) {
+    const it = fc.items[fc.items.length - 1];
+    if (this.type === "flow-error-end") {
+      let top;
+      do {
+        yield* this.pop();
+        top = this.peek(1);
+      } while (top?.type === "flow-collection");
+    } else if (fc.end.length === 0) {
+      switch (this.type) {
+        case "comma":
+        case "explicit-key-ind":
+          if (!it || it.sep)
+            fc.items.push({ start: [this.sourceToken] });
+          else
+            it.start.push(this.sourceToken);
+          return;
+        case "map-value-ind":
+          if (!it || it.value)
+            fc.items.push({ start: [], key: null, sep: [this.sourceToken] });
+          else if (it.sep)
+            it.sep.push(this.sourceToken);
+          else
+            Object.assign(it, { key: null, sep: [this.sourceToken] });
+          return;
+        case "space":
+        case "comment":
+        case "newline":
+        case "anchor":
+        case "tag":
+          if (!it || it.value)
+            fc.items.push({ start: [this.sourceToken] });
+          else if (it.sep)
+            it.sep.push(this.sourceToken);
+          else
+            it.start.push(this.sourceToken);
+          return;
+        case "alias":
+        case "scalar":
+        case "single-quoted-scalar":
+        case "double-quoted-scalar": {
+          const fs = this.flowScalar(this.type);
+          if (!it || it.value)
+            fc.items.push({ start: [], key: fs, sep: [] });
+          else if (it.sep)
+            this.stack.push(fs);
+          else
+            Object.assign(it, { key: fs, sep: [] });
+          return;
+        }
+        case "flow-map-end":
+        case "flow-seq-end":
+          fc.end.push(this.sourceToken);
+          return;
+      }
+      const bv = this.startBlockValue(fc);
+      if (bv)
+        this.stack.push(bv);
+      else {
+        yield* this.pop();
+        yield* this.step();
+      }
+    } else {
+      const parent = this.peek(2);
+      if (parent.type === "block-map" && (this.type === "map-value-ind" && parent.indent === fc.indent || this.type === "newline" && !parent.items[parent.items.length - 1].sep)) {
+        yield* this.pop();
+        yield* this.step();
+      } else if (this.type === "map-value-ind" && parent.type !== "flow-collection") {
+        const prev = getPrevProps(parent);
+        const start = getFirstKeyStartProps(prev);
+        fixFlowSeqItems(fc);
+        const sep = fc.end.splice(1, fc.end.length);
+        sep.push(this.sourceToken);
+        const map2 = {
+          type: "block-map",
+          offset: fc.offset,
+          indent: fc.indent,
+          items: [{ start, key: fc, sep }]
+        };
+        this.onKeyLine = true;
+        this.stack[this.stack.length - 1] = map2;
+      } else {
+        yield* this.lineEnd(fc);
+      }
+    }
+  }
+  flowScalar(type) {
+    if (this.onNewLine) {
+      let nl = this.source.indexOf("\n") + 1;
+      while (nl !== 0) {
+        this.onNewLine(this.offset + nl);
+        nl = this.source.indexOf("\n", nl) + 1;
+      }
+    }
+    return {
+      type,
+      offset: this.offset,
+      indent: this.indent,
+      source: this.source
+    };
+  }
+  startBlockValue(parent) {
+    switch (this.type) {
+      case "alias":
+      case "scalar":
+      case "single-quoted-scalar":
+      case "double-quoted-scalar":
+        return this.flowScalar(this.type);
+      case "block-scalar-header":
+        return {
+          type: "block-scalar",
+          offset: this.offset,
+          indent: this.indent,
+          props: [this.sourceToken],
+          source: ""
+        };
+      case "flow-map-start":
+      case "flow-seq-start":
+        return {
+          type: "flow-collection",
+          offset: this.offset,
+          indent: this.indent,
+          start: this.sourceToken,
+          items: [],
+          end: []
+        };
+      case "seq-item-ind":
+        return {
+          type: "block-seq",
+          offset: this.offset,
+          indent: this.indent,
+          items: [{ start: [this.sourceToken] }]
+        };
+      case "explicit-key-ind": {
+        this.onKeyLine = true;
+        const prev = getPrevProps(parent);
+        const start = getFirstKeyStartProps(prev);
+        start.push(this.sourceToken);
+        return {
+          type: "block-map",
+          offset: this.offset,
+          indent: this.indent,
+          items: [{ start, explicitKey: true }]
+        };
+      }
+      case "map-value-ind": {
+        this.onKeyLine = true;
+        const prev = getPrevProps(parent);
+        const start = getFirstKeyStartProps(prev);
+        return {
+          type: "block-map",
+          offset: this.offset,
+          indent: this.indent,
+          items: [{ start, key: null, sep: [this.sourceToken] }]
+        };
+      }
+    }
+    return null;
+  }
+  atIndentedComment(start, indent) {
+    if (this.type !== "comment")
+      return false;
+    if (this.indent <= indent)
+      return false;
+    return start.every((st) => st.type === "newline" || st.type === "space");
+  }
+  *documentEnd(docEnd) {
+    if (this.type !== "doc-mode") {
+      if (docEnd.end)
+        docEnd.end.push(this.sourceToken);
+      else
+        docEnd.end = [this.sourceToken];
+      if (this.type === "newline")
+        yield* this.pop();
+    }
+  }
+  *lineEnd(token) {
+    switch (this.type) {
+      case "comma":
+      case "doc-start":
+      case "doc-end":
+      case "flow-seq-end":
+      case "flow-map-end":
+      case "map-value-ind":
+        yield* this.pop();
+        yield* this.step();
+        break;
+      case "newline":
+        this.onKeyLine = false;
+      // fallthrough
+      case "space":
+      case "comment":
+      default:
+        if (token.end)
+          token.end.push(this.sourceToken);
+        else
+          token.end = [this.sourceToken];
+        if (this.type === "newline")
+          yield* this.pop();
+    }
+  }
+};
+
+// node_modules/yaml/browser/dist/public-api.js
+function parseOptions(options) {
+  const prettyErrors = options.prettyErrors !== false;
+  const lineCounter = options.lineCounter || prettyErrors && new LineCounter() || null;
+  return { lineCounter, prettyErrors };
+}
+function parseDocument(source, options = {}) {
+  const { lineCounter, prettyErrors } = parseOptions(options);
+  const parser = new Parser(lineCounter?.addNewLine);
+  const composer = new Composer(options);
+  let doc = null;
+  for (const _doc of composer.compose(parser.parse(source), true, source.length)) {
+    if (!doc)
+      doc = _doc;
+    else if (doc.options.logLevel !== "silent") {
+      doc.errors.push(new YAMLParseError(_doc.range.slice(0, 2), "MULTIPLE_DOCS", "Source contains multiple documents; please use YAML.parseAllDocuments()"));
+      break;
+    }
+  }
+  if (prettyErrors && lineCounter) {
+    doc.errors.forEach(prettifyError(source, lineCounter));
+    doc.warnings.forEach(prettifyError(source, lineCounter));
+  }
+  return doc;
+}
+function stringify3(value, replacer, options) {
+  let _replacer = null;
+  if (typeof replacer === "function" || Array.isArray(replacer)) {
+    _replacer = replacer;
+  } else if (options === void 0 && replacer) {
+    options = replacer;
+  }
+  if (typeof options === "string")
+    options = options.length;
+  if (typeof options === "number") {
+    const indent = Math.round(options);
+    options = indent < 1 ? void 0 : indent > 8 ? { indent: 8 } : { indent };
+  }
+  if (value === void 0) {
+    const { keepUndefined } = options ?? replacer ?? {};
+    if (!keepUndefined)
+      return void 0;
+  }
+  if (isDocument(value) && !_replacer)
+    return value.toString(options);
+  return new Document(value, _replacer, options).toString(options);
+}
+
+// pip-editor/pip-host/activation/plugin-yaml.ts
+var decoder = new TextDecoder("utf-8", { fatal: true });
+var maximum_bytes = 64 * 1024;
+function parse_plugin_yaml(bytes) {
+  if (bytes.byteLength > maximum_bytes) throw new Error("plugin.yml \u8D85\u8FC7 64 KiB");
+  const document2 = parseDocument(decoder.decode(bytes), {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true
+  });
+  if (document2.errors.length || document2.warnings.length) {
+    throw new Error(`plugin.yml \u975E\u6CD5: ${document2.errors[0]?.message ?? document2.warnings[0]?.message}`);
+  }
+  visit(document2, (_key, node2) => {
+    if (isAlias(node2)) throw new Error("plugin.yml \u4E0D\u5141\u8BB8 YAML alias \u6216 anchor");
+    if (node2 && typeof node2 === "object") {
+      const metadata = node2;
+      if (metadata.anchor || metadata.tag) throw new Error("plugin.yml \u4E0D\u5141\u8BB8 anchor \u6216 tag");
+    }
+  });
+  const value = document2.toJS({ maxAliasCount: 0 });
+  assert_plugin_json_value(value);
+  if (!is_record2(value) || value.schema_version !== 1 || !["package", "composition", "system"].includes(String(value.kind))) {
+    throw new Error("plugin.yml \u7F3A\u5C11\u53D7\u652F\u6301\u7684 schema_version \u6216 kind");
+  }
+  return value;
+}
+function require_plugin_yaml_kind(document2, kind) {
+  if (document2.kind !== kind) throw new Error(`plugin.yml kind \u5FC5\u987B\u662F ${kind}`);
+  return document2;
+}
+function assert_plain_json(value, depth) {
+  if (depth > 16) throw new Error("plugin.yml \u5C42\u7EA7\u8FC7\u6DF1");
+  if (value === null || typeof value === "string" || typeof value === "boolean") return;
+  if (typeof value === "number" && Number.isFinite(value)) return;
+  if (Array.isArray(value)) {
+    if (value.length > 4096) throw new Error("plugin.yml \u6570\u7EC4\u8D85\u8FC7\u9650\u5236");
+    value.forEach((item) => assert_plain_json(item, depth + 1));
+    return;
+  }
+  if (is_record2(value)) {
+    const entries = Object.entries(value);
+    if (entries.length > 4096) throw new Error("plugin.yml \u5BF9\u8C61\u8D85\u8FC7\u9650\u5236");
+    for (const [key, item] of entries) {
+      if (["__proto__", "prototype", "constructor"].includes(key)) {
+        throw new Error("plugin.yml \u542B\u4E0D\u5B89\u5168\u952E");
+      }
+      assert_plain_json(item, depth + 1);
+    }
+    return;
+  }
+  throw new Error("plugin.yml \u53EA\u80FD\u5305\u542B JSON \u503C");
+}
+function assert_plugin_json_value(value) {
+  assert_plain_json(value, 0);
+}
+function is_record2(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype;
+}
+
+// pip-editor/pip-host/activation/system-plugin-descriptor.ts
+function parse_system_plugin_descriptor(bytes) {
+  const value = require_plugin_yaml_kind(parse_plugin_yaml(bytes), "system");
+  const keys = [
+    "schema_version",
+    "kind",
+    "id",
+    "runtime",
+    "inject",
+    "provides",
+    "config",
+    "contribution"
+  ];
+  if (Object.keys(value).some((key) => !keys.includes(key)) || keys.some((key) => !(key in value)) || !valid_id(value.id) || !is_record3(value.runtime) || value.runtime.abi !== "pip-plugin/1" || value.runtime.module !== value.id || !Array.isArray(value.inject) || !Array.isArray(value.provides) || !is_record3(value.config) || !is_record3(value.contribution)) {
+    throw new Error("\u7CFB\u7EDF\u63D2\u4EF6\u63CF\u8FF0\u7ED3\u6784\u975E\u6CD5");
+  }
+  const services = [...value.inject, ...value.provides];
+  if (services.some((item) => typeof item !== "string" || !item || item.includes(" "))) {
+    throw new Error("\u7CFB\u7EDF\u63D2\u4EF6\u670D\u52A1\u58F0\u660E\u975E\u6CD5");
+  }
+  return value;
+}
+function system_module_from_descriptor(module, descriptor) {
+  if (module.name !== descriptor.runtime.module) {
+    throw new Error("\u7CFB\u7EDF plugin.yml runtime.module \u4E0E\u6A21\u5757\u540D\u79F0\u4E0D\u4E00\u81F4");
+  }
+  assert_services("inject", module.inject ?? [], descriptor.inject);
+  assert_services("provides", module.provides ?? [], descriptor.provides);
+  return {
+    ...module,
+    name: descriptor.runtime.module,
+    inject: [...descriptor.inject],
+    provides: [...descriptor.provides]
+  };
+}
+function assert_services(label, actual, expected) {
+  if (actual.length !== expected.length || actual.some((item, index) => item !== expected[index])) {
+    throw new Error(`\u7CFB\u7EDF plugin.yml ${label} \u4E0E\u6A21\u5757\u58F0\u660E\u4E0D\u4E00\u81F4`);
+  }
+}
+function valid_id(value) {
+  return typeof value === "string" && /^[a-z][a-z0-9.-]+$/.test(value);
+}
+function is_record3(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+// pip-editor/pip-host-io/system-plugin/runtime-host.ts
+var SystemPluginRuntimeHost = class {
+  constructor(plugins) {
+    this.runtime = new PluginRuntime();
+    this.definitions = new RuntimeContributionRegistry(
+      (definition) => definition.id
+    );
+    this.#disposed = false;
+    this.#plugins = plugins;
+    this.ready = this.#initialize();
+  }
+  #plugins;
+  #disposed;
+  list() {
+    return this.definitions.list();
+  }
+  get(plugin_id) {
+    return this.definitions.get(plugin_id);
+  }
+  forTypeNode(type_node_id) {
+    return this.list().find((definition) => definition.typeNode.id === type_node_id);
+  }
+  require(plugin_id) {
+    const definition = this.get(plugin_id);
+    if (!definition) throw new Error(`Unknown system plugin ${plugin_id}`);
+    return definition;
+  }
+  subscribe(listener) {
+    return this.definitions.subscribe(listener);
+  }
+  async #initialize() {
+    await this.runtime.install("system-plugin-host", {
+      name: "system-plugin-host",
+      provides: ["system_plugins"],
+      apply: (ctx) => ctx.provide("system_plugins", this.definitions)
+    });
+    for (const plugin of this.#plugins) {
+      const module = system_module_from_descriptor(plugin.module, plugin.descriptor);
+      await this.runtime.install(module.name, module, plugin.descriptor.config);
+    }
+  }
+  async disable(instance_id) {
+    await this.ready;
+    await this.runtime.disable(instance_id);
+  }
+  async enable(instance_id) {
+    await this.ready;
+    await this.runtime.enable(instance_id);
+  }
+  async dispose() {
+    if (this.#disposed) return;
+    this.#disposed = true;
+    await this.ready;
+    for (const plugin of [...this.#plugins].reverse()) {
+      await this.runtime.uninstall(plugin.descriptor.id);
+    }
+    await this.runtime.uninstall("system-plugin-host");
+  }
+};
+
+// pip-editor/pip-host-io/system-plugin/system-plugin-descriptors.generated.ts
+var encoder = new TextEncoder();
+var parse2 = (source) => parse_system_plugin_descriptor(encoder.encode(source));
+var system_plugin_descriptors = {
+  plugin_manager: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: system.plugin-manager\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: system.plugin-manager\n",
+    "inject:\n",
+    "  - system_plugins\n",
+    "provides: []\n",
+    "config:\n",
+    "  enabled: true\n",
+    "contribution:\n",
+    "  id: host.plugin-manager\n",
+    "  scope: host\n",
+    "  surfaces:\n",
+    "    - host\n",
+    "    - workspace\n",
+    "  instance_policy: singleton\n",
+    "  presentation: window\n"
+  ].join("")),
+  preferences: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: system.preferences\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: system.preferences\n",
+    "inject:\n",
+    "  - system_plugins\n",
+    "provides: []\n",
+    "config:\n",
+    "  enabled: true\n",
+    "contribution:\n",
+    "  id: host.preferences\n",
+    "  scope: host\n",
+    "  surfaces:\n",
+    "    - host\n",
+    "    - workspace\n",
+    "  instance_policy: singleton\n",
+    "  presentation: window\n"
+  ].join("")),
+  guanguan: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: system.guanguan\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: system.guanguan\n",
+    "inject:\n",
+    "  - system_plugins\n",
+    "provides: []\n",
+    "config:\n",
+    "  enabled: true\n",
+    "contribution:\n",
+    "  id: host.interaction-navigator\n",
+    "  scope: host\n",
+    "  surfaces:\n",
+    "    - host\n",
+    "    - workspace\n",
+    "  instance_policy: multiple\n",
+    "  presentation: window\n"
+  ].join("")),
+  core: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-core\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-core\n",
+    "inject: []\n",
+    "provides:\n",
+    "  - guanguan_instances\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: core\n"
+  ].join("")),
+  presentation: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-presentation\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-presentation\n",
+    "inject:\n",
+    "  - guanguan_instances\n",
+    "  - guanguan_presentations\n",
+    "provides: []\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: presentation\n"
+  ].join("")),
+  world_tree: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-world-tree\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-world-tree\n",
+    "inject:\n",
+    "  - pip_workspace_sessions\n",
+    "  - pip_presentation_registry\n",
+    "provides:\n",
+    "  - guanguan_world_tree\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: world_tree\n"
+  ].join("")),
+  inspector: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-inspector\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-inspector\n",
+    "inject:\n",
+    "  - pip_workspace_sessions\n",
+    "  - pip_inspector_registry\n",
+    "provides:\n",
+    "  - guanguan_inspector\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: inspector\n"
+  ].join("")),
+  messages: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-messages\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-messages\n",
+    "inject:\n",
+    "  - guanguan_instances\n",
+    "provides:\n",
+    "  - guanguan_messages\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: messages\n"
+  ].join("")),
+  tools: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-tools\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-tools\n",
+    "inject:\n",
+    "  - pip_history\n",
+    "  - pip_creator_catalog\n",
+    "  - pip_selection\n",
+    "  - pip_navigation\n",
+    "provides:\n",
+    "  - guanguan_tools\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: tools\n"
+  ].join("")),
+  agent: parse2([
+    "schema_version: 1\n",
+    "kind: system\n",
+    "id: guanguan-agent\n",
+    "runtime:\n",
+    "  abi: pip-plugin/1\n",
+    "  module: guanguan-agent\n",
+    "inject:\n",
+    "  - guanguan_instances\n",
+    "  - agent_client\n",
+    "provides:\n",
+    "  - guanguan_agent\n",
+    "config: {}\n",
+    "contribution:\n",
+    "  scope: instance\n",
+    "  capability: agent\n"
+  ].join(""))
+};
+
+// pip-editor/pip-host-io/system-plugin/builtin-runtime-plugins.ts
+var module_for = (name, definition) => ({
+  name,
+  inject: ["system_plugins"],
+  config_schema: {
+    type: "object",
+    properties: { enabled: { type: "boolean", default: true } },
+    additional_properties: false
+  },
+  apply(ctx, raw_config) {
+    const config = raw_config;
+    if (!config.enabled) return;
+    const registry = ctx.services.system_plugins;
+    ctx.effect(() => registry.register(definition), `\u6CE8\u518C\u7CFB\u7EDF\u63D2\u4EF6:${definition.id}`);
+  }
+});
+var plugin_manager_runtime_plugin = module_for(
+  "system.plugin-manager",
+  pluginManagerSystemPlugin
+);
+var preferences_runtime_plugin = module_for(
+  "system.preferences",
+  preferencesSystemPlugin
+);
+var guanguan_system_runtime_plugin = module_for(
+  "system.guanguan",
+  interactionNavigatorSystemPlugin
+);
+var create_builtin_system_plugin_runtime_host = () => new SystemPluginRuntimeHost([
+  {
+    module: plugin_manager_runtime_plugin,
+    descriptor: system_plugin_descriptors.plugin_manager
+  },
+  {
+    module: preferences_runtime_plugin,
+    descriptor: system_plugin_descriptors.preferences
+  },
+  {
+    module: guanguan_system_runtime_plugin,
+    descriptor: system_plugin_descriptors.guanguan
+  }
+]);
 
 // pip-editor/pip-host/pip-host-actions.ts
 async function runCommand(request, context) {
@@ -26379,6 +36202,17 @@ async function dispatchPipElementRequest(request, context) {
     case "set-workspace-view":
       workspaceStore.updateViews(workspaceId, request.views);
       return;
+    case "set-workspace-plugin-state": {
+      const views = normalizeFreeLayout(active.views, active.rootNodeIds);
+      workspaceStore.updateViews(workspaceId, {
+        ...views,
+        plugin_state: {
+          ...views.plugin_state,
+          [request.pluginId]: structuredClone(request.value)
+        }
+      });
+      return;
+    }
     case "apply-patch":
       workspaceStore.commitPatch(
         workspaceId,
@@ -26498,279 +36332,892 @@ async function dispatchPipElementRequest(request, context) {
 }
 
 // pip-editor/pip-host/use-plugin-catalog.ts
-var import_react12 = __toESM(require_react(), 1);
+var import_react26 = __toESM(require_react(), 1);
 
-// pip-editor/pip-host/packages/package-identity.ts
-function assertSameImmutablePlugin(current, incoming) {
-  if (current.packageId !== incoming.packageId || current.packageVersion !== incoming.packageVersion || current.entrySha256 !== incoming.entrySha256 || current.sourceSha256 !== incoming.sourceSha256) {
-    throw new Error(`PIP ${incoming.packageId} conflicts with installed immutable package ${current.packageId}@${current.packageVersion}`);
-  }
-}
-
-// pip-editor/pip-host/activation/element-registry.ts
-var ElementPluginRegistry = class {
-  #plugins = /* @__PURE__ */ new Map();
-  #installing = /* @__PURE__ */ new Map();
-  #runtime;
-  constructor(runtime) {
-    this.#runtime = runtime;
-  }
+// pip-editor/pip-host/activation/production-element-registry.ts
+var ProductionElementRegistry = class {
   list() {
-    return [...this.#plugins.values()];
+    return [];
   }
   get(id) {
-    const plugin = this.#plugins.get(id);
-    return plugin?.active ? plugin : void 0;
+    void id;
+    return void 0;
   }
-  resolve(pluginId, elementId) {
-    return this.get(pluginId)?.manifest.elements.find((element) => element.id === elementId);
-  }
-  install(plugin) {
-    const pending = this.#installing.get(plugin.manifest.packageId);
-    if (pending) return pending.then(() => this.#installOnce(plugin));
-    const task = this.#installOnce(plugin).finally(() => {
-      if (this.#installing.get(plugin.manifest.packageId) === task) this.#installing.delete(plugin.manifest.packageId);
-    });
-    this.#installing.set(plugin.manifest.packageId, task);
-    return task;
-  }
-  async #installOnce(plugin) {
-    const current = this.#plugins.get(plugin.manifest.packageId);
-    if (current) {
-      assertSameImmutablePlugin(current.manifest, plugin.manifest);
-      if (current.active) return "already-active";
-      this.#plugins.set(plugin.manifest.packageId, { ...current, active: true });
-      return "reactivated";
-    }
-    for (const element of plugin.manifest.elements) {
-      const occupied = this.#runtime.registry.get(element.tag);
-      if (occupied) throw new Error(`Custom element tag ${element.tag} is already registered`);
-    }
-    await this.#runtime.load(plugin.entrySource);
-    const missing = plugin.manifest.elements.find((element) => !this.#runtime.registry.get(element.tag));
-    if (missing) throw new Error(`Element module did not register ${missing.tag}`);
-    this.#plugins.set(plugin.manifest.packageId, { ...plugin, active: true });
-    return "installed";
-  }
-  disable(id) {
-    const plugin = this.#plugins.get(id);
-    if (!plugin) return;
-    this.#plugins.set(id, { ...plugin, active: false });
-  }
-  enable(id) {
-    const plugin = this.#plugins.get(id);
-    if (plugin) this.#plugins.set(id, { ...plugin, active: true });
-  }
-  uninstall(id) {
-    this.#plugins.delete(id);
+  resolve(plugin_id, element_id) {
+    void plugin_id;
+    void element_id;
+    return void 0;
   }
 };
-function browserElementRuntime() {
-  return {
-    registry: { get: (tag) => typeof customElements === "undefined" ? void 0 : customElements.get(tag) },
-    async load(source) {
-      if (typeof window === "undefined") throw new Error("Element plugins can only run in a browser");
-      const url = URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
-      try {
-        await import(
-          /* webpackIgnore: true */
-          /* @vite-ignore */
-          url
-        );
-      } finally {
-        URL.revokeObjectURL(url);
-      }
-    }
-  };
-}
 
-// pip-editor/pip-host/activation/node-type-registry.ts
-var typeKey = (type) => `${type.node_id}\0${type.pip_id}`;
-var dispose = (value) => {
-  if (typeof value === "function") value();
-  else value?.dispose();
-};
-var releaseAll = (releases) => {
-  const errors = [];
-  for (const release of [...releases].reverse()) {
-    try {
-      release();
-    } catch (error) {
-      errors.push(error);
-    }
-  }
-  return errors;
-};
-var NodeTypePluginRegistry = class {
-  #plugins = /* @__PURE__ */ new Map();
-  #types = /* @__PURE__ */ new Map();
-  #validators = /* @__PURE__ */ new Set();
-  #commands = /* @__PURE__ */ new Map();
-  #executors = /* @__PURE__ */ new Map();
-  #projections = /* @__PURE__ */ new Map();
-  #languages = /* @__PURE__ */ new Map();
-  #creators = /* @__PURE__ */ new Map();
-  #planners = /* @__PURE__ */ new Map();
-  #runtimes = /* @__PURE__ */ new Map();
-  #operators = /* @__PURE__ */ new Map();
-  #triggers = /* @__PURE__ */ new Map();
-  #effects = /* @__PURE__ */ new Map();
-  #installing = /* @__PURE__ */ new Map();
-  constructor(runtime) {
-    this.runtime = runtime;
+// pip-editor/pip-host/activation/unified-node-registry.ts
+var UnifiedNodeTypeRegistry = class {
+  #services;
+  constructor(services) {
+    this.#services = services;
   }
   list() {
-    return [...this.#plugins.values()];
+    return [];
   }
   types() {
-    return [...this.#types.values()].map(({ value }) => value);
+    return this.#services.types.list();
   }
   validators() {
-    return [...this.#validators];
-  }
-  commands() {
-    return new Map([...this.#commands].map(([id, item]) => [id, item.value]));
-  }
-  executors() {
-    return new Map([...this.#executors].map(([id, item]) => [id, item.value]));
+    return this.#services.validators.list();
   }
   projections() {
-    return [...this.#projections.values()].map(({ value }) => value);
+    return this.#services.projections.list();
+  }
+  inspector_commands() {
+    return this.#services.inspector_commands.list();
   }
   languageProviders() {
-    return [...this.#languages.values()].map(({ value }) => value);
+    return this.#services.languages.list();
   }
   creators() {
-    return [...this.#creators.values()].map(({ value }) => value);
+    return this.#services.creators.list();
   }
   executionPlanners() {
-    return [...this.#planners.values()].map(({ value }) => value);
+    return this.#services.execution_planners.list();
   }
   nodeRuntimes() {
-    return [...this.#runtimes.values()].map(({ value }) => value);
-  }
-  pipOperators() {
-    return new Map([...this.#operators].map(([id, item]) => [id, item.value]));
+    return this.#services.node_runtimes.list();
   }
   triggerProviders() {
-    return [...this.#triggers.values()].map(({ value }) => value);
+    return this.#services.triggers.list();
+  }
+  executors() {
+    return /* @__PURE__ */ new Map();
+  }
+  commands() {
+    return new Map(this.#services.commands.list().map((item) => [item.id, item.handler]));
+  }
+  pipOperators() {
+    return new Map(this.#services.operators.list().map((item) => [item.id, item]));
   }
   effectHandlers() {
-    return new Map([...this.#effects].map(([id, item]) => [id, item.value]));
+    return new Map(this.#services.effects.list().map((item) => [item.type, item]));
   }
   resolveType(type) {
-    return this.#types.get(typeKey(type))?.value;
+    return this.types().find((item) => item.type.node_id === type.node_id && item.type.pip_id === type.pip_id);
   }
-  install(plugin) {
-    const pending = this.#installing.get(plugin.manifest.packageId);
-    if (pending) return pending.then(() => this.#installOnce(plugin));
-    const task = this.#installOnce(plugin).finally(() => {
-      if (this.#installing.get(plugin.manifest.packageId) === task) this.#installing.delete(plugin.manifest.packageId);
-    });
-    this.#installing.set(plugin.manifest.packageId, task);
-    return task;
+};
+
+// pip-editor/pip-host/activation/production-runtime-v3.ts
+var import_react24 = __toESM(require_react(), 1);
+var react_dom = __toESM(require_react_dom(), 1);
+var react_dom_client = __toESM(require_client(), 1);
+var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
+var jsx_runtime = __toESM(require_jsx_runtime(), 1);
+
+// pip-editor/pip-host/activation/plugin-descriptor.ts
+var encoder2 = new TextEncoder();
+function descriptor_for_manifest(manifest, runtime) {
+  assert_runtime_declaration(manifest.packageId, runtime);
+  const contributions = manifest.layer === "a3" ? { elements: manifest.elements.map((item) => ({ ...item })) } : { type_node_ids: [...manifest.typeNodeIds] };
+  return {
+    schema_version: 1,
+    kind: "package",
+    package: {
+      id: manifest.packageId,
+      version: manifest.packageVersion,
+      release_date: manifest.releaseDate,
+      layer: manifest.layer
+    },
+    runtime: {
+      abi: "pip-plugin/1",
+      module_abi: "pip-module-factory/1",
+      entry: "entry.mjs",
+      name: runtime.name,
+      inject: [...runtime.inject ?? []],
+      provides: [...runtime.provides ?? []]
+    },
+    capabilities: {
+      provides: [...manifest.providedCapabilities],
+      requires: [...manifest.requiredCapabilities],
+      platform_modules: [...manifest.platform_dependencies],
+      bundled_dependencies: { ...manifest.bundled_dependencies }
+    },
+    contributions,
+    dependencies: manifest.layer === "a4" ? manifest.dependencies.map((item) => ({ ...item })) : [],
+    resources: { ...manifest.resource_hashes }
+  };
+}
+function parse_plugin_descriptor(bytes) {
+  return require_plugin_yaml_kind(parse_plugin_yaml(bytes), "package");
+}
+function assert_plugin_descriptor(bytes, manifest) {
+  const actual = parse_plugin_descriptor(bytes);
+  const expected = descriptor_for_manifest(manifest, actual.runtime);
+  const canonical2 = (value) => stringify3(value, { lineWidth: 0, sortMapEntries: true });
+  if (canonical2(actual) !== canonical2(expected)) {
+    throw new Error("plugin.yml \u4E0E\u63D2\u4EF6 manifest \u4E0D\u4E00\u81F4");
   }
-  async #installOnce(plugin) {
-    const current = this.#plugins.get(plugin.manifest.packageId);
-    if (current) {
-      assertSameImmutablePlugin(current.manifest, plugin.manifest);
-      if (current.active)
-        return "already-active";
+  return actual;
+}
+function module_from_descriptor(module, descriptor) {
+  assert_equal("name", [module.name], [descriptor.runtime.name]);
+  assert_equal("inject", module.inject ?? [], descriptor.runtime.inject);
+  assert_equal("provides", module.provides ?? [], descriptor.runtime.provides);
+  return {
+    ...module,
+    name: descriptor.runtime.name,
+    inject: [...descriptor.runtime.inject],
+    provides: [...descriptor.runtime.provides]
+  };
+}
+function assert_equal(label, actual, expected) {
+  if (actual.length !== expected.length || actual.some((item, index) => item !== expected[index])) {
+    throw new Error(`plugin.yml runtime.${label} \u4E0E\u6A21\u5757\u58F0\u660E\u4E0D\u4E00\u81F4`);
+  }
+}
+function assert_runtime_declaration(package_id, runtime) {
+  if (runtime.name !== package_id) {
+    throw new Error("plugin.yml runtime.name \u5FC5\u987B\u7B49\u4E8E package.id");
+  }
+  for (const [label, services] of [
+    ["inject", runtime.inject ?? []],
+    ["provides", runtime.provides ?? []]
+  ]) {
+    if (new Set(services).size !== services.length || services.some((item) => typeof item !== "string" || !item || item.includes(" "))) {
+      throw new Error(`plugin.yml runtime.${label} \u670D\u52A1\u58F0\u660E\u975E\u6CD5`);
     }
-    const disposables = [];
-    const registeredTypes = /* @__PURE__ */ new Set();
-    const own = (map, id, value, label) => {
-      if (map.has(id)) throw new Error(`${label} ${id} is already registered`);
-      map.set(id, { pluginId: plugin.manifest.packageId, value });
-      const release = () => {
-        if (map.get(id)?.pluginId === plugin.manifest.packageId) map.delete(id);
-      };
-      disposables.push(release);
-      return release;
-    };
-    const host = {
-      registerType: (descriptor) => {
-        const key = typeKey(descriptor.type);
-        registeredTypes.add(key);
-        return own(this.#types, key, descriptor, "Node type");
-      },
-      registerValidator: (validator) => {
-        this.#validators.add(validator);
-        const release = () => this.#validators.delete(validator);
-        disposables.push(release);
-        return release;
-      },
-      registerCommand: (id, command) => own(this.#commands, id, command, "Command"),
-      registerExecutor: (id, executor) => own(this.#executors, id, executor, "Executor"),
-      registerProjection: (projection) => {
-        const normalized = normalizeProjectionRegistration(projection);
-        return own(this.#projections, projection.id, normalized, "Projection");
-      },
-      registerCreator: (creator) => own(this.#creators, creator.id, creator, "Creator"),
-      registerLanguageProvider: (provider) => own(this.#languages, provider.id, provider, "Language provider"),
-      registerExecutionPlanner: (planner) => own(this.#planners, planner.id, planner, "Execution planner"),
-      registerNodeRuntime: (runtime) => own(this.#runtimes, runtime.id, runtime, "Node runtime"),
-      registerPipOperator: (operator) => own(this.#operators, operator.id, operator, "Pip operator"),
-      registerTriggerProvider: (provider) => own(this.#triggers, provider.id, provider, "Trigger provider"),
-      registerEffectHandler: (handler) => own(this.#effects, handler.type, handler, "Effect handler")
-    };
+  }
+}
+
+// pip-editor/pip-host/activation/package-runtime-v3.ts
+var PluginPackageRuntimeV3 = class {
+  #factory_importer;
+  #elements = /* @__PURE__ */ new Map();
+  #node_types = /* @__PURE__ */ new Map();
+  constructor(runtime, shared_modules, factory_importer) {
+    this.runtime = runtime;
+    this.shared_modules = shared_modules;
+    this.#factory_importer = factory_importer;
+  }
+  async install_element(plugin, config = {}, instance_id = plugin.manifest.packageId) {
+    if (plugin.manifest.elementAbi !== "pip-element/3") {
+      throw new Error("\u65B0 A2 \u62D2\u7EDD pip-element/2\uFF1B\u8BF7\u5207\u6362 legacy profile");
+    }
+    const v3_plugin = plugin;
+    const current = this.#elements.get(instance_id);
+    if (current) {
+      assert_same_content(current.package.contentSha256, v3_plugin.contentSha256, v3_plugin.manifest.packageId);
+      return this.runtime.get_state(instance_id) === "active" ? "already-active" : "installed";
+    }
+    this.#assert_platform_dependencies(v3_plugin.manifest.platform_dependencies);
+    if (!this.#capabilities_ready(v3_plugin)) {
+      throw new Error(`A3 ${instance_id} \u7684\u5305\u80FD\u529B\u4F9D\u8D56\u5C1A\u672A\u6FC0\u6D3B`);
+    }
+    this.#register_package_resources(instance_id, v3_plugin);
     try {
-      const loaded = await this.runtime.load(plugin.entrySource);
-      if (typeof loaded.default !== "function")
-        throw new Error("Node type entry must default-export a register function");
-      const pluginDisposable = loaded.default(host);
-      if (pluginDisposable)
-        disposables.push(() => dispose(pluginDisposable));
-      const expectedTypes = new Set(plugin.manifest.typeNodeIds.map((nodeId) => typeKey({ node_id: nodeId, pip_id: "identity" })));
-      const missing = [...expectedTypes].filter((key) => !registeredTypes.has(key));
-      const extra = [...registeredTypes].filter((key) => !expectedTypes.has(key));
-      if (missing.length || extra.length) {
-        const show = (key) => key.replace("\0", "/");
-        throw new Error(`Node type registrations do not match manifest; missing [${missing.map(show).join(", ")}], extra [${extra.map(show).join(", ")}]`);
-      }
-      this.#plugins.set(plugin.manifest.packageId, { ...plugin, active: true, disposables });
-      return current ? "reactivated" : "installed";
+      const loaded_module = await instantiate_module_factory(
+        v3_plugin.entrySource,
+        this.shared_modules,
+        this.#factory_importer
+      );
+      const module = module_from_descriptor(loaded_module, v3_plugin.descriptor);
+      await this.runtime.install(instance_id, module, config);
+      await this.#throw_if_failed(instance_id);
     } catch (error) {
-      const cleanupErrors = releaseAll(disposables);
-      if (cleanupErrors.length)
-        throw new AggregateError([error, ...cleanupErrors], `Node type plugin ${plugin.manifest.packageId} failed and cleanup reported errors`);
+      this.#remove_package_resources(instance_id);
+      throw error;
+    }
+    this.#elements.set(instance_id, { package: v3_plugin, config });
+    await this.#activate_pending_node_types();
+    return "installed";
+  }
+  async install_node_type(plugin, config = {}, instance_id = plugin.manifest.packageId) {
+    if (plugin.manifest.nodeTypeAbi !== "pip-node-type/3") {
+      throw new Error("\u65B0 A2 \u62D2\u7EDD pip-node-type/2\uFF1B\u8BF7\u5207\u6362 legacy profile");
+    }
+    const v3_plugin = plugin;
+    const current = this.#node_types.get(instance_id);
+    if (current) {
+      assert_same_content(current.package.contentSha256, v3_plugin.contentSha256, v3_plugin.manifest.packageId);
+      return current.installed && this.runtime.get_state(instance_id) === "active" ? "already-active" : "pending-dependency";
+    }
+    this.#assert_platform_dependencies(v3_plugin.manifest.platform_dependencies);
+    this.#node_types.set(instance_id, { package: v3_plugin, config, installed: false });
+    const installed_elements = [];
+    try {
+      for (const embedded of v3_plugin.embedded_elements) {
+        const was_present = this.#elements.has(embedded.manifest.packageId);
+        if (!was_present) installed_elements.push(embedded.manifest.packageId);
+        await this.install_element(embedded);
+      }
+      if (this.#node_types.get(instance_id)?.installed) return "installed";
+      const activated = await this.#activate_node_type(v3_plugin, config, instance_id);
+      if (activated) await this.#activate_pending_node_types();
+      return activated ? "installed" : "pending-dependency";
+    } catch (error) {
+      this.#node_types.delete(instance_id);
+      for (const package_id of installed_elements.reverse()) await this.uninstall(package_id);
       throw error;
     }
   }
-  disable(id) {
-    const plugin = this.#plugins.get(id);
-    if (!plugin?.active) return;
-    const errors = releaseAll(plugin.disposables);
-    this.#plugins.set(id, { ...plugin, active: false, disposables: [] });
-    if (errors.length) throw new AggregateError(errors, `Node type plugin ${id} was disabled but cleanup reported errors`);
-  }
-  uninstall(id) {
-    let cleanupError;
-    try {
-      this.disable(id);
-    } catch (error) {
-      cleanupError = error;
+  async disable(package_id) {
+    if (this.#node_types.has(package_id)) {
+      await this.runtime.disable(package_id);
+      return;
     }
-    this.#plugins.delete(id);
-    if (cleanupError) throw cleanupError;
+    if (this.#elements.has(package_id)) await this.runtime.disable(package_id);
   }
-};
-function browserNodeTypeRuntime() {
-  return {
-    async load(source) {
-      if (typeof window === "undefined") throw new Error("Node type plugins can only run in a browser");
-      const url = URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
-      try {
-        return await import(
-          /* webpackIgnore: true */
-          /* @vite-ignore */
-          url
-        );
-      } finally {
-        URL.revokeObjectURL(url);
+  async enable(package_id) {
+    const node_type = this.#node_types.get(package_id);
+    if (node_type) {
+      if (!this.#dependencies_ready(node_type.package)) {
+        throw new Error(`A4 ${package_id} \u7684\u7CBE\u786E A3 \u4F9D\u8D56\u5C1A\u672A\u6FC0\u6D3B`);
+      }
+      await this.runtime.enable(package_id);
+      await this.#activate_pending_node_types();
+      return;
+    }
+    if (this.#elements.has(package_id)) {
+      await this.runtime.enable(package_id);
+      await this.#activate_pending_node_types();
+    }
+  }
+  async uninstall(package_id) {
+    const node_type = this.#node_types.get(package_id);
+    if (node_type) {
+      if (node_type.installed) await this.runtime.uninstall(package_id);
+      this.#node_types.delete(package_id);
+      return;
+    }
+    if (this.#elements.has(package_id)) {
+      await this.runtime.uninstall(package_id);
+      this.#elements.delete(package_id);
+      this.#remove_package_resources(package_id);
+    }
+  }
+  snapshot() {
+    const elements = [...this.#elements.entries()].map(([instance_id, { package: plugin }]) => ({
+      instance_id,
+      package_id: plugin.manifest.packageId,
+      layer: "a3",
+      content_sha256: plugin.contentSha256,
+      state: this.runtime.get_state(instance_id)
+    }));
+    const node_types = [...this.#node_types.entries()].map(([instance_id, { package: plugin, installed }]) => ({
+      instance_id,
+      package_id: plugin.manifest.packageId,
+      layer: "a4",
+      content_sha256: plugin.contentSha256,
+      state: installed ? this.runtime.get_state(instance_id) : "not-activated"
+    }));
+    return [...elements, ...node_types];
+  }
+  diagnostics() {
+    return this.runtime.list_diagnostics();
+  }
+  /** 静态声明索引用于管理与诊断；实际可用贡献必须查询已提交的运行时 registry。 */
+  declared_contributions(purpose) {
+    return [...this.#elements.entries()].flatMap(([instance_id, { package: plugin }]) => (plugin.descriptor.contributions.elements ?? []).filter((item) => !purpose || item.purpose === purpose).map((item) => ({
+      instance_id,
+      package_id: plugin.manifest.packageId,
+      content_sha256: plugin.contentSha256,
+      id: item.id,
+      purpose: item.purpose,
+      state: this.runtime.get_state(instance_id)
+    })));
+  }
+  package_bytes_by_hash(content_sha256) {
+    const element = [...this.#elements.values()].find((item) => item.package.contentSha256 === content_sha256);
+    if (element) return element.package.pipBytes;
+    return [...this.#node_types.values()].find((item) => item.package.contentSha256 === content_sha256)?.package.pipBytes;
+  }
+  async #activate_node_type(plugin, config = {}, instance_id = plugin.manifest.packageId) {
+    if (!this.#dependencies_ready(plugin) || !this.#capabilities_ready(plugin)) return false;
+    const loaded_module = await instantiate_module_factory(
+      plugin.entrySource,
+      this.shared_modules,
+      this.#factory_importer
+    );
+    const module = module_from_descriptor(loaded_module, plugin.descriptor);
+    await this.runtime.install(instance_id, module, config);
+    await this.#throw_if_failed(instance_id);
+    this.#node_types.get(instance_id).installed = true;
+    return this.runtime.get_state(instance_id) === "active";
+  }
+  async #activate_pending_node_types() {
+    for (const [instance_id, stored] of this.#node_types) {
+      if (!stored.installed) {
+        await this.#activate_node_type(stored.package, stored.config, instance_id);
       }
     }
+  }
+  #dependencies_ready(plugin) {
+    return plugin.manifest.dependencies.every((reference) => {
+      const element = [...this.#elements.values()].find(({ package: item }) => item.contentSha256 === reference.sha256)?.package;
+      return element?.contentSha256 === reference.sha256 && element.manifest.packageVersion === reference.version && element.manifest.releaseDate === reference.releaseDate && [...this.#elements.entries()].some(([instance_id, stored]) => stored.package.contentSha256 === reference.sha256 && this.runtime.get_state(instance_id) === "active");
+    });
+  }
+  #capabilities_ready(plugin) {
+    const active = [
+      ...[...this.#elements.entries()].map(([id, value]) => [id, value.package]),
+      ...[...this.#node_types.entries()].filter(([, value]) => value.installed).map(([id, value]) => [id, value.package])
+    ];
+    const available = new Set(active.filter(([instance_id]) => this.runtime.get_state(instance_id) === "active").flatMap(([, stored]) => stored.descriptor.capabilities.provides));
+    return plugin.descriptor.capabilities.requires.every((capability) => available.has(capability));
+  }
+  #assert_platform_dependencies(dependencies) {
+    for (const dependency of dependencies) {
+      if (!(dependency in this.shared_modules)) {
+        throw new Error(`\u5BBF\u4E3B\u7F3A\u5C11\u5171\u4EAB\u5E73\u53F0\u6A21\u5757: ${dependency}`);
+      }
+    }
+  }
+  #register_package_resources(instance_id, plugin) {
+    if (!this.runtime.services.has("ui_styles")) {
+      throw new Error("\u65B0 A2 \u7F3A\u5C11\u5185\u5EFA ui_styles \u670D\u52A1");
+    }
+    const styles = this.runtime.services.get("ui_styles");
+    styles.register_package?.(instance_id, plugin.files);
+  }
+  #remove_package_resources(package_id) {
+    if (!this.runtime.services.has("ui_styles")) return;
+    const styles = this.runtime.services.get("ui_styles");
+    styles.remove_package?.(package_id);
+  }
+  async #throw_if_failed(package_id) {
+    if (this.runtime.get_state(package_id) !== "failed") return;
+    const diagnostic = this.runtime.get_diagnostic(package_id);
+    await this.runtime.uninstall(package_id);
+    throw new Error(diagnostic?.error ?? `\u63D2\u4EF6 ${package_id} \u6FC0\u6D3B\u5931\u8D25`);
+  }
+};
+function assert_same_content(current, incoming, package_id) {
+  if (current !== incoming) throw new Error(`\u4E0D\u53EF\u53D8\u5305\u8EAB\u4EFD\u51B2\u7A81: ${package_id}`);
+}
+
+// pip-editor/pip-host/activation/production-runtime-v3.ts
+var slot_modes = {
+  "pip.projection.properties": "single",
+  "pip.projection.contains": "single",
+  "thought.note": "single",
+  "thought.inspector": "single",
+  "website.topic": "single",
+  "intent.node": "single",
+  "scene.quadrant": "single",
+  "scene.tube": "single",
+  "spot.terminal": "single",
+  "spot.simple": "single",
+  "spot.composition": "single",
+  "spot.fact": "single",
+  "guanguan.companion": "single",
+  "tutorial.task.card": "list",
+  "tutorial.task.inspector": "single"
+};
+var ProductionRuntimeV3 = class {
+  constructor(workspaces, factory_importer) {
+    this.runtime = new PluginRuntime();
+    this.services = new A2RuntimeServices();
+    this.ui_slots = new UiSlotRegistry();
+    this.ui_styles = new UiStyleRegistry();
+    this.request_gate = new RuntimeRequestGate();
+    for (const [slot_id, mode] of Object.entries(slot_modes)) this.ui_slots.define(slot_id, mode);
+    this.packages = new PluginPackageRuntimeV3(this.runtime, {
+      react: import_react24.default,
+      "react-dom": react_dom,
+      "react-dom/client": react_dom_client,
+      "react/jsx-dev-runtime": jsx_dev_runtime,
+      "react/jsx-runtime": jsx_runtime
+    }, factory_importer);
+    this.ready = this.#start(workspaces);
+  }
+  async #start(workspaces) {
+    await this.runtime.install("pip.a2-services", create_a2_service_module(
+      this.services,
+      workspaces,
+      this.request_gate
+    ));
+    await this.runtime.install("pip.ui-services", {
+      name: "pip.ui-services",
+      provides: ["ui_slots", "ui_styles", "react"],
+      apply: (ctx) => {
+        ctx.provide("ui_slots", this.ui_slots);
+        ctx.provide("ui_styles", this.ui_styles);
+        ctx.provide("react", import_react24.default);
+      }
+    });
+    await this.runtime.install("pip.package-service", create_package_service_module(this.packages));
+  }
+};
+
+// pip-editor/pip-host/packages/hash.ts
+async function sha256(bytes) {
+  const buffer = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(buffer)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+async function sourceDigest(files, paths) {
+  const chunks = paths.sort().flatMap((path) => [new TextEncoder().encode(`${path}\0`), files[path] ?? new Uint8Array()]);
+  const size = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const joined = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    joined.set(chunk, offset);
+    offset += chunk.length;
+  }
+  return sha256(joined);
+}
+
+// pip-editor/pip-host/activation/plugin-composition.ts
+var encoder3 = new TextEncoder();
+function parse_plugin_composition(bytes) {
+  const raw = require_plugin_yaml_kind(parse_plugin_yaml(bytes), "composition");
+  const profile = { ...raw };
+  delete profile.kind;
+  return normalize_plugin_profile(profile);
+}
+async function encode_plugin_composition(profile) {
+  const normalized = normalize_plugin_profile(structuredClone(profile));
+  const text = stringify3({ ...normalized, kind: "composition" }, {
+    lineWidth: 0,
+    sortMapEntries: true
+  });
+  const bytes = encoder3.encode(text);
+  return { text, bytes, sha256: await sha256(bytes) };
+}
+function normalize_plugin_profile(value) {
+  const profile = record4(value, "\u63D2\u4EF6 profile");
+  exact_keys(profile, ["schema_version", "profile_id", "plugins"], "\u63D2\u4EF6 profile");
+  if (profile.schema_version !== 1 || !valid_id2(profile.profile_id) || !Array.isArray(profile.plugins) || profile.plugins.length === 0 || profile.plugins.length > 256) {
+    throw new Error("\u63D2\u4EF6 profile \u975E\u6CD5");
+  }
+  const instance_ids = /* @__PURE__ */ new Set();
+  const plugins = profile.plugins.map((raw, index) => {
+    const entry = record4(raw, `\u63D2\u4EF6\u6761\u76EE ${index}`);
+    exact_keys(entry, ["instance_id", "package", "enabled", "config"], `\u63D2\u4EF6\u6761\u76EE ${index}`, true);
+    const reference = normalize_reference(entry.package, index);
+    const instance_id = entry.instance_id;
+    if (!valid_id2(instance_id) || instance_id !== reference.packageId || instance_ids.has(instance_id)) {
+      throw new Error(`\u63D2\u4EF6\u5B9E\u4F8B\u8EAB\u4EFD\u975E\u6CD5\u6216\u91CD\u590D: ${String(instance_id)}`);
+    }
+    instance_ids.add(instance_id);
+    if (entry.enabled !== void 0 && typeof entry.enabled !== "boolean") {
+      throw new Error(`\u63D2\u4EF6 enabled \u5FC5\u987B\u662F\u5E03\u5C14\u503C: ${instance_id}`);
+    }
+    const config = entry.config ?? {};
+    assert_plugin_json_value(config);
+    return { instance_id, package: reference, enabled: entry.enabled ?? true, config };
+  });
+  return { schema_version: 1, profile_id: profile.profile_id, plugins };
+}
+function normalize_reference(value, index) {
+  const reference = record4(value, `\u63D2\u4EF6\u5305\u5F15\u7528 ${index}`);
+  exact_keys(reference, ["origin", "packageId", "version", "releaseDate", "sha256"], `\u63D2\u4EF6\u5305\u5F15\u7528 ${index}`);
+  if (!["system", "user"].includes(String(reference.origin)) || !valid_id2(reference.packageId) || !/^\d+\.\d+\.\d+$/.test(String(reference.version)) || !/^\d{8}$/.test(String(reference.releaseDate)) || !/^[a-f0-9]{64}$/.test(String(reference.sha256))) {
+    throw new Error(`\u63D2\u4EF6\u5305\u5F15\u7528\u975E\u6CD5: ${index}`);
+  }
+  return reference;
+}
+function record4(value, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`${label} \u5FC5\u987B\u662F\u5BF9\u8C61`);
+  return value;
+}
+function exact_keys(value, allowed, label, optional = false) {
+  const keys = Object.keys(value);
+  if (keys.some((key) => !allowed.includes(key)) || !optional && allowed.some((key) => !(key in value))) {
+    throw new Error(`${label} \u542B\u672A\u77E5\u6216\u7F3A\u5931\u5B57\u6BB5`);
+  }
+}
+function valid_id2(value) {
+  return typeof value === "string" && /^[a-z][a-z0-9._-]{0,127}$/.test(value);
+}
+
+// pip-editor/pip-host/activation/declarative-profile.ts
+var DeclarativePluginProfileLoader = class {
+  #packages;
+  #resolve;
+  constructor(packages, resolve) {
+    this.#packages = packages;
+    this.#resolve = resolve;
+  }
+  async validate(profile) {
+    await this.#resolve_profile(profile);
+  }
+  async activate(profile) {
+    const resolved = await this.#resolve_profile(profile);
+    const ordered = resolved.sort((left, right) => left.plugin.manifest.layer.localeCompare(right.plugin.manifest.layer));
+    const activated = [];
+    try {
+      for (const { entry, plugin } of ordered) {
+        const status = "elementAbi" in plugin.manifest ? await this.#packages.install_element(
+          plugin,
+          entry.config,
+          entry.instance_id
+        ) : await this.#packages.install_node_type(
+          plugin,
+          entry.config,
+          entry.instance_id
+        );
+        if (status === "pending-dependency") {
+          throw new Error(`\u5FC5\u9700\u63D2\u4EF6\u672A\u6FC0\u6D3B: ${entry.instance_id}`);
+        }
+        activated.push(entry.instance_id);
+      }
+      return activated;
+    } catch (error) {
+      for (const instance_id of activated.reverse()) await this.#packages.uninstall(instance_id);
+      throw error;
+    }
+  }
+  async deactivate(profile) {
+    for (const entry of [...profile.plugins].reverse()) {
+      const installed = this.#packages.snapshot().some((item) => item.instance_id === entry.instance_id);
+      if (entry.enabled && installed) await this.#packages.uninstall(entry.instance_id);
+    }
+  }
+  async #resolve_profile(profile) {
+    const normalized = normalize_plugin_profile(profile);
+    const enabled = normalized.plugins.filter((entry) => entry.enabled);
+    return Promise.all(enabled.map(async (entry) => {
+      const plugin = await this.#resolve(entry.package);
+      if (!plugin) throw new Error(`\u65E0\u6CD5\u89E3\u6790\u63D2\u4EF6\u5305: ${entry.instance_id}`);
+      assert_exact_package(entry, plugin);
+      return { entry, plugin };
+    }));
+  }
+};
+function assert_exact_package(entry, plugin) {
+  const manifest = plugin.manifest;
+  if (manifest.packageId !== entry.package.packageId || manifest.packageVersion !== entry.package.version || manifest.releaseDate !== entry.package.releaseDate || plugin.contentSha256 !== entry.package.sha256) {
+    throw new Error(`\u63D2\u4EF6\u5305\u8EAB\u4EFD\u4E0D\u5339\u914D: ${entry.instance_id}`);
+  }
+}
+
+// pip-editor/pip-host/activation/package-update-coordinator.ts
+var PackageUpdateCoordinator = class {
+  #adapter;
+  #active;
+  #state = { kind: "idle" };
+  #queue = Promise.resolve();
+  constructor(adapter, active) {
+    this.#adapter = adapter;
+    this.#active = active && immutable_profile(active);
+    this.#state = { kind: "idle", active_profile_id: active?.profile_id };
+  }
+  state() {
+    return structuredClone(this.#state);
+  }
+  active_profile() {
+    return this.#active && immutable_profile(this.#active);
+  }
+  update(candidate) {
+    const snapshot2 = immutable_profile(candidate);
+    const operation = this.#queue.then(() => this.#update_now(snapshot2));
+    this.#queue = operation.catch(() => void 0);
+    return operation;
+  }
+  deactivate_active() {
+    const operation = this.#queue.then(() => this.#deactivate_active_now());
+    this.#queue = operation.catch(() => void 0);
+    return operation;
+  }
+  async #deactivate_active_now() {
+    const previous = this.#active;
+    if (!previous) return;
+    this.#state = { kind: "updating", from: previous.profile_id, to: "none" };
+    await this.#adapter.pause_requests();
+    try {
+      await this.#adapter.drain_or_cancel();
+      await this.#adapter.deactivate(previous);
+      await this.#adapter.clear_active?.();
+      this.#active = void 0;
+      this.#state = { kind: "idle" };
+    } catch (error) {
+      let restore_error;
+      try {
+        await this.#adapter.activate(previous);
+        this.#active = previous;
+      } catch (restore) {
+        restore_error = restore;
+        this.#active = void 0;
+      }
+      const message = [error, restore_error].filter(Boolean).map(error_message).join("\uFF1B\u6062\u590D\u5931\u8D25\uFF1A");
+      this.#state = {
+        kind: "failed",
+        requested: "none",
+        restored: restore_error ? void 0 : previous.profile_id,
+        error: message
+      };
+      throw new Error(message);
+    } finally {
+      await this.#adapter.resume_requests();
+    }
+  }
+  async #update_now(candidate) {
+    assert_profile(candidate);
+    await this.#adapter.validate(candidate);
+    const previous = this.#active;
+    this.#state = {
+      kind: "updating",
+      from: previous?.profile_id,
+      to: candidate.profile_id
+    };
+    await this.#adapter.pause_requests();
+    try {
+      await this.#adapter.drain_or_cancel();
+      if (previous) await this.#adapter.deactivate(previous);
+      try {
+        await this.#adapter.activate(candidate);
+        this.#active = candidate;
+        this.#state = { kind: "idle", active_profile_id: candidate.profile_id };
+      } catch (candidate_error) {
+        let restore_error;
+        try {
+          await this.#adapter.deactivate(candidate);
+          if (previous) await this.#adapter.activate(previous);
+          this.#active = previous;
+        } catch (error) {
+          restore_error = error;
+          this.#active = void 0;
+        }
+        const message = [candidate_error, restore_error].filter(Boolean).map(error_message).join("\uFF1B\u6062\u590D\u5931\u8D25\uFF1A");
+        this.#state = {
+          kind: "failed",
+          requested: candidate.profile_id,
+          restored: restore_error ? void 0 : previous?.profile_id,
+          error: message
+        };
+        throw new Error(message);
+      }
+    } finally {
+      await this.#adapter.resume_requests();
+    }
+  }
+};
+function immutable_profile(profile) {
+  return Object.freeze({
+    profile_id: profile.profile_id,
+    packages: Object.freeze(profile.packages.map((item) => Object.freeze({ ...item }))),
+    config: Object.freeze(structuredClone(profile.config))
+  });
+}
+function assert_profile(profile) {
+  if (!profile.profile_id || !profile.packages.length) throw new Error("\u5019\u9009 profile \u4E0D\u80FD\u4E3A\u7A7A");
+  const ids = /* @__PURE__ */ new Set();
+  for (const item of profile.packages) {
+    if (!item.instance_id || !item.package_id || !/^[a-f0-9]{64}$/.test(item.content_sha256)) {
+      throw new Error(`\u65E0\u6548\u7CBE\u786E\u5305\u8EAB\u4EFD: ${item.package_id}`);
+    }
+    if (ids.has(item.instance_id)) throw new Error(`profile \u5B9E\u4F8B\u8EAB\u4EFD\u91CD\u590D: ${item.instance_id}`);
+    ids.add(item.instance_id);
+  }
+}
+var error_message = (error) => error instanceof Error ? error.message : String(error);
+
+// pip-editor/pip-host/activation/profile-update-manager.ts
+var DeclarativeProfileUpdateManager = class {
+  #loader;
+  #profiles = /* @__PURE__ */ new Map();
+  #coordinator;
+  #persist;
+  constructor(loader, gate, persist, active) {
+    this.#loader = loader;
+    this.#persist = persist;
+    if (active) this.#profiles.set(active.profile_id, immutable_profile2(active));
+    this.#coordinator = new PackageUpdateCoordinator({
+      validate: async (profile) => {
+        const declarative = this.#require(profile.profile_id);
+        await this.#loader.validate(declarative);
+      },
+      pause_requests: () => gate.pause(),
+      drain_or_cancel: () => gate.drain_or_cancel(),
+      deactivate: (profile) => this.#loader.deactivate(this.#require(profile.profile_id)),
+      activate: async (profile) => {
+        const declarative = this.#require(profile.profile_id);
+        await this.#loader.activate(declarative);
+        await this.#persist(declarative);
+      },
+      clear_active: () => this.#persist(void 0),
+      resume_requests: () => gate.resume()
+    }, active && coordinator_profile(active));
+  }
+  state() {
+    return this.#coordinator.state();
+  }
+  active_profile() {
+    const active = this.#coordinator.active_profile();
+    return active && immutable_profile2(this.#require(active.profile_id));
+  }
+  async update(candidate) {
+    const snapshot2 = immutable_profile2(candidate);
+    this.#profiles.set(snapshot2.profile_id, snapshot2);
+    try {
+      await this.#coordinator.update(coordinator_profile(snapshot2));
+    } catch (error) {
+      if (this.#coordinator.active_profile()?.profile_id !== snapshot2.profile_id) {
+        this.#profiles.delete(snapshot2.profile_id);
+      }
+      throw error;
+    }
+  }
+  async deactivate_active() {
+    await this.#coordinator.deactivate_active();
+  }
+  #require(profile_id) {
+    const profile = this.#profiles.get(profile_id);
+    if (!profile) throw new Error(`\u672A\u77E5\u63D2\u4EF6 profile: ${profile_id}`);
+    return profile;
+  }
+};
+function coordinator_profile(profile) {
+  return {
+    profile_id: profile.profile_id,
+    packages: profile.plugins.filter((entry) => entry.enabled).map((entry) => ({
+      instance_id: entry.instance_id,
+      package_id: entry.package.packageId,
+      content_sha256: entry.package.sha256
+    })),
+    config: Object.fromEntries(profile.plugins.map((entry) => [
+      entry.instance_id,
+      structuredClone(entry.config)
+    ]))
   };
+}
+function immutable_profile2(profile) {
+  return structuredClone(profile);
+}
+
+// pip-editor/pip-host/activation/production-profile-controller.ts
+var ProductionPluginProfileController = class {
+  #repository = /* @__PURE__ */ new Map();
+  #profiles = /* @__PURE__ */ new Map();
+  #restored_profile;
+  constructor(packages, gate, persist, restored_profile) {
+    const loader = new DeclarativePluginProfileLoader(
+      packages,
+      (reference) => this.#repository.get(reference.sha256)
+    );
+    this.manager = new DeclarativeProfileUpdateManager(loader, gate, persist);
+    this.#restored_profile = restored_profile && structuredClone(restored_profile);
+  }
+  async activate(portable) {
+    const profile = portable.pluginComposition;
+    if (!profile) throw new Error("A5 \u7F3A\u5C11\u63D2\u4EF6 profile");
+    const available = [...portable.elementPlugins, ...portable.nodeTypes];
+    for (const plugin of available) {
+      if (!is_v3_plugin(plugin)) throw new Error("\u65B0 A2 \u7684 A5 profile \u53EA\u80FD\u6FC0\u6D3B /3 \u63D2\u4EF6");
+      this.#repository.set(plugin.contentSha256, plugin);
+    }
+    if (this.#restored_profile && this.#can_resolve(this.#restored_profile)) {
+      const restored = this.#restored_profile;
+      this.#restored_profile = void 0;
+      this.#profiles.set(restored.profile_id, structuredClone(restored));
+      await this.manager.update(restored);
+    }
+    const previous_profiles = clone_profiles(this.#profiles);
+    const previous_profile = this.#profiles.get(profile.profile_id);
+    if (previous_profile && same_profile(previous_profile, profile)) {
+      return async () => void 0;
+    }
+    this.#profiles.set(profile.profile_id, structuredClone(profile));
+    try {
+      await this.manager.update(composed_profile(this.#profiles));
+    } catch (error) {
+      replace_profiles(this.#profiles, previous_profiles);
+      throw error;
+    }
+    return async () => {
+      replace_profiles(this.#profiles, previous_profiles);
+      if (this.#profiles.size) {
+        await this.manager.update(composed_profile(this.#profiles));
+      } else {
+        await this.manager.deactivate_active();
+      }
+    };
+  }
+  #can_resolve(profile) {
+    return profile.plugins.filter((entry) => entry.enabled).every((entry) => this.#repository.has(entry.package.sha256));
+  }
+};
+function composed_profile(profiles) {
+  if (profiles.size === 1) return structuredClone([...profiles.values()][0]);
+  const entries = /* @__PURE__ */ new Map();
+  for (const profile of [...profiles.values()].sort((left, right) => left.profile_id.localeCompare(right.profile_id))) {
+    for (const entry of profile.plugins.filter((item) => item.enabled)) {
+      const current = entries.get(entry.instance_id);
+      if (current && !same_profile_entry(current, entry)) {
+        throw new Error(`A5 profile \u5B9E\u4F8B\u51B2\u7A81: ${entry.instance_id}`);
+      }
+      if (!current) entries.set(entry.instance_id, structuredClone(entry));
+    }
+  }
+  return {
+    schema_version: 1,
+    profile_id: "pip.active-workspaces",
+    plugins: [...entries.values()]
+  };
+}
+function clone_profiles(source) {
+  return new Map([...source].map(([id, profile]) => [id, structuredClone(profile)]));
+}
+function replace_profiles(target, source) {
+  target.clear();
+  for (const [id, profile] of source) target.set(id, structuredClone(profile));
+}
+var same_profile = (left, right) => canonical_json(left) === canonical_json(right);
+var same_profile_entry = (left, right) => canonical_json(left) === canonical_json(right);
+function canonical_json(value) {
+  if (Array.isArray(value)) return `[${value.map(canonical_json).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.entries(value).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => `${JSON.stringify(key)}:${canonical_json(item)}`).join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "null";
+}
+function is_v3_plugin(plugin) {
+  return plugin.manifest.layer === "a3" ? plugin.manifest.elementAbi === "pip-element/3" : plugin.manifest.nodeTypeAbi === "pip-node-type/3";
+}
+
+// pip-editor/pip-host/activation/profile-preference.ts
+var ACTIVE_PROFILE_KEY = "pip-editor.plugin-profile.v1";
+var DISABLED_PLUGINS_KEY = "pip-editor.disabled-plugins.v1";
+function read_active_profile(storage = browser_storage()) {
+  if (!storage) return void 0;
+  const text = storage.getItem(ACTIVE_PROFILE_KEY);
+  if (!text) return void 0;
+  try {
+    return normalize_plugin_profile(JSON.parse(text));
+  } catch {
+    storage.removeItem(ACTIVE_PROFILE_KEY);
+    return void 0;
+  }
+}
+function persist_active_profile(profile, storage = browser_storage()) {
+  if (!storage) return;
+  if (profile === void 0) storage.removeItem(ACTIVE_PROFILE_KEY);
+  else storage.setItem(ACTIVE_PROFILE_KEY, JSON.stringify(normalize_plugin_profile(profile)));
+}
+function read_disabled_plugins(storage = browser_storage()) {
+  if (!storage) return { elements: /* @__PURE__ */ new Set(), node_types: /* @__PURE__ */ new Set() };
+  try {
+    const value = JSON.parse(storage.getItem(DISABLED_PLUGINS_KEY) ?? "{}");
+    return {
+      elements: string_set(value?.elements),
+      node_types: string_set(value?.node_types)
+    };
+  } catch {
+    storage.removeItem(DISABLED_PLUGINS_KEY);
+    return { elements: /* @__PURE__ */ new Set(), node_types: /* @__PURE__ */ new Set() };
+  }
+}
+function persist_disabled_plugins(elements, node_types, storage = browser_storage()) {
+  storage?.setItem(DISABLED_PLUGINS_KEY, JSON.stringify({
+    schema_version: 1,
+    elements: [...elements].sort(),
+    node_types: [...node_types].sort()
+  }));
+}
+function string_set(value) {
+  if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) {
+    return /* @__PURE__ */ new Set();
+  }
+  return new Set(value);
+}
+function browser_storage() {
+  return typeof localStorage === "undefined" ? void 0 : localStorage;
 }
 
 // pip-editor/pip-package/types.ts
@@ -26792,7 +37239,7 @@ var textEncoder = new TextEncoder();
 var textDecoder = new TextDecoder("utf-8", { fatal: true });
 var align8 = (value) => value + 7 & ~7;
 var equalBytes = (left, right) => left.length === right.length && left.every((value, index) => value === right[index]);
-var sha256 = async (bytes) => new Uint8Array(await crypto.subtle.digest("SHA-256", Uint8Array.from(bytes).buffer));
+var sha2562 = async (bytes) => new Uint8Array(await crypto.subtle.digest("SHA-256", Uint8Array.from(bytes).buffer));
 var assertSafeLength = (length, label) => {
   if (!Number.isSafeInteger(length) || length < 0) throw new Error(`${label} exceeds this JavaScript runtime's addressable range`);
 };
@@ -26865,6 +37312,27 @@ var pipLimit = (value) => {
   if (normalized < BigInt(0)) throw new Error("PIP limit cannot be negative");
   return { mode: "value", value: normalized.toString() };
 };
+var HOST_PIP_IO_POLICY = Object.freeze({
+  schemaVersion: 1,
+  maxPipBytes: pipLimit(64 * 1024 * 1024),
+  maxSingleResourceBytes: pipLimit(32 * 1024 * 1024),
+  maxExpandedBytes: pipLimit(128 * 1024 * 1024),
+  maxResourceCount: pipLimit(4096),
+  // PIP v1 资源不压缩；保留字段不得被包声明用于放宽未来格式的宿主上限。
+  maxCompressionRatio: pipLimit(1)
+});
+function restrictPipIoPolicy(host, requested) {
+  const policy = { ...host };
+  for (const field of PIP_IO_POLICY_FIELDS) {
+    const candidate = requested[field];
+    if (candidate.mode !== "value") continue;
+    const current = host[field];
+    if (current.mode !== "value" || BigInt(candidate.value) < BigInt(current.value)) {
+      policy[field] = candidate;
+    }
+  }
+  return policy;
+}
 var selectedPipFilePolicy = (byteLength) => ({
   schemaVersion: 1,
   maxPipBytes: pipLimit(byteLength),
@@ -26897,7 +37365,7 @@ var assertPipManifest = (manifest) => {
     throw new Error("Invalid PIP manifest");
   }
   const stringArrays = [manifest.providedEditorKinds, manifest.supportedDocumentKinds, manifest.preferredEditorKinds, manifest.requiredEditorCapabilities, manifest.providedCapabilities, manifest.requiredCapabilities, manifest.requiredAuthoringCapabilities];
-  if (!["a0", "a1", "a2", "a3", "a4", "a5"].includes(manifest.layer) || !artifactNamePattern.test(manifest.artifactName) || !versionPattern.test(manifest.packageVersion) || !validReleaseDate(manifest.releaseDate) || !manifest.packageId || !manifest.name || !manifest.rootNodeId || manifest.loaderAbi !== "pip-loader/1" || !["authoring-source", "runtime", "source-and-runtime"].includes(manifest.artifactRole) || manifest.contentType !== "application/vnd.intent-map.pip" || stringArrays.some((values) => !Array.isArray(values) || values.some((value) => typeof value !== "string" || !value)) || [...manifest.providedCapabilities, ...manifest.requiredAuthoringCapabilities].some((capability) => !capabilityPattern.test(capability)) || manifest.layer === "a2" && (manifest.editorAbi !== "pip-editor/1" || manifest.providedEditorKinds.length === 0) || manifest.layer !== "a2" && "editorAbi" in manifest && manifest.editorAbi !== void 0 || manifest.layer === "a3" && !validElementManifest(manifest) || manifest.layer === "a4" && !validNodeTypeManifest(manifest) || manifest.layer === "a5" && !validNodeMapManifest(manifest) || manifest.layer !== "a3" && ("elementAbi" in manifest || "elements" in manifest) || manifest.layer !== "a4" && ("nodeTypeAbi" in manifest || "typeNodeIds" in manifest) || manifest.layer !== "a5" && ("nodeMapAbi" in manifest || "rootNodeIds" in manifest || "launchProfile" in manifest)) throw new Error("Invalid PIP manifest");
+  if (!["a0", "a1", "a2", "a3", "a4", "a5"].includes(manifest.layer) || !artifactNamePattern.test(manifest.artifactName) || !versionPattern.test(manifest.packageVersion) || !validReleaseDate(manifest.releaseDate) || !manifest.packageId || !manifest.name || !manifest.rootNodeId || manifest.loaderAbi !== "pip-loader/1" || !["authoring-source", "runtime", "source-and-runtime"].includes(manifest.artifactRole) || manifest.contentType !== "application/vnd.intent-map.pip" || stringArrays.some((values) => !Array.isArray(values) || values.some((value) => typeof value !== "string" || !value)) || [...manifest.providedCapabilities, ...manifest.requiredAuthoringCapabilities].some((capability) => !capabilityPattern.test(capability)) || manifest.layer === "a2" && (manifest.editorAbi !== "pip-editor/1" || manifest.providedEditorKinds.length === 0) || manifest.layer !== "a2" && "editorAbi" in manifest && manifest.editorAbi !== void 0 || manifest.layer === "a3" && !validElementManifest(manifest) || manifest.layer === "a4" && !validNodeTypeManifest(manifest) || manifest.layer === "a5" && !validNodeMapManifest(manifest) || manifest.layer !== "a3" && ("elementAbi" in manifest || "elements" in manifest) || manifest.layer !== "a4" && ("nodeTypeAbi" in manifest || "typeNodeIds" in manifest) || manifest.layer !== "a5" && ("nodeMapAbi" in manifest || "rootNodeIds" in manifest || "launchProfile" in manifest || "plugin_composition_abi" in manifest || "plugin_composition_path" in manifest || "plugin_composition_sha256" in manifest)) throw new Error("Invalid PIP manifest");
   return manifest;
 };
 var validRef = (value) => {
@@ -26905,15 +37373,31 @@ var validRef = (value) => {
   const ref = value;
   return ["system", "user"].includes(String(ref.origin)) && typeof ref.packageId === "string" && !!ref.packageId && typeof ref.version === "string" && versionPattern.test(ref.version) && typeof ref.releaseDate === "string" && validReleaseDate(ref.releaseDate) && typeof ref.sha256 === "string" && shaPattern.test(ref.sha256);
 };
-var validElementManifest = (manifest) => manifest.elementAbi === "pip-element/2" && manifest.entry === "entry.mjs" && manifest.providedCapabilities.length > 0 && Array.isArray(manifest.elements) && manifest.elements.length > 0 && manifest.elements.every((item) => item && !!item.id && /^[a-z][a-z0-9._-]*$/.test(item.id) && /^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$/.test(item.tag) && ["control", "preview", "node", "projection", "panel", "creator", "workspace-window"].includes(item.purpose)) && validExecutableFields(manifest);
+var validElementManifest = (manifest) => ["pip-element/2", "pip-element/3"].includes(manifest.elementAbi) && manifest.entry === "entry.mjs" && manifest.providedCapabilities.length > 0 && Array.isArray(manifest.elements) && manifest.elements.length > 0 && manifest.elements.every((item) => item && !!item.id && /^[a-z][a-z0-9._-]*$/.test(item.id) && (manifest.elementAbi === "pip-element/3" || "tag" in item && typeof item.tag === "string" && /^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$/.test(item.tag)) && ["control", "preview", "node", "projection", "panel", "creator", "workspace-window"].includes(item.purpose)) && validExecutableFields(manifest) && validPluginAbi(manifest);
 var validExecutableFields = (manifest) => Array.isArray(manifest.permissions) && manifest.permissions.every(Boolean) && Array.isArray(manifest.sourcePaths) && manifest.sourcePaths.length > 0 && manifest.sourcePaths.every((path) => typeof path === "string" && path.startsWith("source/") && !path.includes("..")) && shaPattern.test(manifest.sourceSha256) && shaPattern.test(manifest.entrySha256) && typeof manifest.redistributable === "boolean";
-var validNodeTypeManifest = (manifest) => manifest.nodeTypeAbi === "pip-node-type/2" && manifest.entry === "entry.mjs" && manifest.typeNodeIds.length > 0 && manifest.typeNodeIds.every(Boolean) && manifest.dependencies.length > 0 && manifest.dependencies.every(validRef) && validExecutableFields(manifest);
-var validNodeMapManifest = (manifest) => ["pip-node-map/1", "relation-node-map/1"].includes(manifest.nodeMapAbi) && Array.isArray(manifest.rootNodeIds) && manifest.rootNodeIds.every(Boolean) && manifest.dependencies.length > 0 && manifest.dependencies.every(validRef) && (!manifest.launchProfile || manifest.launchProfile.schemaVersion === 1 && validRef(manifest.launchProfile.loader) && validRef(manifest.launchProfile.editor));
+var validNodeTypeManifest = (manifest) => ["pip-node-type/2", "pip-node-type/3"].includes(manifest.nodeTypeAbi) && manifest.entry === "entry.mjs" && manifest.typeNodeIds.length > 0 && manifest.typeNodeIds.every(Boolean) && manifest.dependencies.length > 0 && manifest.dependencies.every(validRef) && validExecutableFields(manifest) && validPluginAbi(manifest);
+var validPluginAbi = (manifest) => {
+  const abi = manifest.layer === "a3" ? manifest.elementAbi : manifest.nodeTypeAbi;
+  if (abi.endsWith("/2")) return !("runtime_abi" in manifest) && !("plugin_descriptor_abi" in manifest) && !("plugin_descriptor_path" in manifest) && !("plugin_descriptor_sha256" in manifest) && !("bundled_dependencies" in manifest);
+  return "runtime_abi" in manifest && manifest.runtime_abi === "pip-plugin/1" && manifest.module_abi === "pip-module-factory/1" && manifest.plugin_descriptor_abi === "pip-plugin-descriptor/1" && manifest.plugin_descriptor_path === "plugin.yml" && typeof manifest.plugin_descriptor_sha256 === "string" && shaPattern.test(manifest.plugin_descriptor_sha256) && Array.isArray(manifest.platform_dependencies) && manifest.platform_dependencies.every((item) => typeof item === "string" && Boolean(item)) && Object.entries(manifest.bundled_dependencies ?? {}).every(([name, version]) => Boolean(name) && !name.includes("..") && typeof version === "string" && Boolean(version)) && Object.entries(manifest.resource_hashes).every(([path, hash]) => Boolean(path) && !path.includes("..") && shaPattern.test(hash));
+};
+var validNodeMapManifest = (manifest) => ["pip-node-map/1", "relation-node-map/1"].includes(manifest.nodeMapAbi) && Array.isArray(manifest.rootNodeIds) && manifest.rootNodeIds.every(Boolean) && manifest.dependencies.length > 0 && manifest.dependencies.every(validRef) && (!manifest.launchProfile || manifest.launchProfile.schemaVersion === 1 && validRef(manifest.launchProfile.loader) && validRef(manifest.launchProfile.editor)) && valid_composition_fields(manifest);
+var valid_composition_fields = (manifest) => {
+  const values = [
+    manifest.plugin_composition_abi,
+    manifest.plugin_composition_path,
+    manifest.plugin_composition_sha256
+  ];
+  if (values.every((value) => value === void 0)) return true;
+  const legacy = manifest.plugin_composition_abi === "pip-plugin-composition/1" && manifest.plugin_composition_path === "plugin-profile.yml";
+  const unified = manifest.plugin_composition_abi === "pip-plugin-descriptor/1" && manifest.plugin_composition_path === "plugin.yml";
+  return manifest.nodeMapAbi === "pip-node-map/1" && (legacy || unified) && typeof manifest.plugin_composition_sha256 === "string" && shaPattern.test(manifest.plugin_composition_sha256);
+};
 var pipFilename = (manifest) => {
   assertPipManifest(manifest);
   return `${manifest.layer}_${manifest.artifactName}_${manifest.packageVersion.replaceAll(".", "_")}_${manifest.releaseDate}.pip`;
 };
-var pipSha256 = async (bytes) => [...await sha256(bytes)].map((value) => value.toString(16).padStart(2, "0")).join("");
+var pipSha256 = async (bytes) => [...await sha2562(bytes)].map((value) => value.toString(16).padStart(2, "0")).join("");
 
 // pip-editor/pip-package/io-authorization.ts
 var authorizePipIoMetric = async (field, actual, operation, options) => {
@@ -26935,22 +37419,22 @@ var encodePipAssets = (assets) => {
     if (path.length > 65535 || mime.length > 65535) throw new Error("PIP asset metadata is too large");
     return { asset, path, mime };
   });
-  const total = 4 + records.reduce((sum, record5) => sum + 12 + record5.path.length + record5.mime.length + record5.asset.bytes.length, 0);
+  const total = 4 + records.reduce((sum, record6) => sum + 12 + record6.path.length + record6.mime.length + record6.asset.bytes.length, 0);
   assertSafeLength(total, "Asset section");
   const output = new Uint8Array(total), view = new DataView(output.buffer);
   view.setUint32(0, records.length, true);
   let cursor = 4;
-  for (const record5 of records) {
-    view.setUint16(cursor, record5.path.length, true);
-    view.setUint16(cursor + 2, record5.mime.length, true);
-    writeU64(view, cursor + 4, record5.asset.bytes.length);
+  for (const record6 of records) {
+    view.setUint16(cursor, record6.path.length, true);
+    view.setUint16(cursor + 2, record6.mime.length, true);
+    writeU64(view, cursor + 4, record6.asset.bytes.length);
     cursor += 12;
-    output.set(record5.path, cursor);
-    cursor += record5.path.length;
-    output.set(record5.mime, cursor);
-    cursor += record5.mime.length;
-    output.set(record5.asset.bytes, cursor);
-    cursor += record5.asset.bytes.length;
+    output.set(record6.path, cursor);
+    cursor += record6.path.length;
+    output.set(record6.mime, cursor);
+    cursor += record6.mime.length;
+    output.set(record6.asset.bytes, cursor);
+    cursor += record6.asset.bytes.length;
   }
   return output;
 };
@@ -26999,7 +37483,7 @@ var encodePip = async (input, options) => {
   const descriptors = [];
   for (const section of sections) {
     cursor = align8(cursor);
-    descriptors.push({ offset: cursor, bytes: section, hash: await sha256(section) });
+    descriptors.push({ offset: cursor, bytes: section, hash: await sha2562(section) });
     cursor += section.length;
   }
   assertSafeLength(cursor, "PIP package");
@@ -27041,12 +37525,42 @@ var decodePip = async (source, options) => {
   const payloads = [];
   for (const [index, section] of sections.entries()) {
     const payload = bytes.slice(section.offset, section.offset + section.length);
-    if (!equalBytes(await sha256(payload), section.hash)) throw new Error(`PIP section ${index} hash mismatch`);
+    if (!equalBytes(await sha2562(payload), section.hash)) throw new Error(`PIP section ${index} hash mismatch`);
     payloads.push(payload);
   }
   const manifest = assertPipManifest(JSON.parse(textDecoder.decode(payloads[0])));
   return { manifest, loaderSource: textDecoder.decode(payloads[1]), rootTreeText: textDecoder.decode(payloads[2]), assets: await decodePipAssets(payloads[3], options) };
 };
+
+// pip-editor/pip-package/loader-worker-source.ts
+var PIP_LOADER_WORKER_SOURCE = `
+self.onmessage = async (event) => {
+  let module_url;
+  try {
+    module_url = URL.createObjectURL(new Blob(
+      [event.data.loader_source],
+      { type: "text/javascript" },
+    ));
+    const loader = await import(module_url);
+    if (typeof loader.load !== "function") {
+      throw new Error("PIP loader must export load()");
+    }
+    const diagnostics = [];
+    const root_tree = JSON.parse(event.data.root_tree_text);
+    const result = await loader.load(Object.freeze({
+      manifest: Object.freeze(event.data.manifest),
+      readRootTree: () => structuredClone(root_tree),
+      emitDiagnostic: (entry) => diagnostics.push(structuredClone(entry)),
+    }));
+    self.postMessage({ ok: true, result, diagnostics });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    self.postMessage({ ok: false, error: message });
+  } finally {
+    if (module_url) URL.revokeObjectURL(module_url);
+  }
+};
+`.trim();
 
 // pip-editor/pip-package/loader.ts
 var DEFAULT_PIP_LOADER_SOURCE = `
@@ -27058,22 +37572,8 @@ export async function load(api) {
   return { rootTree, rootNodeId: rootTree.rootIntent.id };
 }`.trim();
 
-// pip-editor/pip-host/packages/hash.ts
-async function sha2562(bytes) {
-  const buffer = await crypto.subtle.digest("SHA-256", bytes);
-  return [...new Uint8Array(buffer)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-async function sourceDigest(files, paths) {
-  const chunks = paths.sort().flatMap((path) => [new TextEncoder().encode(`${path}\0`), files[path] ?? new Uint8Array()]);
-  const size = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
-  const joined = new Uint8Array(size);
-  let offset = 0;
-  for (const chunk of chunks) {
-    joined.set(chunk, offset);
-    offset += chunk.length;
-  }
-  return sha2562(joined);
-}
+// pip-editor/pip-package/profile.ts
+var entryMatchesRef = (entry, reference) => entry.valid && entry.origin === reference.origin && entry.packageId === reference.packageId && entry.packageVersion === reference.version && entry.releaseDate === reference.releaseDate && entry.sha256 === reference.sha256;
 
 // node_modules/es-module-lexer/dist/lexer.asm.js
 var e;
@@ -27096,7 +37596,7 @@ var f = "xportmportlassforetaourceeferromsyncunctionvoyiedelecontininstantybrear
 var t;
 var c;
 var n;
-function parse(k2, u2 = "@") {
+function parse3(k2, u2 = "@") {
   t = k2, c = u2;
   const l2 = 2 * t.length + (2 << 18);
   if (l2 > i || !e) {
@@ -29107,7 +39607,7 @@ function o() {
 async function assertSelfContainedEsm(source, label = "entry.mjs") {
   let imports;
   try {
-    [imports] = parse(source, label);
+    [imports] = parse3(source, label);
   } catch (error) {
     throw new Error(`${label} cannot be parsed as ESM`, { cause: error });
   }
@@ -29119,40 +39619,117 @@ async function assertSelfContainedEsm(source, label = "entry.mjs") {
 }
 
 // pip-editor/pip-host/packages/pip-package.ts
-var encoder = new TextEncoder();
-var decoder = new TextDecoder();
+var encoder4 = new TextEncoder();
+var decoder2 = new TextDecoder();
 var PIP_PACKAGE_LOADER = `export default ({rootTreeText}) => JSON.parse(rootTreeText);`;
-var textAsset = (path, text, mime = "text/plain;charset=utf-8") => ({ path, mime, bytes: encoder.encode(text) });
+var textAsset = (path, text, mime = "text/plain;charset=utf-8") => ({ path, mime, bytes: encoder4.encode(text) });
 var assetsByPath = (assets) => Object.fromEntries(assets.map(({ path, bytes }) => [path, bytes]));
 var assetText = (assets, path) => {
   const asset = assets.find((item) => item.path === path);
   if (!asset) throw new Error(`PIP asset is missing ${path}`);
-  return decoder.decode(asset.bytes);
+  return decoder2.decode(asset.bytes);
 };
 var encodePipPackage = (pip) => encodePip(pip, { policy: UNLIMITED_PIP_IO_POLICY });
 var decodePipPackage = (bytes, options) => decodePip(bytes, options ?? { policy: UNLIMITED_PIP_IO_POLICY });
 
+// pip-editor/pip-host/packages/plugin-v3-package.ts
+async function decode_element_v3(pip_bytes, options) {
+  const pip = await decodePipPackage(pip_bytes, options);
+  if (pip.manifest.layer !== "a3" || pip.manifest.elementAbi !== "pip-element/3") {
+    throw new Error("Expected pip-element/3 package");
+  }
+  const manifest = assertPipManifest(pip.manifest);
+  loadPipDocument(JSON.parse(pip.rootTreeText));
+  const files = await validate_files(manifest, pip.assets);
+  return {
+    manifest,
+    descriptor: assert_plugin_descriptor(files[manifest.plugin_descriptor_path], manifest),
+    entrySource: assetText(pip.assets, manifest.entry),
+    files,
+    pipBytes: pip_bytes,
+    contentSha256: await pipSha256(pip_bytes)
+  };
+}
+async function decode_node_type_v3(pip_bytes, options) {
+  const pip = await decodePipPackage(pip_bytes, options);
+  if (pip.manifest.layer !== "a4" || pip.manifest.nodeTypeAbi !== "pip-node-type/3") {
+    throw new Error("Expected pip-node-type/3 package");
+  }
+  const manifest = assertPipManifest(pip.manifest);
+  const ontology = pipDocumentValues(loadPipDocument(JSON.parse(pip.rootTreeText))).graph;
+  for (const node_id of manifest.typeNodeIds) {
+    if (!graphNodes(ontology)[node_id]) throw new Error(`Ontology is missing type node ${node_id}`);
+  }
+  const files = await validate_files(manifest, pip.assets);
+  const embedded_elements = await Promise.all(pip.assets.filter((asset) => asset.path.startsWith("packages/")).map((asset) => decode_element_v3(asset.bytes, options)));
+  return {
+    manifest,
+    descriptor: assert_plugin_descriptor(files[manifest.plugin_descriptor_path], manifest),
+    ontology,
+    entrySource: assetText(pip.assets, manifest.entry),
+    files,
+    pipBytes: pip_bytes,
+    contentSha256: await pipSha256(pip_bytes),
+    embedded_elements
+  };
+}
+async function validate_files(manifest, assets) {
+  const files = assetsByPath(assets);
+  const allowed = /* @__PURE__ */ new Set([
+    manifest.entry,
+    manifest.plugin_descriptor_path,
+    ...manifest.sourcePaths,
+    ...Object.keys(manifest.resource_hashes)
+  ]);
+  const unexpected = Object.keys(files).find((path) => !allowed.has(path) && !path.startsWith("packages/"));
+  if (unexpected) throw new Error(`Unexpected plugin asset: ${unexpected}`);
+  if (await sha256(files[manifest.entry]) !== manifest.entrySha256) {
+    throw new Error("entry.mjs hash does not match manifest");
+  }
+  if (await sourceDigest(files, manifest.sourcePaths) !== manifest.sourceSha256) {
+    throw new Error("source hash does not match manifest");
+  }
+  const descriptor = files[manifest.plugin_descriptor_path];
+  if (!descriptor || await sha256(descriptor) !== manifest.plugin_descriptor_sha256) {
+    throw new Error("plugin.yml hash does not match manifest");
+  }
+  assert_plugin_descriptor(descriptor, manifest);
+  for (const [path, expected_hash] of Object.entries(manifest.resource_hashes)) {
+    if (!files[path] || await sha256(files[path]) !== expected_hash) {
+      throw new Error(`resource hash does not match manifest: ${path}`);
+    }
+  }
+  return files;
+}
+
 // pip-editor/pip-host/packages/element-package.ts
-async function decodeElementPackage(pipBytes, options) {
+async function decodeAnyElementPackage(pipBytes, options) {
   const pip = await decodePipPackage(pipBytes, options);
   if (pip.manifest.layer !== "a3") throw new Error(`Expected a3 Node Element PIP, received ${pip.manifest.layer}`);
+  if (pip.manifest.elementAbi === "pip-element/3") {
+    return decode_element_v3(pipBytes, options);
+  }
   const manifest = assertPipManifest(pip.manifest);
   loadPipDocument(JSON.parse(pip.rootTreeText));
   const files = assetsByPath(pip.assets), allowed = /* @__PURE__ */ new Set([manifest.entry, ...manifest.sourcePaths]);
   const unexpected = Object.keys(files).find((path) => !allowed.has(path));
   if (unexpected) throw new Error(`Unexpected a3 asset: ${unexpected}`);
   if (!files[manifest.entry] || manifest.sourcePaths.some((path) => !files[path])) throw new Error("A3 package content is incomplete");
-  if (await sha2562(files[manifest.entry]) !== manifest.entrySha256) throw new Error("entry.mjs hash does not match manifest");
+  if (await sha256(files[manifest.entry]) !== manifest.entrySha256) throw new Error("entry.mjs hash does not match manifest");
   if (await sourceDigest(files, manifest.sourcePaths) !== manifest.sourceSha256) throw new Error("source hash does not match manifest");
   const entrySource = assetText(pip.assets, manifest.entry);
   await assertSelfContainedEsm(entrySource, `${manifest.packageId}/entry.mjs`);
-  return { manifest, entrySource, files, pipBytes, contentSha256: await pipSha256(pipBytes) };
+  const common = { entrySource, files, pipBytes, contentSha256: await pipSha256(pipBytes) };
+  return { ...common, manifest };
 }
 
 // pip-editor/pip-host/packages/node-type-package.ts
-async function decodeNodeTypePackage(pipBytes, options) {
+async function decodeAnyNodeTypePackage(pipBytes, options) {
   const pip = await decodePipPackage(pipBytes, options);
   if (pip.manifest.layer !== "a4") throw new Error(`Expected a4 Node Type PIP, received ${pip.manifest.layer}`);
+  if (pip.manifest.nodeTypeAbi === "pip-node-type/3") {
+    return decode_node_type_v3(pipBytes, options);
+  }
   const manifest = assertPipManifest(pip.manifest);
   const ontology = pipDocumentValues(loadPipDocument(JSON.parse(pip.rootTreeText))).graph;
   const files = assetsByPath(pip.assets), allowed = /* @__PURE__ */ new Set([manifest.entry, ...manifest.sourcePaths]);
@@ -29161,7 +39738,7 @@ async function decodeNodeTypePackage(pipBytes, options) {
     throw new Error(`Unexpected a4 asset: ${unexpected}`);
   if (!files[manifest.entry] || manifest.sourcePaths.some((path) => !files[path]))
     throw new Error("A4 package content is incomplete");
-  if (await sha2562(files[manifest.entry]) !== manifest.entrySha256)
+  if (await sha256(files[manifest.entry]) !== manifest.entrySha256)
     throw new Error("entry.mjs hash does not match manifest");
   if (await sourceDigest(files, manifest.sourcePaths) !== manifest.sourceSha256)
     throw new Error("source hash does not match manifest");
@@ -29170,24 +39747,22 @@ async function decodeNodeTypePackage(pipBytes, options) {
       throw new Error(`Ontology is missing type node ${id}`);
   const entrySource = assetText(pip.assets, manifest.entry);
   await assertSelfContainedEsm(entrySource, `${manifest.packageId}/entry.mjs`);
-  const embeddedElements = [];
+  const embedded_elements = [];
   for (const asset of pip.assets.filter(({ path }) => path.startsWith("packages/"))) {
-    const element = await decodeElementPackage(asset.bytes, options);
+    const element = await decodeAnyElementPackage(asset.bytes, options);
     if (asset.path !== `packages/${pipFilename(element.manifest)}`)
       throw new Error(`Embedded PIP filename does not match manifest: ${asset.path}`);
     const ref = manifest.dependencies.find((item) => item.packageId === element.manifest.packageId);
     if (!ref || ref.version !== element.manifest.packageVersion || ref.releaseDate !== element.manifest.releaseDate || ref.sha256 !== element.contentSha256)
       throw new Error(`\u5185\u5D4C A3 \u5185\u5BB9\u8EAB\u4EFD\u4E0D\u5339\u914D ${element.manifest.packageId}`);
-    embeddedElements.push(element);
+    embedded_elements.push(element);
   }
-  return { manifest, ontology, entrySource, files, pipBytes, contentSha256: await pipSha256(pipBytes), embeddedElements };
-}
-function validateNodeTypeDependencies(plugin, elements) {
-  for (const dependency of plugin.manifest.dependencies) {
-    const installed = elements.find((element) => element.manifest.packageId === dependency.packageId);
-    if (!installed) throw new Error(`\u7F3A\u5C11\u5143\u7D20 PIP ${dependency.packageId}@${dependency.version}`);
-    if (installed.manifest.packageVersion !== dependency.version || installed.contentSha256 !== dependency.sha256) throw new Error(`\u5143\u7D20 PIP ${dependency.packageId} \u5185\u5BB9\u8EAB\u4EFD\u4E0D\u5339\u914D`);
-  }
+  const common = { ontology, entrySource, files, pipBytes, contentSha256: await pipSha256(pipBytes) };
+  return {
+    ...common,
+    manifest,
+    embeddedElements: embedded_elements
+  };
 }
 
 // pip-editor/pip-host/packages/legacy-node-map.ts
@@ -29226,12 +39801,12 @@ function migrate_node_map_manifest(manifest) {
 }
 
 // pip-editor/pip-host/contracts/package-validation.ts
-var record4 = (value, label) => {
+var record5 = (value, label) => {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`${label} must be an object`);
   return value;
 };
 function assertNodeMapWorkspace(value) {
-  const item = record4(value, "workspace");
+  const item = record5(value, "workspace");
   const unsupported = Object.keys(item).find((key) => !["views", "initialSelection"].includes(key));
   if (unsupported) throw new Error(`workspace contains unsupported key ${unsupported}`);
   if (!("views" in item)) throw new Error("workspace.views is missing");
@@ -29261,10 +39836,20 @@ async function encodeNodeMapPackage(input) {
   assertPipManifest(manifest);
   assertPipGraph(graph);
   assertNodeMapWorkspace(workspace);
+  const graph_nodes = graphNodes(graph);
   for (const root2 of manifest.rootNodeIds)
-    if (!graphNodes(graph)[root2])
+    if (!graph_nodes[root2])
       throw new Error(`Node Map is missing root node ${root2}`);
   const assets = [textAsset("workspace.json", JSON.stringify(workspace, null, 2), "application/json")];
+  if (input.pluginComposition) {
+    const composition = await encode_plugin_composition(input.pluginComposition);
+    if (manifest.plugin_composition_abi !== "pip-plugin-descriptor/1" || manifest.plugin_composition_path !== "plugin.yml" || manifest.plugin_composition_sha256 !== composition.sha256) {
+      throw new Error("A5 \u63D2\u4EF6\u7F16\u6392 manifest \u4E0E\u5185\u5BB9\u4E0D\u5339\u914D");
+    }
+    assets.push({ path: "plugin.yml", mime: "application/yaml", bytes: composition.bytes });
+  } else if (manifest.plugin_composition_abi) {
+    throw new Error("A5 manifest \u58F0\u660E\u4E86\u63D2\u4EF6\u7F16\u6392\u4F46\u672A\u63D0\u4F9B\u5185\u5BB9");
+  }
   for (const plugin of input.nodeTypes) {
     if (!plugin.manifest.redistributable)
       throw new Error(`Node Type ${plugin.manifest.packageId} \u4E0D\u53EF\u518D\u5206\u53D1`);
@@ -29300,7 +39885,12 @@ async function decodeNodeMapPackage(pipBytes, options) {
     throw new Error("Invalid Node Map manifest");
   const is_legacy = raw_manifest.nodeMapAbi === "relation-node-map/1";
   const manifest = migrate_node_map_manifest(raw_manifest);
-  const document2 = loadPipDocument(JSON.parse(pip.rootTreeText)), { graph } = pipDocumentValues(document2);
+  const document2 = loadPipDocument(JSON.parse(pip.rootTreeText));
+  const { graph, rootNodeIds: document_root_ids } = pipDocumentValues(document2);
+  const document_roots = new Set(document_root_ids);
+  if (document_roots.size !== manifest.rootNodeIds.length || !manifest.rootNodeIds.every((item) => document_roots.has(item))) {
+    throw new Error("Node Map manifest \u4E0E Pip \u6587\u6863\u7684\u6839\u8282\u70B9\u4E0D\u4E00\u81F4");
+  }
   const workspaceAsset = pip.assets.find(({ path }) => path === "workspace.json");
   if (!workspaceAsset)
     throw new Error("Node Map workspace is missing");
@@ -29308,19 +39898,28 @@ async function decodeNodeMapPackage(pipBytes, options) {
   const workspace = is_legacy ? migrate_workspace(raw_workspace) : raw_workspace;
   assertNodeMapWorkspace(workspace);
   const nodeTypes = [], elementPlugins = [];
+  let pluginComposition;
   const runtimePackages = [];
   for (const asset of pip.assets) {
     if (asset.path === "workspace.json")
       continue;
+    if (asset.path === "plugin.yml" || asset.path === "plugin-profile.yml") {
+      const supported_abi = raw_manifest.plugin_composition_abi === "pip-plugin-descriptor/1" || raw_manifest.plugin_composition_abi === "pip-plugin-composition/1";
+      if (!supported_abi || raw_manifest.plugin_composition_path !== asset.path || raw_manifest.plugin_composition_sha256 !== await sha256(asset.bytes)) {
+        throw new Error("A5 \u63D2\u4EF6\u7F16\u6392\u8EAB\u4EFD\u4E0D\u5339\u914D");
+      }
+      pluginComposition = parse_plugin_composition(asset.bytes);
+      continue;
+    }
     if (!asset.path.startsWith("packages/") || !asset.path.endsWith(".pip"))
       throw new Error(`Unexpected Node Map asset: ${asset.path}`);
     const embedded = await decodePipPackage(asset.bytes, options);
     if (asset.path !== `packages/${pipFilename(embedded.manifest)}`)
       throw new Error(`Embedded PIP filename does not match manifest: ${asset.path}`);
     if (embedded.manifest.layer === "a3")
-      elementPlugins.push(await decodeElementPackage(asset.bytes, options));
+      elementPlugins.push(await decodeAnyElementPackage(asset.bytes, options));
     else if (embedded.manifest.layer === "a4")
-      nodeTypes.push(await decodeNodeTypePackage(asset.bytes, options));
+      nodeTypes.push(await decodeAnyNodeTypePackage(asset.bytes, options));
     else if (["a1", "a2"].includes(embedded.manifest.layer))
       runtimePackages.push({ manifest: embedded.manifest, pipBytes: asset.bytes, contentSha256: await pipSha256(asset.bytes) });
     else
@@ -29331,7 +39930,7 @@ async function decodeNodeMapPackage(pipBytes, options) {
       const bytes = await options?.resolvePackage?.(ref);
       if (!bytes)
         throw new Error(`Node Map \u7F3A\u5C11\u7CBE\u786E A4 \u4F9D\u8D56 ${ref.packageId}`);
-      const plugin = await decodeNodeTypePackage(bytes, options);
+      const plugin = await decodeAnyNodeTypePackage(bytes, options);
       if (!refMatches(ref, plugin.manifest, plugin.contentSha256))
         throw new Error(`\u89E3\u6790\u5230\u7684 A4 \u5185\u5BB9\u8EAB\u4EFD\u4E0D\u5339\u914D ${ref.packageId}`);
       nodeTypes.push(plugin);
@@ -29342,7 +39941,7 @@ async function decodeNodeMapPackage(pipBytes, options) {
         const bytes = await options?.resolvePackage?.(ref);
         if (!bytes)
           throw new Error(`Node Type \u7F3A\u5C11\u7CBE\u786E A3 \u4F9D\u8D56 ${ref.packageId}`);
-        const element = await decodeElementPackage(bytes, options);
+        const element = await decodeAnyElementPackage(bytes, options);
         if (!refMatches(ref, element.manifest, element.contentSha256))
           throw new Error(`\u89E3\u6790\u5230\u7684 A3 \u5185\u5BB9\u8EAB\u4EFD\u4E0D\u5339\u914D ${ref.packageId}`);
         elementPlugins.push(element);
@@ -29352,10 +39951,12 @@ async function decodeNodeMapPackage(pipBytes, options) {
       if (!runtimePackages.some((item) => refMatches(ref, item.manifest, item.contentSha256)))
         throw new Error(`Node Map \u542F\u52A8\u95ED\u5305\u7F3A\u5C11 ${ref.packageId}`);
     }
+  if (manifest.plugin_composition_abi && !pluginComposition)
+    throw new Error("A5 \u7F3A\u5C11 plugin.yml");
   for (const root2 of manifest.rootNodeIds)
     if (!graphNodes(graph)[root2])
       throw new Error(`Node Map is missing root node ${root2}`);
-  return { contentSha256: await pipSha256(pipBytes), nodeMap: { manifest, graph, workspace }, nodeTypes, elementPlugins, runtimePackages, pipBytes };
+  return { contentSha256: await pipSha256(pipBytes), nodeMap: { manifest, graph, workspace }, nodeTypes, elementPlugins, runtimePackages, pipBytes, pluginComposition };
 }
 function createNodeMapWorkspace(nodeMap, id = crypto.randomUUID(), contentSha256 = "unpackaged") {
   const initialSelection = [...nodeMap.workspace.initialSelection ?? nodeMap.manifest.rootNodeIds];
@@ -29378,26 +39979,35 @@ var closureHashes = (nodeMap) => [
   ...nodeMap.runtimePackages.map(({ contentSha256 }) => contentSha256)
 ];
 async function importPip(bytes, context) {
-  const ioOptions = context.ioOptions ?? { policy: UNLIMITED_PIP_IO_POLICY };
-  const decoded = await decodePip(bytes, ioOptions);
-  if (context.fileName && context.fileName !== pipFilename(decoded.manifest)) throw new Error(`PIP filename does not match manifest: expected ${pipFilename(decoded.manifest)}`);
+  let ioOptions = context.ioOptions ?? { policy: HOST_PIP_IO_POLICY };
+  let decoded = await decodePip(bytes, ioOptions);
+  const restricted_policy = restrictPipIoPolicy(
+    ioOptions.policy ?? HOST_PIP_IO_POLICY,
+    decoded.manifest.ioPolicy
+  );
+  if (JSON.stringify(restricted_policy) !== JSON.stringify(ioOptions.policy)) {
+    ioOptions = { ...ioOptions, policy: restricted_policy };
+    decoded = await decodePip(bytes, ioOptions);
+  }
   if (!["a3", "a4", "a5"].includes(decoded.manifest.layer)) throw new Error(`\u7F16\u8F91\u5668\u4E0D\u80FD\u5BFC\u5165 ${decoded.manifest.layer} PIP`);
   if (decoded.manifest.layer === "a3") {
-    const plugin = await decodeElementPackage(bytes, ioOptions), hashes2 = [await pipSha256(bytes)];
+    const plugin = await decodeAnyElementPackage(bytes, ioOptions), hashes2 = [await pipSha256(bytes)];
     if (!await context.confirmTrust(plugin.manifest, hashes2)) throw new Error("\u7528\u6237\u53D6\u6D88\u4FE1\u4EFB A3 PIP");
     await context.installElement(plugin);
     await context.trustHashes(hashes2);
     return { layer: "a3", package: plugin };
   }
   if (decoded.manifest.layer === "a4") {
-    const plugin = await decodeNodeTypePackage(bytes, ioOptions), hashes2 = [plugin.contentSha256, ...plugin.embeddedElements.map((item) => item.contentSha256)];
+    const plugin = await decodeAnyNodeTypePackage(bytes, ioOptions);
+    const embedded_elements = "embedded_elements" in plugin ? plugin.embedded_elements : plugin.embeddedElements;
+    const hashes2 = [plugin.contentSha256, ...embedded_elements.map((item) => item.contentSha256)];
     if (!await context.confirmTrust(plugin.manifest, hashes2)) throw new Error("\u7528\u6237\u53D6\u6D88\u4FE1\u4EFB A4 PIP");
     const installedElements2 = [];
     try {
-      for (const element of plugin.embeddedElements) if (await context.installElement(element) === "installed") installedElements2.push(element.manifest.packageId);
+      for (const element of embedded_elements) if (await context.installElement(element) === "installed") installedElements2.push(element.manifest.packageId);
       await context.installNodeType(plugin);
     } catch (error) {
-      installedElements2.reverse().forEach((id) => context.uninstallElement?.(id));
+      for (const id of installedElements2.reverse()) await context.uninstallElement?.(id);
       throw error;
     }
     await context.trustHashes(hashes2);
@@ -29405,18 +40015,69 @@ async function importPip(bytes, context) {
   }
   const nodeMap = await decodeNodeMapPackage(bytes, { ...ioOptions, resolvePackage: context.resolvePackage }), hashes = [...new Set(closureHashes(nodeMap))];
   if (!await context.confirmTrust(nodeMap.nodeMap.manifest, hashes)) throw new Error("\u7528\u6237\u53D6\u6D88\u4FE1\u4EFB A5 \u95ED\u5305");
+  if (nodeMap.pluginComposition && context.activatePluginProfile) {
+    const rollback = await context.activatePluginProfile(nodeMap);
+    try {
+      await context.openNodeMap(nodeMap);
+    } catch (error) {
+      await rollback();
+      throw error;
+    }
+    await context.trustHashes(hashes);
+    return { layer: "a5", package: nodeMap };
+  }
   const installedElements = [], installedNodeTypes = [];
   try {
-    for (const plugin of nodeMap.elementPlugins) if (await context.installElement(plugin) === "installed") installedElements.push(plugin.manifest.packageId);
-    for (const plugin of nodeMap.nodeTypes) if (await context.installNodeType(plugin) === "installed") installedNodeTypes.push(plugin.manifest.packageId);
+    const activation = composition_activation(nodeMap);
+    for (const { plugin, config, instance_id } of activation.elements) {
+      if (await context.installElement(plugin, config, instance_id) === "installed") {
+        installedElements.push(instance_id);
+      }
+    }
+    for (const { plugin, config, instance_id } of activation.node_types) {
+      if (await context.installNodeType(plugin, config, instance_id) === "installed") {
+        installedNodeTypes.push(instance_id);
+      }
+    }
     await context.openNodeMap(nodeMap);
   } catch (error) {
-    installedNodeTypes.reverse().forEach((id) => context.uninstallNodeType?.(id));
-    installedElements.reverse().forEach((id) => context.uninstallElement?.(id));
+    for (const id of installedNodeTypes.reverse()) await context.uninstallNodeType?.(id);
+    for (const id of installedElements.reverse()) await context.uninstallElement?.(id);
     throw error;
   }
   await context.trustHashes(hashes);
   return { layer: "a5", package: nodeMap };
+}
+function composition_activation(node_map) {
+  if (!node_map.pluginComposition) {
+    return {
+      elements: node_map.elementPlugins.map((plugin) => ({
+        plugin,
+        config: {},
+        instance_id: plugin.manifest.packageId
+      })),
+      node_types: node_map.nodeTypes.map((plugin) => ({
+        plugin,
+        config: {},
+        instance_id: plugin.manifest.packageId
+      }))
+    };
+  }
+  const available = [...node_map.elementPlugins, ...node_map.nodeTypes];
+  const selected = node_map.pluginComposition.plugins.filter((entry) => entry.enabled).map((entry) => {
+    const matches = available.filter((plugin) => plugin.manifest.packageId === entry.package.packageId && plugin.manifest.packageVersion === entry.package.version && plugin.manifest.releaseDate === entry.package.releaseDate && plugin.contentSha256 === entry.package.sha256);
+    if (matches.length !== 1) throw new Error(`A5 \u7F16\u6392\u65E0\u6CD5\u7CBE\u786E\u89E3\u6790\u63D2\u4EF6: ${entry.instance_id}`);
+    return { plugin: matches[0], config: entry.config, instance_id: entry.instance_id };
+  });
+  for (const reference of node_map.nodeMap.manifest.dependencies) {
+    if (!selected.some(({ plugin }) => plugin.contentSha256 === reference.sha256)) {
+      throw new Error(`A5 \u7F16\u6392\u7981\u7528\u4E86\u5FC5\u9700 A4: ${reference.packageId}`);
+    }
+  }
+  return {
+    elements: selected.filter((item) => item.plugin.manifest.layer === "a3"),
+    node_types: selected.filter((item) => item.plugin.manifest.layer === "a4")
+  };
 }
 var TRUST_KEY = "pip-editor.trusted-sha256.v1";
 var browserTrustHashes = (hashes) => {
@@ -29455,7 +40116,7 @@ var readHostLaunchPackage = async () => {
 };
 
 // pip-editor/pip-host/use-pip-import-queue.ts
-var import_react11 = __toESM(require_react(), 1);
+var import_react25 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/packages/import-batch.ts
 var layerOrder = {
@@ -29485,13 +40146,6 @@ async function preparePipBatch(batch, files) {
       const pip = await decodePip(bytes, ioOptions);
       if (!["a3", "a4", "a5"].includes(pip.manifest.layer)) {
         throw new Error(`\u7F16\u8F91\u5668\u4E0D\u80FD\u5BFC\u5165 ${pip.manifest.layer} PIP`);
-      }
-      if (file.name !== pipFilename(pip.manifest)) {
-        throw new Error(
-          `PIP filename does not match manifest: expected ${pipFilename(
-            pip.manifest
-          )}`
-        );
       }
       const layer = pip.manifest.layer;
       status.layer = layer;
@@ -29570,13 +40224,13 @@ async function runPreparedPipBatch(initial, prepared, options) {
 
 // pip-editor/pip-host/use-pip-import-queue.ts
 function usePipImportQueue(options) {
-  const optionsRef = (0, import_react11.useRef)(options);
-  (0, import_react11.useEffect)(() => {
+  const optionsRef = (0, import_react25.useRef)(options);
+  (0, import_react25.useEffect)(() => {
     optionsRef.current = options;
   }, [options]);
-  const sequence = (0, import_react11.useRef)(0);
-  const queue = (0, import_react11.useRef)(Promise.resolve());
-  const [importBatch, setImportBatch] = (0, import_react11.useState)();
+  const sequence = (0, import_react25.useRef)(0);
+  const queue = (0, import_react25.useRef)(Promise.resolve());
+  const [importBatch, setImportBatch] = (0, import_react25.useState)();
   const runBatch = async (batchId, files) => {
     const initial = createPendingBatch(batchId, files);
     setImportBatch(initial);
@@ -29618,63 +40272,77 @@ function usePluginCatalog({
   setMessage,
   workspaceStore
 }) {
-  const [elements] = (0, import_react12.useState)(
-    () => new ElementPluginRegistry(browserElementRuntime())
+  const [elements] = (0, import_react26.useState)(() => new ProductionElementRegistry());
+  const [runtime_v3] = (0, import_react26.useState)(() => new ProductionRuntimeV3(workspaceStore));
+  const [initial_preferences] = (0, import_react26.useState)(read_disabled_plugins);
+  const [profile_controller] = (0, import_react26.useState)(() => new ProductionPluginProfileController(
+    runtime_v3.packages,
+    runtime_v3.request_gate,
+    persist_active_profile,
+    read_active_profile()
+  ));
+  const [nodeTypes] = (0, import_react26.useState)(
+    () => new UnifiedNodeTypeRegistry(runtime_v3.services)
   );
-  const [nodeTypes] = (0, import_react12.useState)(
-    () => new NodeTypePluginRegistry(browserNodeTypeRuntime())
+  const [elementPackages, setElementPackages] = (0, import_react26.useState)([]);
+  const [nodeTypePackages, setNodeTypePackages] = (0, import_react26.useState)([]);
+  const [disabledElements, setDisabledElements] = (0, import_react26.useState)(initial_preferences.elements);
+  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react26.useState)(
+    initial_preferences.node_types
   );
-  const [elementPackages, setElementPackages] = (0, import_react12.useState)([]);
-  const [nodeTypePackages, setNodeTypePackages] = (0, import_react12.useState)([]);
-  const [disabledElements, setDisabledElements] = (0, import_react12.useState)(/* @__PURE__ */ new Set());
-  const [disabledNodeTypes, setDisabledNodeTypes] = (0, import_react12.useState)(
-    /* @__PURE__ */ new Set()
-  );
-  const [nodeMaps, setNodeMaps] = (0, import_react12.useState)([]);
-  const nodeMapCatalogRef = (0, import_react12.useRef)(new PortableNodeMapCatalog());
+  const [nodeMaps, setNodeMaps] = (0, import_react26.useState)([]);
+  const nodeMapCatalogRef = (0, import_react26.useRef)(new PortableNodeMapCatalog());
   const persistTrust = async (hashes) => location.protocol === "pip:" ? trustPackageHashes(hashes) : browserTrustHashes(hashes);
-  async function installElement(plugin) {
-    const status = await elements.install(plugin);
-    setDisabledElements((current) => {
-      const next = new Set(current);
-      next.delete(plugin.manifest.packageId);
-      return next;
-    });
-    setElementPackages(
-      (current) => current.some(
-        (item) => item.manifest.packageId === plugin.manifest.packageId
-      ) ? current : [...current, plugin]
-    );
-    return status;
+  async function installElement(plugin, config = {}, instance_id = plugin.manifest.packageId) {
+    if (plugin.manifest.elementAbi === "pip-element/3") {
+      await runtime_v3.ready;
+      const status = await runtime_v3.packages.install_element(
+        plugin,
+        config,
+        instance_id
+      );
+      setDisabledElements((current) => without_id(current, plugin.manifest.packageId));
+      setElementPackages((current) => add_package(current, plugin));
+      return status;
+    }
+    throw new Error("\u65B0 A2 \u62D2\u7EDD pip-element/2\uFF1B\u8BF7\u6574\u9875\u5207\u6362 legacy profile");
   }
-  async function installNodeType(plugin) {
-    validateNodeTypeDependencies(
-      plugin,
-      elements.list().filter((item) => item.active)
-    );
-    const status = await nodeTypes.install(plugin);
-    setDisabledNodeTypes((current) => {
-      const next = new Set(current);
-      next.delete(plugin.manifest.packageId);
-      return next;
-    });
-    setNodeTypePackages(
-      (current) => current.some(
-        (item) => item.manifest.packageId === plugin.manifest.packageId
-      ) ? current : [...current, plugin]
-    );
-    return status;
+  async function installNodeType(plugin, config = {}, instance_id = plugin.manifest.packageId) {
+    if (plugin.manifest.nodeTypeAbi === "pip-node-type/3") {
+      await runtime_v3.ready;
+      const status = await runtime_v3.packages.install_node_type(
+        plugin,
+        config,
+        instance_id
+      );
+      setDisabledNodeTypes((current) => without_id(current, plugin.manifest.packageId));
+      setNodeTypePackages((current) => add_package(current, plugin));
+      return status;
+    }
+    throw new Error("\u65B0 A2 \u62D2\u7EDD pip-node-type/2\uFF1B\u8BF7\u6574\u9875\u5207\u6362 legacy profile");
   }
-  const rollbackElement = (id) => {
-    elements.uninstall(id);
+  const rollbackElement = async (id) => {
+    const installed = runtime_v3.packages.snapshot();
+    const runtime_package = installed.find((item) => item.layer === "a3" && (item.instance_id === id || item.package_id === id));
+    if (runtime_package) {
+      await runtime_v3.packages.uninstall(runtime_package.instance_id);
+    }
+    const package_id = runtime_package?.package_id ?? id;
+    const still_installed = runtime_v3.packages.snapshot().some((item) => item.layer === "a3" && item.package_id === package_id);
     setElementPackages(
-      (current) => current.filter((item) => item.manifest.packageId !== id)
+      (current) => still_installed ? current : current.filter((item) => item.manifest.packageId !== package_id)
     );
   };
-  const rollbackNodeType = (id) => {
-    nodeTypes.uninstall(id);
+  const rollbackNodeType = async (id) => {
+    const installed = runtime_v3.packages.snapshot();
+    const runtime_package = installed.find((item) => item.layer === "a4" && (item.instance_id === id || item.package_id === id));
+    if (runtime_package) {
+      await runtime_v3.packages.uninstall(runtime_package.instance_id);
+    }
+    const package_id = runtime_package?.package_id ?? id;
+    const still_installed = runtime_v3.packages.snapshot().some((item) => item.layer === "a4" && item.package_id === package_id);
     setNodeTypePackages(
-      (current) => current.filter((item) => item.manifest.packageId !== id)
+      (current) => still_installed ? current : current.filter((item) => item.manifest.packageId !== package_id)
     );
   };
   async function openNodeMap(portable) {
@@ -29698,23 +40366,66 @@ function usePluginCatalog({
       `${status === "installed" ? "\u5DF2\u6253\u5F00" : "\u5DF2\u518D\u6B21\u6253\u5F00"} Node Map ${portable.nodeMap.manifest.name}`
     );
   }
+  async function activatePluginProfile(portable) {
+    return profile_controller.activate(portable);
+  }
+  async function restore_plugin_preferences() {
+    await runtime_v3.ready;
+    for (const item of runtime_v3.packages.snapshot()) {
+      const disabled = item.layer === "a3" ? initial_preferences.elements.has(item.package_id) : initial_preferences.node_types.has(item.package_id);
+      if (disabled && item.state !== "disabled") {
+        await runtime_v3.packages.disable(item.instance_id);
+      }
+    }
+    setDisabledElements(new Set(initial_preferences.elements));
+    setDisabledNodeTypes(new Set(initial_preferences.node_types));
+    persist_disabled_plugins(
+      initial_preferences.elements,
+      initial_preferences.node_types
+    );
+  }
+  const set_element_enabled = async (id, enabled) => {
+    const runtime_package = runtime_v3.packages.snapshot().some((item) => item.package_id === id && item.layer === "a3");
+    if (runtime_package) {
+      const instances = runtime_v3.packages.snapshot().filter((item) => item.layer === "a3" && item.package_id === id);
+      for (const instance of instances) {
+        await (enabled ? runtime_v3.packages.enable(instance.instance_id) : runtime_v3.packages.disable(instance.instance_id));
+      }
+    }
+    setDisabledElements((current) => {
+      const next = enabled ? without_id(current, id) : new Set(current).add(id);
+      persist_disabled_plugins(next, disabledNodeTypes);
+      return next;
+    });
+  };
+  const set_node_type_enabled = async (id, enabled) => {
+    const runtime_package = runtime_v3.packages.snapshot().some((item) => item.package_id === id && item.layer === "a4");
+    if (runtime_package) {
+      const instances = runtime_v3.packages.snapshot().filter((item) => item.layer === "a4" && item.package_id === id);
+      for (const instance of instances) {
+        await (enabled ? runtime_v3.packages.enable(instance.instance_id) : runtime_v3.packages.disable(instance.instance_id));
+      }
+    }
+    setDisabledNodeTypes((current) => {
+      const next = enabled ? without_id(current, id) : new Set(current).add(id);
+      persist_disabled_plugins(disabledElements, next);
+      return next;
+    });
+  };
   const imports = usePipImportQueue({
     context: () => ({
       confirmTrust: () => true,
       trustHashes: persistTrust,
       installElement,
       installNodeType,
+      activatePluginProfile,
       openNodeMap,
       uninstallElement: rollbackElement,
       uninstallNodeType: rollbackNodeType
     }),
     onMessage: setMessage,
     // Registry 是同步事实源，不依赖 React catalog state 是否已完成重渲染。
-    resolveInstalled: (reference) => elements.list().find(
-      (item) => item.contentSha256 === reference.sha256
-    )?.pipBytes ?? nodeTypes.list().find(
-      (item) => item.contentSha256 === reference.sha256
-    )?.pipBytes
+    resolveInstalled: (reference) => runtime_v3.packages.package_bytes_by_hash(reference.sha256)
   });
   return {
     disabledElements,
@@ -29728,15 +40439,31 @@ function usePluginCatalog({
     nodeMaps,
     nodeTypePackages,
     nodeTypes,
+    plugin_diagnostics: () => runtime_v3.packages.diagnostics(),
+    declared_contributions: () => runtime_v3.packages.declared_contributions(),
+    runtime_v3,
+    profile_manager: profile_controller.manager,
+    ui_slots: runtime_v3.ui_slots,
     openNodeMap,
     persistTrust,
     rollbackElement,
     rollbackNodeType,
+    restore_plugin_preferences,
     setDisabledElements,
     setDisabledNodeTypes,
+    set_element_enabled,
+    set_node_type_enabled,
     setElementPackages,
     setNodeTypePackages
   };
+}
+function without_id(current, id) {
+  const next = new Set(current);
+  next.delete(id);
+  return next;
+}
+function add_package(current, plugin) {
+  return current.some((item) => item.manifest.packageId === plugin.manifest.packageId) ? current : [...current, plugin];
 }
 
 // pip-editor/pip-host/view/canvas-entry.module.css
@@ -29746,20 +40473,20 @@ var canvas_entry_default = {
 };
 
 // pip-editor/pip-host/view/startup-notice.tsx
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 function StartupNotice({ loading, error, retry }) {
   if (!loading && !error) return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("aside", { className: canvas_entry_default.notice, role: "status", children: loading ? "\u6B63\u5728\u52A0\u8F7D\u542F\u52A8\u63D2\u4EF6\u2026" : /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("aside", { className: canvas_entry_default.notice, role: "status", children: loading ? "\u6B63\u5728\u52A0\u8F7D\u542F\u52A8\u63D2\u4EF6\u2026" : /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
       "\u542F\u52A8\u63D2\u4EF6\u52A0\u8F7D\u5931\u8D25\uFF1A",
       error
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { onClick: retry, children: "\u91CD\u8BD5\u52A0\u8F7D" })
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("button", { onClick: retry, children: "\u91CD\u8BD5\u52A0\u8F7D" })
   ] }) });
 }
 
 // pip-editor/pip-host/use-host-effects.ts
-var import_react14 = __toESM(require_react(), 1);
+var import_react28 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/execution/trigger-runtime.ts
 var TriggerRuntime = class {
@@ -29815,7 +40542,7 @@ var TriggerRuntime = class {
 };
 
 // pip-editor/pip-host/use-startup-workspace.ts
-var import_react13 = __toESM(require_react(), 1);
+var import_react27 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/startup/load-plugins.ts
 async function fetch_startup_asset(asset, base) {
@@ -29871,14 +40598,14 @@ async function load_startup_plugins(manifest_path, choices, auto_load_website, e
 
 // pip-editor/pip-host/use-startup-workspace.ts
 function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_error, startup_plugins = {}) {
-  const started = (0, import_react13.useRef)(false);
-  const launch_imported = (0, import_react13.useRef)(false);
-  const completed = (0, import_react13.useRef)(/* @__PURE__ */ new Set());
-  const requested = (0, import_react13.useRef)(void 0);
-  const [attempt, set_attempt] = (0, import_react13.useState)(0);
-  const [loading, set_loading] = (0, import_react13.useState)(!explicit_launch && auto_load_website);
-  const [error, set_error] = (0, import_react13.useState)("");
-  (0, import_react13.useEffect)(() => {
+  const started = (0, import_react27.useRef)(false);
+  const launch_imported = (0, import_react27.useRef)(false);
+  const completed = (0, import_react27.useRef)(/* @__PURE__ */ new Set());
+  const requested = (0, import_react27.useRef)(void 0);
+  const [attempt, set_attempt] = (0, import_react27.useState)(0);
+  const [loading, set_loading] = (0, import_react27.useState)(!explicit_launch && auto_load_website);
+  const [error, set_error] = (0, import_react27.useState)("");
+  (0, import_react27.useEffect)(() => {
     if (started.current) return;
     started.current = true;
     async function launch() {
@@ -29914,6 +40641,7 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
         requested.current
       );
       if (errors) throw new Error(errors);
+      await catalog.restore_plugin_preferences();
     }
     void launch().catch((failure) => {
       const message = failure instanceof Error ? failure.message : "\u542F\u52A8\u5DE5\u4F5C\u7A7A\u95F4\u5931\u8D25";
@@ -29929,7 +40657,7 @@ function useStartupWorkspace(auto_load_website, explicit_launch, catalog, on_err
     set_loading(true);
     set_attempt((value) => value + 1);
   };
-  (0, import_react13.useEffect)(() => {
+  (0, import_react27.useEffect)(() => {
     const load = (event) => retry(event.detail);
     document.addEventListener("pip-load-startup", load);
     return () => document.removeEventListener("pip-load-startup", load);
@@ -29957,7 +40685,7 @@ function useHostEffects({
   workspaces
 }) {
   const startup = useStartupWorkspace(auto_load_website, explicit_launch, catalog, setMessage, startup_plugins);
-  const [triggerRuntime] = (0, import_react14.useState)(
+  const [triggerRuntime] = (0, import_react28.useState)(
     () => new TriggerRuntime({
       registry: nodeTypes,
       fire: async (workspace, triggerNodeId, payload) => {
@@ -29974,14 +40702,14 @@ function useHostEffects({
       )
     })
   );
-  (0, import_react14.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     const preventPageZoom = (event) => {
       if (event.ctrlKey || event.metaKey) event.preventDefault();
     };
     addEventListener("wheel", preventPageZoom, { passive: false });
     return () => removeEventListener("wheel", preventPageZoom);
   }, []);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     const handleKeyDown = (event) => {
       if (!(event.ctrlKey || event.metaKey)) return;
       const key = event.key.toLowerCase();
@@ -30015,16 +40743,16 @@ function useHostEffects({
     setActiveWorkspaceId,
     tabWorkspaces
   ]);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     for (const workspace of workspaces) {
       executionManager.markWorkspaceStale(workspace.id, graphRevision(workspace.graph));
     }
   }, [executionManager, workspaces]);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     triggerRuntime.sync(workspaces);
   }, [nodeTypePackages, triggerRuntime, workspaces]);
-  (0, import_react14.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react28.useEffect)(() => () => triggerRuntime.dispose(), [triggerRuntime]);
+  (0, import_react28.useEffect)(() => {
     const handleHook = (event) => {
       const detail = event.detail;
       if (typeof detail?.key !== "string") return;
@@ -30039,11 +40767,12 @@ function useHostEffects({
 }
 
 // pip-editor/pip-host/use-system-plugins.ts
-var import_react15 = __toESM(require_react(), 1);
+var import_react32 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/guanguan-host-service.ts
-function create_guanguan_host_service(workspaces, workspace_store, creator_armed, on_history) {
+function create_guanguan_host_service(workspaces, workspace_store, creator_armed, on_history, node_types) {
   return {
+    world_tree: build_space_world_tree(workspaces, node_types),
     creator_armed,
     workspaces: workspaces.map((workspace) => ({
       id: workspace.id,
@@ -30064,6 +40793,1056 @@ function create_guanguan_host_service(workspaces, workspace_store, creator_armed
   };
 }
 
+// pip-editor/pip-host/view/companion-message-store.ts
+var message_priority = {
+  error: 5,
+  warning: 4,
+  waiting: 3,
+  success: 2,
+  info: 1
+};
+var message_duration = (tone) => {
+  if (tone === "success") return 2200;
+  if (tone === "info") return 3200;
+  return void 0;
+};
+var CompanionMessageStore = class {
+  #messages = [];
+  #timer;
+  #running_actions = /* @__PURE__ */ new Set();
+  #publish;
+  constructor(publish = () => void 0) {
+    this.#publish = publish;
+  }
+  publish(input) {
+    const now = Date.now();
+    this.#settle_active(now);
+    const duration = message_duration(input.tone);
+    const existing = this.#messages.findIndex((item) => item.source_plugin_id === input.source_plugin_id && item.key === input.key);
+    const next = {
+      ...input,
+      id: existing >= 0 ? this.#messages[existing].id : `companion.message.${crypto.randomUUID()}`,
+      created_at: existing >= 0 ? this.#messages[existing].created_at : now,
+      ...duration && !input.persistent ? { remaining_ms: duration } : {}
+    };
+    if (existing >= 0) this.#messages.splice(existing, 1, next);
+    else this.#messages.push(next);
+    this.#constrain();
+    this.#schedule();
+    this.#publish();
+    return next.id;
+  }
+  cancel(source_plugin_id, key) {
+    this.#settle_active(Date.now());
+    this.#messages = this.#messages.filter((item) => item.source_plugin_id !== source_plugin_id || item.key !== key);
+    this.#schedule();
+    this.#publish();
+  }
+  cancel_target(instance_id) {
+    this.#settle_active(Date.now());
+    this.#messages = this.#messages.filter((item) => item.target_instance_id !== instance_id);
+    this.#schedule();
+    this.#publish();
+  }
+  current(instance_id, fallback_instance_id) {
+    this.#expire();
+    this.#schedule();
+    const candidates = this.#messages.filter((item) => item.target_instance_id === instance_id || !item.target_instance_id && instance_id === fallback_instance_id);
+    const current = candidates.sort((left, right) => message_priority[right.tone] - message_priority[left.tone] || left.created_at - right.created_at)[0];
+    return current ? this.#view(current) : void 0;
+  }
+  async action(message_id, action_id) {
+    const message = this.#messages.find((item) => item.id === message_id);
+    const action = message?.actions?.find((item) => item.id === action_id);
+    if (!message || !action) return false;
+    const action_key = `${message_id}:${action_id}`;
+    if (this.#running_actions.has(action_key)) return false;
+    this.#running_actions.add(action_key);
+    try {
+      await action.run();
+      if (action.close_after !== false) this.dismiss(message_id, true);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      this.#running_actions.delete(action_key);
+    }
+  }
+  dismiss(message_id, force = false) {
+    const message = this.#messages.find((item) => item.id === message_id);
+    if (!message || !force && (message.dismissible === false || message.tone === "waiting")) {
+      return false;
+    }
+    this.#settle_active(Date.now());
+    this.#messages = this.#messages.filter((item) => item.id !== message_id);
+    this.#schedule();
+    this.#publish();
+    return true;
+  }
+  dispose() {
+    if (this.#timer) clearTimeout(this.#timer);
+    this.#timer = void 0;
+    this.#messages = [];
+    this.#running_actions.clear();
+    this.#publish();
+  }
+  #view(message) {
+    return {
+      id: message.id,
+      tone: message.tone,
+      title: message.title,
+      detail: message.detail,
+      shortcuts: message.shortcuts,
+      actions: (message.actions ?? []).map((action) => ({
+        id: action.id,
+        label: action.label,
+        emphasis: action.emphasis
+      })),
+      dismissible: message.dismissible ?? message.tone !== "waiting"
+    };
+  }
+  #message_group(message) {
+    return message.target_instance_id ?? "unbound";
+  }
+  #active_messages() {
+    const active = /* @__PURE__ */ new Map();
+    for (const message of this.#messages) {
+      const group = this.#message_group(message);
+      const current = active.get(group);
+      if (!current || message_priority[message.tone] > message_priority[current.tone] || message_priority[message.tone] === message_priority[current.tone] && message.created_at < current.created_at) {
+        active.set(group, message);
+      }
+    }
+    return new Set(active.values());
+  }
+  #settle_active(now) {
+    for (const message of this.#messages) {
+      if (message.remaining_ms === void 0 || message.activated_at === void 0) continue;
+      message.remaining_ms = Math.max(0, message.remaining_ms - (now - message.activated_at));
+      message.activated_at = void 0;
+    }
+  }
+  #expire() {
+    this.#settle_active(Date.now());
+    this.#messages = this.#messages.filter((item) => item.remaining_ms === void 0 || item.remaining_ms > 0);
+  }
+  #constrain() {
+    while (this.#messages.length > 20) {
+      const removable = this.#messages.findIndex((item) => item.tone === "info" || item.tone === "success");
+      if (removable < 0) {
+        const rejected = this.#messages.pop();
+        this.#schedule();
+        throw new Error(`Companion message queue is full; rejected ${rejected?.source_plugin_id ?? "unknown"}`);
+      }
+      this.#messages.splice(removable, 1);
+    }
+  }
+  #schedule() {
+    if (this.#timer) clearTimeout(this.#timer);
+    this.#timer = void 0;
+    const now = Date.now();
+    const active = this.#active_messages();
+    let delay;
+    for (const message of this.#messages) {
+      if (message.remaining_ms === void 0) continue;
+      if (!active.has(message)) {
+        message.activated_at = void 0;
+        continue;
+      }
+      message.activated_at = now;
+      delay = delay === void 0 ? message.remaining_ms : Math.min(delay, message.remaining_ms);
+    }
+    if (delay === void 0) return;
+    this.#timer = setTimeout(() => {
+      this.#expire();
+      this.#schedule();
+      this.#publish();
+    }, Math.max(0, delay));
+  }
+};
+
+// pip-editor/pip-host/view/space-inspector-service.ts
+function valid_field(field, value) {
+  if (value === void 0 || value === null || value === "") return !field.required;
+  if (field.kind === "text" || field.kind === "multiline") {
+    return typeof value === "string" && value.length <= 1e5;
+  }
+  if (field.kind === "number") return typeof value === "number" && Number.isFinite(value);
+  if (field.kind === "boolean") return typeof value === "boolean";
+  return typeof value === "string" && Boolean(field.options?.some((item) => item.value === value));
+}
+function create_space_inspector_service(workspaces, node_types, elements) {
+  const read = (target) => {
+    if (target.kind === "viewport" || target.kind === "host") {
+      return { properties: {}, commands: [], views: [] };
+    }
+    const workspace = workspaces.list().find(
+      (item) => item.id === target.workspace_id
+    );
+    if (!workspace) {
+      return { properties: {}, commands: [], views: [] };
+    }
+    const revision = graphRevision(workspace.graph);
+    if (target.kind === "workspace") {
+      return {
+        revision,
+        properties: { node_count: Object.keys(graphNodes(workspace.graph)).length },
+        commands: [],
+        views: []
+      };
+    }
+    const projection_node2 = graphNodes(workspace.graph)[target.projection_id];
+    const observed = projection_node2 && observedNode(projection_node2, workspace.graph);
+    const definition = projection_node2 && projectionForInstance(
+      projection_node2,
+      node_types.projections()
+    );
+    if (!projection_node2 || !observed || !definition) {
+      return { revision, properties: {}, commands: [], views: [] };
+    }
+    const scope = target.route[target.route.length - 1]?.scope ?? "self";
+    const projected = definition.project?.({
+      workspaceId: workspace.id,
+      rootNodeIds: workspace.rootNodeIds,
+      workspaceView: workspace.views,
+      graph: workspace.graph,
+      node: projection_node2,
+      projectionNode: projection_node2,
+      observedNode: observed,
+      context: workspaceProjectionContext(scope),
+      selection: workspace.scopedSelections?.[target.root_window_id] ?? workspace.selection
+    });
+    const properties = projected && typeof projected === "object" && !Array.isArray(projected) ? projected : {};
+    const reference = definition.inspector_element;
+    return {
+      revision,
+      observed_node_id: observed.id,
+      properties,
+      element_tag: reference ? elements.resolve(reference.plugin_id, reference.element_id)?.tag : void 0,
+      commands: node_types.inspector_commands().filter((item) => item.projection_ids.includes(definition.id)),
+      views: projectionOptions(observed.id, workspace.graph, node_types).map((item) => ({
+        projection_id: item.projectionNodeId,
+        label: item.label,
+        scope: item.scope
+      }))
+    };
+  };
+  const execute = async (target, descriptor_id, revision, values) => {
+    if (target.kind !== "projection") throw new Error("\u8BE5\u7A7A\u95F4\u6CA1\u6709\u6B64\u64CD\u4F5C");
+    const workspace = workspaces.list().find((item) => item.id === target.workspace_id);
+    if (!workspace || graphRevision(workspace.graph) !== revision) {
+      throw new Error("\u7A7A\u95F4\u5185\u5BB9\u5DF2\u53D8\u5316\uFF0C\u8BF7\u5237\u65B0\u5C5E\u6027\u540E\u91CD\u8BD5");
+    }
+    if (!valid_projection_route(target, workspace.graph, node_types)) {
+      throw new Error("\u6295\u5F71\u8DEF\u5F84\u5DF2\u5931\u6548\uFF0C\u8BF7\u91CD\u65B0\u9009\u62E9\u7A7A\u95F4");
+    }
+    const snapshot2 = read(target);
+    const descriptor = snapshot2.commands.find((item) => item.id === descriptor_id);
+    const handler = descriptor && node_types.commands().get(descriptor.command_id);
+    if (!descriptor || !handler || !snapshot2.observed_node_id) {
+      throw new Error("\u64CD\u4F5C\u5DF2\u5931\u6548\u6216\u672A\u83B7\u6388\u6743");
+    }
+    const field_ids = new Set(descriptor.fields.map((field) => field.id));
+    if (Object.keys(values).some((id) => !field_ids.has(id)) || descriptor.fields.some((field) => !valid_field(field, values[field.id]))) {
+      throw new Error("\u64CD\u4F5C\u53C2\u6570\u65E0\u6548");
+    }
+    const input = {
+      ...values,
+      node_id: snapshot2.observed_node_id
+    };
+    const patch = await handler(input, workspace.graph);
+    const latest = workspaces.list().find((item) => item.id === workspace.id);
+    if (!latest || graphRevision(latest.graph) !== revision) {
+      throw new Error("\u7A7A\u95F4\u5185\u5BB9\u5DF2\u53D8\u5316\uFF0C\u8BF7\u91CD\u8BD5");
+    }
+    workspaces.commitPatch(workspace.id, patch, node_types.validators());
+  };
+  return { read, execute };
+}
+
+// pip-editor/pip-host/use-system-plugin-definition-sync.ts
+var import_react29 = __toESM(require_react(), 1);
+function useSystemPluginDefinitionSync(registry, runtime, on_message) {
+  (0, import_react29.useEffect)(() => {
+    const synchronize = () => runtime.synchronize_definitions(registry.list());
+    const unsubscribe = registry.subscribe(synchronize);
+    void registry.ready.then(synchronize).catch((error) => {
+      on_message(error instanceof Error ? error.message : String(error));
+    });
+    return () => {
+      void unsubscribe();
+    };
+  }, [on_message, registry, runtime]);
+}
+
+// pip-editor/pip-host/use-guanguan-runtime.ts
+var import_react30 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host-io/guanguan-runtime/instance-service.ts
+var GuanguanInstanceService = class {
+  #instances = /* @__PURE__ */ new Map();
+  create(instance_id, owner) {
+    const current = this.#instances.get(instance_id);
+    if (current) return this.#snapshot(current);
+    const record6 = {
+      instance_id,
+      owner: structuredClone(owner),
+      account_epoch: 0,
+      presentation_count: 0,
+      presentation_state: "suspended",
+      generation: 1
+    };
+    this.#instances.set(instance_id, record6);
+    return this.#snapshot(record6);
+  }
+  has(instance_id) {
+    return this.#instances.has(instance_id);
+  }
+  attach_presentation(instance_id) {
+    const record6 = this.#require(instance_id);
+    record6.presentation_count += 1;
+    record6.presentation_state = "active";
+    return () => this.detach_presentation(instance_id);
+  }
+  detach_presentation(instance_id) {
+    const record6 = this.#instances.get(instance_id);
+    if (!record6) return;
+    record6.presentation_count = Math.max(0, record6.presentation_count - 1);
+    if (!record6.presentation_count) record6.presentation_state = "suspended";
+  }
+  move_owner(instance_id, owner) {
+    this.#require(instance_id).owner = structuredClone(owner);
+  }
+  start_run(instance_id, run_id) {
+    const record6 = this.#require(instance_id);
+    record6.run_controller?.abort("replaced");
+    const controller = new AbortController();
+    record6.run_controller = controller;
+    record6.active_run_id = run_id;
+    return {
+      signal: controller.signal,
+      account_epoch: record6.account_epoch,
+      generation: record6.generation
+    };
+  }
+  switch_account(instance_id) {
+    const record6 = this.#require(instance_id);
+    record6.run_controller?.abort("account-changed");
+    record6.run_controller = void 0;
+    record6.active_run_id = void 0;
+    record6.account_epoch += 1;
+    record6.generation += 1;
+  }
+  cancel_run(instance_id, reason = "cancelled") {
+    const record6 = this.#require(instance_id);
+    record6.run_controller?.abort(reason);
+    record6.run_controller = void 0;
+    record6.active_run_id = void 0;
+  }
+  snapshot(instance_id) {
+    return this.#snapshot(this.#require(instance_id));
+  }
+  list() {
+    return [...this.#instances.values()].map((record6) => this.#snapshot(record6));
+  }
+  close(instance_id) {
+    const record6 = this.#instances.get(instance_id);
+    if (!record6) return;
+    record6.run_controller?.abort("instance-closed");
+    this.#instances.delete(instance_id);
+  }
+  dispose_all() {
+    for (const instance_id of [...this.#instances.keys()]) this.close(instance_id);
+  }
+  #require(instance_id) {
+    const record6 = this.#instances.get(instance_id);
+    if (!record6) throw new Error(`\u5173\u5173\u5B9E\u4F8B\u4E0D\u5B58\u5728: ${instance_id}`);
+    return record6;
+  }
+  #snapshot(record6) {
+    return structuredClone({
+      instance_id: record6.instance_id,
+      owner: record6.owner,
+      account_epoch: record6.account_epoch,
+      presentation_count: record6.presentation_count,
+      presentation_state: record6.presentation_state,
+      active_run_id: record6.active_run_id,
+      generation: record6.generation
+    });
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/core-plugin.ts
+var guanguan_core_plugin = {
+  name: "guanguan-core",
+  provides: ["guanguan_instances"],
+  config_schema: {
+    type: "object",
+    properties: {},
+    additional_properties: false
+  },
+  apply(ctx) {
+    const instances = new GuanguanInstanceService();
+    ctx.provide("guanguan_instances", instances);
+    ctx.effect(() => () => instances.dispose_all(), "\u5173\u95ED\u5173\u5173\u5B9E\u4F8B\u8D44\u6E90");
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/agent-plugin.ts
+var GuanguanAgentService = class {
+  #instances;
+  #client;
+  constructor(instances, client) {
+    this.#instances = instances;
+    this.#client = client;
+  }
+  async start(instance_id, input) {
+    const before = this.#instances.snapshot(instance_id);
+    const run_id = crypto.randomUUID();
+    const guard = this.#instances.start_run(instance_id, run_id);
+    const request = {
+      ...input,
+      run_id,
+      account_epoch: before.account_epoch,
+      generation: before.generation
+    };
+    let created;
+    try {
+      created = await this.#client.start(request, guard.signal);
+    } catch (start_error) {
+      try {
+        created = await this.#client.read(run_id, guard.signal);
+      } catch {
+        throw start_error;
+      }
+    }
+    const current = this.#instances.snapshot(instance_id);
+    if (created.run_id !== run_id || current.active_run_id !== run_id || current.account_epoch !== before.account_epoch || current.generation !== before.generation) {
+      await this.#client.cancel(created.run_id);
+      throw new Error("\u5173\u5173\u8D26\u53F7\u6216 generation \u5DF2\u53D8\u5316");
+    }
+    return { run_id, ...guard };
+  }
+  read(run_id, signal) {
+    return this.#client.read(run_id, signal);
+  }
+  can_accept(instance_id, guard) {
+    const current = this.#instances.snapshot(instance_id);
+    return current.account_epoch === guard.account_epoch && current.generation === guard.generation;
+  }
+  async cancel(instance_id) {
+    const run_id = this.#instances.snapshot(instance_id).active_run_id;
+    if (run_id) await this.#client.cancel(run_id);
+    this.#instances.cancel_run(instance_id);
+  }
+};
+var guanguan_agent_plugin = {
+  name: "guanguan-agent",
+  inject: ["guanguan_instances", "agent_client"],
+  provides: ["guanguan_agent"],
+  apply(ctx) {
+    ctx.provide("guanguan_agent", new GuanguanAgentService(
+      ctx.services.guanguan_instances,
+      ctx.services.agent_client
+    ));
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/inspector-plugin.ts
+var guanguan_inspector_plugin = {
+  name: "guanguan-inspector",
+  inject: ["pip_workspace_sessions", "pip_inspector_registry"],
+  provides: ["guanguan_inspector"],
+  apply(ctx) {
+    const workspaces = ctx.services.pip_workspace_sessions;
+    const node_types = ctx.services.pip_inspector_registry;
+    ctx.provide("guanguan_inspector", create_space_inspector_service(
+      workspaces,
+      node_types,
+      { resolve: () => void 0 }
+    ));
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/messages-plugin.ts
+function create_guanguan_messages_plugin(shared_messages) {
+  return {
+    name: "guanguan-messages",
+    inject: ["guanguan_instances"],
+    provides: ["guanguan_messages"],
+    apply(ctx) {
+      const messages = shared_messages ?? new CompanionMessageStore(() => void 0);
+      ctx.provide("guanguan_messages", messages);
+      if (!shared_messages) {
+        ctx.effect(() => () => messages.dispose(), "\u91CA\u653E\u5173\u5173\u6D88\u606F\u548C\u5BFF\u547D\u8BA1\u65F6\u5668");
+      }
+    }
+  };
+}
+var guanguan_messages_plugin = create_guanguan_messages_plugin();
+
+// pip-editor/pip-host-io/guanguan-runtime/tools-plugin.ts
+var guanguan_tools_plugin = {
+  name: "guanguan-tools",
+  inject: ["pip_history", "pip_creator_catalog", "pip_selection", "pip_navigation"],
+  provides: ["guanguan_tools"],
+  apply(ctx) {
+    const history = ctx.services.pip_history;
+    const creators = ctx.services.pip_creator_catalog;
+    ctx.provide("guanguan_tools", Object.freeze({
+      undo: (workspace_id) => history.undo(workspace_id),
+      redo: (workspace_id) => history.redo(workspace_id),
+      creators: () => creators.list(),
+      selection: ctx.services.pip_selection,
+      navigation: ctx.services.pip_navigation
+    }));
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/world-tree-plugin.ts
+var guanguan_world_tree_plugin = {
+  name: "guanguan-world-tree",
+  inject: ["pip_workspace_sessions", "pip_presentation_registry"],
+  provides: ["guanguan_world_tree"],
+  apply(ctx) {
+    const workspaces = ctx.services.pip_workspace_sessions;
+    const node_types = ctx.services.pip_presentation_registry;
+    ctx.provide("guanguan_world_tree", Object.freeze({
+      snapshot: () => build_space_world_tree(workspaces.list(), node_types)
+    }));
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/presentation-plugin.ts
+var guanguan_presentation_plugin = {
+  name: "guanguan-presentation",
+  inject: ["guanguan_instances", "guanguan_presentations"],
+  config_schema: {
+    type: "object",
+    properties: {
+      instance_id: { type: "string" },
+      owner_kind: { type: "string", enum: ["viewport", "surface"], default: "viewport" },
+      surface_id: { type: "string", default: "" }
+    },
+    required: ["instance_id"],
+    additional_properties: false,
+    validate(value) {
+      return value.owner_kind === "surface" && !value.surface_id ? "surface owner \u5FC5\u987B\u63D0\u4F9B surface_id" : void 0;
+    }
+  },
+  apply(ctx, raw_config) {
+    const config = raw_config;
+    const instances = ctx.services.guanguan_instances;
+    const presentations = ctx.services.guanguan_presentations;
+    const owner = config.owner_kind === "surface" ? { kind: "surface", surface_id: config.surface_id } : { kind: "viewport" };
+    if (!instances.has(config.instance_id)) instances.create(config.instance_id, owner);
+    else instances.move_owner(config.instance_id, owner);
+    ctx.effect(() => instances.attach_presentation(config.instance_id), "\u7ED1\u5B9A\u5B9E\u4F8B presentation");
+    ctx.effect(() => presentations.register({
+      contribution_id: `guanguan.presentation:${config.instance_id}`,
+      instance_id: config.instance_id,
+      owner
+    }), "\u53D1\u5E03\u5173\u5173 presentation");
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/runtime-presentation-coordinator.ts
+var presentation_module = system_module_from_descriptor(
+  guanguan_presentation_plugin,
+  system_plugin_descriptors.presentation
+);
+var RuntimeGuanguanPresentationCoordinator = class {
+  #runtime;
+  #instances;
+  #messages;
+  #configs = /* @__PURE__ */ new Map();
+  #queue = Promise.resolve();
+  constructor(runtime, instances, messages) {
+    this.#runtime = runtime;
+    this.#instances = instances;
+    this.#messages = messages;
+  }
+  sync(presentations) {
+    return this.#enqueue(() => this.#sync_now(presentations));
+  }
+  close_instance(instance_id) {
+    return this.#enqueue(async () => {
+      await this.#remove_presentation(instance_id);
+      this.#messages.cancel_target(instance_id);
+      this.#instances.close(instance_id);
+    });
+  }
+  dispose() {
+    return this.#enqueue(async () => {
+      for (const instance_id of [...this.#configs.keys()].reverse()) {
+        await this.#remove_presentation(instance_id);
+      }
+    });
+  }
+  #enqueue(operation) {
+    const next = this.#queue.then(operation, operation);
+    this.#queue = next.catch(() => void 0);
+    return next;
+  }
+  async #sync_now(presentations) {
+    const visible = new Set(presentations.map((item) => item.instance_id));
+    for (const presentation of presentations) {
+      const config = config_for(presentation);
+      const previous = this.#configs.get(presentation.instance_id);
+      const plugin_id = plugin_instance_id(presentation.instance_id);
+      if (!previous) {
+        await this.#runtime.install(plugin_id, presentation_module, config);
+      } else if (!same_config(previous, config)) {
+        await this.#runtime.update(plugin_id, presentation_module, config);
+      }
+      this.#configs.set(presentation.instance_id, config);
+    }
+    for (const instance_id of [...this.#configs.keys()]) {
+      if (!visible.has(instance_id)) await this.#remove_presentation(instance_id);
+    }
+  }
+  async #remove_presentation(instance_id) {
+    if (!this.#configs.has(instance_id)) return;
+    await this.#runtime.uninstall(plugin_instance_id(instance_id));
+    this.#configs.delete(instance_id);
+  }
+};
+var plugin_instance_id = (instance_id) => `guanguan-presentation:${instance_id}`;
+var config_for = (presentation) => ({
+  instance_id: presentation.instance_id,
+  owner_kind: presentation.owner.kind,
+  surface_id: presentation.owner.kind === "surface" ? presentation.owner.surface_id : ""
+});
+var same_config = (left, right) => left.instance_id === right.instance_id && left.owner_kind === right.owner_kind && left.surface_id === right.surface_id;
+
+// pip-editor/pip-host-io/guanguan-runtime/runtime-host.ts
+var feature_plugins = [
+  ["guanguan-world-tree", system_module_from_descriptor(
+    guanguan_world_tree_plugin,
+    system_plugin_descriptors.world_tree
+  )],
+  ["guanguan-inspector", system_module_from_descriptor(
+    guanguan_inspector_plugin,
+    system_plugin_descriptors.inspector
+  )],
+  ["guanguan-tools", system_module_from_descriptor(
+    guanguan_tools_plugin,
+    system_plugin_descriptors.tools
+  )],
+  ["guanguan-agent", system_module_from_descriptor(
+    guanguan_agent_plugin,
+    system_plugin_descriptors.agent
+  )]
+];
+var GuanguanRuntimeHost = class {
+  constructor(messages, services = {}) {
+    this.runtime = new PluginRuntime();
+    this.#disposed = false;
+    this.#messages = messages;
+    this.#ready = this.#initialize(services);
+  }
+  #messages;
+  #ready;
+  #disposed;
+  async #initialize(services) {
+    const presentations = new RuntimeContributionRegistry(
+      (value) => String(value.contribution_id)
+    );
+    const provided = { ...services, guanguan_presentations: presentations };
+    await this.runtime.install("guanguan-host-services", {
+      name: "guanguan-host-services",
+      provides: Object.keys(provided),
+      apply(ctx) {
+        for (const [service_id, service] of Object.entries(provided)) {
+          ctx.provide(service_id, service);
+        }
+      }
+    });
+    await this.runtime.install("guanguan-core", system_module_from_descriptor(
+      guanguan_core_plugin,
+      system_plugin_descriptors.core
+    ));
+    await this.runtime.install(
+      "guanguan-messages",
+      system_module_from_descriptor(
+        create_guanguan_messages_plugin(this.#messages),
+        system_plugin_descriptors.messages
+      )
+    );
+    for (const [instance_id, plugin] of feature_plugins) {
+      await this.runtime.install(instance_id, plugin);
+    }
+    const instances = this.runtime.services.get("guanguan_instances");
+    return new RuntimeGuanguanPresentationCoordinator(
+      this.runtime,
+      instances,
+      this.#messages
+    );
+  }
+  async sync(presentations) {
+    const coordinator = await this.#ready;
+    if (!this.#disposed) await coordinator.sync(presentations);
+  }
+  async close_instance(instance_id) {
+    const coordinator = await this.#ready;
+    if (!this.#disposed) await coordinator.close_instance(instance_id);
+  }
+  async dispose() {
+    if (this.#disposed) return;
+    this.#disposed = true;
+    const coordinator = await this.#ready;
+    await coordinator.dispose();
+    for (const [instance_id] of [...feature_plugins].reverse()) {
+      await this.runtime.uninstall(instance_id);
+    }
+    await this.runtime.uninstall("guanguan-messages");
+    await this.runtime.uninstall("guanguan-core");
+    await this.runtime.uninstall("guanguan-host-services");
+  }
+};
+
+// pip-editor/pip-host-io/guanguan-runtime/host-services.ts
+function create_guanguan_runtime_services(input) {
+  const latest_workspace = (workspace_id) => input.workspace_store.list().find((item) => item.id === workspace_id);
+  return {
+    pip_workspace_sessions: input.workspace_store,
+    pip_presentation_registry: input.node_types,
+    pip_inspector_registry: input.node_types,
+    pip_creator_catalog: Object.freeze({ list: () => input.node_types.creators() }),
+    pip_history: Object.freeze({
+      undo: (workspace_id) => {
+        const workspace = latest_workspace(workspace_id);
+        if (workspace) input.on_history(workspace, "undo");
+      },
+      redo: (workspace_id) => {
+        const workspace = latest_workspace(workspace_id);
+        if (workspace) input.on_history(workspace, "redo");
+      }
+    }),
+    pip_selection: Object.freeze({
+      select: (workspace_id, node_ids, scope_id) => input.workspace_store.select(workspace_id, node_ids, scope_id)
+    }),
+    pip_navigation: Object.freeze({
+      update_views: (workspace_id, views) => input.workspace_store.updateViews(workspace_id, views),
+      activate_window: (workspace_id, window_id) => input.workspace_store.activateWindow(workspace_id, window_id),
+      close_projection: (workspace_id, node_id) => input.workspace_store.closeProjectionRoot(workspace_id, node_id)
+    }),
+    ...input.agent_client ? { agent_client: input.agent_client } : {}
+  };
+}
+
+// pip-editor/pip-service/agent-client.ts
+var AgentClientHttpError = class extends Error {
+  constructor(status, code) {
+    super(code);
+    this.name = "AgentClientHttpError";
+    this.status = status;
+    this.code = code;
+    this.retryable = status === 408 || status === 429 || status >= 500;
+  }
+};
+var HttpAgentClient = class {
+  #sessions = /* @__PURE__ */ new Map();
+  #run_tokens = /* @__PURE__ */ new Map();
+  #identity_key;
+  constructor(base_url, fetch_impl = fetch) {
+    this.base_url = base_url.replace(/\/$/, "");
+    this.fetch_impl = fetch_impl;
+  }
+  async capabilities(signal) {
+    return this.request("/v1/capabilities", { method: "GET", signal });
+  }
+  async start(request, signal) {
+    const token = await this.#session_token(request.account_epoch, signal);
+    this.#run_tokens.set(request.run_id, token);
+    return this.request("/v1/runs", {
+      method: "POST",
+      signal,
+      headers: authorized_headers(token, true),
+      body: JSON.stringify(request)
+    });
+  }
+  async read(run_id, signal) {
+    return this.request(`/v1/runs/${encodeURIComponent(run_id)}`, {
+      method: "GET",
+      signal,
+      headers: authorized_headers(this.#run_token(run_id))
+    });
+  }
+  async cancel(run_id, signal) {
+    return this.request(`/v1/runs/${encodeURIComponent(run_id)}`, {
+      method: "DELETE",
+      signal,
+      headers: authorized_headers(this.#run_token(run_id))
+    });
+  }
+  async events(run_id, after = 0, signal) {
+    const result = await this.request(
+      `/v1/runs/${encodeURIComponent(run_id)}/events?after=${after}`,
+      { method: "GET", signal, headers: authorized_headers(this.#run_token(run_id)) }
+    );
+    return result.events;
+  }
+  async continue_input(run_id, input, signal) {
+    return this.request(
+      `/v1/runs/${encodeURIComponent(run_id)}/inputs`,
+      { method: "POST", signal, headers: authorized_headers(this.#run_token(run_id), true), body: JSON.stringify(input) }
+    );
+  }
+  async acknowledge_tool(run_id, receipt, signal) {
+    return this.request(
+      `/v1/runs/${encodeURIComponent(run_id)}/tool-receipts`,
+      { method: "POST", signal, headers: authorized_headers(this.#run_token(run_id), true), body: JSON.stringify(receipt) }
+    );
+  }
+  artifact(run_id, artifact_id, signal) {
+    return this.request(
+      `/v1/runs/${encodeURIComponent(run_id)}/artifacts/${encodeURIComponent(artifact_id)}`,
+      { method: "GET", signal, headers: authorized_headers(this.#run_token(run_id)) }
+    );
+  }
+  run_graph(run_id, signal) {
+    return this.request(`/v1/runs/${encodeURIComponent(run_id)}/graph`, {
+      method: "GET",
+      signal,
+      headers: authorized_headers(this.#run_token(run_id))
+    });
+  }
+  async #session_token(account_epoch, signal) {
+    const current = this.#sessions.get(account_epoch);
+    if (current) return current;
+    this.#identity_key ??= await crypto.subtle.generateKey(
+      { name: "ECDSA", namedCurve: "P-256" },
+      true,
+      ["sign", "verify"]
+    );
+    const public_key_jwk = await crypto.subtle.exportKey("jwk", this.#identity_key.publicKey);
+    const challenge = await this.request("/v1/identity/challenges", {
+      method: "POST",
+      signal,
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ account_epoch, public_key_jwk })
+    });
+    const signature = await crypto.subtle.sign(
+      { name: "ECDSA", hash: "SHA-256" },
+      this.#identity_key.privateKey,
+      decode_base64url(challenge.payload_base64url)
+    );
+    const verified = await this.request("/v1/identity/verify", {
+      method: "POST",
+      signal,
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        challenge_id: challenge.challenge_id,
+        account_epoch,
+        public_key_jwk,
+        signature_base64url: encode_base64url(new Uint8Array(signature))
+      })
+    });
+    this.#sessions.set(account_epoch, verified.session_token);
+    return verified.session_token;
+  }
+  #run_token(run_id) {
+    const token = this.#run_tokens.get(run_id);
+    if (!token) throw new Error(`Agent run \u8EAB\u4EFD\u4F1A\u8BDD\u4E0D\u5B58\u5728: ${run_id}`);
+    return token;
+  }
+  async request(path, init) {
+    const response = await this.fetch_impl(`${this.base_url}${path}`, init);
+    if (!response.ok) {
+      let code = `agent_service_http_${response.status}`;
+      try {
+        const body = await response.json();
+        if (typeof body.error === "string") code = body.error;
+        else if (typeof body.error?.code === "string") code = body.error.code;
+      } catch {
+      }
+      throw new AgentClientHttpError(response.status, code);
+    }
+    return response.json();
+  }
+};
+function authorized_headers(token, json = false) {
+  return {
+    authorization: `Bearer ${token}`,
+    ...json ? { "content-type": "application/json" } : {}
+  };
+}
+function decode_base64url(value) {
+  const base64 = value.replaceAll("-", "+").replaceAll("_", "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+  return Uint8Array.from(atob(base64), (character) => character.charCodeAt(0));
+}
+function encode_base64url(value) {
+  let binary2 = "";
+  for (const byte of value) binary2 += String.fromCharCode(byte);
+  return btoa(binary2).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
+}
+
+// pip-editor/pip-host/browser-agent-client.ts
+function create_browser_agent_client(location_value = location) {
+  const configured = new URLSearchParams(location_value.search).get("pip_agent_service")?.trim();
+  if (!configured) return void 0;
+  const url = new URL(configured, location_value.href);
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("pip_agent_service \u53EA\u652F\u6301 HTTP(S) \u5730\u5740");
+  }
+  return new HttpAgentClient(url.href);
+}
+
+// pip-editor/pip-service/proposal-review.ts
+function review_proposal(input) {
+  assert_owner(input.proposal_owner, input.current_owner);
+  if (input.proposal.workspace_id !== input.current_owner.workspace_id) {
+    throw new Error("proposal_workspace_mismatch");
+  }
+  const revision = graphRevision(input.graph);
+  if (input.proposal.base_revision !== revision || input.proposal.patch.baseRevision !== revision) throw new Error("proposal_revision_conflict");
+  const candidate = applyPipTx(input.graph, input.proposal.patch).pip;
+  input.validate_candidate(candidate);
+  const affected_node_ids = [...new Set(input.proposal.patch.operations.flatMap((operation) => operation.parent_path[0] ?? (operation.op === "put" ? operation.pip.id : operation.pip_id)))];
+  return { proposal: input.proposal, affected_node_ids, candidate };
+}
+function confirmed_patch(review, confirmed, latest_graph) {
+  if (!confirmed) throw new Error("proposal_confirmation_required");
+  const latest_revision = graphRevision(latest_graph);
+  if (review.proposal.patch.baseRevision !== latest_revision) {
+    throw new Error("proposal_revision_conflict");
+  }
+  return review.proposal.patch;
+}
+function assert_owner(expected, current) {
+  for (const key of ["workspace_id", "run_id", "account_epoch", "generation"]) {
+    if (expected[key] !== current[key]) throw new Error(`proposal_stale_${key}`);
+  }
+}
+
+// pip-editor/pip-host/guanguan-agent-controller.ts
+var GuanguanAgentController = class {
+  #host;
+  #workspaces;
+  #node_types;
+  constructor(host, workspaces, node_types) {
+    this.#host = host;
+    this.#workspaces = workspaces;
+    this.#node_types = node_types;
+  }
+  available() {
+    return this.#host.runtime.services.has("guanguan_agent");
+  }
+  async run(instance_id, workspace_id, prompt) {
+    const workspace = this.#workspace(workspace_id);
+    const agent = this.#agent();
+    const guard = await agent.start(instance_id, {
+      workspace_id,
+      prompt,
+      graph: workspace.graph
+    });
+    const owner = {
+      workspace_id,
+      run_id: guard.run_id,
+      account_epoch: guard.account_epoch,
+      generation: guard.generation
+    };
+    const snapshot2 = await this.#wait(agent, owner.run_id, guard.signal);
+    if (snapshot2.status !== "completed" || !snapshot2.proposal) {
+      throw new Error(snapshot2.diagnostic?.code ?? `agent_run_${snapshot2.status}`);
+    }
+    this.#assert_owner(instance_id, owner);
+    const review = review_proposal({
+      proposal: snapshot2.proposal,
+      proposal_owner: owner,
+      current_owner: owner,
+      graph: this.#workspace(workspace_id).graph,
+      validate_candidate: (candidate) => {
+        for (const validate2 of this.#node_types.validators()) validate2(candidate);
+      }
+    });
+    return { instance_id, owner, review };
+  }
+  commit(pending) {
+    this.#assert_owner(pending.instance_id, pending.owner);
+    const workspace = this.#workspace(pending.owner.workspace_id);
+    const patch = confirmed_patch(pending.review, true, workspace.graph);
+    this.#workspaces.commitPatch(
+      workspace.id,
+      patch,
+      this.#node_types.validators()
+    );
+  }
+  async #wait(agent, run_id, signal) {
+    for (; ; ) {
+      const snapshot2 = await agent.read(run_id, signal);
+      if (snapshot2.status !== "running") return snapshot2;
+      await abortable_delay(500, signal);
+    }
+  }
+  #assert_owner(instance_id, owner) {
+    const instances = this.#host.runtime.services.get(
+      "guanguan_instances"
+    );
+    const current = instances.snapshot(instance_id);
+    if (current.active_run_id !== owner.run_id || current.account_epoch !== owner.account_epoch || current.generation !== owner.generation) {
+      throw new Error("proposal_stale_owner");
+    }
+  }
+  #agent() {
+    if (!this.available()) throw new Error("agent_client_waiting_online");
+    return this.#host.runtime.services.get("guanguan_agent");
+  }
+  #workspace(workspace_id) {
+    const workspace = this.#workspaces.list().find((item) => item.id === workspace_id);
+    if (!workspace) throw new Error(`Unknown workspace ${workspace_id}`);
+    return workspace;
+  }
+};
+function abortable_delay(delay_ms, signal) {
+  return new Promise((resolve, reject) => {
+    const aborted = () => {
+      clearTimeout(timeout);
+      reject(signal.reason ?? new Error("agent_run_cancelled"));
+    };
+    const timeout = setTimeout(() => {
+      signal.removeEventListener("abort", aborted);
+      resolve();
+    }, delay_ms);
+    signal.addEventListener("abort", aborted, { once: true });
+  });
+}
+
+// pip-editor/pip-host/use-guanguan-runtime.ts
+function useGuanguanRuntime(options) {
+  const [host] = (0, import_react30.useState)(() => new GuanguanRuntimeHost(
+    options.messages,
+    create_guanguan_runtime_services({
+      node_types: options.node_types,
+      workspace_store: options.workspace_store,
+      on_history: options.on_history,
+      agent_client: create_browser_agent_client()
+    })
+  ));
+  const [agent] = (0, import_react30.useState)(() => new GuanguanAgentController(
+    host,
+    options.workspace_store,
+    options.node_types
+  ));
+  return { host, agent };
+}
+
+// pip-editor/pip-host/use-system-plugin-lifetime.ts
+var import_react31 = __toESM(require_react(), 1);
+function useSystemPluginLifetime(runtime, guanguan_runtime, system_plugin_host) {
+  const lifetime = (0, import_react31.useRef)(0);
+  (0, import_react31.useEffect)(() => {
+    const generation = ++lifetime.current;
+    return () => queueMicrotask(() => {
+      if (lifetime.current !== generation) return;
+      runtime.disposeAll();
+      void guanguan_runtime.dispose();
+      void system_plugin_host.dispose();
+    });
+  }, [guanguan_runtime, runtime, system_plugin_host]);
+}
+
 // pip-editor/pip-host/use-system-plugins.ts
 function useSystemPlugins(options) {
   const {
@@ -30078,48 +41857,76 @@ function useSystemPlugins(options) {
     onMessage,
     preferences,
     workspaces,
-    workspaceStore
+    workspaceStore,
+    presentWorkspace
   } = options;
-  const [, setRevision] = (0, import_react15.useState)(0);
-  const [registry] = (0, import_react15.useState)(createBuiltinSystemPluginRegistry);
-  const [runtime] = (0, import_react15.useState)(
+  const [system_plugin_revision, setRevision] = (0, import_react32.useState)(0);
+  const [companion_messages] = (0, import_react32.useState)(
+    () => new CompanionMessageStore(() => setRevision((revision) => revision + 1))
+  );
+  const [system_plugin_host] = (0, import_react32.useState)(
+    create_builtin_system_plugin_runtime_host
+  );
+  const registry = system_plugin_host;
+  const { host: guanguan_runtime, agent: guanguan_agent } = useGuanguanRuntime({
+    messages: companion_messages,
+    node_types: catalog.nodeTypes,
+    workspace_store: workspaceStore,
+    on_history: onHistory
+  });
+  const [runtime] = (0, import_react32.useState)(
     () => new SystemPluginRuntime(
       registry,
       () => setRevision((revision) => revision + 1)
     )
   );
-  const [canvas] = (0, import_react15.useState)(
+  const [canvas] = (0, import_react32.useState)(
     () => createSystemPluginCanvasBridge(registry, runtime)
   );
-  (0, import_react15.useEffect)(() => {
+  useSystemPluginDefinitionSync(registry, runtime, onMessage);
+  (0, import_react32.useEffect)(() => {
     for (const definition of registry.list()) {
       if (definition.window.chrome !== "none" || definition.scope !== "host") {
         continue;
       }
+      if (!runtime.has_definition(definition.id)) continue;
       runtime.ensure(definition.id);
     }
-  }, [registry, runtime]);
-  (0, import_react15.useEffect)(() => {
+  }, [registry, runtime, system_plugin_revision]);
+  (0, import_react32.useEffect)(() => {
     for (const workspace of workspaces) {
       const views = normalizeFreeLayout(
         workspace.views,
         workspace.rootNodeIds
       );
       for (const window2 of Object.values(views.systemWindows)) {
-        if (registry.get(window2.pluginId) && !runtime.get(window2.instanceId)) {
+        if (runtime.has_definition(window2.pluginId) && !runtime.get(window2.instanceId)) {
           runtime.ensure(window2.pluginId, workspace.id, window2.instanceId);
         }
       }
     }
     for (const window2 of Object.values(host.systemWindows)) {
-      if (registry.get(window2.pluginId) && !runtime.get(window2.instanceId)) {
+      if (runtime.has_definition(window2.pluginId) && !runtime.get(window2.instanceId)) {
         runtime.ensure(window2.pluginId, void 0, window2.instanceId);
       }
     }
-  }, [host.systemWindows, registry, runtime, workspaces]);
-  (0, import_react15.useEffect)(() => () => {
-    runtime.disposeAll();
-  }, [runtime]);
+  }, [host.systemWindows, registry, runtime, system_plugin_revision, workspaces]);
+  useSystemPluginLifetime(runtime, guanguan_runtime, system_plugin_host);
+  (0, import_react32.useEffect)(() => {
+    if (creator_armed) {
+      companion_messages.publish({
+        source_plugin_id: "host.creator",
+        key: "creator-placement",
+        tone: "info",
+        title: "\u70B9\u51FB\u753B\u5E03\u653E\u7F6E\u60F3\u6CD5",
+        shortcuts: [{ key: "Esc", label: "\u53D6\u6D88" }],
+        dismissible: false,
+        persistent: true
+      });
+      return;
+    }
+    companion_messages.cancel("host.creator", "creator-placement");
+  }, [companion_messages, creator_armed]);
   const servicesFor = (workspace) => ({
     catalog,
     message,
@@ -30129,12 +41936,26 @@ function useSystemPlugins(options) {
     onExportNative: canExportNative && workspace ? () => onExport(workspace, true) : void 0,
     onMessage,
     preferences,
+    companion_messages,
+    guanguan_runtime,
+    guanguan_agent,
+    inspector_service: create_space_inspector_service(
+      workspaceStore,
+      catalog.nodeTypes,
+      catalog.elements
+    ),
     guanguan: create_guanguan_host_service(
       workspaces,
       workspaceStore,
       creator_armed,
-      onHistory
-    )
+      onHistory,
+      catalog.nodeTypes
+    ),
+    present_workspace: (workspace_id) => {
+      const workspace2 = workspaceStore.list().find((item) => item.id === workspace_id);
+      if (workspace2) presentWorkspace(workspace2);
+    },
+    workspace_store: workspaceStore
   });
   const request_companion = (plugin_id, point, screen, surface_id) => document.dispatchEvent(new CustomEvent("pip-create-system-companion", {
     detail: { plugin_id, point, screen, surface_id }
@@ -30224,19 +42045,19 @@ function useSystemPlugins(options) {
 }
 
 // pip-editor/pip-host/view/close-workspace-dialog.tsx
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 function CloseWorkspaceDialog({ name, onExport, onDiscard, onCancel }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("h2", { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: pip_host_default.modalBackdrop, role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("section", { className: pip_host_default.closeDialog, role: "dialog", "aria-modal": "true", "aria-label": "\u5173\u95ED\u5DE5\u4F5C\u533A", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("h2", { children: [
       "\u5173\u95ED\u201C",
       name,
       "\u201D\uFF1F"
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("p", { children: "Pip \u6709\u5C1A\u672A\u5BFC\u51FA\u7684\u4FEE\u6539\u3002\u76F8\u673A\u3001\u9009\u62E9\u4E0E\u7A97\u53E3\u5E03\u5C40\u4E0D\u4F1A\u89E6\u53D1\u6B64\u63D0\u793A\u3002" }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: onCancel, children: "\u53D6\u6D88" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { onClick: onDiscard, children: "\u653E\u5F03\u5E76\u5173\u95ED" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { className: pip_host_default.primary, onClick: onExport, children: "\u5BFC\u51FA A5 \u5E76\u5173\u95ED" })
     ] })
   ] }) });
 }
@@ -30264,13 +42085,13 @@ function workspace_fit_camera(frames, viewport, coarse_pointer = false, minimum_
 }
 
 // pip-editor/pip-host/view/use-initial-projection-fit.ts
-var import_react16 = __toESM(require_react(), 1);
+var import_react33 = __toESM(require_react(), 1);
 function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
-  const latest = (0, import_react16.useRef)({ views, on_change });
-  (0, import_react16.useLayoutEffect)(() => {
+  const latest = (0, import_react33.useRef)({ views, on_change });
+  (0, import_react33.useLayoutEffect)(() => {
     latest.current = { views, on_change };
   });
-  (0, import_react16.useLayoutEffect)(() => {
+  (0, import_react33.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !enabled) return;
     const fit = () => {
@@ -30302,16 +42123,16 @@ function useInitialProjectionFit(viewport, views, on_change, enabled = true) {
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_react37 = __toESM(require_react(), 1);
+var import_react55 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_react27 = __toESM(require_react(), 1);
+var import_react45 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/creation/content-card.tsx
-var import_react17 = __toESM(require_react(), 1);
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+var import_react34 = __toESM(require_react(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 function ContentCard({ item, target, graph, position, apply, navigate, close, children }) {
-  const drag = (0, import_react17.useRef)(void 0);
+  const drag = (0, import_react34.useRef)(void 0);
   const preview = (element, x, y) => {
     const start = drag.current;
     if (!start) return;
@@ -30350,8 +42171,8 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
     }));
     apply({ schemaVersion: 2, baseRevision: graphRevision(graph), operations: [{ op: "put", parent_path: [], pip: node2 }] });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(import_jsx_runtime29.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
       "header",
       {
         style: { height: "var(--content-header-height, 28px)", display: "flex", background: "var(--pip-panel)", color: "var(--pip-ink)", fontSize: 12, touchAction: "none" },
@@ -30377,14 +42198,14 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
           drag.current = void 0;
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { flex: 1 }, children: position.missing ? "\u5F85\u5B9A\u4F4D \xB7 \u62D6\u52A8\u653E\u7F6E" : item.kind === "child" ? "\u5B50\u7EA7\u60F3\u6CD5" : "\u9644\u6CE8" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: navigate, "aria-label": "\u4E0B\u63A2\u60F3\u6CD5", children: "\u2197" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { "aria-label": "\u5173\u95ED\u9644\u52A0\u6295\u5F71", onClick: close, children: "\xD7" })
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { style: { flex: 1 }, children: position.missing ? "\u5F85\u5B9A\u4F4D \xB7 \u62D6\u52A8\u653E\u7F6E" : item.kind === "child" ? "\u5B50\u7EA7\u60F3\u6CD5" : "\u9644\u6CE8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("button", { onClick: navigate, "aria-label": "\u4E0B\u63A2\u60F3\u6CD5", children: "\u2197" }),
+          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("button", { "aria-label": "\u5173\u95ED\u9644\u52A0\u6295\u5F71", onClick: close, children: "\xD7" })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { height: "calc(100% - var(--content-header-height, 28px))" }, children }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { style: { height: "calc(100% - var(--content-header-height, 28px))" }, children }),
+    /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       "button",
       {
         "aria-label": "\u8C03\u6574\u60F3\u6CD5\u5927\u5C0F",
@@ -30419,8 +42240,8 @@ function ContentCard({ item, target, graph, position, apply, navigate, close, ch
 }
 
 // pip-editor/pip-host/creation/surface.tsx
-var import_react18 = __toESM(require_react(), 1);
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var import_react35 = __toESM(require_react(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 function anchor_elements(root2) {
   const output = [];
   for (const element of root2.querySelectorAll("*")) {
@@ -30432,12 +42253,12 @@ function anchor_elements(root2) {
   return output;
 }
 function ContentSurface({ target, graph, children, render_item, on_request, hidden_ids = [], selection = [], on_close }) {
-  const surface = (0, import_react18.useRef)(null);
-  const content = (0, import_react18.useRef)(null);
-  const events = (0, import_react18.useRef)(null);
-  const [positions, set_positions] = (0, import_react18.useState)({});
-  const items = (0, import_react18.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
-  (0, import_react18.useLayoutEffect)(() => {
+  const surface = (0, import_react35.useRef)(null);
+  const content = (0, import_react35.useRef)(null);
+  const events = (0, import_react35.useRef)(null);
+  const [positions, set_positions] = (0, import_react35.useState)({});
+  const items = (0, import_react35.useMemo)(() => content_placements(graph, target.observed_id ?? "").filter((item) => !item.hidden && !hidden_ids.includes(item.id) && item.kind === (target.scope === "children" ? "child" : "annotation")).map((item) => item.layouts?.[target.view_id ?? ""] ? { ...item, ...item.layouts[target.view_id], anchor: item.layouts[target.view_id].anchor, view_id: target.view_id } : item), [graph, target.observed_id, target.scope, target.view_id, hidden_ids]);
+  (0, import_react35.useLayoutEffect)(() => {
     const root2 = surface.current, body = content.current;
     let frame = 0;
     const update = () => {
@@ -30489,25 +42310,33 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
       roots.forEach((root3) => root3.removeEventListener("scroll", schedule, true));
     };
   }, [items, target.view_id]);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { ref: surface, className: surface_default.surface, "data-creation-surface": JSON.stringify(target), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { ref: content, className: surface_default.content, children }),
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: surface_default.overlay, "data-projection-spatial": target.scope === "children" ? "" : void 0, children: [
-      target.view_id?.endsWith("world-events") && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("section", { ref: events, className: surface_default.events, children: read_content_events(graph, target.observed_id ?? "").map((event) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("article", { "data-pip-anchor": event.id, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { children: event.summary }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("small", { children: event.at })
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { ref: surface, className: surface_default.surface, "data-creation-surface": JSON.stringify(target), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      "div",
+      {
+        ref: content,
+        className: surface_default.content,
+        "data-projection-spatial": target.scope === "children" ? "" : void 0,
+        children
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: surface_default.overlay, children: [
+      target.view_id?.endsWith("world-events") && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("section", { ref: events, className: surface_default.events, children: read_content_events(graph, target.observed_id ?? "").map((event) => /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("article", { "data-pip-anchor": event.id, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { children: event.summary }),
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("small", { children: event.at })
       ] }, event.id)) }),
-      target.scope === "children" && items.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("svg", { className: surface_default.relations, "aria-label": "\u7528\u6237\u5B50\u7EA7\u5173\u7CFB", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: "12", y: "16", children: "\u5F53\u524D\u5BF9\u8C61" }),
+      target.scope === "children" && items.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("svg", { className: surface_default.relations, "aria-label": "\u7528\u6237\u5B50\u7EA7\u5173\u7CFB", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("text", { x: "12", y: "16", children: "\u5F53\u524D\u5BF9\u8C61" }),
         items.map((item) => {
           const position = positions[item.id] ?? item;
-          return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("path", { d: `M 44 22 L ${position.x + item.width / 2} ${position.y}`, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("title", { children: "\u5F53\u524D\u5BF9\u8C61 \u2192 \u7528\u6237\u5B50\u7EA7" }) }, item.id);
+          return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("path", { d: `M 44 22 L ${position.x + item.width / 2} ${position.y}`, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("title", { children: "\u5F53\u524D\u5BF9\u8C61 \u2192 \u7528\u6237\u5B50\u7EA7" }) }, item.id);
         })
       ] }),
       items.map((item) => {
         const observed_value = graphNodes(graph)[item.projection_id]?.pips.find((pip) => pip.predicate_value?.predicate.node_id === "pip.projection.predicate.observes")?.predicate_value?.value;
         const observed_id = observed_value?.kind === "ref" ? observed_value.target.node_id : void 0;
         const position = positions[item.id] ?? { x: item.x, y: item.y, missing: false };
-        return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
           "article",
           {
             className: surface_default.item,
@@ -30524,11 +42353,11 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
             },
             style: { left: position.x, top: position.y, width: item.width, maxWidth: "100%", height: item.height },
             children: [
-              position.missing && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: surface_default.missing, children: [
+              position.missing && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: surface_default.missing, children: [
                 "\u5F85\u5B9A\u4F4D",
                 item.kind === "child" ? "\u5B50\u7EA7" : "\u9644\u6CE8"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
                 ContentCard,
                 {
                   item,
@@ -30551,7 +42380,43 @@ function ContentSurface({ target, graph, children, render_item, on_request, hidd
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_react19 = __toESM(require_react(), 1);
+var import_react37 = __toESM(require_react(), 1);
+
+// pip-editor/pip-host/projection/runtime-projection.ts
+var import_react36 = __toESM(require_react(), 1);
+function RuntimeProjection({
+  registry,
+  slot_id,
+  data,
+  execution,
+  disabled = false,
+  on_request
+}) {
+  return (0, import_react36.createElement)(UiSlot, {
+    registry,
+    slot_id,
+    component_props: {
+      data: projection_view_data(data, execution),
+      disabled,
+      actions: Object.freeze({ request: on_request })
+    }
+  });
+}
+function projection_view_data(data, execution) {
+  if (!execution || !data || typeof data !== "object" || Array.isArray(data)) return data;
+  const target_node_id = typeof data.observedNodeId === "string" ? data.observedNodeId : void 0;
+  const session = execution.sessions.find((item) => item.id === execution.activeSessionId) ?? [...execution.sessions].reverse().find((item) => item.targetNodeId === target_node_id);
+  if (!session) return data;
+  return {
+    ...data,
+    execution: {
+      sessionId: session.id,
+      status: session.status,
+      canCancel: session.status === "running" || session.status === "draining",
+      canPersist: ["completed", "failed", "cancelled", "stale"].includes(session.status)
+    }
+  };
+}
 
 // pip-editor/pip-host/contracts/json-validation.ts
 var isRecord = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -30631,18 +42496,18 @@ function project(projection, projectionNode, observed, graph, elements, type, el
 }
 
 // pip-editor/pip-host/projection/projection-renderer.tsx
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
 var objectText = (pip) => !pip.predicate_value ? "\u2014" : pip.predicate_value.value.kind === "const" ? JSON.stringify(pip.predicate_value.value.value) : pip.predicate_value.value.kind === "ref" ? `\u2192 ${pip.predicate_value.value.target.node_id}/${pip.predicate_value.value.target.pip_id}` : `${pip.predicate_value.value.op}(\u2026)`;
 function RawPips({ pips, depth = 0 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("code", { children: pip.id }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: objectText(pip) }),
-    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: pip_host_default.rawPips, children: pips.map((pip) => /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { style: { marginLeft: depth * 8 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("code", { children: pip.id }),
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: objectText(pip) }),
+    !!pip.pips.length && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(RawPips, { pips: pip.pips, depth: depth + 1 })
   ] }, pip.id)) });
 }
 function PluginProjection({ tag, context, onRequest, children }) {
-  const host = (0, import_react19.useRef)(null);
-  (0, import_react19.useEffect)(() => {
+  const host = (0, import_react37.useRef)(null);
+  (0, import_react37.useEffect)(() => {
     const current = host.current;
     if (!current) return;
     current.context = {
@@ -30673,9 +42538,9 @@ function PluginProjection({ tag, context, onRequest, children }) {
     current.addEventListener("intent-pip-request", listener);
     return () => current.removeEventListener("intent-pip-request", listener);
   }, [context, onRequest]);
-  return (0, import_react19.createElement)(tag, { ref: host }, children);
+  return (0, import_react37.createElement)(tag, { ref: host }, children);
 }
-function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose = "node", projectionContext, execution, elements, nodeTypes, onRequest, root_window_id = node2.id }) {
+function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose = "node", projectionContext, execution, elements, nodeTypes, onRequest, ui_slots, root_window_id = node2.id }) {
   const { type, projection, projectionData, declaration, error, observed, context: contextKind } = resolveNodePresentation(
     node2,
     graph,
@@ -30684,7 +42549,7 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
     purpose,
     { workspaceId, rootNodeIds, workspaceView, selection, projectionContext }
   );
-  const context = (0, import_react19.useMemo)(() => ({
+  const context = (0, import_react37.useMemo)(() => ({
     workspaceId,
     rootNodeIds,
     workspaceView,
@@ -30699,17 +42564,28 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
     execution
   }), [workspaceId, rootNodeIds, workspaceView, graph, node2, observed, contextKind, type, selection, projection, projectionData, execution]);
   if (error)
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: pip_host_default.orphan, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: node2.id }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: "projection error" })
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: pip_host_default.orphan, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("strong", { children: node2.id }),
+        /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: "projection error" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { children: error }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(RawPips, { pips: node2.pips })
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("p", { children: error }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(RawPips, { pips: node2.pips })
     ] });
   const root_frame = normalizeFreeLayout(workspaceView, rootNodeIds).projections[root_window_id];
-  if (declaration)
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+  const slot_id = projection?.slot_id;
+  const projection_view = slot_id && ui_slots ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    RuntimeProjection,
+    {
+      registry: ui_slots,
+      slot_id,
+      data: projectionData,
+      execution,
+      on_request: onRequest
+    }
+  ) : declaration ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(EmbeddedItems, { root_window_id, projectionNode: node2, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest, ui_slots }) }) : void 0;
+  if (projection_view)
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
       ContentSurface,
       {
         target: {
@@ -30732,7 +42608,7 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
         },
         render_item: (item) => {
           const child = graphNodes(graph)[item.projection_id];
-          return child ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+          return child ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
             PipNodeRenderer,
             {
               root_window_id,
@@ -30752,38 +42628,39 @@ function PipNodeRenderer({ workspaceId, rootNodeIds, workspaceView, graph, node:
                 kind: "self-embedded",
                 parentProjectionNodeId: node2.id,
                 frame: { x: item.x, y: item.y, width: item.width, height: item.height, resizeMode: "simple" }
-              }
+              },
+              ui_slots
             }
           ) : null;
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(PluginProjection, { tag: declaration.tag, context, onRequest, children: contextKind?.scope === "children" && contextKind.surface === "workspace" && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(EmbeddedItems, { root_window_id, projectionNode: node2, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) })
+        children: projection_view
       }
     );
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: pip_host_default.orphan, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: node2.id }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: type?.name ?? "orphan Pip" })
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: pip_host_default.orphan, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: pip_host_default.nodeHeading, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("strong", { children: node2.id }),
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: type?.name ?? "orphan Pip" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(RawPips, { pips: node2.pips })
+    /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(RawPips, { pips: node2.pips })
   ] });
 }
-function EmbeddedItems({ root_window_id, projectionNode, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest }) {
+function EmbeddedItems({ root_window_id, projectionNode, workspaceId, rootNodeIds, workspaceView, graph, selection, execution, elements, nodeTypes, onRequest, ui_slots }) {
   const items = presentedProjections(projectionNode, graph);
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_jsx_runtime23.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_jsx_runtime31.Fragment, { children: items.map(({ projectionNodeId, observedNodeId, frame }) => {
     const node2 = graphNodes(graph)[projectionNodeId];
     const definition = node2 && projectionForInstance(node2, nodeTypes.projections());
     if (!node2 || !definition || observationScope(definition) !== "self" || !definition.surfaces?.includes("embedded")) {
-      return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: pip_host_default.orphan, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: pip_host_default.orphan, children: [
         "Invalid embedded Projection Instance: ",
         projectionNodeId
       ] }, projectionNodeId);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(PipNodeRenderer, { root_window_id, workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest }) }, projectionNodeId);
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("article", { "data-embedded-projection": projectionNodeId, "data-observed-node": observedNodeId, style: { left: frame.x, top: frame.y, width: frame.width, height: frame.height }, children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(PipNodeRenderer, { root_window_id, workspaceId, rootNodeIds, workspaceView, graph, node: node2, selection, purpose: "workspace", projectionContext: { scope: "self", surface: "embedded", kind: "self-embedded", parentProjectionNodeId: projectionNode.id, frame }, execution, elements, nodeTypes, onRequest, ui_slots }) }, projectionNodeId);
   }) });
 }
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_react20 = __toESM(require_react(), 1);
+var import_react38 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/creator-window.module.css
 var creator_window_default = {
@@ -30792,21 +42669,21 @@ var creator_window_default = {
 };
 
 // pip-editor/pip-host/view/node-creator.tsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 function NodeCreator({
   candidates,
   onChoose,
   onCancel
 }) {
-  const [query, setQuery] = (0, import_react20.useState)("");
-  const [active, setActive] = (0, import_react20.useState)(0);
-  const filtered = (0, import_react20.useMemo)(
+  const [query, setQuery] = (0, import_react38.useState)("");
+  const [active, setActive] = (0, import_react38.useState)(0);
+  const filtered = (0, import_react38.useMemo)(
     () => candidates.filter(
       (item) => `${item.label} ${item.description ?? ""} ${item.category}`.toLowerCase().includes(query.toLowerCase())
     ),
     [candidates, query]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
     "div",
     {
       className: creator_window_default.creator,
@@ -30828,7 +42705,7 @@ function NodeCreator({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           "input",
           {
             autoFocus: true,
@@ -30840,17 +42717,17 @@ function NodeCreator({
             placeholder: "\u641C\u7D22\u8282\u70B9\u6216\u5DE5\u4F5C\u533A\u5DE5\u5177\u2026"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { children: filtered.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
           "button",
           {
             type: "button",
             className: index === active ? creator_window_default.creatorActive : "",
             onClick: () => onChoose(item),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
-              /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("strong", { children: item.label }),
-                /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("small", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("b", { children: item.icon ?? (item.provider === "system" ? "\u2699" : "\u25C7") }),
+              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("span", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("strong", { children: item.label }),
+                /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("small", { children: [
                   item.category,
                   " \xB7 ",
                   item.description
@@ -30860,7 +42737,7 @@ function NodeCreator({
           },
           `${item.provider}:${item.id}`
         )) }),
-        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
+        !filtered.length && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { children: "\u6CA1\u6709\u5339\u914D\u7684\u521B\u5EFA\u80FD\u529B" })
       ]
     }
   );
@@ -30884,9 +42761,9 @@ var workspace_window_default = {
 };
 
 // pip-editor/pip-host/view/window-menu.tsx
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-function WindowMenu({ target_ref, close_label }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+function WindowMenu({ target_ref, close_label, inspect_target }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(
     "div",
     {
       className: `${workspace_window_default.windowSystemControls} ${workspace_window_default.windowSystemControlsTop}`,
@@ -30894,31 +42771,40 @@ function WindowMenu({ target_ref, close_label }) {
       "data-window-controls": "top",
       "aria-label": "\u7A97\u53E3\u79FB\u52A8\u533A\u57DF",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("details", { "data-window-menu": true, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(GuanguanLogo, {}) }),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("span", { className: workspace_window_default.windowExtraControls, ref: target_ref }),
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("details", { "data-window-menu": true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("summary", { "aria-label": "\u7A97\u53E3\u83DC\u5355", title: "\u7A97\u53E3\u83DC\u5355", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(GuanguanLogo, {}) }),
+          /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+            inspect_target && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "button", onClick: (event) => {
+              const menu = event.currentTarget.closest("details");
+              if (menu) {
+                menu.open = false;
+              }
+              request_space_inspector(inspect_target);
+            }, children: "\u5C5E\u6027\u4E0E\u64CD\u4F5C" }),
+            /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { "data-resize-toggle": true, children: "\u5207\u6362\u5C3A\u5BF8\u8C03\u6574\u65B9\u5F0F" })
+          ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("button", { type: "button", "data-window-close": true, "aria-label": close_label, title: close_label, children: "\xD7" })
       ]
     }
   );
 }
 
 // pip-editor/pip-host/view/active-controls.tsx
-var import_react_dom2 = __toESM(require_react_dom(), 1);
-var import_react21 = __toESM(require_react(), 1);
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-var ActiveControlsContext = (0, import_react21.createContext)(void 0);
-var WindowControlOwner = (0, import_react21.createContext)({ id: "workspace", active: false });
-var HostCameraTarget = (0, import_react21.createContext)(void 0);
+var import_react_dom3 = __toESM(require_react_dom(), 1);
+var import_react39 = __toESM(require_react(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var ActiveControlsContext = (0, import_react39.createContext)(void 0);
+var WindowControlOwner = (0, import_react39.createContext)({ id: "workspace", active: false });
+var HostCameraTarget = (0, import_react39.createContext)(void 0);
 function ActiveControlsProvider({ children, enabled = true, base_target, portal_target, workspace_id }) {
   const space = useActiveSpace();
-  const targets = (0, import_react21.useRef)(/* @__PURE__ */ new Map());
-  const [snapshot2, set_snapshot] = (0, import_react21.useState)([]);
-  const [chosen_id, set_chosen_id] = (0, import_react21.useState)();
+  const targets = (0, import_react39.useRef)(/* @__PURE__ */ new Map());
+  const [snapshot2, set_snapshot] = (0, import_react39.useState)([]);
+  const [chosen_id, set_chosen_id] = (0, import_react39.useState)();
   const slots = useScaleControlSlots();
-  const update = (0, import_react21.useCallback)((target) => {
+  const update = (0, import_react39.useCallback)((target) => {
     const previous = targets.current.get(target.id);
     targets.current.set(target.id, target);
     if (!previous || previous.label !== target.label || previous.scale !== target.scale || previous.active !== target.active) {
@@ -30931,16 +42817,16 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       if (target.active && !previous?.active) set_chosen_id(target.id);
     }
   }, []);
-  const remove = (0, import_react21.useCallback)((id) => {
+  const remove = (0, import_react39.useCallback)((id) => {
     if (targets.current.delete(id)) set_snapshot((items) => items.filter((item) => item.id !== id));
   }, []);
-  const registry = (0, import_react21.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
+  const registry = (0, import_react39.useMemo)(() => ({ update, remove, choose: set_chosen_id }), [update, remove]);
   const choices = [...snapshot2];
   if (base_target) choices.push(base_target);
   const focused_space = space.snapshot?.focus;
   const permitted_id = focused_space?.kind === "host" ? "host-camera" : focused_space?.kind === "workspace" ? "workspace" : focused_space?.window_id;
   const current = space.store ? choices.find((item) => item.id === permitted_id) : choices.find((item) => item.id === chosen_id) ?? (!space.store ? choices.find((item) => item.active) : void 0) ?? (!space.store ? choices.find((item) => item.id !== "host-camera") : void 0) ?? (!space.store ? base_target : void 0);
-  const toolbar = (target) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
+  const toolbar = (target) => /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
     "div",
     {
       "data-active-controls": true,
@@ -30949,14 +42835,14 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
       onPointerDown: (event) => event.stopPropagation(),
       onClick: (event) => event.stopPropagation(),
       children: [
-        !space.store && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: target.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("button", { "aria-label": `\u7F29\u5C0F${target.label}`, onClick: () => target.zoom_out(), children: "\u2212" }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
+        !space.store && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("select", { "aria-label": "\u64CD\u4F5C\u5C42\u7EA7", value: target.id, onChange: (event) => set_chosen_id(event.target.value), children: choices.map((item) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("option", { value: item.id, children: item.label }, item.id)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { "aria-label": `\u7F29\u5C0F${target.label}`, onClick: () => target.zoom_out(), children: "\u2212" }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("output", { "aria-label": "\u7F29\u653E\u6BD4\u4F8B", children: [
           Math.round(target.scale * 100),
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("button", { "aria-label": `\u653E\u5927${target.label}`, onClick: () => target.zoom_in(), children: "+" }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("button", { "aria-label": `\u9002\u5E94${target.label}`, onClick: () => target.fit(), children: "\u9002\u5E94" })
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { "aria-label": `\u653E\u5927${target.label}`, onClick: () => target.zoom_in(), children: "+" }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("button", { "aria-label": `\u9002\u5E94${target.label}`, onClick: () => target.fit(), children: "\u9002\u5E94" })
       ]
     }
   );
@@ -30970,29 +42856,29 @@ function ActiveControlsProvider({ children, enabled = true, base_target, portal_
     return target ? [{ slot, target }] : [];
   });
   const fallback_toolbar = enabled && current && owned_slots.length === 0 ? toolbar(current) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(ActiveControlsContext.Provider, { value: registry, children: [
     children,
-    owned_slots.map(({ slot, target }) => (0, import_react_dom2.createPortal)(
+    owned_slots.map(({ slot, target }) => (0, import_react_dom3.createPortal)(
       toolbar(target),
       slot.element,
       slot.id
     )),
-    portal_target ? (0, import_react_dom2.createPortal)(fallback_toolbar, portal_target) : fallback_toolbar
+    portal_target ? (0, import_react_dom3.createPortal)(fallback_toolbar, portal_target) : fallback_toolbar
   ] });
 }
 function RegisteredScaleControl({ target }) {
-  const registry = (0, import_react21.useContext)(ActiveControlsContext);
-  (0, import_react21.useLayoutEffect)(() => {
+  const registry = (0, import_react39.useContext)(ActiveControlsContext);
+  (0, import_react39.useLayoutEffect)(() => {
     registry?.update(target);
   });
-  (0, import_react21.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
+  (0, import_react39.useLayoutEffect)(() => () => registry?.remove(target.id), [registry, target.id]);
   return null;
 }
 
 // pip-editor/pip-host/view/use-window-activation.ts
-var import_react22 = __toESM(require_react(), 1);
+var import_react40 = __toESM(require_react(), 1);
 function useWindowActivation(window_id, on_activate) {
-  const registry = (0, import_react22.useContext)(ActiveControlsContext);
+  const registry = (0, import_react40.useContext)(ActiveControlsContext);
   return (event) => {
     const path = event.nativeEvent.composedPath();
     if (path.some((item) => item?.matches?.("[data-active-controls],details"))) return;
@@ -31003,7 +42889,7 @@ function useWindowActivation(window_id, on_activate) {
 }
 
 // pip-editor/pip-host/view/use-window-bounds.ts
-var import_react23 = __toESM(require_react(), 1);
+var import_react41 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/viewport-bounds.ts
 function constrain_window(frame, bounds, resize_content = false) {
@@ -31020,12 +42906,12 @@ function constrain_window(frame, bounds, resize_content = false) {
 
 // pip-editor/pip-host/view/use-window-bounds.ts
 function useWindowBounds(window_ref, frame, active, on_frame) {
-  const latest = (0, import_react23.useRef)({ frame, on_frame, active });
-  (0, import_react23.useLayoutEffect)(() => {
+  const latest = (0, import_react41.useRef)({ frame, on_frame, active });
+  (0, import_react41.useLayoutEffect)(() => {
     latest.current = { frame, on_frame, active };
   });
-  const [bounds, set_bounds] = (0, import_react23.useState)();
-  (0, import_react23.useLayoutEffect)(() => {
+  const [bounds, set_bounds] = (0, import_react41.useState)();
+  (0, import_react41.useLayoutEffect)(() => {
     const window_element = window_ref.current;
     const world = window_element?.parentElement;
     const viewport = world?.closest("[data-canvas-shortcuts]");
@@ -31071,22 +42957,22 @@ function useWindowBounds(window_ref, frame, active, on_frame) {
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_react25 = __toESM(require_react(), 1);
+var import_react43 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-window-chrome.tsx
-var import_react24 = __toESM(require_react(), 1);
-var import_react_dom3 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var WorkspaceWindowChromeContext = (0, import_react24.createContext)(void 0);
+var import_react42 = __toESM(require_react(), 1);
+var import_react_dom4 = __toESM(require_react_dom(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var WorkspaceWindowChromeContext = (0, import_react42.createContext)(void 0);
 function useWorkspaceWindowChromeTargets() {
-  const [targets, setTargets] = (0, import_react24.useState)({});
-  const setTop = (0, import_react24.useCallback)((element) => {
+  const [targets, setTargets] = (0, import_react42.useState)({});
+  const setTop = (0, import_react42.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       top: element ?? void 0
     }));
   }, []);
-  const setBottom = (0, import_react24.useCallback)((element) => {
+  const setBottom = (0, import_react42.useCallback)((element) => {
     setTargets((current) => ({
       ...current,
       bottom: element ?? void 0
@@ -31101,8 +42987,8 @@ var controls = ({
   onFit,
   onZoomIn,
   onZoomOut
-}) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className, children: [
-  /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+}) => /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className, children: [
+  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
     "button",
     {
       type: "button",
@@ -31111,11 +42997,11 @@ var controls = ({
       children: "\u2212"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { children: [
+  /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { children: [
     Math.round(scale * 100),
     "%"
   ] }),
-  /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
     "button",
     {
       type: "button",
@@ -31124,7 +43010,7 @@ var controls = ({
       children: "+"
     }
   ),
-  /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+  /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
     "button",
     {
       type: "button",
@@ -31141,10 +43027,10 @@ function WindowScaleControls({
   onZoomIn,
   onZoomOut
 }) {
-  const targets = (0, import_react24.useContext)(WorkspaceWindowChromeContext);
-  const registry = (0, import_react24.useContext)(ActiveControlsContext);
-  const owner = (0, import_react24.useContext)(WindowControlOwner);
-  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(RegisteredScaleControl, { target: {
+  const targets = (0, import_react42.useContext)(WorkspaceWindowChromeContext);
+  const registry = (0, import_react42.useContext)(ActiveControlsContext);
+  const owner = (0, import_react42.useContext)(WindowControlOwner);
+  if (registry) return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(RegisteredScaleControl, { target: {
     id: owner.id,
     label: subject,
     scale,
@@ -31163,7 +43049,7 @@ function WindowScaleControls({
       onZoomOut
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_jsx_runtime27.Fragment, { children: targets.top && (0, import_react_dom3.createPortal)(controls({
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_jsx_runtime35.Fragment, { children: targets.top && (0, import_react_dom4.createPortal)(controls({
     className: workspace_window_default.windowCameraControls,
     scale,
     subject,
@@ -31186,7 +43072,7 @@ function WindowContentScaleControls({
     ...frame,
     contentScale: clampContentScale(next)
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
     WindowScaleControls,
     {
       scale,
@@ -31199,7 +43085,7 @@ function WindowContentScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-window.tsx
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
 var directions = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 var clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 function resized(start, direction, dx, dy, world) {
@@ -31243,25 +43129,26 @@ function WorkspaceWindow({
   onFrame,
   onActivate,
   onClose,
-  close_label = "\u5173\u95ED\u8282\u70B9"
+  close_label = "\u5173\u95ED\u8282\u70B9",
+  inspect_target
 }) {
-  const window_ref = (0, import_react25.useRef)(null);
+  const window_ref = (0, import_react43.useRef)(null);
   const bounds = useWindowBounds(window_ref, frame, active && !focused_space, onFrame);
-  const [preview, setPreview] = (0, import_react25.useState)(frame);
-  const [operating, setOperating] = (0, import_react25.useState)(false);
+  const [preview, setPreview] = (0, import_react43.useState)(frame);
+  const [operating, setOperating] = (0, import_react43.useState)(false);
   const visible_frame = preview;
   const activation = useWindowActivation(id, onActivate);
   const { targets: chrome_targets, setTop: set_top_ref, setBottom: set_bottom_ref } = useWorkspaceWindowChromeTargets();
-  const gesture = (0, import_react25.useRef)(void 0);
-  const latestPreview = (0, import_react25.useRef)(preview);
-  const outsideRelease = (0, import_react25.useRef)(void 0);
-  (0, import_react25.useEffect)(() => {
+  const gesture = (0, import_react43.useRef)(void 0);
+  const latestPreview = (0, import_react43.useRef)(preview);
+  const outsideRelease = (0, import_react43.useRef)(void 0);
+  (0, import_react43.useEffect)(() => {
     latestPreview.current = preview;
   }, [preview]);
-  (0, import_react25.useEffect)(() => {
+  (0, import_react43.useEffect)(() => {
     if (!gesture.current) setPreview(frame);
   }, [frame]);
-  (0, import_react25.useEffect)(() => () => outsideRelease.current?.abort(), []);
+  (0, import_react43.useEffect)(() => () => outsideRelease.current?.abort(), []);
   const finish = (clientX, clientY) => {
     const current = gesture.current;
     if (!current) return;
@@ -31351,7 +43238,7 @@ function WorkspaceWindow({
     }
   };
   const handles = preview.resizeMode === "simple" ? ["e", "s", "se"] : directions;
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(WindowControlOwner.Provider, { value: { id, active }, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(WorkspaceWindowChromeContext.Provider, { value: chrome_targets, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
     "article",
     {
       ref: window_ref,
@@ -31393,9 +43280,9 @@ function WorkspaceWindow({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(WindowMenu, { target_ref: set_top_ref, close_label }),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: workspace_window_default.windowGlassUnderlay, "aria-hidden": "true" }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(WindowMenu, { target_ref: set_top_ref, close_label, inspect_target }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailLeft}`,
@@ -31403,7 +43290,7 @@ function WorkspaceWindow({
             "aria-label": "\u5DE6\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
           "i",
           {
             className: `${workspace_window_default.windowDragRail} ${workspace_window_default.windowDragRailRight}`,
@@ -31411,7 +43298,7 @@ function WorkspaceWindow({
             "aria-label": "\u53F3\u4FA7\u62D6\u52A8\u533A\u57DF"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: workspace_window_default.windowViewport, "data-window-viewport": true, children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
           "div",
           {
             className: workspace_window_default.windowContent,
@@ -31419,8 +43306,8 @@ function WorkspaceWindow({
             children
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
-        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("span", { "data-window-bottom-controls": true, ref: set_bottom_ref }),
+        handles.map((direction) => /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
           "i",
           {
             className: workspace_window_default.resizeHandle,
@@ -31435,7 +43322,7 @@ function WorkspaceWindow({
 }
 
 // pip-editor/pip-host/view/creator-window.tsx
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
 var creatorFrameAt = (point, views) => {
   const width = 420;
   const height = 520;
@@ -31456,7 +43343,7 @@ function CreatorWindow({
   onChoose,
   onFrame
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
     WorkspaceWindow,
     {
       id: "host.transient.creator",
@@ -31467,7 +43354,7 @@ function CreatorWindow({
       onClose: onCancel,
       onFrame,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
           NodeCreator,
           {
             candidates,
@@ -31475,7 +43362,7 @@ function CreatorWindow({
             onChoose
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
           WindowContentScaleControls,
           {
             frame,
@@ -31489,7 +43376,7 @@ function CreatorWindow({
 }
 
 // pip-editor/pip-host/view/system-plugin-window.tsx
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 function SystemPluginWindowView({
   active,
   front,
@@ -31505,7 +43392,7 @@ function SystemPluginWindowView({
 }) {
   const Renderer = plugins.Renderer;
   const window_label = plugins.creatorChoices(surface, workspace).find((choice) => choice.id === window2.pluginId)?.label ?? window2.pluginId;
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
     WorkspaceWindow,
     {
       id: window2.id,
@@ -31518,7 +43405,7 @@ function SystemPluginWindowView({
       close_label: `\u5173\u95ED${window_label}`,
       onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           Renderer,
           {
             window: window2,
@@ -31527,7 +43414,7 @@ function SystemPluginWindowView({
             services
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           WindowContentScaleControls,
           {
             frame: window2.frame,
@@ -31541,7 +43428,7 @@ function SystemPluginWindowView({
 }
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_react26 = __toESM(require_react(), 1);
+var import_react44 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/pip-drop-files.ts
 var PIP_MIME = "application/vnd.intent-map.pip";
@@ -31554,13 +43441,13 @@ var pip_drop_zone_default = {
 };
 
 // pip-editor/pip-host/view/pip-drop-zone.tsx
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 var ownsEvent = (event) => {
   const target = event.target;
   return target instanceof Element && target.closest("[data-pip-drop-target]") === event.currentTarget;
 };
 var carriesFiles = (event) => event.dataTransfer.types.includes("Files");
-var PipDropZone = (0, import_react26.forwardRef)(
+var PipDropZone = (0, import_react44.forwardRef)(
   function PipDropZone2({
     children,
     className,
@@ -31569,14 +43456,14 @@ var PipDropZone = (0, import_react26.forwardRef)(
     pointFromScreen,
     ...props
   }, ref) {
-    const [active, setActive] = (0, import_react26.useState)(false);
+    const [active, setActive] = (0, import_react44.useState)(false);
     const consume = (event) => {
       if (!ownsEvent(event) || !carriesFiles(event)) return false;
       event.preventDefault();
       event.stopPropagation();
       return true;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
       "div",
       {
         ...props,
@@ -31616,7 +43503,7 @@ var PipDropZone = (0, import_react26.forwardRef)(
         },
         children: [
           children,
-          active && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
+          active && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: pip_drop_zone_default.dropHint, "aria-hidden": "true", children: "\u91CA\u653E\u4EE5\u5BFC\u5165 PIP" })
         ]
       }
     );
@@ -31624,7 +43511,7 @@ var PipDropZone = (0, import_react26.forwardRef)(
 );
 
 // pip-editor/pip-host/view/legacy-workspace-canvas.tsx
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 var pointIn = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return { x: clientX - rect.left, y: clientY - rect.top };
@@ -31634,6 +43521,7 @@ function LegacyWorkspaceCanvas({
   elements,
   hasWorkspaceProjection,
   nodeTypes,
+  ui_slots,
   nodes,
   onChooseCreator,
   onCloseSystemPlugin,
@@ -31647,15 +43535,15 @@ function LegacyWorkspaceCanvas({
   workspace
 }) {
   const views = normalizeFreeLayout(workspace.views, workspace.rootNodeIds);
-  const canvas = (0, import_react27.useRef)(null);
-  const drag = (0, import_react27.useRef)(void 0);
-  const [creator, setCreator] = (0, import_react27.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+  const canvas = (0, import_react45.useRef)(null);
+  const drag = (0, import_react45.useRef)(void 0);
+  const [creator, setCreator] = (0, import_react45.useState)();
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     "section",
     {
       className: pip_host_default.canvasWrap,
       "data-testid": "pip-workspace",
-      children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
         PipDropZone,
         {
           ref: canvas,
@@ -31709,12 +43597,12 @@ function LegacyWorkspaceCanvas({
             if (moved >= 4) setCreator({ point });
           },
           children: [
-            hasWorkspaceProjection ? roots.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+            hasWorkspaceProjection ? roots.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               "article",
               {
                 "data-node-id": node2.id,
                 className: pip_host_default.workspaceProjection,
-                children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -31726,18 +43614,19 @@ function LegacyWorkspaceCanvas({
                     purpose: "workspace",
                     elements,
                     nodeTypes,
+                    ui_slots,
                     onRequest
                   }
                 )
               },
               node2.id
-            )) : nodes.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+            )) : nodes.map((node2) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               "article",
               {
                 "data-node-id": node2.id,
                 className: `${pip_host_default.node} ${workspace.selection.includes(node2.id) ? pip_host_default.selected : ""}`,
                 onClick: () => onSelectionChange([node2.id]),
-                children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                   PipNodeRenderer,
                   {
                     workspaceId: workspace.id,
@@ -31748,14 +43637,15 @@ function LegacyWorkspaceCanvas({
                     selection: workspace.selection,
                     elements,
                     nodeTypes,
+                    ui_slots,
                     onRequest
                   }
                 )
               },
               node2.id
             )),
-            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
-            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+            !nodes.length && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { className: pip_host_default.empty, children: "\u8FD9\u4E2A\u72EC\u7ACB\u5DE5\u4F5C\u533A\u6CA1\u6709 Pip\u3002" }),
+            Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               SystemPluginWindowView,
               {
                 window: item,
@@ -31773,7 +43663,7 @@ function LegacyWorkspaceCanvas({
               },
               item.id
             )),
-            creator && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+            creator && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
               CreatorWindow,
               {
                 candidates: creatorChoices,
@@ -31795,7 +43685,7 @@ function LegacyWorkspaceCanvas({
 }
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_react34 = __toESM(require_react(), 1);
+var import_react52 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-camera.ts
 function projection_camera(frame, current, next, offset = frame.contentOffset ?? { x: 0, y: 0 }) {
@@ -31835,7 +43725,7 @@ function transition_opacity(progress, target) {
 }
 
 // pip-editor/pip-host/projection/use-projection-input.ts
-var import_react29 = __toESM(require_react(), 1);
+var import_react47 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/semantic-zoom.ts
 var semanticProgress = (scale) => scale >= 1.7 || scale <= 0.6 ? 1 : scale > 1.4 ? (scale - 1.4) / 0.3 : scale < 0.75 ? (0.75 - scale) / 0.15 : 0;
@@ -31846,7 +43736,7 @@ function applySemanticScale(state, scale, forward) {
 }
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
-var import_react28 = __toESM(require_react(), 1);
+var import_react46 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-pointer.ts
 function nearest_projection(viewport, point) {
@@ -31895,11 +43785,11 @@ var TapSequence = class {
 
 // pip-editor/pip-host/projection/use-projection-touch.ts
 function useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
-  const latest = (0, import_react28.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react28.useLayoutEffect)(() => {
+  const latest = (0, import_react46.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react46.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react28.useEffect)(() => {
+  (0, import_react46.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -32092,11 +43982,11 @@ function useProjectionTouch(viewport, graph, node_types, navigation2, offset, se
 // pip-editor/pip-host/projection/use-projection-input.ts
 function useProjectionInput(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled = true) {
   useProjectionTouch(viewport, graph, node_types, navigation2, offset, selection, select_target, update, enabled);
-  const latest = (0, import_react29.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
-  (0, import_react29.useLayoutEffect)(() => {
+  const latest = (0, import_react47.useRef)({ graph, node_types, navigation: navigation2, offset, selection, select_target, update });
+  (0, import_react47.useLayoutEffect)(() => {
     latest.current = { graph, node_types, navigation: navigation2, offset, selection, select_target, update };
   });
-  (0, import_react29.useEffect)(() => {
+  (0, import_react47.useEffect)(() => {
     const element = viewport.current;
     if (!element || !enabled) return;
     const points = /* @__PURE__ */ new Map();
@@ -32210,10 +44100,10 @@ function useProjectionInput(viewport, graph, node_types, navigation2, offset, se
 }
 
 // pip-editor/pip-host/projection/semantic-projection.tsx
-var import_react31 = __toESM(require_react(), 1);
+var import_react49 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/surface-presentation-layer.tsx
-var import_react30 = __toESM(require_react(), 1);
+var import_react48 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/surface-presentation-layer.module.css
 var surface_presentation_layer_default = {
@@ -32221,9 +44111,9 @@ var surface_presentation_layer_default = {
 };
 
 // pip-editor/pip-host/view/surface-presentation-layer.tsx
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var SurfacePresentationLayer = (0, import_react30.forwardRef)(function SurfacePresentationLayer2({ style }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var SurfacePresentationLayer = (0, import_react48.forwardRef)(function SurfacePresentationLayer2({ style }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
     "div",
     {
       ref,
@@ -32235,22 +44125,25 @@ var SurfacePresentationLayer = (0, import_react30.forwardRef)(function SurfacePr
 });
 
 // pip-editor/pip-host/projection/projection-companion-style.ts
-function projection_companion_style(content_offset, scale, origin) {
+function projection_camera_transform(content_offset, scale) {
+  return `translate(${content_offset.x}px, ${content_offset.y}px) scale(${scale})`;
+}
+function projection_companion_style(content_offset, scale) {
   return {
-    transform: `translate(${content_offset.x}px, ${content_offset.y}px) scale(${scale})`,
-    transformOrigin: origin
+    transform: projection_camera_transform(content_offset, scale),
+    transformOrigin: "top left"
   };
 }
 
 // pip-editor/pip-host/projection/semantic-projection.tsx
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 var mix = (from, to, progress) => from + (to - from) * progress;
-function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation: navigation2, contentOffset, execution, elements, nodeTypes, selection, onRequest }) {
+function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation: navigation2, contentOffset, execution, elements, nodeTypes, selection, onRequest, ui_slots }) {
   const space = useActiveSpace();
   const current_space = space.current;
-  const viewport = (0, import_react31.useRef)(null);
-  const presentation_root = (0, import_react31.useRef)(null);
-  const [flip, setFlip] = (0, import_react31.useState)();
+  const viewport = (0, import_react49.useRef)(null);
+  const presentation_root = (0, import_react49.useRef)(null);
+  const [flip, setFlip] = (0, import_react49.useState)();
   const route = currentRoute(navigation2);
   const surface_id = `projection:${workspace.id}:${rootWindowId}:${route.projectionNodeId}`;
   useCanvasSurface(viewport, presentation_root, {
@@ -32284,7 +44177,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     },
     true
   );
-  (0, import_react31.useLayoutEffect)(() => {
+  (0, import_react49.useLayoutEffect)(() => {
     if (!space.store || current_space?.kind !== "projection" || current_space.window_id !== rootWindowId) return;
     space.store.sync_routes(workspace.id, rootWindowId, navigation2.entries.slice(0, navigation2.index + 1).map((entry) => entry.projectionNodeId));
     if (!navigation2.index) return;
@@ -32307,7 +44200,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
   const transitionKey = transition ? `${route.projectionNodeId}->${transition.projectionNodeId}` : "";
   const forwardFlip = navigation2.semanticScale > 1;
   const flipChildId = forwardFlip ? transition?.enteredFrom?.childProjectionId : route.enteredFrom?.childProjectionId;
-  (0, import_react31.useLayoutEffect)(() => {
+  (0, import_react49.useLayoutEffect)(() => {
     const host = viewport.current;
     if (!host || !transitionKey || !flipChildId) {
       setFlip(void 0);
@@ -32322,7 +44215,7 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     setFlip({ key: transitionKey, ...local_point(outer, { width: host.clientWidth, height: host.clientHeight }, { x: inner.left, y: inner.top }), scaleX: inner.width / outer.width, scaleY: inner.height / outer.height, viewportWidth: outer.width, viewportHeight: outer.height });
   }, [flipChildId, forwardFlip, transitionKey]);
   if (!current)
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: pip_host_default.orphan, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: pip_host_default.orphan, children: [
       "\u5BFC\u822A\u76EE\u6807 ",
       route.projectionNodeId,
       " \u4E0D\u5B58\u5728"
@@ -32336,16 +44229,19 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
     const geometry = flip?.key === transitionKey ? flip : void 0;
     const reduced_motion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targetTransform = reduced_motion ? "none" : geometry && forwardFlip ? `translate(${mix(geometry.x, 0, progress)}px,${mix(geometry.y, 0, progress)}px) scale(${mix(geometry.scaleX, 1, progress)},${mix(geometry.scaleY, 1, progress)})` : `scale(${0.88 + progress * 0.12})`;
-    const sourceTransform = "scale(1)";
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
+    const sourceTransform = projection_camera_transform(
+      contentOffset,
+      navigation2.semanticScale
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { inert: target, "aria-hidden": target || void 0, className: `${pip_host_default.semanticLayer} ${target ? pip_host_default.semanticTarget : ""}`, style: {
       // Keep the current A3 (and its navigation) stable. The opaque target grows
       // over only the declared content viewport, then becomes current at commit.
       opacity: transitionActive ? transition_opacity(progress, target) : opacity,
       clipPath: target && transition ? `inset(${zoomViewport.top}px ${zoomViewport.right}px ${zoomViewport.bottom}px ${zoomViewport.left}px)` : void 0
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: pip_host_default.semanticMotion, style: {
-      // A2 owns semantic scale only. A3 consumes the pan variables on its innermost spatial surface.
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: pip_host_default.semanticMotion, style: {
+      // A2 统一变换内容画布；变量继续供 A3 读取相机信息。
       transform: target ? targetTransform : sourceTransform,
-      transformOrigin: geometry && target && forwardFlip ? "top left" : pointerOrigin,
+      transformOrigin: target && !geometry ? pointerOrigin : "top left",
       "--projection-pan-x": `${contentOffset.x}px`,
       "--projection-pan-y": `${contentOffset.y}px`,
       "--projection-origin-x": `${semanticOrigin?.x ?? 0}px`,
@@ -32353,19 +44249,18 @@ function SemanticProjection({ workspace, workspaceView, rootWindowId, navigation
       // Freeze the fading source at the exact transition boundary. Resetting it
       // to 1 here causes a visible 1.4→1 jump on the first crossfade frame.
       "--projection-zoom": target ? "1" : transition ? String(forwardFlip ? 1.4 : 0.75) : String(navigation2.semanticScale)
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(PipNodeRenderer, { root_window_id: rootWindowId, workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node: node2, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest }) }) }, entry.projectionNodeId);
+    }, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(PipNodeRenderer, { root_window_id: rootWindowId, workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView, graph: workspace.graph, node: node2, selection, purpose: "workspace", projectionContext: workspaceProjectionContext(entry.scope), execution, elements, nodeTypes, onRequest, ui_slots }) }) }, entry.projectionNodeId);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { ref: viewport, style: { background: "var(--pip-bg)" }, className: pip_host_default.semanticViewport, "data-root-window": rootWindowId, children: [
     render(route, transitionActive ? 1 - progress : 1),
     transition && render(transition, transitionActive ? progress : 0, true),
-    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
       SurfacePresentationLayer,
       {
         ref: presentation_root,
         style: projection_companion_style(
           contentOffset,
-          navigation2.semanticScale,
-          pointerOrigin
+          navigation2.semanticScale
         )
       }
     )
@@ -32402,35 +44297,18 @@ var NavigationAnimation = class {
 };
 
 // pip-editor/pip-host/view/projection-navbar.tsx
-var import_react32 = __toESM(require_react(), 1);
-
-// pip-editor/pip-host/projection/projection-view-choice.ts
-function choose_projection(state, projection_id, graph, node_types) {
-  const current = currentRoute(state);
-  const next = routeForProjection(projection_id, graph, node_types, current.enteredFrom);
-  if (!next || next.observedNodeId !== current.observedNodeId) return state;
-  if (next.scope === current.scope) return replaceCurrentProjection(state, next);
-  if (current.scope === "self") {
-    return navigateProjection(state, next);
-  }
-  const previous = state.entries[state.index - 1];
-  if (previous?.scope === "self" && previous.observedNodeId === next.observedNodeId)
-    return replaceCurrentProjection({ ...state, index: state.index - 1 }, next);
-  return state;
-}
-
-// pip-editor/pip-host/view/projection-navbar.tsx
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var import_react50 = __toESM(require_react(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_types, onChange: on_change }) {
-  const [animation] = (0, import_react32.useState)(() => new NavigationAnimation());
-  const latest = (0, import_react32.useRef)({ on_change, navigation: navigation2 });
-  (0, import_react32.useLayoutEffect)(() => {
+  const [animation] = (0, import_react50.useState)(() => new NavigationAnimation());
+  const latest = (0, import_react50.useRef)({ on_change, navigation: navigation2 });
+  (0, import_react50.useLayoutEffect)(() => {
     latest.current = { on_change, navigation: navigation2 };
   });
-  (0, import_react32.useLayoutEffect)(() => {
+  (0, import_react50.useLayoutEffect)(() => {
     animation.cancel();
   }, [animation, graph]);
-  (0, import_react32.useEffect)(() => {
+  (0, import_react50.useEffect)(() => {
     const cancel = () => {
       if (!animation.cancel()) return;
       latest.current.on_change({
@@ -32472,23 +44350,23 @@ function ProjectionNavbar({ navigation: navigation2, graph, nodeTypes: node_type
       });
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("nav", { "data-projection-nav": true, className: pip_host_default.projectionNav, "aria-label": "\u6295\u5F71\u89C6\u56FE", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("span", { style: { color: "var(--pip-muted)", fontSize: 12, letterSpacing: ".12em", flex: 1 }, children: [
       "\u7B2C ",
       navigation2.index + 1,
       " \u5C42 \xB7 ",
       route.scope === "self" ? "\u81EA\u8EAB" : "\u5B50\u7EA7",
       children_count > 0 ? ` \xB7 ${children_count} \u5B50\u9879` : ""
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
+    /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("select", { value: route.projectionNodeId, onChange: (event) => choose(event.target.value), "aria-label": "\u5F53\u524D\u6295\u5F71", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("optgroup", { label: "self \xB7 \u89C2\u5BDF\u81EA\u8EAB", children: options.filter((item) => item.scope === "self").map((item) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("optgroup", { label: "children \xB7 \u89C2\u5BDF\u5B50\u7EA7", children: options.filter((item) => item.scope === "children").map((item) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("option", { value: item.projectionNodeId, children: { Simple: "\u6458\u8981", Detail: "\u6B63\u6587", Flow: "\u5173\u7CFB\u56FE", "World Events": "\u4E16\u754C\u4E8B\u4EF6" }[item.label] ?? item.label }, item.projectionNodeId)) })
     ] })
   ] });
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_react33 = __toESM(require_react(), 1);
+var import_react51 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/projection/projection-scale.ts
 function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, selection, anchor) {
@@ -32516,7 +44394,7 @@ function projectionFrameAtScale(frame, navigation2, scale, graph, nodeTypes, sel
 }
 
 // pip-editor/pip-host/view/projection-scale-controls.tsx
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 function ProjectionScaleControls({
   frame,
   graph,
@@ -32526,7 +44404,7 @@ function ProjectionScaleControls({
   onChange,
   onFit
 }) {
-  const owner = (0, import_react33.useContext)(WindowControlOwner);
+  const owner = (0, import_react51.useContext)(WindowControlOwner);
   const changeScale = (scale) => onChange(projectionFrameAtScale(
     frame,
     navigation2,
@@ -32536,7 +44414,7 @@ function ProjectionScaleControls({
     selection,
     selected_anchor(owner.id, selection)
   ));
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
     WindowScaleControls,
     {
       scale: navigation2.semanticScale,
@@ -32549,13 +44427,13 @@ function ProjectionScaleControls({
 }
 
 // pip-editor/pip-host/view/workspace-camera-controls.tsx
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceCameraControls({
   fit,
   persistCamera,
   views
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
     WindowScaleControls,
     {
       scale: views.camera.scale,
@@ -32573,7 +44451,7 @@ function WorkspaceCameraControls({
 }
 
 // pip-editor/pip-host/view/free-workspace-canvas.tsx
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 function FreeWorkspaceCanvas({
   is_active,
   creator,
@@ -32582,6 +44460,7 @@ function FreeWorkspaceCanvas({
   execution,
   fit,
   nodeTypes,
+  ui_slots,
   normalized,
   onActivateWindow,
   onChooseCreator,
@@ -32603,7 +44482,7 @@ function FreeWorkspaceCanvas({
   workspace
 }) {
   const space = useActiveSpace();
-  const presentation_root = (0, import_react34.useRef)(null);
+  const presentation_root = (0, import_react52.useRef)(null);
   useCanvasSurface(viewport, presentation_root, {
     id: `workspace:${workspace.id}`,
     parentId: "host",
@@ -32612,17 +44491,18 @@ function FreeWorkspaceCanvas({
     workspace_id: workspace.id,
     capabilities: { pan: true, zoom: true, create: true, connect: true, nativeScroll: false }
   });
-  const host_target = (0, import_react34.useContext)(HostCameraTarget);
-  const outer_chrome = (0, import_react34.useContext)(WorkspaceWindowChromeContext);
+  const host_target = (0, import_react52.useContext)(HostCameraTarget);
+  const outer_chrome = (0, import_react52.useContext)(WorkspaceWindowChromeContext);
+  const projection_control_mode = systemPluginServices.preferences?.snapshot().projection_control_mode ?? "compact";
   const focused_workspace = space.snapshot?.focus?.kind !== "host" && space.snapshot?.focus?.workspace_id === workspace.id;
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "pip-workspace", "data-workspace-active": is_active, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
     ActiveControlsProvider,
     {
       enabled: is_active && (!space.store || focused_workspace),
       base_target: host_target,
       portal_target: outer_chrome?.bottom,
       workspace_id: workspace.id,
-      children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
         PipDropZone,
         {
           ref: viewport,
@@ -32643,12 +44523,12 @@ function FreeWorkspaceCanvas({
           onPointerUp: pointer.end,
           onPointerCancel: pointer.cancel,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: pip_host_default.freeWorld, style: {
+            /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: pip_host_default.freeWorld, style: {
               width: views.world.width,
               height: views.world.height,
               transform: `translate(${views.camera.x}px,${views.camera.y}px) scale(${views.camera.scale})`
             }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SurfacePresentationLayer, { ref: presentation_root }),
+              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(SurfacePresentationLayer, { ref: presentation_root }),
               roots.map((node2) => {
                 const frame = views.projections[node2.id];
                 const navigation2 = navigationForRoot(
@@ -32661,6 +44541,7 @@ function FreeWorkspaceCanvas({
                 const pluginChrome = Boolean(
                   routeNode && projectionForInstance(routeNode, nodeTypes.projections())?.windowChrome === "plugin"
                 );
+                const show_navbar = !pluginChrome && projection_control_mode === "legacy";
                 const executionView = frame.execution ?? {
                   flowLayerVisible: true,
                   followActiveEvent: false
@@ -32685,41 +44566,67 @@ function FreeWorkspaceCanvas({
                     }
                   }
                 });
-                return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WorkspaceWindow, { space_root: true, layout_enabled: true, focused_space: space.snapshot?.focus?.kind === "host" || !projectionFocused && !projectionActive, projection_focus_target: projectionFocused, id: node2.id, frame, views, active: projectionActive, front: views.frontWindowId === node2.id, onActivate: () => onActivateWindow(node2.id), onFrame: (next) => onRequest({
-                  kind: "set-workspace-window",
-                  windowId: node2.id,
-                  frame: next
-                }), onClose: () => onRequest({
-                  kind: "close-workspace-root",
-                  nodeId: node2.id
-                }), children: navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${pluginChrome ? pip_host_default.pluginChrome : ""}`, children: [
-                  !pluginChrome && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
-                  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SemanticProjection, { workspace, workspaceView: {
-                    ...normalized,
-                    projections: {
-                      ...normalized.projections,
-                      [node2.id]: { ...frame, navigation: navigation2 }
-                    }
-                  }, rootWindowId: node2.id, navigation: navigation2, contentOffset: frame.contentOffset ?? { x: 0, y: 0 }, execution, elements, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onRequest }),
-                  /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onChange: (next) => onRequest({
-                    kind: "set-workspace-window",
-                    windowId: node2.id,
-                    frame: next
-                  }), onFit: resetProjection })
-                ] }) : /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_jsx_runtime38.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { "data-native-scroll": true, style: { overflow: "auto", height: "100%" }, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node: node2, selection: scopedSelections[node2.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest }) }) }) }, node2.id);
+                const inspect_target = navigation2 ? {
+                  kind: "projection",
+                  workspace_id: workspace.id,
+                  root_window_id: node2.id,
+                  projection_id: navigation2.entries[navigation2.index].projectionNodeId,
+                  route: navigation2.entries.slice(0, navigation2.index + 1)
+                } : void 0;
+                return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+                  WorkspaceWindow,
+                  {
+                    space_root: true,
+                    layout_enabled: true,
+                    focused_space: space.snapshot?.focus?.kind === "host" || !projectionFocused && !projectionActive,
+                    projection_focus_target: projectionFocused,
+                    id: node2.id,
+                    frame,
+                    views,
+                    active: projectionActive,
+                    front: views.frontWindowId === node2.id,
+                    inspect_target,
+                    onActivate: () => onActivateWindow(node2.id),
+                    onFrame: (next) => onRequest({
+                      kind: "set-workspace-window",
+                      windowId: node2.id,
+                      frame: next
+                    }),
+                    onClose: () => onRequest({
+                      kind: "close-workspace-root",
+                      nodeId: node2.id
+                    }),
+                    children: navigation2 ? /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { "data-projection-shell": true, className: `${pip_host_default.projectionShell} ${show_navbar ? "" : pip_host_default.noNavbar}`, children: [
+                      show_navbar && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(ProjectionNavbar, { navigation: navigation2, execution, executionView, graph: workspace.graph, nodeTypes, onChange: setNavigation }),
+                      /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(SemanticProjection, { workspace, workspaceView: {
+                        ...normalized,
+                        projections: {
+                          ...normalized.projections,
+                          [node2.id]: { ...frame, navigation: navigation2 }
+                        }
+                      }, rootWindowId: node2.id, navigation: navigation2, contentOffset: frame.contentOffset ?? { x: 0, y: 0 }, execution, elements, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onRequest, ui_slots }),
+                      /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(ProjectionScaleControls, { frame, graph: workspace.graph, navigation: navigation2, nodeTypes, selection: scopedSelections[node2.id] ?? workspace.selection, onChange: (next) => onRequest({
+                        kind: "set-workspace-window",
+                        windowId: node2.id,
+                        frame: next
+                      }), onFit: resetProjection })
+                    ] }) : /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_jsx_runtime46.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { "data-native-scroll": true, style: { overflow: "auto", height: "100%" }, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(PipNodeRenderer, { workspaceId: workspace.id, rootNodeIds: workspace.rootNodeIds, workspaceView: views, graph: workspace.graph, node: node2, selection: scopedSelections[node2.id] ?? workspace.selection, purpose: "workspace", execution, elements, nodeTypes, onRequest, ui_slots }) }) })
+                  },
+                  node2.id
+                );
               }),
-              Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
+              Object.values(views.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(SystemPluginWindowView, { window: item, views, plugins: systemPlugins, services: systemPluginServices, surface: "workspace", workspace, active: views.activeWindowId === item.id, front: views.frontWindowId === item.id, onActivate: () => onActivateWindow(item.id), onFrame: (frame) => onRequest({
                 kind: "set-workspace-window",
                 windowId: item.id,
                 frame
               }), onClose: () => onCloseSystemPlugin(item) }, item.id)),
-              creator && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
+              creator && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(CreatorWindow, { candidates: creatorChoices, frame: creator.frame ?? creatorFrameAt(creator.world, views), views, onCancel: () => setCreator(void 0), onChoose: onChooseCreator, onFrame: (frame) => setCreator({ ...creator, frame }) })
             ] }),
-            wire && /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+            wire && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
+            /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(WindowControlOwner.Provider, { value: { id: "workspace", active: !views.activeWindowId }, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(WorkspaceCameraControls, { views, persistCamera, fit }) })
           ]
         }
       )
@@ -32814,7 +44721,7 @@ var CreatorSwipe = class {
 };
 
 // pip-editor/pip-host/view/workspace-canvas-pointer.ts
-var import_react35 = __toESM(require_react(), 1);
+var import_react53 = __toESM(require_react(), 1);
 var pointIn2 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -32830,11 +44737,11 @@ function useWorkspaceCanvasPointer({
   viewport,
   views
 }) {
-  const creator_swipe = (0, import_react35.useRef)(new CreatorSwipe());
-  const gesture = (0, import_react35.useRef)(void 0);
-  const touches = (0, import_react35.useRef)(/* @__PURE__ */ new Map());
-  const pinch_camera = (0, import_react35.useRef)(void 0);
-  const pinch = (0, import_react35.useRef)(void 0);
+  const creator_swipe = (0, import_react53.useRef)(new CreatorSwipe());
+  const gesture = (0, import_react53.useRef)(void 0);
+  const touches = (0, import_react53.useRef)(/* @__PURE__ */ new Map());
+  const pinch_camera = (0, import_react53.useRef)(void 0);
+  const pinch = (0, import_react53.useRef)(void 0);
   const begin = (event) => {
     if (!free || event.button !== 0 && event.button !== 1) return;
     const full_path = event.nativeEvent.composedPath();
@@ -32996,7 +44903,7 @@ function useWorkspaceCanvasPointer({
 }
 
 // pip-editor/pip-host/view/workspace-canvas-wheel.ts
-var import_react36 = __toESM(require_react(), 1);
+var import_react54 = __toESM(require_react(), 1);
 var pointIn3 = (element, clientX, clientY) => {
   const rect = element.getBoundingClientRect();
   return local_point(rect, { width: element.clientWidth, height: element.clientHeight }, { x: clientX, y: clientY });
@@ -33012,11 +44919,11 @@ function useWorkspaceCanvasWheel({
   viewport,
   workspace
 }) {
-  const settleTimers = (0, import_react36.useRef)(
+  const settleTimers = (0, import_react54.useRef)(
     /* @__PURE__ */ new Map()
   );
-  const semanticGestures = (0, import_react36.useRef)(/* @__PURE__ */ new Map());
-  (0, import_react36.useEffect)(() => {
+  const semanticGestures = (0, import_react54.useRef)(/* @__PURE__ */ new Map());
+  (0, import_react54.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     const handle = (event) => {
@@ -33177,7 +45084,7 @@ function useWorkspaceCanvasWheel({
 }
 
 // pip-editor/pip-host/view/workspace-canvas.tsx
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var isFree = (views) => Boolean(
   views && typeof views === "object" && ["free-layout", "parallel-projections"].includes(
     String(views.kind)
@@ -33188,6 +45095,7 @@ function NodeCanvas({
   elements,
   execution,
   nodeTypes,
+  ui_slots,
   onActivateWindow,
   onCloseSystemPlugin,
   onInvokeCreator,
@@ -33205,24 +45113,24 @@ function NodeCanvas({
   const nodes = Object.values(graphNodes(workspace.graph));
   const roots = workspace.rootNodeIds.map((id) => graphNodes(workspace.graph)[id]).filter(Boolean);
   const free = isFree(workspace.views) || Boolean(space_store && roots.length);
-  const normalized = (0, import_react37.useMemo)(
+  const normalized = (0, import_react55.useMemo)(
     () => normalizeFreeLayout(workspace.views, workspace.rootNodeIds),
     [workspace.views, workspace.rootNodeIds]
   );
-  const [previewCamera, setPreviewCamera] = (0, import_react37.useState)();
-  const [creator, setCreator] = (0, import_react37.useState)();
-  const [wire, setWire] = (0, import_react37.useState)();
-  const viewport = (0, import_react37.useRef)(null);
-  const views = (0, import_react37.useMemo)(
+  const [previewCamera, setPreviewCamera] = (0, import_react55.useState)();
+  const [creator, setCreator] = (0, import_react55.useState)();
+  const [wire, setWire] = (0, import_react55.useState)();
+  const viewport = (0, import_react55.useRef)(null);
+  const views = (0, import_react55.useMemo)(
     () => previewCamera ? { ...normalized, camera: previewCamera } : normalized,
     [normalized, previewCamera]
   );
   useInitialProjectionFit(viewport, normalized, onViewsChange, !space_store || active_space?.kind === "workspace");
-  const scopedSelections = (0, import_react37.useMemo)(
+  const scopedSelections = (0, import_react55.useMemo)(
     () => workspace.scopedSelections ?? {},
     [workspace.scopedSelections]
   );
-  (0, import_react37.useEffect)(() => {
+  (0, import_react55.useEffect)(() => {
     const element = viewport.current;
     if (!free || !element) return;
     element.scrollLeft = 0;
@@ -33240,7 +45148,7 @@ function NodeCanvas({
       if (timer !== void 0) clearTimeout(timer);
     };
   }, [autoFocus, free, workspace.id]);
-  (0, import_react37.useEffect)(() => {
+  (0, import_react55.useEffect)(() => {
     const handleKeyDown = (event) => {
       const interactive = event.isComposing || event.composedPath().some((target) => target instanceof HTMLElement && (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(target.tagName) || target.isContentEditable));
       if (event.code === "Space" && !interactive) {
@@ -33262,7 +45170,7 @@ function NodeCanvas({
     element?.addEventListener("keydown", handleKeyDown);
     return () => element?.removeEventListener("keydown", handleKeyDown);
   }, [views]);
-  (0, import_react37.useEffect)(() => {
+  (0, import_react55.useEffect)(() => {
     const open_creator = (event) => {
       if (event.detail !== workspace.id || !viewport.current) return;
       const screen = { x: viewport.current.clientWidth / 2, y: viewport.current.clientHeight / 2 };
@@ -33317,7 +45225,7 @@ function NodeCanvas({
     if (camera) persistCamera(camera);
   };
   if (!free) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
       LegacyWorkspaceCanvas,
       {
         workspace,
@@ -33326,6 +45234,7 @@ function NodeCanvas({
         hasWorkspaceProjection,
         elements,
         nodeTypes,
+        ui_slots,
         creatorChoices: creatorChoices.filter(
           (choice) => choice.provider === "system"
         ),
@@ -33342,7 +45251,7 @@ function NodeCanvas({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
     FreeWorkspaceCanvas,
     {
       is_active: autoFocus,
@@ -33350,6 +45259,7 @@ function NodeCanvas({
       roots,
       elements,
       nodeTypes,
+      ui_slots,
       execution,
       systemPlugins,
       systemPluginServices,
@@ -33383,12 +45293,13 @@ function NodeCanvas({
 }
 
 // pip-editor/pip-host/view/workspace-session-canvas.tsx
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function WorkspaceSessionCanvas({
   autoFocus,
   elements,
   execution,
   nodeTypes,
+  ui_slots,
   systemPlugins,
   systemPluginServices,
   workspace,
@@ -33402,13 +45313,14 @@ function WorkspaceSessionCanvas({
   onSelectionChange,
   onViewsChange
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
     NodeCanvas,
     {
       autoFocus,
       workspace,
       elements,
       nodeTypes,
+      ui_slots,
       execution: {
         sessions: execution.sessions.filter(
           (item) => item.workspaceId === workspace.id
@@ -33431,15 +45343,62 @@ function WorkspaceSessionCanvas({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_react41 = __toESM(require_react(), 1);
+var import_react59 = __toESM(require_react(), 1);
 
-// pip-editor/pip-host/workspace/host-presentation-store.ts
-var DEFAULT_FRAME = {
+// pip-editor/pip-host/workspace/host-window-geometry.ts
+var default_frame = {
   width: 1120,
   height: 720,
   resizeMode: "full"
 };
-var VIEWPORT_MARGIN = 64;
+var viewport_margin = 64;
+var workspace_frame_for_viewport = (state, viewport) => {
+  if (!viewport) return default_frame;
+  const available_width = (viewport.width - viewport_margin * 2) / state.camera.scale;
+  const available_height = (viewport.height - viewport_margin * 2) / state.camera.scale;
+  return {
+    ...default_frame,
+    width: Math.max(360, Math.min(default_frame.width, available_width)),
+    height: Math.max(420, Math.min(default_frame.height, available_height))
+  };
+};
+var visible_center = (state, viewport) => viewport ? {
+  x: (viewport.width / 2 - state.camera.x) / state.camera.scale,
+  y: (viewport.height / 2 - state.camera.y) / state.camera.scale
+} : { x: 650, y: 440 };
+var centered_frame = (state, point, base) => ({
+  ...base,
+  x: Math.max(0, Math.min(
+    state.world.width - base.width,
+    point.x - base.width / 2
+  )),
+  y: Math.max(0, Math.min(
+    state.world.height - base.height,
+    point.y - base.height / 2
+  )),
+  contentScale: 1
+});
+var frame_at_point = (point, base) => ({
+  ...base,
+  x: point.x,
+  y: point.y,
+  resizeMode: "full",
+  contentScale: 1
+});
+var visible_bounds = (state, viewport) => ({
+  x: (8 - state.camera.x) / state.camera.scale,
+  y: (40 - state.camera.y) / state.camera.scale,
+  width: Math.max(160, (viewport.width - 16) / state.camera.scale),
+  height: Math.max(160, (viewport.height - 92) / state.camera.scale)
+});
+var planned_workspace_frame = (state, point, anchor, viewport, existing) => {
+  const base = existing ?? workspace_frame_for_viewport(state, viewport);
+  const target = point ?? visible_center(state, viewport);
+  const frame = anchor === "top-left" ? frame_at_point(target, base) : centered_frame(state, target, base);
+  return viewport && anchor === "center" ? constrain_window(frame, visible_bounds(state, viewport), true) : frame;
+};
+
+// pip-editor/pip-host/workspace/host-presentation-store.ts
 var WORKSPACE_TAB_STRIP_HEIGHT = 42;
 var tabStripHeightAfterWorkspaceDrop = (workspaceIds, droppedWorkspaceId) => workspaceIds.some((workspaceId) => workspaceId !== droppedWorkspaceId) ? WORKSPACE_TAB_STRIP_HEIGHT : 0;
 var createHostCanvasState = () => ({
@@ -33448,42 +45407,6 @@ var createHostCanvasState = () => ({
   workspaceWindows: {},
   systemWindows: {}
 });
-var centeredFrame = (state, point, base) => ({
-  ...base,
-  x: Math.max(
-    0,
-    Math.min(state.world.width - base.width, point.x - base.width / 2)
-  ),
-  y: Math.max(
-    0,
-    Math.min(state.world.height - base.height, point.y - base.height / 2)
-  ),
-  contentScale: 1
-});
-var frameAtPoint = (point, base) => ({
-  ...base,
-  x: point.x,
-  y: point.y,
-  resizeMode: "full",
-  contentScale: 1
-});
-var workspaceFrameForViewport = (state, viewport) => {
-  if (!viewport) return DEFAULT_FRAME;
-  const availableWidth = (viewport.width - VIEWPORT_MARGIN * 2) / state.camera.scale;
-  const availableHeight = (viewport.height - VIEWPORT_MARGIN * 2) / state.camera.scale;
-  return {
-    ...DEFAULT_FRAME,
-    width: Math.max(360, Math.min(DEFAULT_FRAME.width, availableWidth)),
-    height: Math.max(420, Math.min(DEFAULT_FRAME.height, availableHeight))
-  };
-};
-var visibleCenter = (state, viewport) => {
-  if (!viewport) return { x: 650, y: 440 };
-  return {
-    x: (viewport.width / 2 - state.camera.x) / state.camera.scale,
-    y: (viewport.height / 2 - state.camera.y) / state.camera.scale
-  };
-};
 var HostPresentationStore = class {
   #value;
   #viewport;
@@ -33508,18 +45431,32 @@ var HostPresentationStore = class {
       this.#viewport = { ...viewport };
     }
   }
+  /**
+   * 将宿主世界坐标换算为即将创建的工作区窗口内容坐标。
+   * 窗口靠近世界边缘时会被约束，不能假设点击点始终落在窗口几何中心。
+   */
+  workspace_local_point(point, viewport) {
+    const frame = planned_workspace_frame(
+      this.#value,
+      point,
+      "center",
+      viewport ?? this.#viewport
+    );
+    return {
+      x: (point.x - frame.x) / (frame.contentScale ?? 1),
+      y: (point.y - frame.y) / (frame.contentScale ?? 1)
+    };
+  }
   presentWorkspace(workspaceId, point, anchor = "center", viewport) {
     const id = `host.workspace.${workspaceId}`;
     const existing = this.#value.workspaceWindows[workspaceId];
-    const base = existing?.frame ?? workspaceFrameForViewport(
+    const frame = planned_workspace_frame(
       this.#value,
-      viewport ?? this.#viewport
+      point,
+      anchor,
+      viewport ?? this.#viewport,
+      existing?.frame
     );
-    const target = point ?? visibleCenter(
-      this.#value,
-      viewport ?? this.#viewport
-    );
-    const frame = anchor === "top-left" ? frameAtPoint(target, base) : centeredFrame(this.#value, target, base);
     this.#replace({
       ...this.#value,
       workspaceWindows: {
@@ -33590,10 +45527,13 @@ var HostPresentationStore = class {
   }
   openSystemWindow(window2, point, defaultFrame2) {
     const existing = this.#value.systemWindows[window2.id];
-    const frame = centeredFrame(
+    const base = existing?.frame ?? defaultFrame2;
+    const frame = planned_workspace_frame(
       this.#value,
       point,
-      existing?.frame ?? defaultFrame2
+      "center",
+      this.#viewport,
+      base
     );
     this.#replace({
       ...this.#value,
@@ -33633,8 +45573,8 @@ function host_fit_camera(host, viewport, coarse_pointer = false) {
 }
 
 // pip-editor/pip-host/view/host-canvas.tsx
-var import_react38 = __toESM(require_react(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_react56 = __toESM(require_react(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 function HostCanvas({
   creatorRequest,
   creation_choices = [],
@@ -33654,20 +45594,20 @@ function HostCanvas({
   onUnsupportedPipDrop
 }) {
   const space = useActiveSpace();
-  const viewport = (0, import_react38.useRef)(null);
-  const presentation_root = (0, import_react38.useRef)(null);
+  const viewport = (0, import_react56.useRef)(null);
+  const presentation_root = (0, import_react56.useRef)(null);
   useCanvasSurface(viewport, presentation_root, {
     id: "host",
     kind: "host",
     label: "\u5BBF\u4E3B\u753B\u5E03",
     capabilities: { pan: true, zoom: true, create: true, connect: false, nativeScroll: false }
   });
-  const [previewCamera, setPreviewCamera] = (0, import_react38.useState)();
-  const [creator, setCreator] = (0, import_react38.useState)();
-  const [wire, setWire] = (0, import_react38.useState)();
+  const [previewCamera, setPreviewCamera] = (0, import_react56.useState)();
+  const [creator, setCreator] = (0, import_react56.useState)();
+  const [wire, setWire] = (0, import_react56.useState)();
   const camera = previewCamera ?? host.camera;
   const focusedProjectionWorkspaceId = space.snapshot?.focus?.kind === "projection" ? space.snapshot.focus.workspace_id : void 0;
-  const views = (0, import_react38.useMemo)(() => ({
+  const views = (0, import_react56.useMemo)(() => ({
     kind: "free-layout",
     world: host.world,
     camera,
@@ -33676,7 +45616,7 @@ function HostCanvas({
     activeWindowId: host.activeWindowId,
     frontWindowId: host.frontWindowId
   }), [camera, host]);
-  const persistCamera = (0, import_react38.useCallback)((next) => {
+  const persistCamera = (0, import_react56.useCallback)((next) => {
     setPreviewCamera(void 0);
     hostStore.setCamera(next);
   }, [hostStore]);
@@ -33706,7 +45646,7 @@ function HostCanvas({
     ...creation_choices,
     ...systemPlugins.creatorChoices("host", focusedWorkspace)
   ];
-  (0, import_react38.useEffect)(() => {
+  (0, import_react56.useEffect)(() => {
     viewport.current?.focus({ preventScroll: true });
   }, []);
   const openCreatorAtCenter = () => {
@@ -33722,15 +45662,15 @@ function HostCanvas({
     width: viewport.current?.clientWidth ?? 0,
     height: viewport.current?.clientHeight ?? 0
   });
-  (0, import_react38.useEffect)(() => {
+  (0, import_react56.useEffect)(() => {
     if (creatorRequest > 0) openCreatorAtCenter();
   }, [creatorRequest]);
-  (0, import_react38.useEffect)(() => {
+  (0, import_react56.useEffect)(() => {
     const open = () => openCreatorAtCenter();
     document.addEventListener("pip-open-host-creator", open);
     return () => document.removeEventListener("pip-open-host-creator", open);
   });
-  (0, import_react38.useEffect)(() => {
+  (0, import_react56.useEffect)(() => {
     const element = viewport.current;
     if (!element) return;
     const handleWheel = (event) => {
@@ -33775,7 +45715,7 @@ function HostCanvas({
       if (next_camera) persistCamera(next_camera);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ActiveControlsProvider, { enabled: space.store ? space.current?.kind === "host" : !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("section", { className: pip_host_default.canvasWrap, "data-testid": "host-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(HostCameraTarget.Provider, { value: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ActiveControlsProvider, { enabled: space.store ? space.current?.kind === "host" : !Object.values(host.workspaceWindows).some((item) => item.id === host.activeWindowId), base_target: host_target, children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
     PipDropZone,
     {
       ref: viewport,
@@ -33808,7 +45748,7 @@ function HostCanvas({
       onPointerUp: pointer.end,
       onPointerCancel: pointer.cancel,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
           "div",
           {
             className: pip_host_default.freeWorld,
@@ -33818,13 +45758,13 @@ function HostCanvas({
               transform: `translate(${camera.x}px,${camera.y}px) scale(${camera.scale})`
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(SurfacePresentationLayer, { ref: presentation_root }),
+              /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(SurfacePresentationLayer, { ref: presentation_root }),
               Object.values(host.workspaceWindows).map((item) => {
                 const workspace = workspaces.find((value) => value.id === item.workspaceId);
                 if (!workspace) return null;
                 const focused = host.activeWindowId === item.id;
                 const workspaceViews = normalizeFreeLayout(workspace.views, workspace.rootNodeIds), activeProjection = Boolean(workspaceViews.activeWindowId && workspaceViews.projections[workspaceViews.activeWindowId]);
-                return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
                   WorkspaceWindow,
                   {
                     id: item.id,
@@ -33845,7 +45785,7 @@ function HostCanvas({
                   item.id
                 );
               }),
-              Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              Object.values(host.systemWindows).map((item) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
                 SystemPluginWindowView,
                 {
                   window: item,
@@ -33862,7 +45802,7 @@ function HostCanvas({
                 },
                 item.id
               )),
-              creator && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+              creator && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
                 CreatorWindow,
                 {
                   candidates: choices,
@@ -33885,9 +45825,9 @@ function HostCanvas({
             ]
           }
         ),
-        wire && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("svg", { className: pip_host_default.creationWire, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
-          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
+        wire && /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("svg", { className: pip_host_default.creationWire, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("line", { x1: wire.from.x, y1: wire.from.y, x2: wire.to.x, y2: wire.to.y }),
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("circle", { cx: wire.to.x, cy: wire.to.y, r: "5" })
         ] })
       ]
     }
@@ -33895,11 +45835,11 @@ function HostCanvas({
 }
 
 // pip-editor/pip-host/view/use-tab-touch-drag.ts
-var import_react39 = __toESM(require_react(), 1);
+var import_react57 = __toESM(require_react(), 1);
 function useTabTouchDrag(on_reorder, on_detach) {
-  const drag = (0, import_react39.useRef)(void 0);
-  const suppress_click = (0, import_react39.useRef)(false);
-  const [preview, set_preview] = (0, import_react39.useState)();
+  const drag = (0, import_react57.useRef)(void 0);
+  const suppress_click = (0, import_react57.useRef)(false);
+  const [preview, set_preview] = (0, import_react57.useState)();
   const down = (event) => {
     if (event.pointerType === "mouse") return;
     if (drag.current) return;
@@ -33967,7 +45907,7 @@ function useTabTouchDrag(on_reorder, on_detach) {
 }
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_react40 = __toESM(require_react(), 1);
+var import_react58 = __toESM(require_react(), 1);
 
 // pip-editor/pip-host/view/workspace-tabs.module.css
 var workspace_tabs_default = {
@@ -33979,7 +45919,7 @@ var workspace_tabs_default = {
 };
 
 // pip-editor/pip-host/view/workspace-tabs.tsx
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 var WORKSPACE_DRAG_MIME = "application/x-intent-map-workspace";
 function WorkspaceTabs({
   activeWorkspaceId,
@@ -33992,8 +45932,8 @@ function WorkspaceTabs({
   onTouchDetach
 }) {
   const touch_drag = useTabTouchDrag(onReorder, onTouchDetach);
-  const [dragging, setDragging] = (0, import_react40.useState)();
-  return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
+  const [dragging, setDragging] = (0, import_react58.useState)();
+  return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
     "nav",
     {
       className: workspace_tabs_default.workspaceTabs,
@@ -34008,7 +45948,7 @@ function WorkspaceTabs({
         workspaces.map((workspace) => {
           const active = workspace.id === activeWorkspaceId;
           const name = nameFor(workspace);
-          return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
             "div",
             {
               role: "presentation",
@@ -34032,7 +45972,7 @@ function WorkspaceTabs({
                   onReorder(dragging, workspace.id);
                 }
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
                 "button",
                 {
                   type: "button",
@@ -34049,9 +45989,9 @@ function WorkspaceTabs({
                       onClose(workspace.id);
                   },
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children: name }),
-                    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
-                    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
+                    /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("span", { children: name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("small", { children: workspace.source.id === "host.new-tab" ? "" : `r${graphRevision(workspace.graph)}` }),
+                    /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("i", { role: "button", "aria-label": `\u5173\u95ED ${name}`, className: workspace_tabs_default.workspaceTabClose, onClick: (event) => {
                       event.stopPropagation();
                       onClose(workspace.id);
                     }, children: "\xD7" })
@@ -34062,7 +46002,7 @@ function WorkspaceTabs({
             workspace.id
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
+        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("button", { type: "button", className: workspace_tabs_default.workspaceTabAdd, onClick: (event) => {
           event.currentTarget.blur();
           onNew();
         }, title: "\u6253\u5F00\u521B\u5EFA\u5668", "aria-label": "\u6253\u5F00\u521B\u5EFA\u5668", children: "+" })
@@ -34072,7 +46012,7 @@ function WorkspaceTabs({
 }
 
 // pip-editor/pip-host/view/pip-host-surface.tsx
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 function PipHostSurface({
   active,
   activeWorkspaceId,
@@ -34097,20 +46037,24 @@ function PipHostSurface({
   const space = useActiveSpace();
   const entered_id = space.current && space.current.kind !== "host" ? space.current.workspace_id : void 0;
   const entered_workspace = workspaces.find((item) => item.id === entered_id);
+  const entered_floating_workspace = entered_workspace && Boolean(
+    host.workspaceWindows[entered_workspace.id]
+  );
+  const direct_workspace = space.store ? entered_floating_workspace ? void 0 : entered_workspace : active;
   const enter_workspace = (workspace_id) => space.store?.enter({
     kind: "workspace",
     id: workspace_space_id(workspace_id),
     workspace_id
   });
-  (0, import_react41.useEffect)(() => {
+  (0, import_react59.useEffect)(() => {
     const current = space.store?.current();
     if (active?.id && (!current || current.kind === "host" || current.workspace_id !== active.id)) space.store?.enter({ kind: "workspace", id: workspace_space_id(active.id), workspace_id: active.id });
   }, [active?.id, space.store]);
-  (0, import_react41.useEffect)(() => {
+  (0, import_react59.useEffect)(() => {
     space.store?.reconcile((item) => item.kind === "host" || workspaces.some((workspace) => workspace.id === item.workspace_id && (item.kind !== "projection" || workspace.rootNodeIds.includes(item.window_id))));
   }, [workspaces, space.store]);
-  const surface = (0, import_react41.useRef)(null);
-  (0, import_react41.useEffect)(() => {
+  const surface = (0, import_react59.useRef)(null);
+  (0, import_react59.useEffect)(() => {
     const element = surface.current;
     if (!element) return;
     const publishViewport = () => {
@@ -34155,7 +46099,7 @@ function PipHostSurface({
       height: rect.height - tabStripHeight
     });
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
     "section",
     {
       ref: surface,
@@ -34167,7 +46111,7 @@ function PipHostSurface({
       },
       onDrop: drop,
       children: [
-        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        tabWorkspaces.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
           WorkspaceTabs,
           {
             workspaces: tabWorkspaces,
@@ -34186,7 +46130,7 @@ function PipHostSurface({
             onTouchDetach: detach_at
           }
         ),
-        (space.store ? entered_workspace : active) ? renderWorkspace(space.store ? entered_workspace : active, true) : /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        direct_workspace ? renderWorkspace(direct_workspace, true) : /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
           HostCanvas,
           {
             nameFor,
@@ -34227,7 +46171,8 @@ function exportNodeMap(workspace, options) {
     nodeMap,
     nodeTypes: options.portable === false ? [] : options.source.nodeTypes,
     elementPlugins: options.portable === false ? [] : options.source.elementPlugins,
-    runtimePackages: options.portable === false ? [] : options.source.runtimePackages
+    runtimePackages: options.portable === false ? [] : options.source.runtimePackages,
+    pluginComposition: options.source.pluginComposition
   });
 }
 async function exportNativeNodeMap(a5Bytes) {
@@ -34250,18 +46195,7 @@ var packageRef = (entry) => ({
 });
 async function attachNativeLaunchProfile(source) {
   const catalog = await readHostCatalog();
-  const entries = ["a1", "a2"].map(
-    (layer) => catalog.packages.find(
-      (item) => item.layer === layer && item.valid && (item.origin === "system" || item.origin === "user")
-    )
-  );
-  const complete = entries.every(
-    (entry) => entry?.packageId && entry.packageVersion && entry.releaseDate && entry.sha256
-  );
-  if (!complete) {
-    throw new Error("\u5BBF\u4E3B catalog \u672A\u63D0\u4F9B\u5B8C\u6574 A1/A2 launcher \u95ED\u5305");
-  }
-  const exact = entries;
+  const exact = resolve_active_launch_entries(catalog);
   const runtimePackages = await Promise.all(
     exact.map(async (entry) => {
       const pipBytes = new Uint8Array(await readHostPackage(entry));
@@ -34290,6 +46224,21 @@ async function attachNativeLaunchProfile(source) {
       }
     }
   };
+}
+function resolve_active_launch_entries(catalog) {
+  if (!catalog.profile) throw new Error("\u5BBF\u4E3B\u6CA1\u6709\u5B9E\u9645\u6FC0\u6D3B\u7684 runtime profile");
+  const references = [catalog.profile.loader, catalog.profile.editor];
+  const expected_layers = ["a1", "a2"];
+  const entries = references.map((reference, index) => {
+    const matches = catalog.packages.filter(
+      (entry) => entry.layer === expected_layers[index] && entryMatchesRef(entry, reference)
+    );
+    if (matches.length !== 1) {
+      throw new Error(`\u6FC0\u6D3B profile \u7684 ${expected_layers[index].toUpperCase()} \u5FC5\u987B\u7CBE\u786E\u89E3\u6790\u4E00\u6B21`);
+    }
+    return matches[0];
+  });
+  return entries;
 }
 var nativeFileName = () => {
   const platform = navigator.platform.toLowerCase();
@@ -34344,28 +46293,40 @@ var workspaceName = (workspace, nodeMaps) => workspace.source.id === "host.new-t
   (item) => item.contentSha256 === workspace.source.contentSha256
 )?.nodeMap.manifest.name ?? workspace.source.id;
 
+// pip-editor/pip-host/workspace-history-action.ts
+function create_workspace_history_action(workspace_store, node_types, on_message) {
+  return (workspace, direction) => {
+    try {
+      workspace_store.history(workspace.id, direction, node_types.validators());
+      on_message(direction === "undo" ? "\u5DF2\u64A4\u9500 / Undone" : "\u5DF2\u91CD\u505A / Redone");
+    } catch (error) {
+      on_message(error instanceof Error ? error.message : "\u5386\u53F2\u64CD\u4F5C\u5931\u8D25");
+    }
+  };
+}
+
 // pip-editor/pip-host/pip-host.tsx
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 function PipHost() {
-  return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(ActiveSpaceProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(PipHostSession, {}) });
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ActiveSpaceProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(PipHostSession, {}) });
 }
 function PipHostSession() {
-  const [workspaces, setWorkspaces] = (0, import_react42.useState)([]);
-  const [workspaceStore] = (0, import_react42.useState)(
+  const [workspaces, setWorkspaces] = (0, import_react60.useState)([]);
+  const [workspaceStore] = (0, import_react60.useState)(
     () => new WorkspaceSessionStore([], setWorkspaces)
   );
-  const [host, setHost] = (0, import_react42.useState)(createHostCanvasState);
-  const [hostStore] = (0, import_react42.useState)(() => new HostPresentationStore(setHost));
-  const [, setPreferences] = (0, import_react42.useState)(defaultEditorPreferences);
-  const [preferenceStore] = (0, import_react42.useState)(
+  const [host, setHost] = (0, import_react60.useState)(createHostCanvasState);
+  const [hostStore] = (0, import_react60.useState)(() => new HostPresentationStore(setHost));
+  const [, setPreferences] = (0, import_react60.useState)(defaultEditorPreferences);
+  const [preferenceStore] = (0, import_react60.useState)(
     () => new EditorPreferenceStore(setPreferences)
   );
-  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react42.useState)();
-  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react42.useState)();
-  const [creatorRequest, setCreatorRequest] = (0, import_react42.useState)(0);
-  const [creator_armed, set_creator_armed] = (0, import_react42.useState)(false);
-  const [pendingClose, setPendingClose] = (0, import_react42.useState)();
-  const [message, setMessage] = (0, import_react42.useState)(
+  const [activeWorkspaceId, setActiveWorkspaceId] = (0, import_react60.useState)();
+  const [focusedWorkspaceId, setFocusedWorkspaceId] = (0, import_react60.useState)();
+  const [creatorRequest, setCreatorRequest] = (0, import_react60.useState)(0);
+  const [creator_armed, set_creator_armed] = (0, import_react60.useState)(false);
+  const [pendingClose, setPendingClose] = (0, import_react60.useState)();
+  const [message, setMessage] = (0, import_react60.useState)(
     "\u7A7A\u683C\u6216 Alt/Option + \u5DE6\u952E\u62D6\u62FD\u53EF\u6253\u5F00\u521B\u5EFA\u5668\u3002"
   );
   const active = workspaces.find((item) => item.id === activeWorkspaceId);
@@ -34387,30 +46348,28 @@ function PipHostSession() {
     setMessage,
     workspaceStore
   });
-  const { nodeMaps, nodeTypePackages, nodeTypes, elements } = catalog;
+  const { nodeMaps, nodeTypePackages, nodeTypes, elements, ui_slots } = catalog;
   useHostTheme(preferenceStore.snapshot().theme_mode);
   const placement = useHostPlacement(
     nodeTypes,
     workspaceStore,
     presentWorkspace,
+    (point) => hostStore.workspace_local_point(point),
     setMessage,
     set_creator_armed
   );
-  const [execution, setExecution] = (0, import_react42.useState)({
+  const [execution, setExecution] = (0, import_react60.useState)({
     sessions: []
   });
-  const [executionManager] = (0, import_react42.useState)(
+  const [executionManager] = (0, import_react60.useState)(
     () => new ExecutionSessionManager(nodeTypes, setExecution)
   );
-  const [commandQueues] = (0, import_react42.useState)(() => /* @__PURE__ */ new Map());
-  const history = (workspace, direction) => {
-    try {
-      workspaceStore.history(workspace.id, direction, nodeTypes.validators());
-      setMessage(direction === "undo" ? "\u5DF2\u64A4\u9500 / Undone" : "\u5DF2\u91CD\u505A / Redone");
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "\u5386\u53F2\u64CD\u4F5C\u5931\u8D25");
-    }
-  };
+  const [commandQueues] = (0, import_react60.useState)(() => /* @__PURE__ */ new Map());
+  const history = create_workspace_history_action(
+    workspaceStore,
+    nodeTypes,
+    setMessage
+  );
   const exportWorkspace = create_workspace_exporter(nodeMaps, workspaceStore, setMessage);
   const systemPlugins = useSystemPlugins({
     catalog,
@@ -34424,7 +46383,8 @@ function PipHostSession() {
     onMessage: setMessage,
     preferences: preferenceStore,
     workspaces,
-    workspaceStore
+    workspaceStore,
+    presentWorkspace
   });
   const invokeCreator = async (workspace, creatorId, point, input, origin) => {
     if (nodeTypes.creators().find((item) => item.id === creatorId)?.placement) {
@@ -34488,13 +46448,14 @@ function PipHostSession() {
       closeNow(id);
     }
   };
-  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+  const renderWorkspace = (workspace, autoFocus) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
     WorkspaceSessionCanvas,
     {
       autoFocus,
       workspace,
       elements,
       nodeTypes,
+      ui_slots,
       execution,
       systemPlugins: systemPlugins.canvas,
       systemPluginServices: systemPlugins.servicesFor(workspace),
@@ -34537,11 +46498,11 @@ function PipHostSession() {
     workspaces
   });
   const SystemPresentations = systemPlugins.canvas.Presentations;
-  return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("main", { className: pip_host_default.shell, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SystemPresentations, { services: systemPlugins.servicesFor(focused) }),
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(StartupNotice, { ...startup }),
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("main", { className: pip_host_default.shell, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SystemPresentations, { services: systemPlugins.servicesFor(focused) }),
+    /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(StartupNotice, { ...startup }),
     placement,
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
       PipHostSurface,
       {
         creation_choices: nodeTypes.creators().filter((item) => item.placement).map((item) => ({ ...item, provider: "node-type" })),
@@ -34581,7 +46542,7 @@ function PipHostSession() {
         }
       }
     ),
-    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    pendingClose && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
       CloseWorkspaceDialog,
       {
         name: nameFor(workspaces.find((item) => item.id === pendingClose)),
@@ -34598,11 +46559,11 @@ function PipHostSession() {
 }
 
 // pip-editor/web/main.tsx
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var root = document.getElementById("root");
 if (!root) throw new Error("Editor document requires a #root mount point");
 install_touch_boundary(root);
-(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_react43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(PipHost, {}) }));
+(0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_react61.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(PipHost, {}) }));
 /*! Bundled license information:
 
 react/cjs/react.development.js:
@@ -34653,6 +46614,17 @@ react/cjs/react-jsx-runtime.development.js:
   (**
    * @license React
    * react-jsx-runtime.development.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   *)
+
+react/cjs/react-jsx-dev-runtime.development.js:
+  (**
+   * @license React
+   * react-jsx-dev-runtime.development.js
    *
    * Copyright (c) Meta Platforms, Inc. and affiliates.
    *
